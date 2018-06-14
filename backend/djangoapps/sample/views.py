@@ -6,10 +6,13 @@ from django.db import connections
 
 #UTIL
 import json
+import requests
+import xmltodict
 
 from django.conf import settings
 from backend.djangoapps.common.views import common_sample
 from backend.djangoapps.common.views import dictfetchall
+from backend.djangoapps.common.views import api_coSpaces
 
 def sample(request):
 
@@ -37,6 +40,16 @@ def sample(request):
     print("-------------------------> DEBUG [e]")
 
     return render(request, 'sample/sample.html', context)
+    #return JsonResponse({'a':'b'})
+
+def apiTest(request):
+
+    resDataJson = api_coSpaces()
+
+    context = {}
+    context['resDataJson'] = resDataJson
+
+    return render(request, 'sample/apiTest.html', context)
     #return JsonResponse({'a':'b'})
 
 def vuejs(request):

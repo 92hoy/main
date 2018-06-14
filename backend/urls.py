@@ -25,6 +25,7 @@ urlpatterns = [
 
     # main-url
     url('sample$', SampleViews.sample, name='sample'),
+    url('api_test$', SampleViews.apiTest, name='apiTest'),
     url('vuejs$', SampleViews.vuejs, name='vuejs'),
     url('vueservice$', SampleViews.vueService, name='vueService'),
 
