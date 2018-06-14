@@ -10,9 +10,8 @@ import requests
 import xmltodict
 
 from django.conf import settings
-from backend.djangoapps.common.views import common_sample
-from backend.djangoapps.common.views import dictfetchall
-from backend.djangoapps.common.views import api_coSpaces
+from backend.djangoapps.common.util.views import dictfetchall
+from backend.djangoapps.common.api.views import api_coSpaces
 
 def sample(request):
 
@@ -35,7 +34,6 @@ def sample(request):
     context['sample_key'] = 'sample_val'
 
     print("-------------------------> DEBUG [s]")
-    common_sample()
     print(settings.TIME_ZONE)
     print("-------------------------> DEBUG [e]")
 

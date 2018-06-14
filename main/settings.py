@@ -81,8 +81,8 @@ DATABASES = {
         'NAME': 'main',
         'USER': 'admin',
         'PASSWORD': '0000',
-        'HOST': 'db',
-        'PORT': '3306',
+        'HOST': '127.0.0.1',
+        'PORT': '3315',
     }
 }
 
@@ -104,6 +104,7 @@ AUTH_PASSWORD_VALIDATORS = [
 DATABASAE_OPTIONS = {'charset':'utf8'}
 LANGUAGE_CODE = 'ko-kr'
 TIME_ZONE = 'Asia/Seoul'
+AUTHORIZATION = 'Basic YWRtaW46RXRlY2hzeXN0ZW0='
 
 USE_I18N = True
 USE_L10N = True

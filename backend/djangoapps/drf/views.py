@@ -15,7 +15,7 @@ from .serializers import SimpleUserAddSerializer
 #UTIL
 import json
 
-from backend.djangoapps.common.views import dictfetchall
+from backend.djangoapps.common.util.views import dictfetchall
 
 class SampleView(CreateAPIView):
 
