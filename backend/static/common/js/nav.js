@@ -1,6 +1,6 @@
 (function ($) {
   "use strict";
-  
+
   $(document).on('click', '[data-nav] a', function (e) {
     var $this = $(this), $active, $li, $li_li;
 
@@ -11,7 +11,7 @@
 
     $li_li.addClass('active');
     ( $this.next().is('ul') && $li.toggleClass('active') ) || $li.addClass('active');
-    
+
     $active.not($li_li).not($li).removeClass('active');
 
     if($this.attr('href') && $this.attr('href') !=''){
@@ -28,7 +28,7 @@
       return url == $(this).attr('href');
     }).parents('li').addClass( 'active' );
   }
-  
+
   init();
 
   $(document).on('pjaxEnd', function(){

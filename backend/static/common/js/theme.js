@@ -30,7 +30,7 @@
 
     var namespace = app.color.primary+'-setting',
         theme;
-    
+
     if( ! store(namespace) ){
       store(namespace, app.setting);
     }else{
@@ -84,10 +84,10 @@
       that.find('input[name="bg"][value="'+app.setting.bg+'"]').prop('checked', true);
       that.find('input[name="aside"][value="'+app.setting.aside+'"]').prop('checked', true);
       that.find('input[name="brand"][value="'+app.setting.brand+'"]').prop('checked', true);
-      
+
       if(theme != app.setting.theme){
-        lazyload.load('../assets/css/theme/'+app.setting.theme+'.css').then(function(){
-          lazyload.unload('../assets/css/theme/'+theme+'.css');
+        lazyload.load('/static/common/css/theme/'+app.setting.theme+'.css').then(function(){
+          lazyload.unload('/static/common/css/theme/'+theme+'.css');
           theme = app.setting.theme;
         });
       }
@@ -103,7 +103,7 @@
           return (store && JSON.parse(store)) || false;
         }
       }catch(err){
-        
+
       }
     }
 

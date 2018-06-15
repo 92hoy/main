@@ -22,6 +22,7 @@ var lazyload = lazyload || {};
 	 */
 	lazyload.load = function (srcs) {
 		srcs = $.isArray(srcs) ? srcs : srcs.split(/\s+/);
+
 		if(!promise){
 			promise = deferred.promise();
 		}
@@ -37,6 +38,7 @@ var lazyload = lazyload || {};
 
 	lazyload.unload = function(srcs){
 		srcs = $.isArray(srcs) ? srcs : srcs.split(/\s+/);
+
 		$.each(srcs, function(index, src) {
 			src.indexOf('.css') >=0 ? $('link[href="'+src+'"]').remove() : $('script[src="'+src+'"]').remove();
 			delete loaded[src];

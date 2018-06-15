@@ -6,10 +6,10 @@
 4. Material Design style
 -------------------------------------------------------------------*/
 /*---------------------------
-1. Bootstrap Extension 
+1. Bootstrap Extension
 ---------------------------*/
 /*
-Base 
+Base
 */
 html {
   background: #e2e9f1; }
@@ -60,7 +60,7 @@ canvas {
   max-width: 100%; }
 
 /*
-badge 
+badge
 */
 .badge.up {
   padding: 0.1565rem 0.245rem;
@@ -100,7 +100,7 @@ badge
   border: 2px solid; }
 
 /*
-Buttons 
+Buttons
 */
 .btn {
   font-size: 0.8rem;
@@ -264,13 +264,13 @@ Buttons
   min-width: 7rem; }
 
 /*
-Card 
+Card
 */
 .card {
   border-color: rgba(120, 130, 140, 0.13); }
 
 /*
-Carousel 
+Carousel
 */
 .carousel-control .glyphicon {
   position: absolute;
@@ -282,7 +282,7 @@ Carousel
   margin-left: -10px; }
 
 /*
-Dropdown menu 
+Dropdown menu
 */
 .dropdown-menu {
   font-size: 0.8rem;
@@ -352,7 +352,7 @@ Dropdown menu
   color: rgba(70, 90, 110, 0.85); }
 
 /*
-Form 
+Form
 */
 .form-control {
   border-color: rgba(120, 130, 140, 0.2);
@@ -432,7 +432,7 @@ input:checked + .active-checked {
   opacity: 1; }
 
 /*
-List Group 
+List Group
 */
 .list-group {
   border-radius: 3px;
@@ -504,7 +504,7 @@ a.list-group-item {
     background-color: rgba(0, 0, 0, 0.05); }
 
 /*
-Modal 
+Modal
 */
 .modal.fade .modal-left,
 .modal.fade .modal-right,
@@ -671,7 +671,7 @@ Modal
     left: auto; } }
 
 /*
-Modal animation 
+Modal animation
 */
 .modal .modal-dialog {
   -webkit-transform: translate(0, 0);
@@ -707,7 +707,7 @@ Modal animation
   animation: fadeInDown 0.5s; }
 
 /*
-Nav 
+Nav
 */
 .nav {
   border: inherit; }
@@ -819,7 +819,7 @@ Nav
     content: '/ '; }
 
 /*
-Navbar 
+Navbar
 */
 .navbar {
   min-height: 3.5rem;
@@ -849,7 +849,7 @@ Navbar
     font-weight: 600; }
 
 /*
-pagination 
+pagination
 */
 .pagination a {
   padding: .5rem .75rem;
@@ -913,7 +913,7 @@ Popover
   font-size: 0.8rem; }
 
 /*
-Progress 
+Progress
 */
 .progress[value]::-webkit-progress-bar {
   background-color: rgba(0, 0, 0, 0.05); }
@@ -935,7 +935,7 @@ Progress
   transition: width .6s ease; }
 
 /*
-Row 
+Row
 */
 .padding {
   padding: 2rem; }
@@ -979,7 +979,7 @@ Row
       padding-right: 0.5rem; } }
 
 /*
-Table 
+Table
 */
 .panel .table {
   border-color: rgba(120, 130, 140, 0.065) !important; }

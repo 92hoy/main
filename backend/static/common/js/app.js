@@ -50,7 +50,7 @@ var app = app || {};
       $('body').find('[data-plugin]').plugin();
 
     }
-    
+
    	app.init();
 
    	$(document).on('pjaxEnd', function(){

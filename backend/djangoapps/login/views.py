@@ -1,31 +1,38 @@
 #-*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
+from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_protect
 from django.db import connections
 
-#UTIL
-import json
-
 def login(request):
 
-    """
-    making logic
-    """
+    if request.is_ajax():
 
-    """
-    with connections['default'].cursor() as cur:
-        query = '''
-            select *
-            FROM table
-            where sample = '{page}'
-        '''.format(page=page)
-        cur.execute(query)
-        rows = cur.fetchall()
-    """
+        inputId = request.POST.get('inputId')
+        inputPw = request.POST.get('inputPw')
+
+        print("----------------------> s")
+        print("inputId = ", inputId)
+        print("inputPw = ", inputPw)
+        print("----------------------> e")
+
+        """
+        with connections['default'].cursor() as cur:
+            query = '''
+                select *
+                FROM table
+                where sample = '{page}'
+            '''.format(page=page)
+            cur.execute(query)
+            rows = cur.fetchall()
+        """
+
+        request.session['user_id'] = 'test'
+
+        return JsonResponse({'result':'success'})
+        return JsonResponse({'result':'fail'})
 
     context = {}
-    context['sample_key'] = 'sample_val'
 
     return render(request, 'login/login.html', context)
-    #return JsonResponse({'a':'b'})

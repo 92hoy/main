@@ -1,6 +1,6 @@
 (function ($) {
 	'use strict';
-    
+
     var TRANSITION_DURATION = 600;
 
     $(document).on('pjax:send', function() {
@@ -19,7 +19,7 @@
       main_pjax && main_pjax.refresh();
       sub_pjax && sub_pjax.refresh();
     });
-    
+
     $(document).on('pjax:success', function() {
       if(bootstrap && bootstrap.Util){
         $(document).one(bootstrap.Util.TRANSITION_END, function(){

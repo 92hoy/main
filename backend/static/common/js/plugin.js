@@ -1,6 +1,6 @@
 (function ($, MODULE_CONFIG, MODULE_OPTION_CONFIG) {
   	"use strict";
-  
+
 	$.fn.plugin = function(){
 
         return this.each(function(){
