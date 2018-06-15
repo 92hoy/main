@@ -18,6 +18,7 @@ from .djangoapps.login import views as LoginViews
 from .djangoapps.logout import views as LogoutViews
 
 # side menu
+from .djangoapps.main import views as MainViews
 from .djangoapps.conference import views as ConferenceViews
 from .djangoapps.monitoring import views as MonitoringViews
 from .djangoapps.statistics import views as StatisticsViews
@@ -40,6 +41,7 @@ urlpatterns = [
 
     # sample
     url('sample$', SampleViews.sample, name='sample'),
+    url('sample2$', SampleViews.sample2, name='sample2'),
     url('apiTest$', SampleViews.apiTest, name='apiTest'),
     url('vuejs$', SampleViews.vuejs, name='vuejs'),
     url('vueService$', SampleViews.vueService, name='vueService'),
@@ -92,4 +94,7 @@ urlpatterns = [
     # spark test
     url('spark$', SparkTestViews.spark, name='spark'),
     url('speech$', SparkTestViews.speech, name='speech'),
+
+    # index
+    url('$', MainViews.main, name='main'),
 ]

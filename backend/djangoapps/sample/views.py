@@ -40,6 +40,9 @@ def sample(request):
     return render(request, 'sample/sample.html', context)
     #return JsonResponse({'a':'b'})
 
+def sample2(request):
+    return render(request, 'sample/sample2.html')
+
 def apiTest(request):
 
     resDataJson = api_coSpaces()

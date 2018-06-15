@@ -1,12 +1,41 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>sample</title>
-    <%include file="../common/loadLibrary.html"/>
-</head>
+<%inherit file="../common/main_base.html"/>
 
-<body style="padding:100px;">
-    <h5> endPoint </h5><hr/>
-</body>
-</html>
+<%block name="containor">
+<div class="padding">
+
+  <div class="box">
+    <div class="box-header">
+      <h2>ENDPOINT</h2>
+      <small>ENDPOINT</small>
+    </div>
+  </div>
+
+  <div class="box">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th><input type="checkbox"/></th>
+              <th>EndPoint Name</th>
+              <th>Device Type</th>
+              <th>IP</th>
+              <th>Group Name</th>
+              <th>View</th>
+            </tr>
+          </thead>
+          <tbody>
+            % for n in range(0,6):
+            <tr>
+              <td><input type="checkbox"/></td>
+              <td>6F</td>
+              <td>IP</td>
+              <td>192.168.128.10</td>
+              <td>기본</td>
+              <td><button class="btn btn-fw primary">VIEW</button></td>
+            </tr>
+            % endfor
+          </tbody>
+        </table>
+      </div>
+    </div>
+</%block>

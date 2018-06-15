@@ -1,12 +1,43 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>sample</title>
-    <%include file="../common/loadLibrary.html"/>
-</head>
+<%inherit file="../common/main_base.html"/>
 
-<body style="padding:100px;">
-    <h5> periodStatistics </h5><hr/>
-</body>
-</html>
+<%block name="containor">
+<div class="padding">
+
+  <div class="box">
+    <div class="box-header">
+      <h2>PERIOD STATISTICS</h2>
+      <small>PERIOD STATISTICS</small>
+    </div>
+  </div>
+
+  <div class="box">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Conference name</th>
+              <th>Period</th>
+              <th>Tot Duration</th>
+              <th>Avg Conference Duration</th>
+              <th>Avg User Count</th>
+              <th>Tot Conference Count</th>
+              <th>Tot User Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            % for n in range(0,6):
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            % endfor
+          </tbody>
+        </table>
+      </div>
+    </div>
+</%block>

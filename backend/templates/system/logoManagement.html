@@ -1,12 +1,43 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>sample</title>
-    <%include file="../common/loadLibrary.html"/>
-</head>
+<%inherit file="../common/main_base.html"/>
 
-<body style="padding:100px;">
-    <h5> logoManagement </h5><hr/>
-</body>
-</html>
+<%block name="containor">
+<div class="padding">
+
+  <div class="box">
+    <div class="box-header">
+      <h2>LOGO MANAGEMENT</h2>
+      <small>LOGO MANAGEMENT</small>
+    </div>
+  </div>
+
+  <div class="box">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td>Logo Image</td>
+              <td>
+                <form action="api/dropzone" class="dropzone white b-a b-3x b-dashed b-primary p-a rounded p-5 text-center dz-clickable" data-plugin="dropzone" data-option="{url: 'api/dropzone'}">
+                  <div class="dz-message">
+                  <h4 class="my-4">Drop files here or click to upload.</h4>
+                    <span class="text-muted d-block mb-4">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
+                  </div>
+                </form>
+              </td>
+            </tr>
+            <tr>
+              <td>Login Page Image</td>
+              <td>
+                <form action="api/dropzone" class="dropzone white b-a b-3x b-dashed b-primary p-a rounded p-5 text-center dz-clickable" data-plugin="dropzone" data-option="{url: 'api/dropzone'}">
+                  <div class="dz-message">
+                  <h4 class="my-4">Drop files here or click to upload.</h4>
+                    <span class="text-muted d-block mb-4">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
+                  </div>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</%block>

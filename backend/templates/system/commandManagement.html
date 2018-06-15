@@ -1,12 +1,77 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>sample</title>
-    <%include file="../common/loadLibrary.html"/>
-</head>
+<%inherit file="../common/main_base.html"/>
 
-<body style="padding:100px;">
-    <h5> commandManagement </h5><hr/>
-</body>
-</html>
+<%block name="containor">
+<div class="padding">
+
+  <div class="box">
+    <div class="box-header">
+      <h2>CONFERENCE ROOM</h2>
+      <small>You can see the current meeting status</small>
+    </div>
+  </div>
+
+  <div class="box">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td>Video Send</td>
+              <td>
+                <label class="ui-check">
+                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check"><i></i> I agree to the <a href="#" class="text-info">Terms of Service</a>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>Audio Hearing</td>
+              <td>
+                <label class="ui-check">
+                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check"><i></i> I agree to the <a href="#" class="text-info">Terms of Service</a>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>Document Sharing</td>
+              <td>
+                <label class="ui-check">
+                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check"><i></i> I agree to the <a href="#" class="text-info">Terms of Service</a>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>Video Mode</td>
+              <td>
+                <label class="ui-check">
+                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check"><i></i> I agree to the <a href="#" class="text-info">Terms of Service</a>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>Video Receive</td>
+              <td>
+                <label class="ui-check">
+                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check"><i></i> I agree to the <a href="#" class="text-info">Terms of Service</a>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>Audio Speaking</td>
+              <td>
+                <label class="ui-check">
+                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check"><i></i> I agree to the <a href="#" class="text-info">Terms of Service</a>
+                </label>
+              </td>
+            </tr>
+            <tr>
+              <td>Document View</td>
+              <td>
+                <label class="ui-check">
+                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check"><i></i> I agree to the <a href="#" class="text-info">Terms of Service</a>
+                </label>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</%block>

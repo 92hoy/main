@@ -1,12 +1,37 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>sample</title>
-    <%include file="../common/loadLibrary.html"/>
-</head>
+<%inherit file="../common/main_base.html"/>
 
-<body style="padding:100px;">
-    <h5> acanoClient </h5><hr/>
-</body>
-</html>
+<%block name="containor">
+<div class="padding">
+
+  <div class="box">
+    <div class="box-header">
+      <h2>ACANO CLIENT</h2>
+      <small>ACANO CLIENT</small>
+    </div>
+  </div>
+
+  <div class="box">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>User JID</th>
+              <th>tenent</th>
+            </tr>
+          </thead>
+          <tbody>
+            % for n in range(0,6):
+            <tr>
+              <td>eth 14f</td>
+              <td>eth 14f@etechsystem.co.kr</td>
+              <td>eth 14f@etechsystem.co.kr</td>
+              <td></td>
+            </tr>
+            % endfor
+          </tbody>
+        </table>
+      </div>
+    </div>
+</%block>

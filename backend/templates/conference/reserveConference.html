@@ -1,12 +1,47 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>sample</title>
-    <%include file="../common/loadLibrary.html"/>
-</head>
+<%inherit file="../common/main_base.html"/>
 
-<body style="padding:100px;">
-    <h5> reserveConference </h5><hr/>
-</body>
-</html>
+<%block name="containor">
+<div class="padding">
+
+  <div class="box">
+    <div class="box-header">
+      <h2>CONFERENCE ROOM</h2>
+      <small>You can see the current meeting status</small>
+    </div>
+  </div>
+
+  <div class="box">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th><input type="checkbox"/></th>
+              <th>Conference name</th>
+              <th>User</th>
+              <th>Date</th>
+              <th>Start time</th>
+              <th>End time</th>
+              <th>Reserve Type</th>
+              <th>call ID</th>
+              <th>View</th>
+            </tr>
+          </thead>
+          <tbody>
+            % for n in range(0,6):
+            <tr>
+              <td><input type="checkbox"/></td>
+              <td>Webbex Teams Conference 8500</td>
+              <td>개설자</td>
+              <td>2018-05-23</td>
+              <td>15:00</td>
+              <td>17:00</td>
+              <td>화상회의</td>
+              <td>8500</td>
+              <td><button class="btn btn-fw primary">VIEW</button></td>
+            </tr>
+            % endfor
+          </tbody>
+        </table>
+      </div>
+    </div>
+</%block>

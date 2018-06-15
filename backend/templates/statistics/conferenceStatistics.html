@@ -1,12 +1,43 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>sample</title>
-    <%include file="../common/loadLibrary.html"/>
-</head>
+<%inherit file="../common/main_base.html"/>
 
-<body style="padding:100px;">
-    <h5> conferenceStatistics </h5><hr/>
-</body>
-</html>
+<%block name="containor">
+<div class="padding">
+
+  <div class="box">
+    <div class="box-header">
+      <h2>CONFERENCE STATISTICS</h2>
+      <small>CONFERENCE STATISTICS</small>
+    </div>
+  </div>
+
+  <div class="box">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Remote ID</th>
+              <th>Display Name</th>
+              <th>Name</th>
+              <th>Duration (sec)</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Direction</th>
+            </tr>
+          </thead>
+          <tbody>
+            % for n in range(0,6):
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            % endfor
+          </tbody>
+        </table>
+      </div>
+    </div>
+</%block>

@@ -1,0 +1,71 @@
+<!-- main menu [s] --------------------------------->
+<li>
+  <a>
+      <span class="nav-caret">
+        <i class="fa fa-caret-down"></i>
+      </span>
+      <span class="nav-icon">
+        <i class="fa fa-play-circle-o"></i>
+      </span>
+      <span class="nav-text">Streaming Service</span>
+    </a>
+  <!-- sub menu -------------------------------->
+  <ul class="nav-sub">
+    <li>
+      <a href="/liveVod">
+          <span class="nav-text">Live & Vod</span>
+        </a>
+    </li>
+    <li>
+      <a href="/trafficStatistics">
+          <span class="nav-text">Traffic Statistics</span>
+        </a>
+    </li>
+    <li>
+      <a href="/conversionStatistics">
+          <span class="nav-text">Conversion Statistics</span>
+        </a>
+    </li>
+    <li>
+      <a href="/serverMonitoring">
+          <span class="nav-text">Server Monitoring</span>
+        </a>
+    </li>
+    <li>
+      <a href="/recording">
+          <span class="nav-text">Recording</span>
+        </a>
+    </li>
+  </ul>
+  <!-- sub menu -------------------------------->
+</li>
+<!-- main menu [e] --------------------------------->
+
+
+<!-- main menu [s] --------------------------------->
+<li>
+  <a>
+      <span class="nav-caret">
+        <i class="fa fa-caret-down"></i>
+      </span>
+      <span class="nav-icon">
+        <i class="fa fa-bolt"></i>
+      </span>
+      <span class="nav-text">Spark Test</span>
+    </a>
+  <!-- sub menu -------------------------------->
+  <ul class="nav-sub">
+    <li>
+      <a href="/spark">
+          <span class="nav-text">Spark</span>
+        </a>
+    </li>
+    <li>
+      <a href="/speech">
+          <span class="nav-text">Speech</span>
+        </a>
+    </li>
+  </ul>
+  <!-- sub menu -------------------------------->
+</li>
+<!-- main menu [e] --------------------------------->

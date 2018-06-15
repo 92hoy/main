@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Cisco x Kotech</title>
+    <meta name="description" content="Responsive, Bootstrap, BS4" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Flatkit">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <link rel="apple-touch-icon" href="/static/common/img/logo.svg">
+    <link rel="shortcut icon" sizes="196x196" href="/static/common/img/logo.svg">
+    <link rel="stylesheet" href="/static/common/libs/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="/static/common/libs/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="/static/common/css/app.css" type="text/css" />
+    <link rel="stylesheet" href="/static/common/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="/static/common/css//theme/primary.css" type="text/css" />
+</head>
+
+<body>
+
+  <header class="app-header theme">
+    <div class="navbar navbar-expand-lg" style="height: 56px;">
+      <a class="d-lg-none mx-2" data-toggle="modal" data-target="#aside">
+	    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512"><path d="M80 304h352v16H80zM80 248h352v16H80zM80 192h352v16H80z"/></svg>
+	  </a>
+      <!-- Page title -->
+      <!-- brand -->
+      <a href="/" class="navbar-brand">
+	  		<img style="margin-left: 40px; margin-right: 65px; width:92px; height:40px;" src="/static/common/img/logo_main.png" alt=".">
+	  	</a>
+      <!-- / brand -->
+
+      <ul class="nav flex-row order-lg-2">
+        <div class="nav-fold px-2">
+          <a class="d-flex p-2" href="profile.html">
+				      <span class="avatar w-40 rounded grey hide">J</span>
+				      <img src="/static/common/img/a0.jpg" alt="..." class="w-40 circle">
+				  </a>
+          <div class="hidden-folded flex p-2">
+            <div class="d-flex">
+              <a href="profile.html" class="mr-auto text-nowrap">
+				        안진용
+				        <small class="d-block text-muted">관리자(admin) 권한</small>
+				      </a>
+            </div>
+          </div>
+          <button class="btn btn-fw accent" style="margin-left: 15px;">Logout</button>
+        </div>
+      </ul>
+      <!-- Navbar collapse -->
+      <div class="collapse navbar-collapse  order-lg-1" id="navbarToggler">
+        <ul class="navbar-nav mt-2 mt-lg-0 mx-0 mx-lg-2 flex">
+          <li class="nav-item">
+            <span class="nav-icon">
+            <i class="fa fa-history"></i>
+          </span>
+            <a href="#" class="nav-link" style="width: 150px;">
+	  	      Active Call
+	  	    </a>
+          </li>
+          <li class="nav-item">
+            <span class="nav-icon">
+            <i class="fa fa-random"></i>
+          </span>
+            <a href="#" class="nav-link" style="width: 150px;">
+	  	      Call Status
+	  	    </a>
+          </li>
+          <li class="nav-item">
+            <span class="nav-icon">
+            <i class="fa fa-plug"></i>
+          </span>
+            <a href="#" class="nav-link" style="width: 165px;">
+	  	      System Status
+	  	    </a>
+          </li>
+          <li class="nav-item">
+            <span class="nav-icon">
+            <i class="fa fa-signal"></i>
+          </span>
+            <a href="#" class="nav-link" style="width: 150px;">
+	  	      Network Status
+	  	    </a>
+          </li>
+          <!--
+	  	  <li class="nav-item dropdown">
+	  	    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+	  	      Projects
+	  	    </a>
+	  	      <div class="dropdown-menu dropdown-menu-right mt-2 text-color" role="menu">
+	  	        <a class="dropdown-item">
+	  	        	<i class="fa fa-tag"></i>
+	  	        	Action
+	  	        </a>
+	  	        <a class="dropdown-item">
+	  	        	<i class="fa fa-pencil"></i>
+	  	        	Another action
+	  	        </a>
+	  	        <a class="dropdown-item">
+	  	        	<i class="fa fa-reply"></i>
+	  	        	Something else here
+	  	        </a>
+	  	        <div class="dropdown-divider"></div>
+	  	        <a class="dropdown-item">
+	  	        	<i class="fa fa-ellipsis-h"></i>
+	  	        	Separated link
+	  	        </a>
+	  	      </div>
+	  	  </li>
+        -->
+        </ul>
+        <!--
+	  	<form class="input-group m-2 my-lg-0">
+	  	    <span class="input-group-btn">
+	  	      <button type="button" class="btn no-border no-bg no-shadow"><i class="fa fa-search"></i></button>
+	  	    </span>
+	  	    <input type="text" class="form-control no-border no-bg no-shadow" placeholder="Search projects...">
+	  	</form>
+      -->
+      </div>
+
+    </div>
+  </header>
+
+  <div class="app" id="app">
+    <div id="aside" class="app-aside fade box-shadow-x nav-expand white" aria-hidden="true">
+      <div class="sidenav modal-dialog dk">
+        <div class="navbar d-lg-none">
+          <a href="/" class="navbar-brand">
+		    	<svg viewBox="0 0 24 24" height="28" width="28" xmlns="http://www.w3.org/2000/svg">
+		    	    <path d="M0 0h24v24H0z" fill="none"/>
+		    	    <path d="M19.51 3.08L3.08 19.51c.09.34.27.65.51.9.25.24.56.42.9.51L20.93 4.49c-.19-.69-.73-1.23-1.42-1.41zM11.88 3L3 11.88v2.83L14.71 3h-2.83zM5 3c-1.1 0-2 .9-2 2v2l4-4H5zm14 18c.55 0 1.05-.22 1.41-.59.37-.36.59-.86.59-1.41v-2l-4 4h2zm-9.71 0h2.83L21 12.12V9.29L9.29 21z" fill="#fff" class="fill-theme"/>
+		    	</svg>
+		    	<img src="/static/common/img/logo.png" alt="." class="hide">
+		    	<span class="hidden-folded d-inline">Apply</span>
+		    </a>
+        </div>
+
+        <div class="flex hide-scroll">
+          <div class="scroll">
+            <div class="nav-stacked nav-active-theme" data-nav>
+              <ul class="nav ">
+                <li class="nav-header">
+                  <span class="text-xs hidden-folded">Menu</span>
+                </li>
+
+                <!-- main menu [s] --------------------------------->
+                <li>
+                  <a>
+		                  <span class="nav-caret">
+		                    <i class="fa fa-caret-down"></i>
+		                  </span>
+		                  <span class="nav-icon">
+		                    <i class="fa fa-group"></i>
+		                  </span>
+		                  <span class="nav-text">Conference</span>
+		                </a>
+                  <!-- sub menu -------------------------------->
+                  <ul class="nav-sub">
+                    <li>
+                      <a href="/conferenceRoom">
+		                      <span class="nav-text">Conference Room</span>
+		                    </a>
+                    </li>
+                    <li>
+                      <a href="/activeCall">
+		                      <span class="nav-text">Active Call</span>
+		                    </a>
+                    </li>
+                    <li>
+                      <a href="/template">
+		                      <span class="nav-text">Template</span>
+		                    </a>
+                    </li>
+                    <li>
+                      <a href="/reserveConference">
+		                      <span class="nav-text">Reserve Conference</span>
+		                    </a>
+                    </li>
+                    <!--
+                    <li>
+                      <a href="/reserveConferenceCal">
+		                      <span class="nav-text">Reserve Conference Cal</span>
+		                    </a>
+                    </li>
+                    -->
+                  </ul>
+                  <!-- sub menu -------------------------------->
+                </li>
+                <!-- main menu [e] --------------------------------->
+
+                <!-- main menu [s] --------------------------------->
+                <li>
+                  <a>
+		                  <span class="nav-caret">
+		                    <i class="fa fa-caret-down"></i>
+		                  </span>
+		                  <span class="nav-icon">
+		                    <i class="fa fa-desktop"></i>
+		                  </span>
+		                  <span class="nav-text">Monitoring</span>
+		                </a>
+                  <!-- sub menu -------------------------------->
+                  <ul class="nav-sub">
+                    <li>
+                      <a href="/callStatus">
+		                      <span class="nav-text">Call Status</span>
+		                    </a>
+                    </li>
+                    <li>
+                      <a href="/networkStatus">
+		                      <span class="nav-text">Network Status</span>
+		                    </a>
+                    </li>
+                    <li>
+                      <a href="/systemStatus">
+		                      <span class="nav-text">System Status</span>
+		                    </a>
+                    </li>
+                  </ul>
+                  <!-- sub menu -------------------------------->
+                </li>
+                <!-- main menu [e] --------------------------------->
+
+                <!-- main menu [s] --------------------------------->
+                <li>
+                  <a>
+		                  <span class="nav-caret">
+		                    <i class="fa fa-caret-down"></i>
+		                  </span>
+		                  <span class="nav-icon">
+		                    <i class="fa fa-line-chart"></i>
+		                  </span>
+		                  <span class="nav-text">Statistics</span>
+		                </a>
+                  <!-- sub menu -------------------------------->
+                  <ul class="nav-sub">
+                    <li>
+                      <a href="/roomUseState">
+		                      <span class="nav-text">Room Use State</span>
+		                    </a>
+                    </li>
+                    <li>
+                      <a href="/conferenceStatistics">
+		                      <span class="nav-text">Conference Statistics</span>
+		                    </a>
+                    </li>
+                    <li>
+                      <a href="/periodStatistics">
+		                      <span class="nav-text">Period Statistics</span>
+		                    </a>
+                    </li>
+                  </ul>
+                  <!-- sub menu -------------------------------->
+                </li>
+                <!-- main menu [e] --------------------------------->
+
+                <!-- main menu [s] --------------------------------->
+                <li>
+                  <a>
+		                  <span class="nav-caret">
+		                    <i class="fa fa-caret-down"></i>
+		                  </span>
+		                  <span class="nav-icon">
+		                    <i class="fa fa-tasks"></i>
+		                  </span>
+		                  <span class="nav-text">System</span>
+		                </a>
+                  <!-- sub menu -------------------------------->
+                  <ul class="nav-sub">
+                    <li>
+                      <a href="/cdr">
+		                      <span class="nav-text">CDR</span>
+		                    </a>
+                    </li>
+                    <li>
+                      <a href="/ldap">
+		                      <span class="nav-text">LDAP</span>
+		                    </a>
+                    </li>
+                    <li>
+                      <a href="/account">
+		                      <span class="nav-text">Account</span>
+		                    </a>
+                    </li>
+                    <li>
+                      <a href="/endPoint">
+		                      <span class="nav-text">EndPoint</span>
+		                    </a>
+                    </li>
+                    <li>
+                      <a href="/endPointGroup">
+		                      <span class="nav-text">EndPointGroup</span>
+		                    </a>
+                    </li>
+                    <li>
+                      <a href="/acanoClient">
+		                      <span class="nav-text">Acano Client</span>
+		                    </a>
+                    </li>
+                    <li>
+                      <a href="/logoManagement">
+		                      <span class="nav-text">Logo Management</span>
+		                    </a>
+                    </li>
+                    <li>
+                      <a href="/commandManagement">
+		                      <span class="nav-text">Command Management</span>
+		                    </a>
+                    </li>
+                  </ul>
+                  <!-- sub menu -------------------------------->
+                </li>
+                <!-- main menu [e] --------------------------------->
+
+                <!-- main menu [s] --------------------------------->
+                <li>
+                  <a>
+		                  <span class="nav-caret">
+		                    <i class="fa fa-caret-down"></i>
+		                  </span>
+		                  <span class="nav-icon">
+		                    <i class="fa fa-soundcloud"></i>
+		                  </span>
+		                  <span class="nav-text">Environment</span>
+		                </a>
+                  <!-- sub menu -------------------------------->
+                  <ul class="nav-sub">
+                    <li>
+                      <a href="/environment">
+		                      <span class="nav-text">Environment</span>
+		                    </a>
+                    </li>
+                    <li>
+                      <a href="/license">
+		                      <span class="nav-text">License</span>
+		                    </a>
+                    </li>
+                  </ul>
+                  <!-- sub menu -------------------------------->
+                </li>
+                <!-- main menu [e] --------------------------------->
+
+                <!-- main menu [s] --------------------------------->
+                <li>
+                  <a>
+		                  <span class="nav-caret">
+		                    <i class="fa fa-caret-down"></i>
+		                  </span>
+		                  <span class="nav-icon">
+		                    <i class="fa fa-arrows-alt"></i>
+		                  </span>
+		                  <span class="nav-text">Supplementary Service</span>
+		                </a>
+                  <!-- sub menu -------------------------------->
+                  <ul class="nav-sub">
+                    <li>
+                      <a href="/outBoundDialPlan">
+		                      <span class="nav-text">Outbound Dial Plan</span>
+		                    </a>
+                    </li>
+                  </ul>
+                  <!-- sub menu -------------------------------->
+                </li>
+                <!-- main menu [e] --------------------------------->
+
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- sidenav bottom -->
+        <div class="py-2 mt-2 b-t no-shrink">
+          <ul class="nav no-border">
+            <li>
+              <a href="#">
+						        <span class="nav-icon">
+						          <i class="fa fa-power-off"></i>
+						        </span>
+						        <span class="nav-text">Logout</span>
+						      </a>
+            </li>
+          </ul>
+        </div>
+        <!-- sidenav bottom -->
+      </div>
+    </div>
+
+    <!-- content -->
+    <div class="content-main " id="content-main" style="width:100%">
+    <%block name="containor">
+    </%block>
+    </div>
+    <!-- content -->
+
+
+    <!-- jQuery -->
+    <script src="/static/common/libs/jquery/dist/jquery.min.js"></script>
+    <!--<script src="/static/common/vendor/jquery.js"></script>-->
+
+    <!-- Bootstrap -->
+    <script src="/static/common/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/static/common/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- core -->
+    <script src="/static/common/libs/pace-progress/pace.min.js"></script>
+    <script src="/static/common/libs/pjax/pjax.js"></script>
+    <script src="/static/common/js/lazyload.config.js"></script>
+    <script src="/static/common/js/lazyload.js"></script>
+    <script src="/static/common/js/plugin.js"></script>
+    <script src="/static/common/js/nav.js"></script>
+    <script src="/static/common/js/scrollto.js"></script>
+    <script src="/static/common/js/toggleclass.js"></script>
+    <script src="/static/common/js/theme.js"></script>
+    <script src="/static/common/js/ajax.js"></script>
+    <script src="/static/common/js/app.js"></script>
+    <!-- chat -->
+    <script src="/static/common/libs/list.js/dist/list.js"></script>
+    <script src="/static/common/libs/notie/dist/notie.min.js"></script>
+    <script src="/static/common/js/plugins/notie.js"></script>
+    <script src="/static/common/js/app/chat.js"></script>
+    <!-- mail -->
+    <script src="/static/common/libs/list.js/dist/list.js"></script>
+    <script src="/static/common/libs/notie/dist/notie.min.js"></script>
+    <script src="/static/common/js/plugins/notie.js"></script>
+    <script src="/static/common/js/app/mail.js"></script>
+    <!-- user -->
+    <script src="/static/common/libs/list.js/dist/list.js"></script>
+    <script src="/static/common/libs/notie/dist/notie.min.js"></script>
+    <script src="/static/common/js/plugins/notie.js"></script>
+    <script src="/static/common/js/app/user.js"></script>
+    <!-- screenfull -->
+    <script src="/static/common/libs/screenfull/dist/screenfull.js"></script>
+    <script src="/static/common/js/plugins/screenfull.js"></script>
+    <!-- jscroll -->
+    <script src="/static/common/libs/jscroll/jquery.jscroll.min.js"></script>
+    <!-- stick_in_parent -->
+    <script src="/static/common/libs/sticky-kit/dist/sticky-kit.min.js"></script>
+    <!-- scrollreveal -->
+    <script src="/static/common/libs/scrollreveal/dist/scrollreveal.min.js"></script>
+    <script src="/static/common/js/plugins/jquery.scrollreveal.js"></script>
+    <!-- owlCarousel -->
+    <link rel="stylesheet" href="/static/common/libs/owl.carousel/dist/assets/owl.carousel.min.css" type="text/css" />
+    <link rel="stylesheet" href="/static/common/libs/owl.carousel/dist/assets/owl.theme.default.css" type="text/css" />
+    <script src="/static/common/libs/owl.carousel/dist/owl.carousel.min.js"></script>
+    <!-- html5sortable -->
+    <script src="/static/common/libs/html5sortable/dist/html.sortable.min.js"></script>
+    <script src="/static/common/js/plugins/jquery.html5sortable.js"></script>
+    <script src="/static/common/js/plugins/sortable.js"></script>
+    <!-- easyPieChart -->
+    <script src="/static/common/libs/easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
+    <!-- peity -->
+    <script src="/static/common/libs/peity/jquery.peity.js"></script>
+    <script src="/static/common/js/plugins/jquery.peity.tooltip.js"></script>
+    <!-- chart -->
+    <script src="/static/common/libs/moment/min/moment-with-locales.min.js"></script>
+    <script src="/static/common/libs/chart.js/dist/Chart.min.js"></script>
+    <script src="/static/common/js/plugins/jquery.chart.js"></script>
+    <script src="/static/common/js/plugins/chartjs.js"></script>
+    <!-- dataTable -->
+    <script src="/static/common/libs/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="/static/common/libs/datatables.net-bs4/js/dataTables.bootstrap4.js"></script>
+    <link rel="stylesheet" href="/static/common/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" type="text/css" />
+    <script src="/static/common/js/plugins/datatable.js"></script>
+    <!-- bootstrapTable -->
+    <link rel="stylesheet" href="/static/common/libs/bootstrap-table/dist/bootstrap-table.min.css" type="text/css" />
+    <script src="/static/common/libs/bootstrap-table/dist/bootstrap-table.min.js"></script>
+    <script src="/static/common/libs/bootstrap-table/dist/extensions/export/bootstrap-table-export.min.js"></script>
+    <script src="/static/common/libs/bootstrap-table/dist/extensions/mobile/bootstrap-table-mobile.min.js"></script>
+    <script src="/static/common/js/plugins/tableExport.min.js"></script>
+    <script src="/static/common/js/plugins/bootstrap-table.js"></script>
+    <!-- bootstrapWizard -->
+    <script src="/static/common/libs/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <!-- dropzone -->
+    <script src="/static/common/libs/dropzone/dist/min/dropzone.min.js"></script>
+    <link rel="stylesheet" href="/static/common/libs/dropzone/dist/min/dropzone.min.css" type="text/css" />
+    <!-- datetimepicker -->
+    <link rel="stylesheet" href="/static/common/libs/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css" type="text/css" />
+    <script src="/static/common/libs/moment/min/moment-with-locales.min.js"></script>
+    <script src="/static/common/libs/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="/static/common/js/plugins/datetimepicker.js"></script>
+    <!-- datepicker -->
+    <script src="/static/common/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="/static/common/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" type="text/css" />
+    <!-- fullCalendar -->
+    <script src="/static/common/libs/moment/min/moment-with-locales.min.js"></script>
+    <script src="/static/common/libs/fullcalendar/dist/fullcalendar.min.js"></script>
+    <link rel="stylesheet" href="/static/common/libs/fullcalendar/dist/fullcalendar.min.css" type="text/css" />
+    <script src="/static/common/js/plugins/fullcalendar.js"></script>
+    <!-- parsley -->
+    <script src="/static/common/libs/parsleyjs/dist/parsley.min.js"></script>
+    <!-- select2 -->
+    <link rel="stylesheet" href="/static/common/libs/select2/dist/css/select2.min.css" type="text/css" />
+    <script src="/static/common/libs/select2/dist/js/select2.min.js"></script>
+    <script src="/static/common/js/plugins/select2.js"></script>
+    <!-- summernote -->
+    <link rel="stylesheet" href="/static/common/libs/summernote/dist/summernote.css" type="text/css" />
+    <link rel="stylesheet" href="/static/common/libs/summernote/dist/summernote-bs4.css" type="text/css" />
+    <script src="/static/common/libs/summernote/dist/summernote.min.js"></script>
+    <script src="/static/common/libs/summernote/dist/summernote-bs4.min.js"></script>
+    <!-- vectorMap -->
+    <link rel="stylesheet" href="/static/common/libs/jqvmap/dist/jqvmap.min.css" type="text/css" />
+    <script src="/static/common/libs/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="/static/common/libs/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="/static/common/libs/jqvmap/dist/maps/jquery.vmap.usa.js"></script>
+    <script src="/static/common/libs/jqvmap/dist/maps/jquery.vmap.france.js"></script>
+    <script src="/static/common/js/plugins/jqvmap.js"></script>
+    <!-- waves -->
+    <link rel="stylesheet" href="/static/common/libs/node-waves/dist/waves.min.css" type="text/css" />
+    <script src="/static/common/libs/node-waves/dist/waves.min.js"></script>
+    <script src="/static/common/js/plugins/waves.js"></script>
+
+</body>
+
+</html>
