@@ -1,4 +1,5 @@
 import os
+from django.utils.translation import ugettext_lazy as _
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -23,6 +24,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -42,6 +44,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.core.context_processors.i18n',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -81,8 +84,8 @@ DATABASES = {
         'NAME': 'main',
         'USER': 'admin',
         'PASSWORD': '0000',
-        'HOST': 'db',
-        'PORT': '3306',
+        'HOST': '127.0.0.1',
+        'PORT': '3315',
     }
 }
 
@@ -102,9 +105,24 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 DATABASAE_OPTIONS = {'charset':'utf8'}
-LANGUAGE_CODE = 'ko-kr'
+
+#LANGUAGE_CODE = 'ko-KR'
+#LANGUAGE_CODE = 'en-US'
+#LANGUAGE_CODE = 'en-US'
+
 TIME_ZONE = 'Asia/Seoul'
 AUTHORIZATION = 'Basic YWRtaW46RXRlY2hzeXN0ZW0='
+
+LANGUAGES = [
+    ('ja', _('Japanese')),
+    ('ko', _('Korean')),
+]
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
+
+print(LOCALE_PATHS)
 
 USE_I18N = True
 USE_L10N = True
