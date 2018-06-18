@@ -11,10 +11,7 @@ from backend.djangoapps.common.api.views import api_activeCall
 # 컨퍼런스 목록
 def conferenceRoom(request):
 
-    resDataJson = api_coSpaces()
-
     context = {}
-    context['resDataJson'] = resDataJson
 
     return render(request, 'conference/conferenceRoom.html', context)
 

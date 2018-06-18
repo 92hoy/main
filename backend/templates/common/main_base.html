@@ -139,7 +139,7 @@ from django.utils import translation
                   <!-- sub menu -------------------------------->
                   <ul class="nav-sub">
                     <li>
-                      <a class="hello" href="/conferenceRoom">
+                      <a href="/conferenceRoom">
 		                      <span class="nav-text">Conference Room</span>
 		                    </a>
                     </li>
@@ -408,6 +408,10 @@ from django.utils import translation
     <script src="/static/common/js/theme.js"></script>
     <script src="/static/common/js/ajax.js"></script>
     <script src="/static/common/js/app.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+    <%block name="scriptDown">
+    </%block>
 
     <script>
     $( document ).ready(function() {

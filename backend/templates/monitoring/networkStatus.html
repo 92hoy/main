@@ -14,6 +14,8 @@ from django.utils.translation import ugettext as _
   </div>
 
   <div class="box">
+    <canvas id="myChart" width="400" height="400"></canvas>
+    <!--
     <div class="box-body">
       <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
         <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
@@ -28,6 +30,53 @@ from django.utils.translation import ugettext as _
       <canvas id="chart-line" data-plugin="chart" class="chartjs-render-monitor" style="display: block;">
       </canvas>
     </div>
+    -->
   </div>
 </div>
+</%block>
+
+<%block name="scriptDown">
+<script>
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ["21:00:00", "21:00:15", "21:00:30", "21:00:45"],
+            //label: ["Video egress", "Video ingress", "Audio egress", "Audio ingress"],
+        datasets: [
+          {
+            label: "Video egress",
+            borderColor: "#e8c3b9",
+            fill: false,
+            data: [0, 0, 0, 0]
+          },
+          {
+            label: "Video ingress",
+            borderColor: "#3e95cd",
+            fill: false,
+            data: [0, 0, 0, 0]
+          },
+          {
+            label: "Audio egress",
+            borderColor: "#8e5ea2",
+            fill: false,
+            data: [0, 0, 0, 0]
+          },
+          {
+            label: "Audio ingress",
+            borderColor: "#3cba9f",
+            fill: false,
+            data: [0, 0, 0, 0]
+          },
+        ]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+
+            }]
+        }
+    }
+});
+</script>
 </%block>

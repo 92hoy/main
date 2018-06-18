@@ -17,52 +17,68 @@ from django.utils.translation import ugettext as _
     <table class="table">
       <tbody>
         <tr>
+          <td>host ID</td>
+          <td>${hostId}</td>
+        </tr>
+        <tr>
           <td>softwareVersion</td>
-          <td>2.4(Beta2)</td>
+          <td>${softwareVersion}</td>
         </tr>
         <tr>
           <td>uptimeSeconds</td>
-          <td>2494177</td>
+          <td>${uptimeSeconds}</td>
         </tr>
         <tr>
           <td>cdrTime</td>
-          <td>2018-06-14T23:50:33Z</td>
+          <td>${cdrTime}</td>
         </tr>
         <tr>
           <td>activated</td>
-          <td><span class="badge primary text-u-c">Open</span></td>
+          % if activated == 'true':
+            <td><span class="badge primary text-u-c">Open</span></td>
+          % else:
+            <td><span class="badge grey text-u-c">Closed</span></td>
+          % endif
         </tr>
         <tr>
           <td>clusterEnabled</td>
-          <td><span class="badge grey text-u-c">Closed</span></td>
+          % if clusterEnabled == 'true':
+            <td><span class="badge primary text-u-c">Open</span></td>
+          % else:
+            <td><span class="badge grey text-u-c">Closed</span></td>
+          % endif
+        </tr>
+        <tr>
+          <td>cdrCorrelatorIndex</td>
+          <td>${cdrCorrelatorIndex}</td>
         </tr>
         <tr>
           <td>callLegsActive</td>
-          <td>0</td>
+          <td>${callLegsActive}</td>
         </tr>
         <tr>
           <td>callLegsMaxActive</td>
-          <td>25</td>
+          <td>${callLegsMaxActive}</td>
         </tr>
         <tr>
           <td>callLegsCompleted</td>
-          <td>4914</td>
+          <td>${callLegsCompleted}</td>
         </tr>
         <tr>
           <td>audioBitRateOutgoing</td>
-          <td>0</td>
+          <td>${audioBitRateOutgoing}</td>
         </tr>
         <tr>
           <td>audioBitRateIncoming</td>
-          <td>0</td>
+          <td>${audioBitRateIncoming}</td>
         </tr>
         <tr>
           <td>videoBitRateOutgoing</td>
-          <td>0</td>
+          <td>${videoBitRateOutgoing}</td>
         </tr>
         <tr>
           <td>videoBitRateIncoming</td>
-          <td>0</td>
+          <td>${videoBitRateIncoming}</td>
         </tr>
       </tbody>
     </table>
