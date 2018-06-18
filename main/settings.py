@@ -106,12 +106,12 @@ AUTH_PASSWORD_VALIDATORS = [
 
 DATABASAE_OPTIONS = {'charset':'utf8'}
 
-#LANGUAGE_CODE = 'ko-KR'
-#LANGUAGE_CODE = 'en-US'
-#LANGUAGE_CODE = 'en-US'
-
-TIME_ZONE = 'Asia/Seoul'
 AUTHORIZATION = 'Basic YWRtaW46RXRlY2hzeXN0ZW0='
+
+#ja = 일본어
+#ko = 한국어
+#en = 영어
+DEFAULT_LANG = 'en'
 
 LANGUAGES = [
     ('ja', _('Japanese')),
@@ -127,6 +127,8 @@ print(LOCALE_PATHS)
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+
+TIME_ZONE = 'Asia/Seoul'
 
 STATIC_ROOT = BASE_DIR + '/static/'
 STATIC_URL = '/static/'

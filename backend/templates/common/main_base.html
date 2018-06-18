@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<%!
+from django.utils import translation
+%>
+
 <html lang="en">
 
 <head>
@@ -37,6 +41,7 @@
       <div class="collapse navbar-collapse  order-lg-1" id="navbarToggler">
 
         <ul class="nav flex-row order-lg-2">
+
           <div class="nav-fold px-2">
             <div class="d-flex p-2">
                 <span class="avatar w-40 rounded grey hide">J</span>
@@ -50,6 +55,17 @@
                 </div>
               </div>
             </div>
+
+            <div class="btn-group" style="padding-top: 10px; padding-bottom: 10px; margin-left: 10px;">
+            <button class="btn warn">언어</button>
+            <button class="btn warn dropdown-toggle" data-toggle="dropdown" aria-expanded="false"></button>
+            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(154px, 33px, 0px); top: 10px; left: -150px; width:30px; will-change: transform;">
+              <a class="dropdown-item" id="transLangEN">영어</a>
+              <a class="dropdown-item" id="transLangKO">한국어</a>
+              <a class="dropdown-item" id="transLangJP">일본어</a>
+            </div>
+            </div>
+
             <button
               class="btn btn-fw accent"
               style="margin-left: 15px;"
@@ -360,6 +376,8 @@
 
     </div>
 
+    <div class="hidden_csrftoken" style="display:none">${ csrf_token }</div>
+
     <script src="/static/common/libs/jquery/dist/jquery.min.js"></script>
 
     <script>
@@ -390,6 +408,57 @@
     <script src="/static/common/js/theme.js"></script>
     <script src="/static/common/js/ajax.js"></script>
     <script src="/static/common/js/app.js"></script>
+
+    <script>
+    $( document ).ready(function() {
+      var hidden_csrftoken = $('.hidden_csrftoken').text();
+      var langCode = '${request.session[translation.LANGUAGE_SESSION_KEY]}';
+
+      if(langCode == 'en'){
+          $('#transLangEN').css("background-color","#d2c6f4");
+          $('#transLangKO').css("background-color","#ffffff");
+          $('#transLangJP').css("background-color","#ffffff");
+      }
+      else if(langCode == 'ko'){
+          $('#transLangEN').css("background-color","#ffffff");
+          $('#transLangKO').css("background-color","#d2c6f4");
+          $('#transLangJP').css("background-color","#ffffff");
+      }
+      else if(langCode == 'ja'){
+          $('#transLangEN').css("background-color","#ffffff");
+          $('#transLangKO').css("background-color","#ffffff");
+          $('#transLangJP').css("background-color","#d2c6f4");
+      }
+
+      $( "#transLangEN" ).click(function() {
+        $.post( "/transLangEN", {
+           csrfmiddlewaretoken: hidden_csrftoken
+         })
+        .done(function( data ) {
+          location.reload();
+        });
+      });
+
+      $( "#transLangKO" ).click(function() {
+        $.post( "/transLangKO", {
+           csrfmiddlewaretoken: hidden_csrftoken
+         })
+        .done(function( data ) {
+          location.reload();
+        });
+      });
+
+      $( "#transLangJP" ).click(function() {
+        $.post( "/transLangJP", {
+           csrfmiddlewaretoken: hidden_csrftoken
+         })
+        .done(function( data ) {
+          location.reload();
+        });
+      });
+    });
+
+    </script>
 
 </body>
 

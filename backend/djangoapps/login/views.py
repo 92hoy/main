@@ -4,17 +4,15 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_protect
 from django.db import connections
-#from django.utils import translation
-#from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext as _
+from django.conf import settings
+from django.utils import translation
 
 def login(request):
 
-    from django.conf import settings
-    print(settings.LANGUAGE_CODE)
-
-    print(_('helloworld'))
-    print(_('good day'))
+    userLanguage = settings.DEFAULT_LANG
+    request.session[translation.LANGUAGE_SESSION_KEY] = userLanguage
+    translation.activate(userLanguage)
 
     if request.is_ajax():
 

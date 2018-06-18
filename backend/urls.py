@@ -27,6 +27,7 @@ from .djangoapps.environment import views as EnvironmentViews
 from .djangoapps.supplementaryService import views as SupplementaryServiceViews
 from .djangoapps.streamService import views as StreamServiceViews
 from .djangoapps.sparkTest import views as SparkTestViews
+from .djangoapps.common.lang import views as LangViews
 
 schema_view = get_swagger_view(title='happy API')
 
@@ -45,6 +46,11 @@ urlpatterns = [
     url('apiTest$', SampleViews.apiTest, name='apiTest'),
     url('vuejs$', SampleViews.vuejs, name='vuejs'),
     url('vueService$', SampleViews.vueService, name='vueService'),
+
+    # Lang API
+    url('transLangEN$', LangViews.transLangEN, name='transLangEN'),
+    url('transLangKO$', LangViews.transLangKO, name='transLangKO'),
+    url('transLangJP$', LangViews.transLangJP, name='transLangJP'),
 
     # login / logout
     url('login$', LoginViews.login, name='login'),
