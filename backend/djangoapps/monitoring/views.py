@@ -19,10 +19,17 @@ def callStatus(request):
 # 네트워크 상태
 def networkStatus(request):
 
-    #resDataJson = api_coSpaces()
+    resDataJson = api_mornitoringStatus()
+
+    if request.is_ajax():
+        context = {}
+        context['audioBitRateOutgoing'] = resDataJson['status']['audioBitRateOutgoing']
+        context['audioBitRateIncoming'] = resDataJson['status']['audioBitRateIncoming']
+        context['videoBitRateOutgoing'] = resDataJson['status']['videoBitRateOutgoing']
+        context['videoBitRateIncoming'] = resDataJson['status']['videoBitRateIncoming']
+        return JsonResponse(context)
 
     context = {}
-    #context['resDataJson'] = resDataJson
 
     return render(request, 'monitoring/networkStatus.html', context)
 

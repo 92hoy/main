@@ -14,69 +14,148 @@ from django.utils.translation import ugettext as _
   </div>
 
   <div class="box">
-    <canvas id="myChart" width="400" height="400"></canvas>
-    <!--
-    <div class="box-body">
-      <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
-        <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-          <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0">
-          </div>
-        </div>
-        <div class="chartjs-size-monitor-shrink"   style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-          <div style="position:absolute;width:200%;height:200%;left:0; top:0">
-          </div>
-        </div>
-      </div>
-      <canvas id="chart-line" data-plugin="chart" class="chartjs-render-monitor" style="display: block;">
-      </canvas>
-    </div>
-    -->
+    <canvas id="myChart"></canvas>
   </div>
 </div>
 </%block>
 
 <%block name="scriptDown">
 <script>
+
+var init = new Date();
+var initTime = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
+
+init.setTime(init.getTime() - 10000);
+var initTimeMinus10 = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
+
+init.setTime(init.getTime() - 10000);
+var initTimeMinus20 = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
+
+init.setTime(init.getTime() - 10000);
+var initTimeMinus30 = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
+
+var queue = [ initTimeMinus30, initTimeMinus20, initTimeMinus10, initTime ]
+var audioBitRateOutgoing = [0,0,0,0]
+var audioBitRateIncoming = [0,0,0,0]
+var videoBitRateOutgoing = [0,0,0,0]
+var videoBitRateIncoming = [0,0,0,0]
+
+function syncChart() {
+    setInterval(function(){
+       var d = new Date();
+       var currTime = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
+
+       d.setTime(d.getTime() - 10000);
+       var currTimeMinus10 = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
+
+       d.setTime(d.getTime() - 10000);
+       var currTimeMinus20 = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
+
+       d.setTime(d.getTime() - 10000);
+       var currTimeMinus30 = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
+
+       queue.push(currTime);
+       queue.shift();
+
+       $.get( "/networkStatus", {
+          //...
+        })
+        .done(function( context ) {
+          //audioBitRateOutgoing.push(Number(context['audioBitRateOutgoing']))
+          audioBitRateOutgoing.push(3)
+          audioBitRateIncoming.push(Number(context['audioBitRateIncoming']))
+          videoBitRateOutgoing.push(Number(context['videoBitRateOutgoing']))
+          videoBitRateIncoming.push(Number(context['videoBitRateIncoming']))
+
+          audioBitRateOutgoing.shift();
+          audioBitRateIncoming.shift();
+          videoBitRateOutgoing.shift();
+          videoBitRateIncoming.shift();
+
+          /*
+          console.log(queue);
+          console.log(audioBitRateOutgoing);
+          console.log(audioBitRateIncoming);
+          console.log(videoBitRateOutgoing);
+          console.log(videoBitRateIncoming);
+          */
+
+          var dataSet = [
+              {
+                label: "videoBitRateOutgoing",
+                borderColor: "#e8c3b9",
+                fill: false,
+                data: videoBitRateOutgoing
+              },
+              {
+                label: "videoBitRateIncoming",
+                borderColor: "#3e95cd",
+                fill: false,
+                data: videoBitRateIncoming
+              },
+              {
+                label: "audioBitRateOutgoing",
+                borderColor: "#8e5ea2",
+                fill: false,
+                data: audioBitRateOutgoing
+              },
+              {
+                label: "audioBitRateIncoming",
+                borderColor: "#3cba9f",
+                fill: false,
+                data: audioBitRateIncoming
+              }
+          ];
+
+          var ctx = document.getElementById("myChart").getContext('2d');
+          var myChart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                  labels: queue,
+                  datasets: dataSet
+              }
+          });
+
+        });
+     }, 10000);
+}
+
+syncChart();
+
 var ctx = document.getElementById("myChart").getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: ["21:00:00", "21:00:15", "21:00:30", "21:00:45"],
+        labels: queue,
             //label: ["Video egress", "Video ingress", "Audio egress", "Audio ingress"],
         datasets: [
           {
-            label: "Video egress",
+            label: "videoBitRateOutgoing",
             borderColor: "#e8c3b9",
             fill: false,
             data: [0, 0, 0, 0]
           },
           {
-            label: "Video ingress",
+            label: "videoBitRateIncoming",
             borderColor: "#3e95cd",
             fill: false,
             data: [0, 0, 0, 0]
           },
           {
-            label: "Audio egress",
+            label: "audioBitRateOutgoing",
             borderColor: "#8e5ea2",
             fill: false,
             data: [0, 0, 0, 0]
           },
           {
-            label: "Audio ingress",
+            label: "audioBitRateIncoming",
             borderColor: "#3cba9f",
             fill: false,
             data: [0, 0, 0, 0]
           },
         ]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-
-            }]
-        }
     }
 });
+
 </script>
 </%block>
