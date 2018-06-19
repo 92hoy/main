@@ -52,9 +52,7 @@ urlpatterns = [
     url('commList$', BoardViews.commList, name='commList'),
 
     # Lang API
-    url('transLangEN$', LangViews.transLangEN, name='transLangEN'),
-    url('transLangKO$', LangViews.transLangKO, name='transLangKO'),
-    url('transLangJP$', LangViews.transLangJP, name='transLangJP'),
+    url('transLang$', LangViews.transLang, name='transLang'),
 
     # login / logout
     url('login$', LoginViews.login, name='login'),

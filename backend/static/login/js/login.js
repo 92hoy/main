@@ -1,5 +1,26 @@
 $( document ).ready(function() {
-  $( ".login100-form-btn" ).click(function() {
+
+  $("input[name=idBox]").keydown(function (key) {
+    if(key.keyCode == 13){
+        loginClick();
+    }
+  });
+
+  $("input[name=pwBox]").keydown(function (key) {
+    if(key.keyCode == 13){
+        loginClick();
+    }
+  });
+
+  login();
+
+  function login(){
+    $( ".login100-form-btn" ).click(function() {
+      loginClick();
+    });
+  }
+
+  function loginClick(){
     var inputId = $('#inputId').val();
     var inputPw = $('#inputPw').val();
     var hidden_csrftoken = $('.hidden_csrftoken').text();
@@ -17,9 +38,21 @@ $( document ).ready(function() {
       if(data.result == 'success'){
         $(location).attr('href', '/')
       }
+      else if(data.result == 'error0'){
+        $('.info').show();
+        $('.info').text('아이디와 비밀번호를 입력해주세요');
+      }
+      else if(data.result == 'error1'){
+        $('.info').show();
+        $('.info').text('아이디가 존재하지 않습니다');
+      }
+      else if(data.result == 'error2'){
+        $('.info').show();
+        $('.info').text('비밀번호가 일치하지 않습니다');
+      }
       else{
-        alert("error");
+        alert("알 수 없는 오류");
       }
     });
-  });
+  }
 });

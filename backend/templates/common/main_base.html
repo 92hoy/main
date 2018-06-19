@@ -45,13 +45,30 @@ from django.utils import translation
           <div class="nav-fold px-2">
             <div class="d-flex p-2">
                 <span class="avatar w-40 rounded grey hide">J</span>
-                <img src="/static/common/img/a0.jpg" alt="..." class="w-40 circle">
+                % if request.session['user_role'] == 'S':
+                  <img src="/static/common/img/a0.jpg" alt="..." class="w-40 circle">
+                % elif request.session['user_role'] == 'A':
+                  <img src="/static/common/img/a1.jpg" alt="..." class="w-40 circle">
+                % elif request.session['user_role'] == 'M':
+                  <img src="/static/common/img/a2.jpg" alt="..." class="w-40 circle">
+                % elif request.session['user_role'] == 'U':
+                  <img src="/static/common/img/a3.jpg" alt="..." class="w-40 circle">
+                % endif
+
             </div>
             <div class="hidden-folded flex p-2">
               <div class="d-flex">
                 <div class="mr-auto text-nowrap">
-                  안진용
-                  <small class="d-block text-muted">관리자(admin) 권한</small>
+                  ${request.session['user_name']}
+                  % if request.session['user_role'] == 'S':
+                    <small class="d-block text-muted">System Admin</small>
+                  % elif request.session['user_role'] == 'A':
+                    <small class="d-block text-muted">Admin</small>
+                  % elif request.session['user_role'] == 'M':
+                    <small class="d-block text-muted">Monitoring</small>
+                  % elif request.session['user_role'] == 'U':
+                    <small class="d-block text-muted">User</small>
+                  % endif
                 </div>
               </div>
             </div>
@@ -435,8 +452,9 @@ from django.utils import translation
       }
 
       $( "#transLangEN" ).click(function() {
-        $.post( "/transLangEN", {
-           csrfmiddlewaretoken: hidden_csrftoken
+        $.post( "/transLang", {
+           csrfmiddlewaretoken: hidden_csrftoken,
+           lang: 'en'
          })
         .done(function( data ) {
           location.reload();
@@ -444,8 +462,9 @@ from django.utils import translation
       });
 
       $( "#transLangKO" ).click(function() {
-        $.post( "/transLangKO", {
-           csrfmiddlewaretoken: hidden_csrftoken
+        $.post( "/transLang", {
+           csrfmiddlewaretoken: hidden_csrftoken,
+           lang: 'ko'
          })
         .done(function( data ) {
           location.reload();
@@ -453,8 +472,9 @@ from django.utils import translation
       });
 
       $( "#transLangJP" ).click(function() {
-        $.post( "/transLangJP", {
-           csrfmiddlewaretoken: hidden_csrftoken
+        $.post( "/transLang", {
+           csrfmiddlewaretoken: hidden_csrftoken,
+           lang: 'ja'
          })
         .done(function( data ) {
           location.reload();

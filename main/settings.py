@@ -81,11 +81,11 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'main',
-        'USER': 'admin',
-        'PASSWORD': '0000',
-        'HOST': '127.0.0.1',
-        'PORT': '3315',
+        'NAME': 'kotech_cisco_cms',
+        'USER': 'cmsuser',
+        'PASSWORD': 'cmsuser',
+        'HOST': '182.237.86.248',
+        'PORT': '3306',
     }
 }
 

@@ -359,3 +359,11 @@ iframe {
 .login100-form-btn:hover {
   background-color: #403866;
 }
+
+.info{
+  color: red;
+  font-size: 80%;
+  margin-top:10px;
+  float:right;
+  display: none;
+}
