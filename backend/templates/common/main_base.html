@@ -77,9 +77,9 @@ from django.utils import translation
             <button class="btn warn">Language</button>
             <button class="btn warn dropdown-toggle" data-toggle="dropdown" aria-expanded="false"></button>
             <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(154px, 33px, 0px); top: 10px; left: -150px; width:30px; will-change: transform;">
-              <a class="dropdown-item" id="transLangEN">영어</a>
-              <a class="dropdown-item" id="transLangKO">한국어</a>
-              <a class="dropdown-item" id="transLangJP">일본어</a>
+              <a class="dropdown-item" id="transLangEN">English</a>
+              <a class="dropdown-item" id="transLangKO">Korean</a>
+              <a class="dropdown-item" id="transLangJP">Japanese</a>
             </div>
             </div>
 
@@ -156,22 +156,26 @@ from django.utils import translation
                   <!-- sub menu -------------------------------->
                   <ul class="nav-sub">
                     <li>
-                      <a href="/conferenceRoom">
+                      <!--<a href="/conferenceRoom">-->
+                        <a href="javascript:window.location.href = '/conferenceRoom';">
 		                      <span class="nav-text">Conference Room</span>
 		                    </a>
                     </li>
                     <li>
-                      <a href="/activeCall">
+                      <!--<a href="/activeCall">-->
+                        <a href="javascript:window.location.href = '/activeCall';">
 		                      <span class="nav-text">Active Call</span>
 		                    </a>
                     </li>
                     <li>
-                      <a href="/template">
+                      <!--<a href="/template">-->
+                        <a href="javascript:window.location.href = '/template';">
 		                      <span class="nav-text">Template</span>
 		                    </a>
                     </li>
                     <li>
-                      <a href="/reserveConference">
+                      <!--<a href="/reserveConference">-->
+                        <a href="javascript:window.location.href = '/reserveConference';">
 		                      <span class="nav-text">Reserve Conference</span>
 		                    </a>
                     </li>
@@ -201,17 +205,20 @@ from django.utils import translation
                   <!-- sub menu -------------------------------->
                   <ul class="nav-sub">
                     <li>
-                      <a href="/callStatus">
+                      <!--<a href="/callStatus">-->
+                        <a href="javascript:window.location.href = '/callStatus';">
 		                      <span class="nav-text">Call Status</span>
 		                    </a>
                     </li>
                     <li>
-                      <a href="/networkStatus">
+                      <!--<a href="/networkStatus">-->
+                        <a href="javascript:window.location.href = '/networkStatus';">
 		                      <span class="nav-text">Network Status</span>
 		                    </a>
                     </li>
                     <li>
-                      <a href="/systemStatus">
+                      <!--<a href="/systemStatus">-->
+                        <a href="javascript:window.location.href = '/systemStatus';">
 		                      <span class="nav-text">System Status</span>
 		                    </a>
                     </li>
@@ -234,17 +241,20 @@ from django.utils import translation
                   <!-- sub menu -------------------------------->
                   <ul class="nav-sub">
                     <li>
-                      <a href="/roomUseState">
+                      <!--<a href="/roomUseState">-->
+                        <a href="javascript:window.location.href = '/roomUseState';">
 		                      <span class="nav-text">Room Use State</span>
 		                    </a>
                     </li>
                     <li>
-                      <a href="/conferenceStatistics">
+                      <!--<a href="/conferenceStatistics">-->
+                        <a href="javascript:window.location.href = '/conferenceStatistics';">
 		                      <span class="nav-text">Conference Statistics</span>
 		                    </a>
                     </li>
                     <li>
-                      <a href="/periodStatistics">
+                      <!--<a href="/periodStatistics">-->
+                        <a href="javascript:window.location.href = '/periodStatistics';">
 		                      <span class="nav-text">Period Statistics</span>
 		                    </a>
                     </li>
@@ -267,42 +277,50 @@ from django.utils import translation
                   <!-- sub menu -------------------------------->
                   <ul class="nav-sub">
                     <li>
-                      <a href="/cdr">
+                      <!--<a href="/cdr">-->
+                        <a href="javascript:window.location.href = '/cdr';">
 		                      <span class="nav-text">CDR</span>
 		                    </a>
                     </li>
                     <li>
-                      <a href="/ldap">
+                      <!--<a href="/ldap">-->
+                        <a href="javascript:window.location.href = '/ldap';">
 		                      <span class="nav-text">LDAP</span>
 		                    </a>
                     </li>
                     <li>
-                      <a href="/account">
+                      <!--<a href="/account">-->
+                        <a href="javascript:window.location.href = '/account';">
 		                      <span class="nav-text">Account</span>
 		                    </a>
                     </li>
                     <li>
-                      <a href="/endPoint">
+                      <!--<a href="/endPoint">-->
+                        <a href="javascript:window.location.href = '/endPoint';">
 		                      <span class="nav-text">EndPoint</span>
 		                    </a>
                     </li>
                     <li>
-                      <a href="/endPointGroup">
+                      <!--<a href="/endPointGroup">-->
+                        <a href="javascript:window.location.href = '/endPointGroup';">
 		                      <span class="nav-text">EndPointGroup</span>
 		                    </a>
                     </li>
                     <li>
-                      <a href="/acanoClient">
+                      <!--<a href="/acanoClient">-->
+                        <a href="javascript:window.location.href = '/acanoClient';">
 		                      <span class="nav-text">Acano Client</span>
 		                    </a>
                     </li>
                     <li>
-                      <a href="/logoManagement">
+                      <!--<a href="/logoManagement">-->
+                        <a href="javascript:window.location.href = '/logoManagement';">
 		                      <span class="nav-text">Logo Management</span>
 		                    </a>
                     </li>
                     <li>
-                      <a href="/commandManagement">
+                      <!--<a href="/commandManagement">-->
+                        <a href="javascript:window.location.href = '/commandManagement';">
 		                      <span class="nav-text">Command Management</span>
 		                    </a>
                     </li>
@@ -325,13 +343,9 @@ from django.utils import translation
                   <!-- sub menu -------------------------------->
                   <ul class="nav-sub">
                     <li>
-                      <a href="/environment">
+                      <!--<a href="/environment">-->
+                        <a href="javascript:window.location.href = '/environment';">
 		                      <span class="nav-text">Environment</span>
-		                    </a>
-                    </li>
-                    <li>
-                      <a href="/license">
-		                      <span class="nav-text">License</span>
 		                    </a>
                     </li>
                   </ul>
@@ -353,7 +367,8 @@ from django.utils import translation
                   <!-- sub menu -------------------------------->
                   <ul class="nav-sub">
                     <li>
-                      <a href="/outBoundDialPlan">
+                      <!--<a href="/outBoundDialPlan">-->
+                        <a href="javascript:window.location.href = '/outBoundDialPlan';">
 		                      <span class="nav-text">Outbound Dial Plan</span>
 		                    </a>
                     </li>
