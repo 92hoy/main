@@ -10,8 +10,8 @@
 .btn.b-theme:focus,
 .pace .pace-progress,
 .theme {
-  color: rgba(255, 255, 255, 0.85) !important;
-  background-color: #53a6fa !important; }
+  color: rgba(255, 255, 255, 1.0) !important;
+  background-color: #b4a8d9 !important; }
 
 .b-theme,
 .nav-border,
@@ -21,7 +21,7 @@ nav.nav-border {
 .btn.theme-accent,
 .btn.b-theme-accent:hover,
 .btn.b-theme-accent:focus {
-  color: rgba(255, 255, 255, 0.85) !important;
+  color: rgba(255, 255, 255) !important;
   background-color: #22b66e !important; }
 
 .theme-accent {
