@@ -1,0 +1,37 @@
+{
+	"api":{
+		"ipAddress":"1.214.62.162",
+		"port":"37777",
+		"useHttps":"true",
+		"userName":"comtec",
+		"password":"fKtXaGBg+yqaloSHDEtX1Q==",
+		"ipAddress1":"1.214.62.162",
+		"port1":"37777",
+		"useHttps1":"true",
+		"ldapAddress":null,
+		"ldapPort":null,
+		"domainName":null
+	},
+	"account":{
+		"defaultTimeZone":"Asia/Seoul",
+		"cmsAdminUrl":"https://1.24.62.162:37777",
+		"jitter":"10",
+		"packetLoss":"10",
+		"userName":"admin",
+		"password":"0+E3cpblUK35i4hDOEpYiQ==",
+		"uiTemplate":"ovotemplate",
+		"cisocoSparkId":"",
+		"cloudWebExSiteName":"",
+		"cloudWebExId":"",
+		"cloudWebExPwd":""
+	},
+	"callcommand":{
+		"txVideoMute":"true",
+		"rxVideoMute":"true",
+		"txAudioMute":"true",
+		"rxAudioMute":"true",
+		"presentationContributionAllowed":"true",
+		"presentationViewingAllowed":"true",
+		"videoMode":"false"
+	}
+}
