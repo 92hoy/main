@@ -29,35 +29,43 @@ from django.utils.translation import ugettext as _
       <tbody>
         <tr>
           <td class="environment">API Server</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
+          <td><input type="text" class="form-control" id="example" value="${api_ipAddress}"></td>
         </tr>
         <tr>
           <td class="environment">API PORT</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
+          <td><input type="text" class="form-control" id="example" value="${api_port}"></td>
         </tr>
         <tr>
           <td class="environment">use HTTPS</td>
-          <td><input type="checkbox"></td>
+          % if api_useHttps == 'true':
+            <td><input type="checkbox" checked></td>
+          % else:
+            <td><input type="checkbox"></td>
+          % endif
         </tr>
         <tr>
           <td class="environment">API User Name</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
+          <td><input type="text" class="form-control" id="example" value="${api_userName}"></td>
         </tr>
         <tr>
           <td class="environment">API Password</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
+          <td><input type="password" class="form-control" id="example" value="${api_password}"></td>
         </tr>
         <tr>
           <td class="environment">API Server for Call Bridge</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
+          <td><input type="text" class="form-control" id="example" value="${api_ipAddress1}"></td>
         </tr>
         <tr>
           <td class="environment">API PORT for Call Bridge</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
+          <td><input type="text" class="form-control" id="example" value="${api_port1}"></td>
         </tr>
         <tr>
           <td class="environment">use HTTPS for Call Bridge</td>
-          <td><input type="checkbox"></td>
+          % if api_useHttps1 == 'true':
+            <td><input type="checkbox" checked></td>
+          % else:
+            <td><input type="checkbox"></td>
+          % endif
         </tr>
       </tbody>
     </table>
@@ -71,47 +79,39 @@ from django.utils.translation import ugettext as _
       <tbody>
         <tr>
           <td class="environment">Time Zone</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
+          <td><input type="text" class="form-control" id="example" value="${account_defaultTimeZone}"></td>
         </tr>
         <tr>
           <td class="environment">CISCO CMS URL</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
+          <td><input type="text" class="form-control" id="example" value="${account_cmsAdminUrl}"></td>
         </tr>
         <tr>
           <td class="environment">Jitter Alert (over)</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
+          <td><input type="text" class="form-control" id="example" value="${account_jitter}"></td>
         </tr>
         <tr>
           <td class="environment">PacketLoss Alert (over)</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
-        </tr>
-        <tr>
-          <td class="environment">Main Logo</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
-        </tr>
-        <tr>
-          <td class="environment">Login Logo</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
+          <td><input type="text" class="form-control" id="example" value="${account_packetLoss}"></td>
         </tr>
         <tr>
           <td class="environment">Administrator Cisco Spark ID</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
+          <td><input type="text" class="form-control" id="example" value="${account_cisocoSparkId}"></td>
         </tr>
         <tr>
           <td class="environment">WebEx Site Name</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
+          <td><input type="text" class="form-control" id="example" value="${account_cloudWebExSiteName}"></td>
         </tr>
         <tr>
           <td class="environment">WebEx ID</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
+          <td><input type="text" class="form-control" id="example" value="${account_cloudWebExId}"></td>
         </tr>
         <tr>
           <td class="environment">WebEx Password</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
+          <td><input type="text" class="form-control" id="example" value="${account_cloudWebExPwd}"></td>
         </tr>
         <tr>
           <td class="environment">UI Template</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
+          <td><input type="text" class="form-control" id="example" value="${account_uiTemplate}"></td>
         </tr>
       </tbody>
     </table>
