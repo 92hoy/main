@@ -5,14 +5,23 @@ from django.views.decorators.csrf import csrf_protect
 from django.db import connections
 
 from backend.djangoapps.common.api.views import api_mornitoringStatus
+from backend.djangoapps.common.api.views import api_activeCall
 
 # 호출 상태
 def callStatus(request):
 
-    #resDataJson = api_coSpaces()
+    #resDataJson_c = api_coSpaces()
+    resDataJson = api_mornitoringStatus()
+    resDataJson2 = api_activeCall()
 
+    if request.is_ajax():
+        context = {}
+        context['call_total'] = resDataJson2['calls']['@total']
+        context['callLegsActive'] = resDataJson['status']['callLegsActive']
+        context['callLegsMaxActive'] = resDataJson['status']['callLegsMaxActive']
+        context['videoBitRateIncoming'] = resDataJson['status']['videoBitRateIncoming']
+        return JsonResponse(context)
     context = {}
-    #context['resDataJson'] = resDataJson
 
     return render(request, 'monitoring/callStatus.html', context)
 

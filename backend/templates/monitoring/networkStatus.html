@@ -6,156 +6,139 @@ from django.utils.translation import ugettext as _
 
 <%block name="containor">
 <div class="padding">
-  <div class="box">
-    <div class="box-header">
-      <h2>NETWORK STATUS</h2>
-      <small>NETWORK STATUS</small>
+    <div class="box">
+        <div class="box-header">
+            <h2>NETWORK STATUS</h2>
+            <small>NETWORK STATUS</small>
+        </div>
     </div>
-  </div>
 
-  <div class="box">
-    <canvas id="myChart"></canvas>
-  </div>
+    <div class="box">
+        <canvas id="myChart"></canvas>
+    </div>
 </div>
 </%block>
 
 <%block name="scriptDown">
 <script>
+    var init = new Date();
+    var initTime = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
 
-var init = new Date();
-var initTime = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
+    init.setTime(init.getTime() - 10000);
+    var initTimeMinus10 = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
 
-init.setTime(init.getTime() - 10000);
-var initTimeMinus10 = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
+    init.setTime(init.getTime() - 10000);
+    var initTimeMinus20 = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
 
-init.setTime(init.getTime() - 10000);
-var initTimeMinus20 = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
+    init.setTime(init.getTime() - 10000);
+    var initTimeMinus30 = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
 
-init.setTime(init.getTime() - 10000);
-var initTimeMinus30 = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
+    var queue = [initTimeMinus30, initTimeMinus20, initTimeMinus10, initTime]
 
-var queue = [ initTimeMinus30, initTimeMinus20, initTimeMinus10, initTime ]
-var audioBitRateOutgoing = [0,0,0,0]
-var audioBitRateIncoming = [0,0,0,0]
-var videoBitRateOutgoing = [0,0,0,0]
-var videoBitRateIncoming = [0,0,0,0]
+    $(document).ready(function() {
 
-function syncChart() {
-    setInterval(function(){
-       var d = new Date();
-       var currTime = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
-
-       d.setTime(d.getTime() - 10000);
-       var currTimeMinus10 = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
-
-       d.setTime(d.getTime() - 10000);
-       var currTimeMinus20 = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
-
-       d.setTime(d.getTime() - 10000);
-       var currTimeMinus30 = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
-
-       queue.push(currTime);
-       queue.shift();
-
-       $.get( "/networkStatus", {
-          //...
-        })
-        .done(function( context ) {
-          //audioBitRateOutgoing.push(Number(context['audioBitRateOutgoing']))
-          audioBitRateOutgoing.push(3)
-          audioBitRateIncoming.push(Number(context['audioBitRateIncoming']))
-          videoBitRateOutgoing.push(Number(context['videoBitRateOutgoing']))
-          videoBitRateIncoming.push(Number(context['videoBitRateIncoming']))
-
-          audioBitRateOutgoing.shift();
-          audioBitRateIncoming.shift();
-          videoBitRateOutgoing.shift();
-          videoBitRateIncoming.shift();
-
-          /*
-          console.log(queue);
-          console.log(audioBitRateOutgoing);
-          console.log(audioBitRateIncoming);
-          console.log(videoBitRateOutgoing);
-          console.log(videoBitRateIncoming);
-          */
-
-          var dataSet = [
-              {
+        var audioBitRateOutgoing = [0, 0, 0, 0]
+        var audioBitRateIncoming = [0, 0, 0, 0]
+        var videoBitRateOutgoing = [0, 0, 0, 0]
+        var videoBitRateIncoming = [0, 0, 0, 0]
+        var dataSet = [
+            {
                 label: "videoBitRateOutgoing",
                 borderColor: "#e8c3b9",
                 fill: false,
                 data: videoBitRateOutgoing
-              },
-              {
+            },
+            {
                 label: "videoBitRateIncoming",
                 borderColor: "#3e95cd",
                 fill: false,
                 data: videoBitRateIncoming
-              },
-              {
+            },
+            {
                 label: "audioBitRateOutgoing",
                 borderColor: "#8e5ea2",
                 fill: false,
                 data: audioBitRateOutgoing
-              },
-              {
+            },
+            {
                 label: "audioBitRateIncoming",
                 borderColor: "#3cba9f",
                 fill: false,
                 data: audioBitRateIncoming
-              }
-          ];
+            }
+        ];
+        function syncChart() {
+            setInterval(function(){
 
-          var ctx = document.getElementById("myChart").getContext('2d');
-          var myChart = new Chart(ctx, {
-              type: 'line',
-              data: {
-                  labels: queue,
-                  datasets: dataSet
-              }
-          });
+                var d = new Date();
+                var currTime = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
 
-        });
-     }, 10000);
-}
+                queue.push(currTime);
+                queue.shift();
 
-syncChart();
+                $.get( "/networkStatus", {
+                        //...
+                    })
+                    .done(function( context ) {
 
-var ctx = document.getElementById("myChart").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
+                        audioBitRateOutgoing.push(Number(context['audioBitRateOutgoing']));
+                        audioBitRateIncoming.push(Number(context['audioBitRateIncoming']));
+                        videoBitRateOutgoing.push(Number(context['videoBitRateOutgoing']));
+                        videoBitRateIncoming.push(Number(context['videoBitRateIncoming']));
+
+                        audioBitRateOutgoing.shift();
+                        audioBitRateIncoming.shift();
+                        videoBitRateOutgoing.shift();
+                        videoBitRateIncoming.shift();
+
+                        myLineChart.data.datasets[0]['data'] = videoBitRateOutgoing;
+                        myLineChart.data.datasets[1]['data'] = videoBitRateIncoming;
+                        myLineChart.data.datasets[2]['data'] = audioBitRateOutgoing;
+                        myLineChart.data.datasets[3]['data'] = audioBitRateIncoming;
+                        myLineChart.update();
+
+                    });
+            } ,5000);
+        }
+        syncChart();
+    });
+
+    var canvas = document.getElementById('myChart');
+    var s_data={
         labels: queue,
-            //label: ["Video egress", "Video ingress", "Audio egress", "Audio ingress"],
         datasets: [
-          {
-            label: "videoBitRateOutgoing",
-            borderColor: "#e8c3b9",
-            fill: false,
-            data: [0, 0, 0, 0]
-          },
-          {
-            label: "videoBitRateIncoming",
-            borderColor: "#3e95cd",
-            fill: false,
-            data: [0, 0, 0, 0]
-          },
-          {
-            label: "audioBitRateOutgoing",
-            borderColor: "#8e5ea2",
-            fill: false,
-            data: [0, 0, 0, 0]
-          },
-          {
-            label: "audioBitRateIncoming",
-            borderColor: "#3cba9f",
-            fill: false,
-            data: [0, 0, 0, 0]
-          },
+            {
+                label: "videoBitRateOutgoing",
+                borderColor: "#e8c3b9",
+                fill: false,
+                data: [0, 0, 0, 0]
+            },
+            {
+                label: "videoBitRateIncoming",
+                borderColor: "#3e95cd",
+                fill: false,
+                data: [0, 0, 0, 0]
+            },
+            {
+                label: "audioBitRateOutgoing",
+                borderColor: "#8e5ea2",
+                fill: false,
+                data: [0, 0, 0, 0]
+            },
+            {
+                label: "audioBitRateIncoming",
+                borderColor: "#3cba9f",
+                fill: false,
+                data: [0, 0, 0, 0]
+            },
         ]
-    }
-});
-
+    };
+    var option = {
+        showLines: true
+    };
+    var myLineChart = Chart.Line(canvas,{
+        data:s_data,
+        options:option
+    });
 </script>
 </%block>

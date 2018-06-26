@@ -108,9 +108,9 @@ def api_activeCall():
     resData = json.dumps(o)
     resDataJson = json.loads(resData)
 
-    print("-------------------> DEBUG[s]")
-
-    print("-------------------> DEBUG[e]")
+    print("-------------------> DEBUG[api_activeCall ---s]")
+    print(resDataJson)
+    print("-------------------> DEBUG[api_activeCall ---e]")
 
     return resDataJson
 
@@ -132,9 +132,9 @@ def api_templateLegPro(id):
     resData = json.dumps(o)
     resDataJson = json.loads(resData)
 
-    print("-------------------> DEBUG[s]")
+    print("-------------------> DEBUG[api_templateLegPro ---s]")
 
-    print("-------------------> DEBUG[e]")
+    print("-------------------> DEBUG[api_templateLegPro ---e]")
 
     return resDataJson
 
@@ -156,9 +156,9 @@ def api_templatePro(id):
     resData = json.dumps(o)
     resDataJson = json.loads(resData)
 
-    print("-------------------> DEBUG[s]")
+    print("-------------------> DEBUG[api_templatePro ---s]")
 
-    print("-------------------> DEBUG[e]")
+    print("-------------------> DEBUG[api_templatePro ---e]")
 
     return resDataJson
 
@@ -180,8 +180,9 @@ def api_mornitoringStatus():
     resData = json.dumps(o)
     resDataJson = json.loads(resData)
 
-    print("-------------------> DEBUG[s]")
-
-    print("-------------------> DEBUG[e]")
+    print("-------------------> DEBUG[mornitoringStatus ---s]")
+    print(resDataJson)
+    print("-------------------> DEBUG[mornitoringStatus ---e]")
 
     return resDataJson
+
