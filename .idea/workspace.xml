@@ -2,24 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b6bca849-db40-4ab5-ae5c-f15cf88fd910" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/djangoapps/common/api/views.py" afterPath="$PROJECT_DIR$/backend/djangoapps/common/api/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/djangoapps/common/board/views.py" afterPath="$PROJECT_DIR$/backend/djangoapps/common/board/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/djangoapps/conference/views.py" afterPath="$PROJECT_DIR$/backend/djangoapps/conference/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/djangoapps/system/views.py" afterPath="$PROJECT_DIR$/backend/djangoapps/system/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/static/common/css/app.css" afterPath="$PROJECT_DIR$/backend/static/common/css/app.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/static/common/css/style.css" afterPath="$PROJECT_DIR$/backend/static/common/css/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/templates/common/main_base.html" afterPath="$PROJECT_DIR$/backend/templates/common/main_base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/templates/conference/activeCall.html" afterPath="$PROJECT_DIR$/backend/templates/conference/activeCall.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/templates/conference/conferenceRoom.html" afterPath="$PROJECT_DIR$/backend/templates/conference/conferenceRoom.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/templates/conference/template.html" afterPath="$PROJECT_DIR$/backend/templates/conference/template.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/templates/statistics/roomUseState.html" afterPath="$PROJECT_DIR$/backend/templates/statistics/roomUseState.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/templates/supplementaryService/outBoundDialPlan.html" afterPath="$PROJECT_DIR$/backend/templates/supplementaryService/outBoundDialPlan.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/templates/system/acanoClient.html" afterPath="$PROJECT_DIR$/backend/templates/system/acanoClient.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/templates/system/account.html" afterPath="$PROJECT_DIR$/backend/templates/system/account.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/templates/system/cdr.html" afterPath="$PROJECT_DIR$/backend/templates/system/cdr.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/templates/system/endPoint.html" afterPath="$PROJECT_DIR$/backend/templates/system/endPoint.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/templates/system/endPointGroup.html" afterPath="$PROJECT_DIR$/backend/templates/system/endPointGroup.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backend/templates/system/ldap.html" afterPath="$PROJECT_DIR$/backend/templates/system/ldap.html" />
     </list>
     <ignored path="cms.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -66,11 +54,11 @@
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="endPoint.html" pinned="false" current-in-tab="false">
+            <file leaf-file-name="endPoint.html" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/backend/templates/system/endPoint.html">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="-9.428572">
-                    <caret line="65" column="33" selection-start-line="65" selection-start-column="33" selection-end-line="65" selection-end-column="33" />
+                  <state vertical-scroll-proportion="0.6412556">
+                    <caret line="47" column="20" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
                     <folding>
                       <element signature="n#style#0;n#th#0;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
                     </folding>
@@ -78,11 +66,11 @@
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="endPointGroup.html" pinned="false" current-in-tab="true">
+            <file leaf-file-name="endPointGroup.html" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/backend/templates/system/endPointGroup.html">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="0.75336325">
-                    <caret line="104" column="71" selection-start-line="104" selection-start-column="71" selection-end-line="104" selection-end-column="71" />
+                  <state vertical-scroll-proportion="-24.0">
+                    <caret line="43" column="24" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="24" />
                     <folding>
                       <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
                       <element signature="n#style#0;n#th#0;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
@@ -97,20 +85,6 @@
                   <state vertical-scroll-proportion="-33.785713">
                     <caret line="46" column="21" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
                     <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="outBoundDialPlan.html" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/backend/templates/supplementaryService/outBoundDialPlan.html">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="-21.214285">
-                    <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-                    <folding>
-                      <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-                      <element signature="n#style#0;n#th#0;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
-                    </folding>
                   </state>
                 </provider>
               </entry>
@@ -173,11 +147,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/djangoapps/common/api/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4680851">
-              <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="50" />
+            <state vertical-scroll-proportion="-8.111111">
+              <caret line="82" column="38" selection-start-line="82" selection-start-column="38" selection-end-line="82" selection-end-column="38" />
               <folding>
                 <element signature="e#23#58#0" expanded="true" />
               </folding>
@@ -201,7 +175,7 @@
         <entry file="file://$PROJECT_DIR$/backend/djangoapps/common/util/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <caret line="12" column="52" selection-start-line="12" selection-start-column="52" selection-end-line="12" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -210,8 +184,8 @@
       <file leaf-file-name="main_base.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/backend/templates/common/main_base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.8">
-              <caret line="32" column="7" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
+            <state vertical-scroll-proportion="-18.071428">
+              <caret line="383" column="64" selection-start-line="383" selection-start-column="64" selection-end-line="383" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -221,11 +195,12 @@
         <entry file="file://$PROJECT_DIR$/backend/djangoapps/system/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="77" column="22" selection-start-line="77" selection-start-column="22" selection-end-line="77" selection-end-column="22" />
+              <caret line="106" column="26" selection-start-line="106" selection-start-column="26" selection-end-line="106" selection-end-column="26" />
               <folding>
                 <element signature="e#23#58#0" expanded="true" />
-                <marker date="1529978831000" expanded="true" signature="674:866" placeholder="SELECT user_..cms_manager..." />
-                <marker date="1529978831000" expanded="true" signature="1440:1953" placeholder="SELECT ep_id..cms_endpoint..." />
+                <marker date="1530002065000" expanded="true" signature="674:866" placeholder="SELECT user_..cms_manager..." />
+                <marker date="1530002065000" expanded="true" signature="1440:1953" placeholder="SELECT ep_id..cms_endpoint..." />
+                <marker date="1530002065000" expanded="true" signature="2869:2937" placeholder="SELECT ep_gr..cms_endpoint_group..." />
               </folding>
             </state>
           </provider>
@@ -251,11 +226,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="conferenceRoom.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="conferenceRoom.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/backend/templates/conference/conferenceRoom.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.892858">
-              <caret line="149" column="16" selection-start-line="149" selection-start-column="16" selection-end-line="149" selection-end-column="16" />
+            <state vertical-scroll-proportion="-1.2054795">
+              <caret line="189" column="43" selection-start-line="189" selection-start-column="43" selection-end-line="189" selection-end-column="43" />
               <folding>
                 <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#table#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
@@ -287,13 +262,13 @@
         <option value="$PROJECT_DIR$/backend/templates/system/ldap.html" />
         <option value="$PROJECT_DIR$/backend/templates/supplementaryService/outBoundDialPlan.html" />
         <option value="$PROJECT_DIR$/backend/templates/conference/template.html" />
-        <option value="$PROJECT_DIR$/backend/templates/conference/conferenceRoom.html" />
-        <option value="$PROJECT_DIR$/backend/templates/common/main_base.html" />
         <option value="$PROJECT_DIR$/backend/djangoapps/common/api/views.py" />
         <option value="$PROJECT_DIR$/backend/templates/system/account.html" />
-        <option value="$PROJECT_DIR$/backend/djangoapps/system/views.py" />
         <option value="$PROJECT_DIR$/backend/templates/system/endPoint.html" />
+        <option value="$PROJECT_DIR$/backend/djangoapps/system/views.py" />
         <option value="$PROJECT_DIR$/backend/templates/system/endPointGroup.html" />
+        <option value="$PROJECT_DIR$/backend/templates/common/main_base.html" />
+        <option value="$PROJECT_DIR$/backend/templates/conference/conferenceRoom.html" />
       </list>
     </option>
   </component>
@@ -439,7 +414,7 @@
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="/Volumes/macHDD/cms/eGovFrameDev-3.5.1-64bit/workspace/manager" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="endpoin&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/system/endPoint.html&#10;accoun&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/system/account.html&#10;settings.p&#9;FILE&#9;file:///Users/kotech/workspace/cms/main/settings.py&#10;template.html&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/conference/template.html&#10;room&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/statistics/roomUseState.html&#10;outbound&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/supplementaryService/outBoundDialPlan.html&#10;ldap.html&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/system/ldap.html&#10;account&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/system/account.html&#10;acano&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/system/acanoClient.html&#10;endpointgroup&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/system/endPointGroup.html&#10;confer&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/conference/conferenceRoom.html&#10;endpoint&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/system/endPoint.html&#10;cdr.html&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/system/cdr.html&#10;roomUseState&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/statistics/roomUseState.html&#10;systemStatus&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/monitoring/systemStatus.html&#10;activeCall&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/conference/activeCall.html&#10;app.css&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/static/common/css/app.css&#10;conference/template.html&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/conference/template.html&#10;template&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/conference/template.html" />
+    <property name="SearchEverywhereHistoryKey" value="system/view&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/djangoapps/system/views.py&#10;confer&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/conference/conferenceRoom.html&#10;endpoin&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/system/endPoint.html&#10;accoun&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/system/account.html&#10;settings.p&#9;FILE&#9;file:///Users/kotech/workspace/cms/main/settings.py&#10;template.html&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/conference/template.html&#10;room&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/statistics/roomUseState.html&#10;outbound&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/supplementaryService/outBoundDialPlan.html&#10;ldap.html&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/system/ldap.html&#10;account&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/system/account.html&#10;acano&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/system/acanoClient.html&#10;endpointgroup&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/system/endPointGroup.html&#10;endpoint&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/system/endPoint.html&#10;cdr.html&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/system/cdr.html&#10;roomUseState&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/statistics/roomUseState.html&#10;systemStatus&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/monitoring/systemStatus.html&#10;activeCall&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/conference/activeCall.html&#10;app.css&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/static/common/css/app.css&#10;conference/template.html&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/conference/template.html&#10;template&#9;FILE&#9;file:///Users/kotech/workspace/cms/backend/templates/conference/template.html" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
@@ -551,11 +526,6 @@
           <line>49</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/backend/djangoapps/common/api/views.py</url>
-          <line>96</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
       </breakpoints>
       <option name="time" value="13" />
     </breakpoint-manager>
@@ -657,30 +627,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/templates/supplementaryService/outBoundDialPlan.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-21.214285">
-          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding>
-            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#th#0;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/templates/statistics/roomUseState.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-18.071428">
           <caret line="32" column="16" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/templates/common/main_base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.8">
-          <caret line="32" column="7" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="7" />
           <folding />
         </state>
       </provider>
@@ -699,14 +649,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.44963503">
           <caret line="22" column="45" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/djangoapps/common/util/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -738,18 +680,57 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/templates/system/acanoClient.html">
+    <entry file="file://$PROJECT_DIR$/backend/templates/system/account.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-33.785713">
-          <caret line="46" column="21" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
+        <state vertical-scroll-proportion="-15.714286">
+          <caret line="33" column="24" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="24" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/djangoapps/common/util/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="52" selection-start-line="12" selection-start-column="52" selection-end-line="12" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/djangoapps/system/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="106" column="26" selection-start-line="106" selection-start-column="26" selection-end-line="106" selection-end-column="26" />
+          <folding>
+            <element signature="e#23#58#0" expanded="true" />
+            <marker date="1530002065000" expanded="true" signature="674:866" placeholder="SELECT user_..cms_manager..." />
+            <marker date="1530002065000" expanded="true" signature="1440:1953" placeholder="SELECT ep_id..cms_endpoint..." />
+            <marker date="1530002065000" expanded="true" signature="2869:2937" placeholder="SELECT ep_gr..cms_endpoint_group..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/templates/common/main_base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-18.071428">
+          <caret line="383" column="64" selection-start-line="383" selection-start-column="64" selection-end-line="383" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/djangoapps/common/api/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.111111">
+          <caret line="82" column="38" selection-start-line="82" selection-start-column="38" selection-end-line="82" selection-end-column="38" />
+          <folding>
+            <element signature="e#23#58#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/backend/templates/conference/conferenceRoom.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.892858">
-          <caret line="149" column="16" selection-start-line="149" selection-start-column="16" selection-end-line="149" selection-end-column="16" />
+        <state vertical-scroll-proportion="-1.2054795">
+          <caret line="189" column="43" selection-start-line="189" selection-start-column="43" selection-end-line="189" selection-end-column="43" />
           <folding>
             <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#table#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
@@ -760,28 +741,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/templates/system/account.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.714286">
-          <caret line="33" column="24" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/backend/templates/system/endPoint.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.428572">
-          <caret line="65" column="33" selection-start-line="65" selection-start-column="33" selection-end-line="65" selection-end-column="33" />
-          <folding>
-            <element signature="n#style#0;n#th#0;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/backend/templates/system/endPointGroup.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.75336325">
-          <caret line="104" column="71" selection-start-line="104" selection-start-column="71" selection-end-line="104" selection-end-column="71" />
+        <state vertical-scroll-proportion="-24.0">
+          <caret line="43" column="24" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="24" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#th#0;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
@@ -789,24 +752,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/djangoapps/system/views.py">
+    <entry file="file://$PROJECT_DIR$/backend/templates/supplementaryService/outBoundDialPlan.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="77" column="22" selection-start-line="77" selection-start-column="22" selection-end-line="77" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.6659193">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
           <folding>
-            <element signature="e#23#58#0" expanded="true" />
-            <marker date="1529978831000" expanded="true" signature="674:866" placeholder="SELECT user_..cms_manager..." />
-            <marker date="1529978831000" expanded="true" signature="1440:1953" placeholder="SELECT ep_id..cms_endpoint..." />
+            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#th#0;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/backend/djangoapps/common/api/views.py">
+    <entry file="file://$PROJECT_DIR$/backend/templates/system/acanoClient.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4680851">
-          <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="50" />
+        <state vertical-scroll-proportion="-33.785713">
+          <caret line="46" column="21" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/templates/system/endPoint.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6412556">
+          <caret line="47" column="20" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
           <folding>
-            <element signature="e#23#58#0" expanded="true" />
+            <element signature="n#style#0;n#th#0;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

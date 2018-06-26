@@ -148,7 +148,7 @@ width:100%
             <tbody id="tbody">
             % for data in context['data']:
             <tr>
-                <td><input type="checkbox"/></td>
+                <td></td>
                 <td>${data['name']}</td>
                 <td>${data['uri']}</td>
                 <td></td>
@@ -196,6 +196,7 @@ $(document).ready(function() {
             "oLanguage": {
                 "sInfo": "Page: _PAGE_ / _PAGES_",
                 'sLengthMenu': 'Display <select name="datatable-length">'+
+                '<option value="5">5</option>'+
                 '<option value="10">10</option>'+
                 '<option value="20">20</option>'+
                 '<option value="50">50</option>'+
@@ -216,7 +217,7 @@ $(document).ready(function() {
                 null,
             ],
             columnDefs: [
-                {targets: 0, orderable: 'false', searchable: false, className: "text-center"},
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center"},
             ],
             'initComplete': function(){
                 $(".paginate_button").attr('href', 'javascript:check_click();');

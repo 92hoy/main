@@ -100,10 +100,22 @@ def endPoint(request):
 
 # 시스템 상태
 def endPointGroup(request):
+    with connections['default'].cursor() as cur:
+        query = '''
+          SELECT ep_group_seq, ep_group_name, order_no FROM cms_endpoint_group;
+        '''
+        cur.execute(query)
+        ep_group = cur.fetchall()
 
-    #resDataJson = api_coSpaces()
+    data_list = list()
+    for data in ep_group:
+        data_dict = dict()
+        data_dict['ep_group_seq'] = data[0]
+        data_dict['ep_group_name'] = data[1]
+        data_dict['order_no'] = data[2]
+        data_list.append(data_dict)
 
-    context = {}
+    context = {'data': data_list}
     #context['resDataJson'] = resDataJson
 
     return render(request, 'system/endPointGroup.html', context)

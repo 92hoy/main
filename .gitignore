@@ -1,5 +1,6 @@
 *.pyc
 *.log
 *.swp
+/.idea
 /media
 /venv
