@@ -135,3 +135,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR + '/backend/static/'
 ]
+
+CORE_APIJSON_PATH = BASE_DIR + '/backend/djangoapps/common/core/api.json'
