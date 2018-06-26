@@ -81,7 +81,7 @@ from django.utils import translation
             <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(154px, 33px, 0px); top: 10px; left: -150px; width:30px; will-change: transform;">
               <a class="dropdown-item" id="transLangEN">English</a>
               <a class="dropdown-item" id="transLangKO">Korean</a>
-              <a class="dropdown-item" id="transLangJP">Japanese</a>
+              <!--<a class="dropdown-item" id="transLangJP">Japanese</a>-->
             </div>
             </div>
 
@@ -94,6 +94,7 @@ from django.utils import translation
           </div>
         </ul>
 
+        <!--
         <ul class="navbar-nav mt-2 mt-lg-0 mx-0 mx-lg-2 flex">
           <li class="nav-item" style="margin-left: 70px;">
             <span class="nav-icon">
@@ -128,6 +129,10 @@ from django.utils import translation
 	  	    </a>
           </li>
         </ul>
+        -->
+
+        <ul class="navbar-nav mt-2 mt-lg-0 mx-0 mx-lg-2 flex"></ul>
+
       </div>
     </div>
   </header>
@@ -175,12 +180,14 @@ from django.utils import translation
 		                      <span class="nav-text">Template</span>
 		                    </a>
                     </li>
+                    <!--
                     <li>
-                      <!--<a href="/reserveConference">-->
                         <a href="javascript:window.location.href = '/reserveConference';">
 		                      <span class="nav-text">Reserve Conference</span>
 		                    </a>
+
                     </li>
+                    -->
                     <!--
                     <li>
                       <a href="/reserveConferenceCal">
@@ -284,12 +291,13 @@ from django.utils import translation
 		                      <span class="nav-text">CDR</span>
 		                    </a>
                     </li>
+                    <!--
                     <li>
-                      <!--<a href="/ldap">-->
                         <a href="javascript:window.location.href = '/ldap';">
 		                      <span class="nav-text">LDAP</span>
 		                    </a>
                     </li>
+                    -->
                     <li>
                       <!--<a href="/account">-->
                         <a href="javascript:window.location.href = '/account';">
@@ -355,7 +363,7 @@ from django.utils import translation
                 </li>
                 <!-- main menu [e] --------------------------------->
 
-                <!-- main menu [s] --------------------------------->
+                <!--
                 <li>
                   <a>
 		                  <span class="nav-caret">
@@ -366,18 +374,15 @@ from django.utils import translation
 		                  </span>
 		                  <span class="nav-text">Supplementary Service</span>
 		                </a>
-                  <!-- sub menu -------------------------------->
                   <ul class="nav-sub">
                     <li>
-                      <!--<a href="/outBoundDialPlan">-->
                         <a href="javascript:window.location.href = '/outBoundDialPlan';">
 		                      <span class="nav-text">Outbound Dial Plan</span>
 		                    </a>
                     </li>
                   </ul>
-                  <!-- sub menu -------------------------------->
                 </li>
-                <!-- main menu [e] --------------------------------->
+                -->
 
               </ul>
             </div>
