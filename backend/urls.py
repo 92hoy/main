@@ -29,6 +29,7 @@ from .djangoapps.streamService import views as StreamServiceViews
 from .djangoapps.sparkTest import views as SparkTestViews
 from .djangoapps.common.lang import views as LangViews
 from .djangoapps.common.board import views as BoardViews
+from .djangoapps.common.util import views as UtilViews
 
 schema_view = get_swagger_view(title='happy API')
 
@@ -53,6 +54,9 @@ urlpatterns = [
 
     # Lang API
     url('transLang$', LangViews.transLang, name='transLang'),
+
+    # util
+    url('fileUpload$', UtilViews.fileUpload, name='fileUpload'),
 
     # login / logout
     url('login$', LoginViews.login, name='login'),
