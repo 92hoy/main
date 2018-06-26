@@ -44,7 +44,6 @@ var init = new Date();
         var call_total = [0, 0, 0, 0, 0]
         var callLegsActive       = [0, 0, 0, 0, 0]
         var callLegsMaxActive    = [0, 0, 0, 0, 0]
-        var videoBitRateIncoming = [0, 0, 0, 0, 0]
         var dataSet = [
             {
                 label: "Active Call",
@@ -63,12 +62,6 @@ var init = new Date();
                 borderColor: "#8e5ea2",
                 fill: false,
                 data: callLegsMaxActive
-            },
-            {
-                label: "License CallLeg",
-                borderColor: "#3cba9f",
-                fill: false,
-                data: videoBitRateIncoming
             }
         ];
         function syncChart() {
@@ -96,17 +89,14 @@ var init = new Date();
                             call_total.push(Number(context['call_total']));
                             callLegsActive.push(Number(context['callLegsActive']));
                             callLegsMaxActive.push(Number(context['callLegsMaxActive']));
-                            videoBitRateIncoming.push(18);
 
                             call_total.shift();
                             callLegsActive.shift();
                             callLegsMaxActive.shift();
-                            videoBitRateIncoming.shift();
 
                             myLineChart.data.datasets[0]['data'] = call_total;
                             myLineChart.data.datasets[1]['data'] = callLegsActive;
                             myLineChart.data.datasets[2]['data'] = callLegsMaxActive;
-                            myLineChart.data.datasets[3]['data'] = videoBitRateIncoming;
                             myLineChart.update();
                             /*
                              console.log(queue);
@@ -144,12 +134,6 @@ var init = new Date();
                 borderColor: "#FAB9F1",
                 fill: false,
                 data: [2, 2, 2, 2, 2]
-            },
-            {
-                label: "videoBitRateIncoming",
-                borderColor: "#2EB5EB",
-                fill: false,
-                data: [1, 1, 1, 1, 1]
             },
         ]
     };

@@ -19,7 +19,7 @@ def callStatus(request):
         context['call_total'] = resDataJson2['calls']['@total']
         context['callLegsActive'] = resDataJson['status']['callLegsActive']
         context['callLegsMaxActive'] = resDataJson['status']['callLegsMaxActive']
-        context['videoBitRateIncoming'] = resDataJson['status']['videoBitRateIncoming']
+
         return JsonResponse(context)
     context = {}
 
