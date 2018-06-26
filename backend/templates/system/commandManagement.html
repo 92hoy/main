@@ -5,12 +5,29 @@ from django.utils.translation import ugettext as _
 %>
 
 <%block name="containor">
+<style>
+    td{
+       font-size: 15px !important;
+        height: auto !important;
+    }
+    .td_text{
+        width: 30%;
+    }
+    .td_text2{
+        font-size: 15px !important;
+    }
+    .cm_img{
+        margin-left: 15px !important;
+        margin-right: 15px !important;
+    }
+
+</style>
 <div class="padding">
 
   <div class="box">
     <div class="box-header">
-      <h2>CONFERENCE ROOM</h2>
-      <small>You can see the current meeting status</small>
+      <h2>COMMAND MANAGEMENT</h2>
+      <small>COMMAND MANAGEMENT</small>
     </div>
   </div>
 
@@ -19,59 +36,55 @@ from django.utils.translation import ugettext as _
         <table class="table table-bordered">
           <tbody>
             <tr>
-              <td>Video Send</td>
+              <td class="td_text"> <img src="/static/common/img/video.png" alt="logo" class="cm_img"> &nbsp; Video Send </td>
               <td>
-                <label class="ui-check">
-                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check"><i></i> I agree to the <a href="#" class="text-info">Terms of Service</a>
-                </label>
+                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a>
               </td>
             </tr>
             <tr>
-              <td>Audio Hearing</td>
-              <td>
-                <label class="ui-check">
-                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check"><i></i> I agree to the <a href="#" class="text-info">Terms of Service</a>
-                </label>
+              <td class="td_text"> <img src="/static/common/img/mpg.png" alt="logo" class="cm_img"> &nbsp; Video Mode </td>
+              <td class="td_text2">
+                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a>
               </td>
             </tr>
             <tr>
-              <td>Document Sharing</td>
+              <td class="td_text"> <img src="/static/common/img/volume.png" alt="logo" class="cm_img"> &nbsp; Audio Hearing </td>
               <td>
-                <label class="ui-check">
-                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check"><i></i> I agree to the <a href="#" class="text-info">Terms of Service</a>
-                </label>
+
+                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a>
+
               </td>
             </tr>
             <tr>
-              <td>Video Mode</td>
+              <td class="td_text"> <img src="/static/common/img/mic.png" alt="logo" class="cm_img"> &nbsp; Audio Speaking </td>
               <td>
-                <label class="ui-check">
-                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check"><i></i> I agree to the <a href="#" class="text-info">Terms of Service</a>
-                </label>
+
+                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a>
+
               </td>
             </tr>
             <tr>
-              <td>Video Receive</td>
+              <td class="td_text"> <img src="/static/common/img/fileshared.png" alt="logo" class="cm_img"> &nbsp; Document Sharing </td>
               <td>
-                <label class="ui-check">
-                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check"><i></i> I agree to the <a href="#" class="text-info">Terms of Service</a>
-                </label>
+
+                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a>
+
               </td>
             </tr>
             <tr>
-              <td>Audio Speaking</td>
+              <td class="td_text"> <img src="/static/common/img/text file.png" alt="logo" class="cm_img"> &nbsp; Document View </td>
               <td>
-                <label class="ui-check">
-                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check"><i></i> I agree to the <a href="#" class="text-info">Terms of Service</a>
-                </label>
+
+                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a>
+
               </td>
             </tr>
             <tr>
-              <td>Document View</td>
+              <td class="td_text"> <img src="/static/common/img/view.png" alt="logo" class="cm_img"> &nbsp; Video Receive </td>
               <td>
-                <label class="ui-check">
-                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check"><i></i> I agree to the <a href="#" class="text-info">Terms of Service</a>
-                </label>
+
+                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a>
+
               </td>
             </tr>
           </tbody>
@@ -79,4 +92,10 @@ from django.utils.translation import ugettext as _
       </div>
     </div>
 </div>
+
+<!-- 기본 소스
+ <label class="ui-check">
+                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check"><i></i> I agree to the <a href="#" class="text-info">Terms of Service</a>
+                </label>
+ -->
 </%block>
