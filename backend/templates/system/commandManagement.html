@@ -8,17 +8,18 @@ from django.utils.translation import ugettext as _
 <style>
     td{
        font-size: 15px !important;
-        height: auto !important;
+        height: 30px !important;
     }
     .td_text{
         width: 30%;
     }
-    .td_text2{
-        font-size: 15px !important;
-    }
     .cm_img{
-        margin-left: 15px !important;
-        margin-right: 15px !important;
+        margin-left: 13px !important;
+        margin-right: 13px !important;
+    }
+    p{
+        font-size: 15px !important;
+        margin-top: 40px !important;
     }
 
 </style>
@@ -38,20 +39,20 @@ from django.utils.translation import ugettext as _
             <tr>
               <td class="td_text"> <img src="/static/common/img/video.png" alt="logo" class="cm_img"> &nbsp; Video Send </td>
               <td>
-                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a>
+                  <p><input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a></p>
               </td>
             </tr>
             <tr>
               <td class="td_text"> <img src="/static/common/img/mpg.png" alt="logo" class="cm_img"> &nbsp; Video Mode </td>
               <td class="td_text2">
-                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a>
+                  <p><input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a></p>
               </td>
             </tr>
             <tr>
               <td class="td_text"> <img src="/static/common/img/volume.png" alt="logo" class="cm_img"> &nbsp; Audio Hearing </td>
               <td>
 
-                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a>
+                 <p> <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a></p>
 
               </td>
             </tr>
@@ -59,7 +60,7 @@ from django.utils.translation import ugettext as _
               <td class="td_text"> <img src="/static/common/img/mic.png" alt="logo" class="cm_img"> &nbsp; Audio Speaking </td>
               <td>
 
-                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a>
+                  <p><input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a></p>
 
               </td>
             </tr>
@@ -67,7 +68,7 @@ from django.utils.translation import ugettext as _
               <td class="td_text"> <img src="/static/common/img/fileshared.png" alt="logo" class="cm_img"> &nbsp; Document Sharing </td>
               <td>
 
-                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a>
+                  <p><input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a></p>
 
               </td>
             </tr>
@@ -75,7 +76,7 @@ from django.utils.translation import ugettext as _
               <td class="td_text"> <img src="/static/common/img/text file.png" alt="logo" class="cm_img"> &nbsp; Document View </td>
               <td>
 
-                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a>
+                  <p><input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a></p>
 
               </td>
             </tr>
@@ -83,7 +84,7 @@ from django.utils.translation import ugettext as _
               <td class="td_text"> <img src="/static/common/img/view.png" alt="logo" class="cm_img"> &nbsp; Video Receive </td>
               <td>
 
-                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a>
+                  <p><input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a></p>
 
               </td>
             </tr>
