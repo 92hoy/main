@@ -6,19 +6,19 @@ from django.utils.translation import ugettext as _
 
 <%block name="containor">
 <style>
-.pagination .active .page-link, .pagination .active a{
-  background-color: #6e8df4 !important;
-  border-color: #6e8df4 !important
-}
+    .pagination .active .page-link, .pagination .active a{
+        background-color: #6e8df4 !important;
+        border-color: #6e8df4 !important
+    }
 
-td{
-  border: solid 1px #dddddd;
-  padding: 3px;
-}
+    td{
+        border: solid 1px #dddddd;
+        padding: 3px;
+    }
 
-.rightTd{
-width:100%
-}
+    .rightTd{
+        width:100%
+    }
 </style>
 
 <div class="dim-layer">
@@ -30,81 +30,81 @@ width:100%
           <span class="nav-icon" style="padding-bottom: 18px;">
             <i class="fa fa-plug"></i>
           </span>
-          <div style="margin-bottom: 10px;">
-            Conference management<a href="#" class="btn-layerClose" style="float: right;">X</a>
-          </div>
+                <div style="margin-bottom: 10px;">
+                    Conference management<a href="#" class="btn-layerClose" style="float: right;">X</a>
+                </div>
 
-          <div style="text-align: center;">
-              <table style="display: inline-block; width:100%;">
-                      <tbody>
+                <div style="text-align: center;">
+                    <table style="display: inline-block; width:100%;">
+                        <tbody>
                         <tr>
-                          <td>Conference name</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>Conference name</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
-                          <td>uri</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>uri</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
-                          <td>secondaryUri</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>secondaryUri</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
-                          <td>callId</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>callId</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
-                          <td>cdrTag</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>cdrTag</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
-                          <td>passcode</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>passcode</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
-                          <td>Confirm password</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>Confirm password</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
-                          <td>defaultLayout</td>
-                          <td class="rightTd">
-                            <select id="inputState" class="custom-select w-100">
-                              <option selected="">Choose...</option>
-                              <option>...</option>
-                            </select>
-                          </td>
+                            <td>defaultLayout</td>
+                            <td class="rightTd">
+                                <select id="inputState" class="custom-select w-100">
+                                    <option selected="">Choose...</option>
+                                    <option>...</option>
+                                </select>
+                            </td>
                         </tr>
                         <tr>
-                          <td>ownerJid</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>ownerJid</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
-                          <td>template</td>
-                          <td class="rightTd">
-                            <select id="inputState" class="custom-select w-100">
-                              <option selected="">Choose...</option>
-                              <option>...</option>
-                            </select>
-                          </td>
+                            <td>template</td>
+                            <td class="rightTd">
+                                <select id="inputState" class="custom-select w-100">
+                                    <option selected="">Choose...</option>
+                                    <option>...</option>
+                                </select>
+                            </td>
                         </tr>
                         <tr>
-                          <td>streamUrl</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>streamUrl</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
-                          <td>ownerAdGuid</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>ownerAdGuid</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
-                          <td>MeetingScheduler</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>MeetingScheduler</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
                         </tr>
-                      </tbody>
+                        </tbody>
                     </table>
 
-                <button class="md-btn md-raised mb-2 w-xs blue mgt10" id="confSave">SAVE</button>
+                    <button class="md-btn md-raised mb-2 w-xs blue mgt10" id="confSave">SAVE</button>
 
-            </div>
+                </div>
             </div>
         </div>
     </div>
@@ -113,10 +113,11 @@ width:100%
 
 <div class="padding">
 
-  <div class="box">
-    <div class="box-header">
-      <h2>CONFERENCE ROOM</h2>
-      <small>You can see the current meeting status</small>
+    <div class="box">
+        <div class="box-header">
+            <h2>CONFERENCE ROOM</h2>
+            <small>You can see the current meeting status</small>
+        </div>
     </div>
   </div>
 
@@ -165,7 +166,6 @@ width:100%
         <div id="paging"></div>
       </div>
 
-    </div>
 </div>
 
 <input type="hidden" id="all_pages" value="6">
@@ -175,19 +175,14 @@ width:100%
 
 <%block name="scriptDown">
 <script>
-
-$(document).ready(function() {
-
-
-    //$(".paginate_button").attr('href', 'javascript:check_click();');
-
-
+    $(document).ready(function() {
+        //$(".paginate_button").attr('href', 'javascript:check_click();');
         $table = $("#table_conferenceRoom");
         var data_tb = $table.dataTable({
             rowReorder: false,
             sLengthMenu: [
-                [10, 20, 50, -1], //key
-                [10, 20, 50, "All"] //value
+                [5,10, 20, 50, -1], //key
+                [5,10, 20, 50, "All"] //value
             ],
             dom: '<"clear"fl><"search">rt<"bottom"ipl>',
             searching: true,
@@ -219,79 +214,60 @@ $(document).ready(function() {
             columnDefs: [
                 {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center"},
             ],
-            'initComplete': function(){
+            "drawCallback":function(){
                 $(".paginate_button").attr('href', 'javascript:check_click();');
             }
         });
-
-    $("input:checkbox[id='select_all']").click(function () {
-        checkbox_all();
     });
 
-    /*$( ".paginate_button" ).click(function() {
-        alert(333);
-    });*/
-    $table.on('click', '.paginate_button', function(){
-        alert('3213122121');
-    });
-
-    data_tb.on('draw', function () {
-        alert(000);
-        $('input:checkbox[id="select_all"]').prop("checked", false);
-    });
-
-});
-
-function check_click(){
-    alert(321);
-}
-
-function checkbox_all(){
-    if($("input:checkbox[id='select_all']").prop("checked")) {
-        $('input:checkbox').prop("checked", true);
-    } else {
-        $('input:checkbox').prop("checked", false);
-    }
-}
-
-
-$('.btn-example').click(function(){
-    var $href = $(this).attr('href');
-    layer_popup($href);
-});
-
-function layer_popup(el){
-
-    var $el = $(el);        //레이어의 id를 $el 변수에 저장
-    var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
-
-    isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
-
-    var $elWidth = ~~($el.outerWidth()),
-        $elHeight = ~~($el.outerHeight()),
-        docWidth = $(document).width(),
-        docHeight = $(document).height();
-
-    // 화면의 중앙에 레이어를 띄운다.
-    if ($elHeight < docHeight || $elWidth < docWidth) {
-        $el.css({
-            marginTop: -$elHeight /2,
-            marginLeft: -$elWidth/2
-        })
-    } else {
-        $el.css({top: 0, left: 0});
+    function check_click(){
+        //alert("paging btn");
+        if($("input:checkbox[id='select_all']").prop("checked")) {
+            $('input:checkbox').prop("checked", false);
+        }
+        else {
+            $('input:checkbox').prop("checked", false);
+        }
     }
 
-    $el.find('a.btn-layerClose').click(function(){
-        isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
-        return false;
+
+    $('.btn-example').click(function(){
+        var $href = $(this).attr('href');
+        layer_popup($href);
     });
 
-    $('.layer .dimBg').click(function(){
-        $('.dim-layer').fadeOut();
-        return false;
-    });
+    function layer_popup(el){
+        var $el = $(el);        //레이어의 id를 $el 변수에 저장
+        var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
 
-}
+        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
+
+        var $elWidth = ~~($el.outerWidth()),
+            $elHeight = ~~($el.outerHeight()),
+            docWidth = $(document).width(),
+            docHeight = $(document).height();
+
+        // 화면의 중앙에 레이어를 띄운다.
+        if ($elHeight < docHeight || $elWidth < docWidth) {
+            $el.css({
+                marginTop: -$elHeight /2,
+                marginLeft: -$elWidth/2
+            })
+        }
+        else {
+            $el.css({top: 0, left: 0});
+        }
+
+        $el.find('a.btn-layerClose').click(function(){
+            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+            return false;
+        });
+
+        $('.layer .dimBg').click(function(){
+            $('.dim-layer').fadeOut();
+            return false;
+        });
+
+    }
 </script>
 </%block>
