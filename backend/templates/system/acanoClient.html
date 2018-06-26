@@ -7,36 +7,78 @@ from django.utils.translation import ugettext as _
 <%block name="containor">
 <div class="padding">
 
-  <div class="box">
-    <div class="box-header">
-      <h2>ACANO CLIENT</h2>
-      <small>ACANO CLIENT</small>
+    <div class="box">
+        <div class="box-header">
+            <h2>ACANO CLIENT</h2>
+            <small>ACANO CLIENT</small>
+        </div>
     </div>
-  </div>
 
-  <div class="box">
-      <div class="table-responsive">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>User JID</th>
-              <th>tenent</th>
-            </tr>
-          </thead>
-          <tbody>
-            % for n in range(0,6):
-            <tr>
-              <td>eth 14f</td>
-              <td>eth 14f@etechsystem.co.kr</td>
-              <td>eth 14f@etechsystem.co.kr</td>
-              <td></td>
-            </tr>
-            % endfor
-          </tbody>
-        </table>
-      </div>
+    <div class="box">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered" id="table_acanoClient" style="width:100%">
+                <thead>
+                <tr>
+                    <th class="th-center">Name</th>
+                    <th class="th-center">Email</th>
+                    <th class="th-center">User JID</th>
+                    <th class="th-center">tenent</th>
+                </tr>
+                </thead>
+                <tbody>
+                % for n in range(0,6):
+                <tr>
+                    <td>eth 14f</td>
+                    <td>eth 14f@etechsystem.co.kr</td>
+                    <td>eth 14f@etechsystem.co.kr</td>
+                    <td></td>
+                </tr>
+                % endfor
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+</%block>
+
+<%block name="scriptDown">
+<script>
+    $(document).ready(function() {
+        $table = $("#table_acanoClient");
+        $table.dataTable({
+            sLengthMenu: [
+                [10, 20, 50, -1], //key
+                [10, 20, 50, "All"] //value
+            ],
+            dom: '<"clear"fl><"search">rt<"bottom"ipl>',
+            searching: true,
+            paginate: true,
+            order: [[0, 'asc']],
+            "oLanguage": {
+                "sInfo": "Page: _PAGE_ / _PAGES_",
+                'sLengthMenu': 'Display <select name="datatable-length">' +
+                '<option value="10">10</option>' +
+                '<option value="20">20</option>' +
+                '<option value="50">50</option>' +
+                '<option value="-1">All</option>' +
+                '</select> records',
+                "oPaginate": {
+                    "sNext": ">",
+                    "sPrevious": "<",
+                },
+
+            },
+            columns: [
+                null,
+                null,
+                null,
+                null,
+            ],
+            columnDefs: [
+            ],
+            'initComplete': function () {
+            }
+        });
+    });
+</script>
 </%block>

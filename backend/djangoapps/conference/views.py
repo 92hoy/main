@@ -8,12 +8,15 @@ from backend.djangoapps.common.api.views import api_coSpaces
 from backend.djangoapps.common.api.views import api_coSpaceId
 from backend.djangoapps.common.api.views import api_activeCall
 
+
 # 컨퍼런스 목록
 def conferenceRoom(request):
 
-    context = {}
+    context = dict()
+    context['data'] = api_coSpaces()
 
     return render(request, 'conference/conferenceRoom.html', context)
+
 
 # 진행중인 회의 관리
 def activeCall(request):
@@ -25,6 +28,7 @@ def activeCall(request):
 
     return render(request, 'conference/activeCall.html', context)
 
+
 # 진행중인 회의 관리
 def template(request):
 
@@ -35,6 +39,7 @@ def template(request):
 
     return render(request, 'conference/template.html', context)
 
+
 # 컨퍼런스 제공
 def reserveConference(request):
 
@@ -44,6 +49,7 @@ def reserveConference(request):
     #context['resDataJson'] = resDataJson
 
     return render(request, 'conference/reserveConference.html', context)
+
 
 # 컨퍼런스 제공 (달력)
 def reserveConferenceCal(request):

@@ -7,57 +7,106 @@ from django.utils.translation import ugettext as _
 <%block name="containor">
 <div class="padding">
 
-  <div class="box">
-    <div class="box-header">
-      <h2>ACTIVE CALL</h2>
-      <small>what is active call</small>
-    </div>
-  </div>
-
-  <div class="box">
-
-    <div class="box-header">
-        <ul class="pagination pagination-sm" style="float:right">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">«</span>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">»</span>
-                <span class="sr-only">Next</span>
-              </a>
-            </li>
-          </ul>
+    <div class="box">
+        <div class="box-header">
+            <h2>ACTIVE CALL</h2>
+            <small>what is active call</small>
+        </div>
     </div>
 
-      <div class="table-responsive">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th><input type="checkbox"/></th>
-              <th>Conference name</th>
-              <th>call ID</th>
-              <th>current visitor</th>
-            </tr>
-          </thead>
-          <tbody>
-            % for n in range(0,6):
-            <tr>
-              <td><input type="checkbox"/></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            % endfor
-          </tbody>
-        </table>
-      </div>
+    <div class="box">
+        <div style="padding: 10px;">
+
+            <button class="md-btn md-raised mb-2 w-xs red" id="delBtn" style="float: right;">DEL</button>
+
+            <a href="#layer2" class="btn-example">
+                <button class="md-btn md-raised mb-2 w-xs indigo dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
+            </a>
+
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered" id="table_activeCall" style="width:100%">
+                <thead>
+                <tr>
+                    <th class="th-center"><input type="checkbox"id="select_all"/></th>
+                    <th class="th-center">Conference name</th>
+                    <th class="th-center">call ID</th>
+                    <th class="th-center">current visitor</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <!-- 데이터 확인 후 작업 예정 -->
+                % for n in range(0,6):
+                <tr>
+                    <td><input type="checkbox"/></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                % endfor
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+</%block>
+
+<%block name="scriptDown">
+<script>
+    $(document).ready(function() {
+        $table = $("#table_activeCall");
+        $table.dataTable({
+            sLengthMenu: [
+                [10, 20, 50, -1], //key
+                [10, 20, 50, "All"] //value
+            ],
+            dom: '<"clear"fl><"search">rt<"bottom"ipl>',
+            searching: true,
+            paginate: true,
+            order: [[1, 'desc']],
+            "oLanguage": {
+                "sInfo": "Page: _PAGE_ / _PAGES_",
+                'sLengthMenu': 'Display <select name="datatable-length">'+
+                '<option value="10">10</option>'+
+                '<option value="20">20</option>'+
+                '<option value="50">50</option>'+
+                '<option value="-1">All</option>'+
+                '</select> records',
+                "oPaginate": {
+                    "sNext": ">",
+                    "sPrevious": "<",
+                },
+
+            },
+            columns: [
+                {'orderable': false},
+                null,
+                null,
+                null,
+            ],
+            columnDefs: [
+                {targets: 0, orderable: 'false', searchable: false, className: "text-center"},
+            ],
+            'initComplete': function(){
+            }
+        });
+
+        $("input:checkbox[id='select_all']").click(function () {
+            checkbox_all();
+        });
+
+    });
+
+
+    function checkbox_all(){
+        if($("input:checkbox[id='select_all']").prop("checked")) {
+            $('input:checkbox').prop("checked", true);
+        } else {
+            $('input:checkbox').prop("checked", false);
+        }
+    }
+
+</script>
 </%block>

@@ -16,7 +16,8 @@ from django.utils import translation
   <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Flatkit">
   <meta name="mobile-web-app-capable" content="yes">
-
+  <script src="/static/common/libs/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.js"></script>
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.css">
 
   <link rel="icon" type="image/png" href="/static/common/img/favicons.png"/>
@@ -26,6 +27,9 @@ from django.utils import translation
   <link rel="stylesheet" href="/static/common/libs/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
   <link rel="stylesheet" href="/static/common/css/app.css" type="text/css" />
   <link rel="stylesheet" href="/static/common/css/style.css" type="text/css" />
+  <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css" rel="stylesheet" />
+  <script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>
+
 </head>
 
 <body>
@@ -175,12 +179,14 @@ from django.utils import translation
 		                      <span class="nav-text">Template</span>
 		                    </a>
                     </li>
+                      <!--
                     <li>
-                      <!--<a href="/reserveConference">-->
+                      <!--<a href="/reserveConference">
                         <a href="javascript:window.location.href = '/reserveConference';">
 		                      <span class="nav-text">Reserve Conference</span>
 		                    </a>
                     </li>
+                      -->
                     <!--
                     <li>
                       <a href="/reserveConferenceCal">
@@ -412,7 +418,7 @@ from django.utils import translation
 
     <div class="hidden_csrftoken" style="display:none">${ csrf_token }</div>
 
-    <script src="/static/common/libs/jquery/dist/jquery.min.js"></script>
+
 
     <script>
     $( document ).ready(function() {
@@ -429,7 +435,7 @@ from django.utils import translation
     //}
     </script>
 
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.js"></script>
+
 
     <script src="/static/common/libs/popper.js/dist/umd/popper.min.js"></script>
     <script src="/static/common/libs/bootstrap/dist/js/bootstrap.min.js"></script>

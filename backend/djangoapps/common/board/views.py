@@ -10,6 +10,7 @@ import math
 
 from backend.djangoapps.common.api.views import api_coSpaces
 
+
 def commList(request):
 
     page_size = int(request.POST.get('page_size'))
