@@ -3337,7 +3337,7 @@ Colors
   background-color: #f9fafc; }
 
 .dark {
-  color: rgba(232, 215, 238, 1.0);
+  color: rgba(160, 180, 200, 0.85);
   background-color: #1e2835; }
   .dark.lt,
   .dark .lt {
