@@ -12,107 +12,123 @@ from django.utils.translation import ugettext as _
       <small>ENVIRONMENT</small>
     </div>
   </div>
-<style>
+  <style>
     #example{
       width: 70%; !important;
+      border: 1px solid #CECEF6 !important;
     }
-  .environment{
-    margin-left: 50px !important;
-    width: 30% !important;
-  }
+    .environment{
+      font-size: 15px !important;
+      margin-left: 5px !important;
+      width: 30% !important;
+      border-right: 1px !important;
+    }
+    #timezone{
+      font-size: 15px !important;
+      height: 25px !important;
+      border: 1px solid #0a6aa1 !important;
+      background-color: whitesmoke !important;
+    }
+    input[type="checkbox"] {
+      position: absolute !important;
+      height: 25px !important;
+      width: 25px !important;
+      background-color: #eee !important;
+      border: 1px solid #0a6aa1 !important;
+    }
   </style>
   <div class="box">
     <div class="box-header accent">
-      <h3>API</h3>
+      <h3 style="font-size: 20px;">API</h3>
     </div>
     <table class="table table-bordered">
       <tbody>
-        <tr>
-          <td class="environment">API Server</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
-        </tr>
-        <tr>
-          <td class="environment">API PORT</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
-        </tr>
-        <tr>
-          <td class="environment">use HTTPS</td>
-          <td><input type="checkbox"></td>
-        </tr>
-        <tr>
-          <td class="environment">API User Name</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
-        </tr>
-        <tr>
-          <td class="environment">API Password</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
-        </tr>
-        <tr>
-          <td class="environment">API Server for Call Bridge</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
-        </tr>
-        <tr>
-          <td class="environment">API PORT for Call Bridge</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
-        </tr>
-        <tr>
-          <td class="environment">use HTTPS for Call Bridge</td>
-          <td><input type="checkbox"></td>
-        </tr>
+      <tr>
+        <td class="environment"> &nbsp; API Server</td>
+        <td><input type="text" class="form-control" id="example" value="${api_ipAddress}"></td>
+      </tr>
+      <tr>
+        <td class="environment"> &nbsp; API PORT</td>
+        <td><input type="text" class="form-control" id="example" value="${api_port}"></td>
+      </tr>
+      <tr>
+        <td class="environment"> &nbsp; use HTTPS</td>
+        % if api_useHttps == 'true':
+        <td><input type="checkbox" checked></td>
+        % else:
+        <td><input type="checkbox"></td>
+        % endif
+      </tr>
+      <tr>
+        <td class="environment"> &nbsp; API User Name</td>
+        <td><input type="text" class="form-control" id="example" value="${api_userName}"></td>
+      </tr>
+      <tr>
+        <td class="environment"> &nbsp; API Password</td>
+        <td><input type="password" class="form-control" id="example" placeholder=value="${api_password}"></td>
+      </tr>
+      <tr>
+        <td class="environment"> &nbsp; API Server for Call Bridge</td>
+        <td><input type="text" class="form-control" id="example" placeholder=value="${api_ipAddress1}"></td>
+      </tr>
+      <tr>
+        <td class="environment"> &nbsp; API PORT for Call Bridge</td>
+        <td><input type="text" class="form-control" id="example" placeholder=value="${api_port1}></td>
+      </tr>
+      <tr>
+        <td class="environment"> &nbsp; use HTTPS for Call Bridge</td>
+        % if api_useHttps1 == 'true':
+        <td><input type="checkbox" checked></td>
+        % else:
+        <td><input type="checkbox"></td>
+        % endif
+      </tr>
       </tbody>
     </table>
   </div>
 
   <div class="box">
     <div class="box-header accent">
-      <h3>System Account</h3>
+      <h3 style="font-size: 20px;">System Account</h3>
     </div>
     <table class="table table-bordered">
       <tbody>
-        <tr>
-          <td class="environment">Time Zone</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
-        </tr>
-        <tr>
-          <td class="environment">CISCO CMS URL</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
-        </tr>
-        <tr>
-          <td class="environment">Jitter Alert (over)</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
-        </tr>
-        <tr>
-          <td class="environment">PacketLoss Alert (over)</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
-        </tr>
-        <tr>
-          <td class="environment">Main Logo</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
-        </tr>
-        <tr>
-          <td class="environment">Login Logo</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
-        </tr>
-        <tr>
-          <td class="environment">Administrator Cisco Spark ID</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
-        </tr>
-        <tr>
-          <td class="environment">WebEx Site Name</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
-        </tr>
-        <tr>
-          <td class="environment">WebEx ID</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
-        </tr>
-        <tr>
-          <td class="environment">WebEx Password</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
-        </tr>
-        <tr>
-          <td class="environment">UI Template</td>
-          <td><input type="text" class="form-control" id="example" placeholder=""></td>
-        </tr>
+      <tr>
+        <td class="environment"> &nbsp; Time Zone</td>
+        <td><input type="text" class="form-control" id="example" value="${account_defaultTimeZone}"></td>
+      </tr>
+      <tr>
+        <td class="environment"> &nbsp; CISCO CMS URL</td>
+        <td><input type="text" class="form-control" id="example" value="${account_cmsAdminUrl}"></td>
+      </tr>
+      <tr>
+        <td class="environment"> &nbsp; Jitter Alert (over)</td>
+        <td><input type="text" class="form-control" id="example" value="${account_jitter}"></td>
+      </tr>
+      <tr>
+        <td class="environment"> &nbsp; PacketLoss Alert (over)</td>
+        <td><input type="text" class="form-control" id="example" value="${account_packetLoss}"></td>
+      </tr>
+      <tr>
+        <td class="environment"> &nbsp; Administrator Cisco Spark ID</td>
+        <td><input type="text" class="form-control" id="example" value="${account_cisocoSparkId}"></td>
+      </tr>
+      <tr>
+        <td class="environment"> &nbsp; WebEx Site Name</td>
+        <td><input type="text" class="form-control" id="example" value="${account_cloudWebExSiteName}"></td>
+      </tr>
+      <tr>
+        <td class="environment"> &nbsp; WebEx ID</td>
+        <td><input type="text" class="form-control" id="example" value="${account_cloudWebExId}"></td>
+      </tr>
+      <tr>
+        <td class="environment"> &nbsp; WebEx Password</td>
+        <td><input type="text" class="form-control" id="example" value="${account_cloudWebExPwd}"></td>
+      </tr>
+      <tr>
+        <td class="environment"> &nbsp; UI Template</td>
+        <td><input type="text" class="form-control" id="example" value="${account_uiTemplate}"></td>
+      </tr>
       </tbody>
     </table>
   </div>
