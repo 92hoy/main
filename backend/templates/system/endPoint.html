@@ -49,6 +49,76 @@ from django.utils.translation import ugettext as _
         </div>
     </div>
 </div>
+<!--  Layer popup -->
+
+<div class="dim-layer">
+    <div class="dimBg"></div>
+
+    <div id="layer2" class="pop-layer">
+        <div class="pop-container">
+            <div class="pop-conts">
+
+          <span class="nav-icon" style="padding-bottom: 18px;">
+            <i class="fa fa-plug"></i>
+          </span>
+                <div style="margin-bottom: 10px;">
+                    <strong>Account</strong><a href="#" class="btn-layerClose" style="float: right; font-size:18px;">X</a>
+                </div>
+                <hr width="100%" color="#d9d9d9">
+                <div style="text-align: center;">
+                    <table style="display: inline-block; width:100%;">
+                        <tr style="margin-bottom: 10px;">
+                            <td>Name</td>
+                            <td class="rightTd"><input type="text" class="form-control wi280" id="user_id"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Device Type</td>
+                            <td class="rightTd"><input type="text" class="form-control"  id="user_name"><br></td>
+                        </tr>
+                        <tr>
+                            <td>IP</td>
+                            <td class="rightTd"><input type="password" class="form-control"  id="user_pw"><br></td>
+                        </tr>
+                        <tr>
+                            <td>SIP</td>
+                            <td class="rightTd"><input type="password" class="form-control"id="user_pw2"><br></td>
+                        </tr>
+                        <tr>
+                            <td>H.323</td>
+                            <td class="rightTd"><input type="password" class="form-control"id="user_pw2"><br></td>
+                        </tr>
+                        <tr>
+                            <td>MSLync</td>
+                            <td class="rightTd"><input type="password" class="form-control"id="user_pw2"><br></td>
+                        </tr>
+                        <tr>
+                            <td>UserName</td>
+                            <td class="rightTd"><input type="password" class="form-control"id="user_pw2"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Recoring Device</td>
+                            <td class="rightTd"><input type="password" class="form-control"id="user_pw2"><br></td>
+                        </tr>
+                        <tr>
+                            <td>Group Name</td>
+                            <td class="rightTd"><input type="password" class="form-control"id="user_pw2"><br></td>
+                        </tr>
+                        <tr>
+                            <td>SortNo</td>
+                            <td class="rightTd"><input type="password" class="form-control"id="user_pw2"><br></td>
+                        </tr>
+
+
+                    </table>
+
+                    <button class="md-btn md-raised mb-2 w-xs purple mgt-20" id="confSave" onclick="btn_save()">SAVE</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--  Layer popup -->
 </%block>
 
 <%block name="scriptDown">
