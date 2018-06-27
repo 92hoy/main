@@ -5,14 +5,8 @@ from django.utils.translation import ugettext as _
 %>
 
 <%block name="containor">
-<div class="padding">
-  <div class="box">
-    <div class="box-header">
-      <h2>ENVIRONMENT</h2>
-      <small>ENVIRONMENT</small>
-    </div>
-  </div>
-  <style>
+
+<style>
     #example{
       width: 70%; !important;
       border: 1px solid #CECEF6 !important;
@@ -36,11 +30,31 @@ from django.utils.translation import ugettext as _
       background-color: #eee !important;
       border: 1px solid #0a6aa1 !important;
     }
+  #btn_save{
+    float: right;
+    margin-top: 11px;
+    margin-right: 2px;
+    margin-bottom: 5px;
+    background-color: #E6E0F8;
+    display: inline-block;
+  }
   </style>
+
+
+<div class="padding">
   <div class="box">
-    <div class="box-header accent">
-      <h3 style="font-size: 20px;">API</h3>
+    <div class="box-header">
+      <h2>ENVIRONMENT</h2>
+      <small>ENVIRONMENT</small>
     </div>
+    <button id="btn_save" class="md-btn md-raised mb-2 w-xs white"  >Save</button>
+  </div>
+<br>
+  <div class="box">
+    <div class="box-header accent" style="background-color: #A9D0F5; ">
+      <h3 style="font-size: 20px; ">API</h3>
+    </div>
+
     <table class="table table-bordered">
       <tbody>
       <tr>
@@ -88,7 +102,7 @@ from django.utils.translation import ugettext as _
   </div>
 
   <div class="box">
-    <div class="box-header accent">
+    <div class="box-header accent" style="background-color: #A9D0F5;">
       <h3 style="font-size: 20px;">System Account</h3>
     </div>
     <table class="table table-bordered">
