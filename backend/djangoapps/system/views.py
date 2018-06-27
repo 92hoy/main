@@ -4,14 +4,21 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_protect
 from django.db import connections
 
+from backend.djangoapps.common.api.views import api_users
+from backend.djangoapps.common.api.views import api_cdrReceivers
+
 
 # 호출 상태
 def cdr(request):
 
-    #resDataJson = api_coSpaces()
+    resDataJson = api_cdrReceivers()
+    return_data = list()
+    if resDataJson['cdrReceivers']['@total'] != '1':
+        return_data = resDataJson['cdrReceivers']['cdrReceiver']
+    else:
+        return_data.append(resDataJson['cdrReceivers']['cdrReceiver'])
 
-    context = {}
-    #context['resDataJson'] = resDataJson
+    context = {'data': return_data}
 
     return render(request, 'system/cdr.html', context)
 
@@ -124,10 +131,21 @@ def endPointGroup(request):
 # 시스템 상태
 def acanoClient(request):
 
-    #resDataJson = api_coSpaces()
+    resDataJson = api_users()
 
-    context = {}
-    #context['resDataJson'] = resDataJson
+    acano_list = list()
+
+    for data in resDataJson['users']['user']:
+        reData = dict()
+        res_user = api_users(data['@id'])
+
+        reData['userJid'] = res_user['user']['userJid']
+        reData['name'] = res_user['user']['name']
+        reData['email'] = res_user['user']['email']
+        reData['tenant'] = res_user['user']['tenant'] if 'tenant' in res_user['user'] else ''
+        acano_list.append(reData)
+
+    context = {'data': acano_list}
 
     return render(request, 'system/acanoClient.html', context)
 

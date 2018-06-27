@@ -152,9 +152,9 @@ from django.utils.translation import ugettext as _
                 <td></td>
                 <td>${data['name']}</td>
                 <td>${data['uri']}</td>
-                <td></td>
+                <td>${data['secondaryUri']}</td>
                 <td>${data['callId']}</td>
-                <td></td>
+                <td>${data['cdrTag']}</td>
             </tr>
             % endfor
             </tbody>
@@ -181,8 +181,8 @@ from django.utils.translation import ugettext as _
         var data_tb = $table.dataTable({
             rowReorder: false,
             sLengthMenu: [
-                [5,10, 20, 50, -1], //key
-                [5,10, 20, 50, "All"] //value
+                [10, 20, 50, -1], //key
+                [10, 20, 50, "All"] //value
             ],
             dom: '<"clear"fl><"search">rt<"bottom"ipl>',
             searching: true,
@@ -191,7 +191,6 @@ from django.utils.translation import ugettext as _
             "oLanguage": {
                 "sInfo": "Page: _PAGE_ / _PAGES_",
                 'sLengthMenu': 'Display <select name="datatable-length">'+
-                '<option value="5">5</option>'+
                 '<option value="10">10</option>'+
                 '<option value="20">20</option>'+
                 '<option value="50">50</option>'+

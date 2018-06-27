@@ -22,16 +22,16 @@ from django.utils.translation import ugettext as _
                     <th class="th-center">Name</th>
                     <th class="th-center">Email</th>
                     <th class="th-center">User JID</th>
-                    <th class="th-center">tenent</th>
+                    <th class="th-center">tenant</th>
                 </tr>
                 </thead>
                 <tbody>
-                % for n in range(0,6):
+                % for data in context['data']:
                 <tr>
-                    <td>eth 14f</td>
-                    <td>eth 14f@etechsystem.co.kr</td>
-                    <td>eth 14f@etechsystem.co.kr</td>
-                    <td></td>
+                    <td>${data['name']}</td>
+                    <td>${data['email']}</td>
+                    <td>${data['userJid']}</td>
+                    <td>${data['tenant']}</td>
                 </tr>
                 % endfor
                 </tbody>

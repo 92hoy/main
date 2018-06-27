@@ -29,21 +29,21 @@ from django.utils.translation import ugettext as _
             <table class="table table-hover table-striped table-bordered" id="table_activeCall" style="width:100%">
                 <thead>
                 <tr>
-                    <th class="th-center"><input type="checkbox"id="select_all"/></th>
+                    <th class="th-center" style="width: 5%"><input type="checkbox"id="select_all"/></th>
                     <th class="th-center">Conference name</th>
                     <th class="th-center">call ID</th>
-                    <th class="th-center">current visitor</th>
+                    <th class="th-center" style="width: 20%">current visitor</th>
                 </tr>
                 </thead>
                 <tbody>
 
                 <!-- 데이터 확인 후 작업 예정 -->
-                % for n in range(0,6):
+                % for data in context['data']:
                 <tr>
-                    <td><input type="checkbox"/></td>
                     <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>${data['name']}</td>
+                    <td>${data['callId']}</td>
+                    <td style="text-align: right">${data['cv']}</td>
                 </tr>
                 % endfor
                 </tbody>
@@ -87,23 +87,21 @@ from django.utils.translation import ugettext as _
                 null,
             ],
             columnDefs: [
-                {targets: 0, orderable: 'false', searchable: false, className: "text-center"},
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center"},
             ],
-            'initComplete': function(){
+            "drawCallback":function(){
+                $(".paginate_button").attr('href', 'javascript:check_click();');
             }
-        });
-
-        $("input:checkbox[id='select_all']").click(function () {
-            checkbox_all();
         });
 
     });
 
-
-    function checkbox_all(){
+   function check_click(){
+        //alert("paging btn");
         if($("input:checkbox[id='select_all']").prop("checked")) {
-            $('input:checkbox').prop("checked", true);
-        } else {
+            $('input:checkbox').prop("checked", false);
+        }
+        else {
             $('input:checkbox').prop("checked", false);
         }
     }

@@ -37,7 +37,7 @@ from django.utils.translation import ugettext as _
                 <tbody>
                 % for data in context['data']:
                 <tr>
-                    <td><input class="text-center" type="checkbox"/></td>
+                    <td></td>
                     <td>${data['ep_name']}</td>
                     <td>${data['ep_type']}</td>
                     <td>${data['ip']}</td>
@@ -86,25 +86,25 @@ from django.utils.translation import ugettext as _
                 null,
             ],
             columnDefs: [
-                {targets: 0, orderable: 'false', searchable: false, className: "text-center"},
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center"},
             ],
-            'initComplete': function(){
+            "drawCallback":function(){
+                $(".paginate_button").attr('href', 'javascript:check_click();');
             }
-        });
-
-        $("input:checkbox[id='select_all']").click(function () {
-            checkbox_all();
         });
 
     });
 
-    function checkbox_all(){
+    function check_click(){
+        //alert("paging btn");
         if($("input:checkbox[id='select_all']").prop("checked")) {
-            $('input:checkbox').prop("checked", true);
-        } else {
+            $('input:checkbox').prop("checked", false);
+        }
+        else {
             $('input:checkbox').prop("checked", false);
         }
     }
+
     $('.btn-example').click(function(){
         var $href = $(this).attr('href');
         layer_popup($href);

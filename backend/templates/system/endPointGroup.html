@@ -84,12 +84,9 @@ from django.utils.translation import ugettext as _
             columnDefs: [
                 {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center"},
             ],
-            'initComplete': function(){
+            "drawCallback":function(){
+                $(".paginate_button").attr('href', 'javascript:check_click();');
             }
-        });
-
-        $("input:checkbox[id='select_all']").click(function () {
-            checkbox_all();
         });
 
         $table.on('click', 'td', function() {
@@ -115,19 +112,18 @@ from django.utils.translation import ugettext as _
                 $(table_tr).find('input.dt-checkboxes').prop('checked', true);
             });
         });
-
-
     });
 
 
-    function checkbox_all(){
+    function check_click(){
+        //alert("paging btn");
         if($("input:checkbox[id='select_all']").prop("checked")) {
-            $('input:checkbox').prop("checked", true);
-        } else {
+            $('input:checkbox').prop("checked", false);
+        }
+        else {
             $('input:checkbox').prop("checked", false);
         }
     }
-
 
     $('.btn-example').click(function(){
         var $href = $(this).attr('href');
