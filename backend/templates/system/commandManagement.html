@@ -54,17 +54,29 @@ from django.utils.translation import ugettext as _
                     <td class="td_text"> <img src="/static/common/img/video.png" alt="logo" class="cm_img"> &nbsp; Video Send </td>
                     <td>
                         <div class="btn-group-toggle" data-toggle="buttons" id="btn_chk">
-                        <label class="btn btn-outline-info">
-                            <input type="checkbox" checked autocomplete="off"> Checked
+                        % if cc_txVideoMute == 'true':
+                        <label id="cc_txVideoMute" class="btn btn-outline-info active">
+                            <input type="checkbox" checked autocomplete="off">ON</input>
                         </label>
+                        % else:
+                        <label id="cc_txVideoMute" class="btn btn-outline-info">
+                            <input type="checkbox" checked autocomplete="off"> OFF
+                        </label>
+                        % endif
                         </div>
                     </td>
                     <td class="td_text"> <img src="/static/common/img/mpg.png" alt="logo" class="cm_img"> &nbsp; Video Mode </td>
                     <td class="td_text2">
                         <div class="btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-outline-info">
-                            <input type="checkbox" checked autocomplete="off"> Checked
-                        </label>
+                          % if cc_videoMode == 'true':
+                          <label id="cc_videoMode" class="btn btn-outline-info active">
+                              <input type="checkbox" checked autocomplete="off"> ON
+                          </label>
+                          % else:
+                          <label id="cc_videoMode" class="btn btn-outline-info">
+                              <input type="checkbox" checked autocomplete="off"> OFF
+                          </label>
+                          % endif
                         </div>
                     </td>
                 </tr>
@@ -72,17 +84,29 @@ from django.utils.translation import ugettext as _
                     <td class="td_text"> <img src="/static/common/img/volume.png" alt="logo" class="cm_img"> &nbsp; Audio Hearing </td>
                     <td>
                         <div class="btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-outline-info">
-                            <input type="checkbox" checked autocomplete="off"> Checked
-                        </label>
+                          % if cc_txAudioMute == 'true':
+                          <label id="cc_txAudioMute" class="btn btn-outline-info active">
+                              <input type="checkbox" checked autocomplete="off"> ON
+                          </label>
+                          % else:
+                          <label id="cc_txAudioMute" class="btn btn-outline-info">
+                              <input type="checkbox" checked autocomplete="off"> OFF
+                          </label>
+                          % endif
                         </div>
                     </td>
                     <td class="td_text"> <img src="/static/common/img/mic.png" alt="logo" class="cm_img"> &nbsp; Audio Speaking </td>
                     <td>
                         <div class="btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-outline-info">
-                            <input type="checkbox" checked autocomplete="off"> Checked
-                        </label>
+                          % if cc_rxAudioMute == 'true':
+                          <label id="cc_rxAudioMute" class="btn btn-outline-info active">
+                              <input type="checkbox" checked autocomplete="off"> ON
+                          </label>
+                          % else:
+                          <label id="cc_rxAudioMute" class="btn btn-outline-info">
+                              <input type="checkbox" checked autocomplete="off"> OFF
+                          </label>
+                          % endif
                         </div>
                     </td>
                 </tr>
@@ -91,17 +115,29 @@ from django.utils.translation import ugettext as _
                     <td class="td_text"> <img src="/static/common/img/fileshared.png" alt="logo" class="cm_img"> &nbsp; Document Sharing </td>
                     <td>
                         <div class="btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-outline-info">
-                            <input type="checkbox" checked autocomplete="off"> Checked
-                        </label>
+                          % if cc_presentationContributionAllowed == 'true':
+                          <label id="cc_presentationContributionAllowed" class="btn btn-outline-info active">
+                              <input type="checkbox" checked autocomplete="off"> ON
+                          </label>
+                          % else:
+                          <label id="cc_presentationContributionAllowed" class="btn btn-outline-info">
+                              <input type="checkbox" checked autocomplete="off"> OFF
+                          </label>
+                          % endif
                         </div>
                     </td>
                     <td class="td_text"> <img src="/static/common/img/text file.png" alt="logo" class="cm_img"> &nbsp; Document View </td>
                     <td>
                         <div class="btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-outline-info">
-                            <input type="checkbox" checked autocomplete="off"> Checked
-                        </label>
+                          % if cc_presentationViewingAllowed == 'true':
+                          <label id="cc_presentationViewingAllowed" class="btn btn-outline-info active">
+                              <input type="checkbox" checked autocomplete="off"> ON
+                          </label>
+                          % else:
+                          <label id="cc_presentationViewingAllowed" class="btn btn-outline-info">
+                              <input type="checkbox" checked autocomplete="off"> OFF
+                          </label>
+                          % endif
                         </div>
                     </td>
                 </tr>
@@ -109,9 +145,15 @@ from django.utils.translation import ugettext as _
                     <td class="td_text"> <img src="/static/common/img/view.png" alt="logo" class="cm_img"> &nbsp; Video Receive </td>
                     <td>
                         <div class="btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-outline-info">
-                            <input type="checkbox" checked autocomplete="off"> Checked
-                        </label>
+                          % if cc_rxVideoMute == 'true':
+                          <label id="cc_rxVideoMute" class="btn btn-outline-info active">
+                              <input type="checkbox" checked autocomplete="off"> ON
+                          </label>
+                          % else:
+                          <label id="cc_rxVideoMute" class="btn btn-outline-info">
+                              <input type="checkbox" checked autocomplete="off"> OFF
+                          </label>
+                          % endif
                         </div>
                     </td>
                 </tr>
@@ -120,11 +162,115 @@ from django.utils.translation import ugettext as _
         </div>
     </div>
 </div>
+</%block>
+<%block name="scriptDown">
+<script>
+$( document ).ready(function() {
 
+  function common_ccChange(inputMode, inputFlag){
+    $.post( "/ccChange", {
+       mode: inputMode,
+       flag: inputFlag
+     })
+    .done(function( data ) {
+      if(data.return === 'success'){
+        console.log("success");
+      }
+    });
+  }
 
-<!-- 기본 소스
- <label class="ui-check">
-                  <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check"><i></i> I agree to the <a href="#" class="text-info">Terms of Service</a>
-                </label>
- -->
+  $( "#cc_txVideoMute" ).click(function() {
+    var el = $( "#cc_txVideoMute" );
+    if(el.text().trim() === 'ON'){
+      common_ccChange('txVideoMute', 'off')
+      el.addClass("active");
+      el.text('OFF');
+    }
+    else if(el.text().trim() === 'OFF'){
+      common_ccChange('txVideoMute', 'on')
+      el.removeClass("active");
+      el.text('ON');
+    }
+  });
+
+  $( "#cc_videoMode" ).click(function() {
+    var el = $( "#cc_videoMode" );
+    if(el.text().trim() === 'ON'){
+      common_ccChange('videoMode', 'off')
+      el.addClass("active");
+      el.text('OFF');
+    }
+    else if(el.text().trim() === 'OFF'){
+      common_ccChange('videoMode', 'on')
+      el.removeClass("active");
+      el.text('ON');
+    }
+  });
+  $( "#cc_txAudioMute" ).click(function() {
+    var el = $( "#cc_txAudioMute" );
+    if(el.text().trim() === 'ON'){
+      common_ccChange('txAudioMute', 'off')
+      el.addClass("active");
+      el.text('OFF');
+    }
+    else if(el.text().trim() === 'OFF'){
+      common_ccChange('txAudioMute', 'on')
+      el.removeClass("active");
+      el.text('ON');
+    }
+  });
+  $( "#cc_rxAudioMute" ).click(function() {
+    var el = $( "#cc_rxAudioMute" );
+    if(el.text().trim() === 'ON'){
+      common_ccChange('rxAudioMute', 'off')
+      el.addClass("active");
+      el.text('OFF');
+    }
+    else if(el.text().trim() === 'OFF'){
+      common_ccChange('rxAudioMute', 'on')
+      el.removeClass("active");
+      el.text('ON');
+    }
+  });
+  $( "#cc_presentationContributionAllowed" ).click(function() {
+    var el = $( "#cc_presentationContributionAllowed" );
+    if(el.text().trim() === 'ON'){
+      common_ccChange('presentationContributionAllowed', 'off')
+      el.addClass("active");
+      el.text('OFF');
+    }
+    else if(el.text().trim() === 'OFF'){
+      common_ccChange('presentationContributionAllowed', 'on')
+      el.removeClass("active");
+      el.text('ON');
+    }
+  });
+  $( "#cc_presentationViewingAllowed" ).click(function() {
+    var el = $( "#cc_presentationViewingAllowed" );
+    if(el.text().trim() === 'ON'){
+      common_ccChange('presentationViewingAllowed', 'off')
+      el.addClass("active");
+      el.text('OFF');
+    }
+    else if(el.text().trim() === 'OFF'){
+      common_ccChange('presentationViewingAllowed', 'on')
+      el.removeClass("active");
+      el.text('ON');
+    }
+  });
+  $( "#cc_rxVideoMute" ).click(function() {
+    var el = $( "#cc_rxVideoMute" );
+    if(el.text().trim() === 'ON'){
+      common_ccChange('rxVideoMute', 'off')
+      el.addClass("active");
+      el.text('OFF');
+    }
+    else if(el.text().trim() === 'OFF'){
+      common_ccChange('rxVideoMute', 'on')
+      el.removeClass("active");
+      el.text('ON');
+    }
+  });
+});
+</script>
 </%block>

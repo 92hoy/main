@@ -10,17 +10,6 @@ from backend.djangoapps.common.core.views import coreJson
 def environment(request):
 
     jsonData = coreJson()
-    print(jsonData['account']['defaultTimeZone'])
-    print(jsonData['account']['cmsAdminUrl'])
-    print(jsonData['account']['jitter'])
-    print(jsonData['account']['packetLoss'])
-    print(jsonData['account']['userName'])
-    print(jsonData['account']['password'])
-    print(jsonData['account']['uiTemplate'])
-    print(jsonData['account']['cisocoSparkId'])
-    print(jsonData['account']['cloudWebExSiteName'])
-    print(jsonData['account']['cloudWebExId'])
-    print(jsonData['account']['cloudWebExPwd'])
 
     context = {}
     context['api_ipAddress'] = jsonData['api']['ipAddress']

@@ -30,14 +30,10 @@ from django.utils.translation import ugettext as _
       background-color: #eee !important;
       border: 1px solid #0a6aa1 !important;
     }
-  #btn_save{
-    float: right;
-    margin-top: 11px;
-    margin-right: 2px;
-    margin-bottom: 5px;
-    background-color: #E6E0F8;
-    display: inline-block;
-  }
+    .outDiv{
+      width: 100%;
+      text-align: right;
+    }
   </style>
 
 
@@ -47,11 +43,13 @@ from django.utils.translation import ugettext as _
       <h2>ENVIRONMENT</h2>
       <small>ENVIRONMENT</small>
     </div>
-    <button id="btn_save" class="md-btn md-raised mb-2 w-xs white"  >Save</button>
   </div>
 <br>
+  <div class="outDiv">
+    <button id="btn_save" class="md-btn md-raised mb-2 w-xs blue">Save</button>
+  </div>
   <div class="box">
-    <div class="box-header accent" style="background-color: #A9D0F5; ">
+    <div class="box-header accent">
       <h3 style="font-size: 20px; ">API</h3>
     </div>
 
@@ -79,15 +77,15 @@ from django.utils.translation import ugettext as _
       </tr>
       <tr>
         <td class="environment"> &nbsp; API Password</td>
-        <td><input type="password" class="form-control" id="example" placeholder=value="${api_password}"></td>
+        <td><input type="password" class="form-control" id="example" value="${api_password}"></td>
       </tr>
       <tr>
         <td class="environment"> &nbsp; API Server for Call Bridge</td>
-        <td><input type="text" class="form-control" id="example" placeholder=value="${api_ipAddress1}"></td>
+        <td><input type="text" class="form-control" id="example" value="${api_ipAddress1}"></td>
       </tr>
       <tr>
         <td class="environment"> &nbsp; API PORT for Call Bridge</td>
-        <td><input type="text" class="form-control" id="example" placeholder=value="${api_port1}></td>
+        <td><input type="text" class="form-control" id="example" value="${api_port1}"></td>
       </tr>
       <tr>
         <td class="environment"> &nbsp; use HTTPS for Call Bridge</td>
@@ -102,7 +100,7 @@ from django.utils.translation import ugettext as _
   </div>
 
   <div class="box">
-    <div class="box-header accent" style="background-color: #A9D0F5;">
+    <div class="box-header accent">
       <h3 style="font-size: 20px;">System Account</h3>
     </div>
     <table class="table table-bordered">

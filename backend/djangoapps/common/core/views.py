@@ -52,3 +52,65 @@ def coreJson():
     print(jsonData['callcommand']['videoMode'])
 
     return jsonData
+
+#from backend.djangoapps.common.api.views import api_command
+@csrf_exempt
+def ccChange(request):
+
+    mode = request.POST.get('mode') # txVideoMute
+    flag = request.POST.get('flag') # on
+
+    print("mode = ", mode)
+    print("flag = ", flag)
+
+    f = open(settings.CORE_APIJSON_PATH, 'r')
+    rawData = f.read()
+    f.close()
+    jsonData = json.loads(rawData)
+
+    print(jsonData)
+
+    if mode == 'txVideoMute':
+        if flag == 'on':
+            jsonData['callcommand']['txVideoMute'] = 'true'
+        elif flag == 'off':
+            jsonData['callcommand']['txVideoMute'] = 'false'
+    elif mode == 'videoMode':
+        if flag == 'on':
+            jsonData['callcommand']['videoMode'] = 'true'
+        elif flag == 'off':
+            jsonData['callcommand']['videoMode'] = 'false'
+    elif mode == 'txAudioMute':
+        if flag == 'on':
+            jsonData['callcommand']['txAudioMute'] = 'true'
+        elif flag == 'off':
+            jsonData['callcommand']['txAudioMute'] = 'false'
+    elif mode == 'rxAudioMute':
+        if flag == 'on':
+            jsonData['callcommand']['rxAudioMute'] = 'true'
+        elif flag == 'off':
+            jsonData['callcommand']['rxAudioMute'] = 'false'
+    elif mode == 'presentationContributionAllowed':
+        if flag == 'on':
+            jsonData['callcommand']['presentationContributionAllowed'] = 'true'
+        elif flag == 'off':
+            jsonData['callcommand']['presentationContributionAllowed'] = 'false'
+    elif mode == 'presentationViewingAllowed':
+        if flag == 'on':
+            jsonData['callcommand']['presentationViewingAllowed'] = 'true'
+        elif flag == 'off':
+            jsonData['callcommand']['presentationViewingAllowed'] = 'false'
+    elif mode == 'rxVideoMute':
+        if flag == 'on':
+            jsonData['callcommand']['rxVideoMute'] = 'true'
+        elif flag == 'off':
+            jsonData['callcommand']['rxVideoMute'] = 'false'
+
+    print(jsonData)
+    rawData = json.dumps(jsonData)
+
+    f = open(settings.CORE_APIJSON_PATH, 'w')
+    f.write(rawData)
+    f.close()
+
+    return JsonResponse({'return':'success'})

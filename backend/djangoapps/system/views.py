@@ -4,6 +4,8 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_protect
 from django.db import connections
 
+from backend.djangoapps.common.core.views import coreJson
+
 # 호출 상태
 def cdr(request):
 
@@ -77,9 +79,22 @@ def logoManagement(request):
 # 시스템 상태
 def commandManagement(request):
 
-    #resDataJson = api_coSpaces()
+    jsonData = coreJson()
+    print(jsonData['callcommand']['txVideoMute'])
+    print(jsonData['callcommand']['rxVideoMute'])
+    print(jsonData['callcommand']['txAudioMute'])
+    print(jsonData['callcommand']['rxAudioMute'])
+    print(jsonData['callcommand']['presentationContributionAllowed'])
+    print(jsonData['callcommand']['presentationViewingAllowed'])
+    print(jsonData['callcommand']['videoMode'])
 
     context = {}
-    #context['resDataJson'] = resDataJson
+    context['cc_txVideoMute'] = jsonData['callcommand']['txVideoMute']
+    context['cc_rxVideoMute'] = jsonData['callcommand']['rxVideoMute']
+    context['cc_txAudioMute'] = jsonData['callcommand']['txAudioMute']
+    context['cc_rxAudioMute'] = jsonData['callcommand']['rxAudioMute']
+    context['cc_presentationContributionAllowed'] = jsonData['callcommand']['presentationContributionAllowed']
+    context['cc_presentationViewingAllowed'] = jsonData['callcommand']['presentationViewingAllowed']
+    context['cc_videoMode'] = jsonData['callcommand']['videoMode']
 
     return render(request, 'system/commandManagement.html', context)

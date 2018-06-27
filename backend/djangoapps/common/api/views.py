@@ -185,4 +185,3 @@ def api_mornitoringStatus():
     print("-------------------> DEBUG[mornitoringStatus ---e]")
 
     return resDataJson
-

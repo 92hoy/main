@@ -30,6 +30,7 @@ from .djangoapps.sparkTest import views as SparkTestViews
 from .djangoapps.common.lang import views as LangViews
 from .djangoapps.common.board import views as BoardViews
 from .djangoapps.common.util import views as UtilViews
+from .djangoapps.common.core import views as CoreViews
 
 schema_view = get_swagger_view(title='happy API')
 
@@ -57,6 +58,9 @@ urlpatterns = [
 
     # util
     url('fileUpload$', UtilViews.fileUpload, name='fileUpload'),
+
+    # core
+    url('ccChange$', CoreViews.ccChange, name='ccChange'),
 
     # login / logout
     url('login$', LoginViews.login, name='login'),
