@@ -39,7 +39,6 @@ def ldap(request):
 # 시스템 상태
 @csrf_exempt
 def account(request):
-
     #-=-=-=-=-=-=-=-Account 생성-=-=-=-=-=-=-=-=-=-=-
     if request.is_ajax():
         user_id = request.POST.get('user_id')
@@ -62,8 +61,6 @@ def account(request):
             cur.execute(query)
             rows = cur.fetchall()
 
-
-        #-------검증--------------------------
         print (query)
         print ("rows ->",rows)
         print("before len rows =>",len(rows))
@@ -118,7 +115,30 @@ def account(request):
 
 
 # 시스템 상태
+@csrf_exempt
 def endPoint(request):
+
+    if request.is_ajax():
+        name= request.POST.get('name'),
+        device_type= request.POST.get('device_type'),
+        user_name= request.POST.get('user_name'),
+        ip= request.POST.get('ip'),
+        sip= request.POST.get('sip'),
+        h_323= request.POST.get('h_323'),
+        mslync= request.POST.get('mslync'),
+        username= request.POST.get('username'),
+        recording_device= request.POST.get('recording_device'),
+        group_name= request.POST.get('group_name'),
+        sortno= request.POST.get('sortno'),
+        print ("name-->",name)
+        print ("device_type-->",device_type)
+        print ("group_name-->",group_name)
+        print ("sortno-->",sortno)
+
+        #대충 값 넘어오는 ajax만 설정
+
+        return JsonResponse({"return":"success"})
+
     with connections['default'].cursor() as cur:
         query = '''
             SELECT ep_id,

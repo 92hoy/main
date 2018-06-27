@@ -27,7 +27,7 @@ from django.utils.translation import ugettext as _
 
     <div class="box" style="padding: 10px;">
         <div style="padding: 10px;">
-            <button class="md-btn md-raised mb-2 w-xs red" id="delBtn" style="float: right;">DEL</button>
+            <button class="md-btn md-raised mb-2 w-xs red" id="delBtn" style="float: right;" onclick="btn_del()">DEL</button>
 
             <a href="#layer2" class="btn-example">
                 <button class="md-btn md-raised mb-2 w-xs indigo dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
@@ -117,7 +117,6 @@ from django.utils.translation import ugettext as _
 
 <%block name="scriptDown">
 <script>
-
     $(document).ready(function() {
         $table = $("#table_account");
         $table.dataTable({
@@ -222,6 +221,9 @@ from django.utils.translation import ugettext as _
                 },
             });
         }
+    }
+    function btn_del(){
+
     }
 
     function layer_popup(el){
