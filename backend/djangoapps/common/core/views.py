@@ -114,3 +114,79 @@ def ccChange(request):
     f.close()
 
     return JsonResponse({'return':'success'})
+
+@csrf_exempt
+def envChange(request):
+
+    api_server = request.POST.get('api_server')
+    api_port = request.POST.get('api_port')
+    use_https = request.POST.get('use_https')
+    api_username = request.POST.get('api_username')
+    api_password = request.POST.get('api_password')
+    api_server_callbridge = request.POST.get('api_server_callbridge')
+    api_port_callbridge = request.POST.get('api_port_callbridge')
+    use_https_callbridge = request.POST.get('use_https_callbridge')
+    time_zone = request.POST.get('time_zone')
+    cisco_cms_url = request.POST.get('cisco_cms_url')
+    jitter = request.POST.get('jitter')
+    packetloss = request.POST.get('packetloss')
+    spark_id = request.POST.get('spark_id')
+    web_sitename = request.POST.get('web_sitename')
+    web_id = request.POST.get('web_id')
+    web_password = request.POST.get('web_password')
+    ui_template = request.POST.get('ui_template')
+
+    print("api_server = ", api_server)
+    print("api_port = ", api_port)
+    print("use_https = ", use_https)
+    print("api_username = ", api_username)
+    print("api_password = ", api_password)
+    print("api_server_callbridge = ", api_server_callbridge)
+    print("api_port_callbridge = ", api_port_callbridge)
+    print("use_https_callbridge = ", use_https_callbridge)
+
+    print("time_zone = ", time_zone)
+    print("cisco_cms_url = ", cisco_cms_url)
+    print("jitter = ", jitter)
+    print("packetloss = ", packetloss)
+    print("spark_id = ", spark_id)
+    print("web_sitename = ", web_sitename)
+    print("web_id = ", web_id)
+    print("web_password = ", web_password)
+    print("ui_template = ", ui_template)
+
+    f = open(settings.CORE_APIJSON_PATH, 'r')
+    rawData = f.read()
+    f.close()
+    jsonData = json.loads(rawData)
+
+    jsonData['api']['ipAddress'] = api_server
+    jsonData['api']['port'] = api_port
+    jsonData['api']['useHttps'] = use_https
+    jsonData['api']['userName'] = api_username
+    jsonData['api']['password'] = api_password
+    jsonData['api']['ipAddress1'] = api_server_callbridge
+    jsonData['api']['port1'] = api_port_callbridge
+    jsonData['api']['useHttps1'] = use_https_callbridge
+    #jsonData['api']['ldapAddress'] =
+    #jsonData['api']['ldapPort'] =
+    #jsonData['api']['domainName'] =
+    jsonData['account']['defaultTimeZone'] = time_zone
+    jsonData['account']['cmsAdminUrl'] = cisco_cms_url
+    jsonData['account']['jitter'] = jitter
+    jsonData['account']['packetLoss'] = packetloss
+    #jsonData['account']['userName'] =
+    #jsonData['account']['password'] =
+    jsonData['account']['uiTemplate'] = ui_template
+    jsonData['account']['cisocoSparkId'] = spark_id
+    jsonData['account']['cloudWebExSiteName'] = web_sitename
+    jsonData['account']['cloudWebExId'] = web_id
+    jsonData['account']['cloudWebExPwd'] = web_password
+
+    rawData = json.dumps(jsonData)
+
+    f = open(settings.CORE_APIJSON_PATH, 'w')
+    f.write(rawData)
+    f.close()
+
+    return JsonResponse({'return':'success'})

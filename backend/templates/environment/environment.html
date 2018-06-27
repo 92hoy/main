@@ -57,42 +57,42 @@ from django.utils.translation import ugettext as _
       <tbody>
       <tr>
         <td class="environment"> &nbsp; API Server</td>
-        <td><input type="text" class="form-control" id="example" value="${api_ipAddress}"></td>
+        <td><input type="text" class="form-control" id="api_server" value="${api_ipAddress}"></td>
       </tr>
       <tr>
         <td class="environment"> &nbsp; API PORT</td>
-        <td><input type="text" class="form-control" id="example" value="${api_port}"></td>
+        <td><input type="text" class="form-control" id="api_port" value="${api_port}"></td>
       </tr>
       <tr>
         <td class="environment"> &nbsp; use HTTPS</td>
         % if api_useHttps == 'true':
-        <td><input type="checkbox" checked></td>
+        <td><input id="use_https" type="checkbox" checked></td>
         % else:
-        <td><input type="checkbox"></td>
+        <td><input id="use_https" type="checkbox"></td>
         % endif
       </tr>
       <tr>
         <td class="environment"> &nbsp; API User Name</td>
-        <td><input type="text" class="form-control" id="example" value="${api_userName}"></td>
+        <td><input type="text" class="form-control" id="api_username" value="${api_userName}"></td>
       </tr>
       <tr>
         <td class="environment"> &nbsp; API Password</td>
-        <td><input type="password" class="form-control" id="example" value="${api_password}"></td>
+        <td><input type="password" class="form-control" id="api_password" value="${api_password}"></td>
       </tr>
       <tr>
         <td class="environment"> &nbsp; API Server for Call Bridge</td>
-        <td><input type="text" class="form-control" id="example" value="${api_ipAddress1}"></td>
+        <td><input type="text" class="form-control" id="api_server_callbridge" value="${api_ipAddress1}"></td>
       </tr>
       <tr>
         <td class="environment"> &nbsp; API PORT for Call Bridge</td>
-        <td><input type="text" class="form-control" id="example" value="${api_port1}"></td>
+        <td><input type="text" class="form-control" id="api_port_callbridge" value="${api_port1}"></td>
       </tr>
       <tr>
         <td class="environment"> &nbsp; use HTTPS for Call Bridge</td>
         % if api_useHttps1 == 'true':
-        <td><input type="checkbox" checked></td>
+        <td><input id="use_https_callbridge" type="checkbox" checked></td>
         % else:
-        <td><input type="checkbox"></td>
+        <td><input id="use_https_callbridge" type="checkbox"></td>
         % endif
       </tr>
       </tbody>
@@ -107,43 +107,116 @@ from django.utils.translation import ugettext as _
       <tbody>
       <tr>
         <td class="environment"> &nbsp; Time Zone</td>
-        <td><input type="text" class="form-control" id="example" value="${account_defaultTimeZone}"></td>
+        <td><input type="text" class="form-control" id="time_zone" value="${account_defaultTimeZone}"></td>
       </tr>
       <tr>
         <td class="environment"> &nbsp; CISCO CMS URL</td>
-        <td><input type="text" class="form-control" id="example" value="${account_cmsAdminUrl}"></td>
+        <td><input type="text" class="form-control" id="cisco_cms_url" value="${account_cmsAdminUrl}"></td>
       </tr>
       <tr>
         <td class="environment"> &nbsp; Jitter Alert (over)</td>
-        <td><input type="text" class="form-control" id="example" value="${account_jitter}"></td>
+        <td><input type="text" class="form-control" id="jitter" value="${account_jitter}"></td>
       </tr>
       <tr>
         <td class="environment"> &nbsp; PacketLoss Alert (over)</td>
-        <td><input type="text" class="form-control" id="example" value="${account_packetLoss}"></td>
+        <td><input type="text" class="form-control" id="packetloss" value="${account_packetLoss}"></td>
       </tr>
       <tr>
         <td class="environment"> &nbsp; Administrator Cisco Spark ID</td>
-        <td><input type="text" class="form-control" id="example" value="${account_cisocoSparkId}"></td>
+        <td><input type="text" class="form-control" id="spark_id" value="${account_cisocoSparkId}"></td>
       </tr>
       <tr>
         <td class="environment"> &nbsp; WebEx Site Name</td>
-        <td><input type="text" class="form-control" id="example" value="${account_cloudWebExSiteName}"></td>
+        <td><input type="text" class="form-control" id="web_sitename" value="${account_cloudWebExSiteName}"></td>
       </tr>
       <tr>
         <td class="environment"> &nbsp; WebEx ID</td>
-        <td><input type="text" class="form-control" id="example" value="${account_cloudWebExId}"></td>
+        <td><input type="text" class="form-control" id="web_id" value="${account_cloudWebExId}"></td>
       </tr>
       <tr>
         <td class="environment"> &nbsp; WebEx Password</td>
-        <td><input type="text" class="form-control" id="example" value="${account_cloudWebExPwd}"></td>
+        <td><input type="text" class="form-control" id="web_password" value="${account_cloudWebExPwd}"></td>
       </tr>
       <tr>
         <td class="environment"> &nbsp; UI Template</td>
-        <td><input type="text" class="form-control" id="example" value="${account_uiTemplate}"></td>
+        <td><input type="text" class="form-control" id="ui_template" value="${account_uiTemplate}"></td>
       </tr>
       </tbody>
     </table>
   </div>
 </div>
 
+</%block>
+<%block name="scriptDown">
+<script>
+$( document ).ready(function() {
+  $( "#btn_save" ).click(function() {
+    var api_server = $('#api_server').val();
+    var api_port = $('#api_port').val();
+    var use_https = $('#use_https').prop("checked");
+    var api_username = $('#api_username').val();
+    var api_password = $('#api_password').val();
+    var api_server_callbridge =  $('#api_server_callbridge').val();
+    var api_port_callbridge = $('#api_port_callbridge').val();
+    var use_https_callbridge = $('#use_https_callbridge').prop("checked");
+
+    var time_zone = $('#time_zone').val();
+    var cisco_cms_url = $('#cisco_cms_url').val();
+    var jitter = $('#jitter').val();
+    var packetloss = $('#packetloss').val();
+    var spark_id = $('#spark_id').val();
+    var web_sitename = $('#web_sitename').val();
+    var web_id = $('#web_id').val();
+    var web_password = $('#web_password').val();
+    var ui_template = $('#ui_template').val();
+
+    $.post( "/envChange", {
+       api_server: api_server,
+       api_port: api_port,
+       use_https: use_https,
+       api_username: api_username,
+       api_password: api_password,
+       api_server_callbridge: api_server_callbridge,
+       api_port_callbridge: api_port_callbridge,
+       use_https_callbridge: use_https_callbridge,
+       time_zone: time_zone,
+       cisco_cms_url: cisco_cms_url,
+       jitter: jitter,
+       packetloss: packetloss,
+       spark_id: spark_id,
+       web_sitename: web_sitename,
+       web_id: web_id,
+       web_password: web_password,
+       ui_template: ui_template,
+     })
+    .done(function( data ) {
+      if(data.return === 'success'){
+        alert("success");
+      }
+    });
+
+  });
+
+  console.log("=== API ===");
+  console.log( "api_server = ", $('#api_server').val() );
+  console.log( "api_port = ", $('#api_port').val() );
+  console.log( "use_https = ", $('#use_https').prop("checked") );
+  console.log( "api_username = ", $('#api_username').val() );
+  console.log( "api_password = ", $('#api_password').val() );
+  console.log( "api_server_callbridge = ", $('#api_server_callbridge').val() );
+  console.log( "api_port_callbridge = ", $('#api_port_callbridge').val() );
+  console.log( "use_https_callbridge = ", $('#use_https_callbridge').prop("checked") );
+
+  console.log("=== System Account ===");
+  console.log( "time_zone = ", $('#time_zone').val() );
+  console.log( "cisco_cms_url = ", $('#cisco_cms_url').val() );
+  console.log( "jitter = ", $('#jitter').val() );
+  console.log( "packetloss = ", $('#packetloss').val() );
+  console.log( "spark_id = ", $('#spark_id').val() );
+  console.log( "web_sitename = ", $('#web_sitename').val() );
+  console.log( "web_id = ", $('#web_id').val() );
+  console.log( "web_password = ", $('#web_password').val() );
+  console.log( "ui_template = ", $('#ui_template').val() );
+});
+</script>
 </%block>

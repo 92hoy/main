@@ -61,6 +61,7 @@ urlpatterns = [
 
     # core
     url('ccChange$', CoreViews.ccChange, name='ccChange'),
+    url('envChange$', CoreViews.envChange, name='envChange'),
 
     # login / logout
     url('login$', LoginViews.login, name='login'),
