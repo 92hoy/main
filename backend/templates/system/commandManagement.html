@@ -6,8 +6,11 @@ from django.utils.translation import ugettext as _
 
 <%block name="containor">
 <style>
+    .table td, .table th{
+        vertical-align: middle !important;
+    }
     td{
-       font-size: 15px !important;
+        font-size: 15px !important;
         height: 30px !important;
     }
     .td_text{
@@ -25,75 +28,96 @@ from django.utils.translation import ugettext as _
     tr{
         height:50px !important;
     }
+    .btn-outline-info:not([disabled]):not(.disabled).active,
+    .btn-outline-info:not([disabled]):not(.disabled):active,
+    .show>.btn-outline-info.dropdown-toggle {
+        color: #212529 !important;
+        background-color: #81BEF7 !important;
+        border-color: #17a2b8;
+        box-shadow: 0 0 0 0.2rem #81BEF7;
+    }
 </style>
 <div class="padding">
 
-  <div class="box">
-    <div class="box-header">
-      <h2>COMMAND MANAGEMENT</h2>
-      <small>COMMAND MANAGEMENT</small>
+    <div class="box">
+        <div class="box-header">
+            <h2>COMMAND MANAGEMENT</h2>
+            <small>COMMAND MANAGEMENT</small>
+        </div>
     </div>
-  </div>
 
-  <div class="box">
-      <div class="table-responsive">
-        <table class="table table-bordered">
-          <tbody>
-            <tr>
-              <td class="td_text"> <img src="/static/common/img/video.png" alt="logo" class="cm_img"> &nbsp; Video Send </td>
-              <td>
-                  <p><input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a></p>
-              </td>
-            </tr>
-            <tr>
-              <td class="td_text"> <img src="/static/common/img/mpg.png" alt="logo" class="cm_img"> &nbsp; Video Mode </td>
-              <td class="td_text2">
-                  <p><input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a></p>
-              </td>
-            </tr>
-            <tr>
-              <td class="td_text"> <img src="/static/common/img/volume.png" alt="logo" class="cm_img"> &nbsp; Audio Hearing </td>
-              <td>
+    <div class="box">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <td class="td_text"> <img src="/static/common/img/video.png" alt="logo" class="cm_img"> &nbsp; Video Send </td>
+                    <td>
+                        <div class="btn-group-toggle" data-toggle="buttons" id="btn_chk">
+                        <label class="btn btn-outline-info">
+                            <input type="checkbox" checked autocomplete="off"> Checked
+                        </label>
+                        </div>
+                    </td>
+                    <td class="td_text"> <img src="/static/common/img/mpg.png" alt="logo" class="cm_img"> &nbsp; Video Mode </td>
+                    <td class="td_text2">
+                        <div class="btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-outline-info">
+                            <input type="checkbox" checked autocomplete="off"> Checked
+                        </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_text"> <img src="/static/common/img/volume.png" alt="logo" class="cm_img"> &nbsp; Audio Hearing </td>
+                    <td>
+                        <div class="btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-outline-info">
+                            <input type="checkbox" checked autocomplete="off"> Checked
+                        </label>
+                        </div>
+                    </td>
+                    <td class="td_text"> <img src="/static/common/img/mic.png" alt="logo" class="cm_img"> &nbsp; Audio Speaking </td>
+                    <td>
+                        <div class="btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-outline-info">
+                            <input type="checkbox" checked autocomplete="off"> Checked
+                        </label>
+                        </div>
+                    </td>
+                </tr>
 
-                 <p> <input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a></p>
-
-              </td>
-            </tr>
-            <tr>
-              <td class="td_text"> <img src="/static/common/img/mic.png" alt="logo" class="cm_img"> &nbsp; Audio Speaking </td>
-              <td>
-
-                  <p><input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a></p>
-
-              </td>
-            </tr>
-            <tr>
-              <td class="td_text"> <img src="/static/common/img/fileshared.png" alt="logo" class="cm_img"> &nbsp; Document Sharing </td>
-              <td>
-
-                  <p><input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a></p>
-
-              </td>
-            </tr>
-            <tr>
-              <td class="td_text"> <img src="/static/common/img/text file.png" alt="logo" class="cm_img"> &nbsp; Document View </td>
-              <td>
-
-                  <p><input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a></p>
-
-              </td>
-            </tr>
-            <tr>
-              <td class="td_text"> <img src="/static/common/img/view.png" alt="logo" class="cm_img"> &nbsp; Video Receive </td>
-              <td>
-
-                  <p><input type="checkbox" name="check" checked="" required="true" data-parsley-multiple="check">I agree to the <a href="#" class="text-info">Terms of Service</a></p>
-
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                <tr>
+                    <td class="td_text"> <img src="/static/common/img/fileshared.png" alt="logo" class="cm_img"> &nbsp; Document Sharing </td>
+                    <td>
+                        <div class="btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-outline-info">
+                            <input type="checkbox" checked autocomplete="off"> Checked
+                        </label>
+                        </div>
+                    </td>
+                    <td class="td_text"> <img src="/static/common/img/text file.png" alt="logo" class="cm_img"> &nbsp; Document View </td>
+                    <td>
+                        <div class="btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-outline-info">
+                            <input type="checkbox" checked autocomplete="off"> Checked
+                        </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_text"> <img src="/static/common/img/view.png" alt="logo" class="cm_img"> &nbsp; Video Receive </td>
+                    <td>
+                        <div class="btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-outline-info">
+                            <input type="checkbox" checked autocomplete="off"> Checked
+                        </label>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
