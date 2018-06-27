@@ -191,7 +191,11 @@ $( document ).ready(function() {
      })
     .done(function( data ) {
       if(data.return === 'success'){
-        alert("success");
+        swal(
+          'Data Save',
+          'Saving data successfully',
+          'success'
+        )
       }
     });
 
