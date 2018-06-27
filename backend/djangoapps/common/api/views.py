@@ -21,6 +21,7 @@ def api_coSpaces():
         'Authorization': Authorization
     }
     r = requests.get(url, headers=headers, verify=False)
+    r.encoding = None
     resData = str(r.text)
 
     # xml to json
@@ -37,6 +38,7 @@ def api_coSpaces():
     for n in range(0, int(requestCnt)):
         url = 'https://14.63.53.22:449/api/v1/coSpaces?offset={offset}&limit=20'.format(offset=n*20)
         res = requests.get(url, headers=headers, verify=False)
+        res.encoding = None
         res_data = str(res.text)
         res_o = xmltodict.parse(res_data)
         res_data = json.dumps(res_o)
@@ -71,6 +73,7 @@ def api_coSpaceId(id):
         'Authorization': Authorization
     }
     r = requests.get(url, headers=headers, verify=False)
+    r.encoding = None
     resData = str(r.text)
 
     # xml to json
@@ -85,7 +88,7 @@ def api_coSpaceId(id):
     return resDataJson
 
 #from backend.djangoapps.common.api.views import api_activeCall
-def api_activeCall(id=None):
+def api_activeCall():
     Authorization = settings.AUTHORIZATION
 
     # requests GET
@@ -93,10 +96,53 @@ def api_activeCall(id=None):
     headers = {
         'Authorization': Authorization
     }
-    if id is not None:
-        url = 'https://14.63.53.22:449/api/v1/calls/' + id
 
     r = requests.get(url, headers=headers, verify=False)
+    r.encoding = None
+    resData = str(r.text)
+
+    # xml to json
+    o = xmltodict.parse(resData)
+    resData = json.dumps(o)
+    resDataJson = json.loads(resData)
+
+    print("-------------------> DEBUG[s]")
+    print(resDataJson)
+    print("-------------------> DEBUG[e]")
+
+    requestCnt = (int(resDataJson['calls']['@total']) / 20) + 1
+    resDataList = list()
+
+    for n in range(0, int(requestCnt)):
+        url = 'https://14.63.53.22:449/api/v1/calls?offset={offset}&limit=20'.format(offset=n*20)
+        res = requests.get(url, headers=headers, verify=False)
+        res.encoding = None
+        res_data = str(res.text)
+        res_o = xmltodict.parse(res_data)
+        res_data = json.dumps(res_o)
+        res_data_json = json.loads(res_data)
+        resDataList.append(res_data_json['calls']['call'])
+
+    totDataList = list()
+    for list_data in resDataList:
+        for data in list_data:
+            totDataList.append(data)
+
+    return totDataList
+
+
+#from backend.djangoapps.common.api.views import api_activeCallId
+def api_activeCallId(id):
+    Authorization = settings.AUTHORIZATION
+
+    # requests GET
+    headers = {
+        'Authorization': Authorization
+    }
+    url = 'https://14.63.53.22:449/api/v1/calls/' + id
+
+    r = requests.get(url, headers=headers, verify=False)
+    r.encoding = None
     resData = str(r.text)
 
     # xml to json
@@ -123,6 +169,7 @@ def api_activeCallLegs(id):
         'Authorization': Authorization
     }
     r = requests.get(url, headers=headers, verify=False)
+    r.encoding = None
     resData = str(r.text)
 
     # xml to json
@@ -147,6 +194,7 @@ def api_templateLegPro(id):
         'Authorization': Authorization
     }
     r = requests.get(url, headers=headers, verify=False)
+    r.encoding = None
     resData = str(r.text)
 
     # xml to json
@@ -171,6 +219,7 @@ def api_templatePro(id):
         'Authorization': Authorization
     }
     r = requests.get(url, headers=headers, verify=False)
+    r.encoding = None
     resData = str(r.text)
 
     # xml to json
@@ -195,6 +244,7 @@ def api_mornitoringStatus():
         'Authorization': Authorization
     }
     r = requests.get(url, headers=headers, verify=False)
+    r.encoding = None
     resData = str(r.text)
 
     # xml to json
@@ -210,7 +260,7 @@ def api_mornitoringStatus():
 
 
 #from backend.djangoapps.common.api.views import api_users
-def api_users(id=None):
+def api_users():
 
     Authorization = settings.AUTHORIZATION
 
@@ -220,10 +270,54 @@ def api_users(id=None):
         'Authorization': Authorization
     }
 
-    if id is not None:
-        url = 'https://14.63.53.22:449/api/v1/users/' + id
+    r = requests.get(url, headers=headers, verify=False)
+    r.encoding = None
+    resData = str(r.text)
+
+    # xml to json
+    o = xmltodict.parse(resData)
+    resData = json.dumps(o)
+    resDataJson = json.loads(resData)
+
+    print("-------------------> DEBUG[s]")
+    print(resDataJson)
+    print("-------------------> DEBUG[e]")
+    requestCnt = (int(resDataJson['users']['@total']) / 20) + 1
+    resDataList = list()
+
+    for n in range(0, int(requestCnt)):
+        url = 'https://14.63.53.22:449/api/v1/users?offset={offset}&limit=20'.format(offset=n*20)
+        res = requests.get(url, headers=headers, verify=False)
+        res.encoding = None
+        res_data = str(res.text)
+        res_o = xmltodict.parse(res_data)
+        res_data = json.dumps(res_o)
+        res_data_json = json.loads(res_data)
+        resDataList.append(res_data_json['users']['user'])
+
+    print(resDataList)
+    totDataList = list()
+    for list_data in resDataList:
+        for data in list_data:
+            totDataList.append(data)
+
+    return totDataList
+
+
+#from backend.djangoapps.common.api.views import api_usersId
+def api_usersId(id):
+
+    Authorization = settings.AUTHORIZATION
+
+    # requests GET
+    headers = {
+        'Authorization': Authorization,
+    }
+
+    url = 'https://14.63.53.22:449/api/v1/users/' + id
 
     r = requests.get(url, headers=headers, verify=False)
+    r.encoding = None
     resData = str(r.text)
 
     # xml to json
@@ -249,6 +343,7 @@ def api_cdrReceivers():
     }
 
     r = requests.get(url, headers=headers, verify=False)
+    r.encoding = None
     resData = str(r.text)
 
     # xml to json

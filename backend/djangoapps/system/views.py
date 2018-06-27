@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.db import connections
 
 from backend.djangoapps.common.api.views import api_users
+from backend.djangoapps.common.api.views import api_usersId
 from backend.djangoapps.common.api.views import api_cdrReceivers
 
 
@@ -135,9 +136,9 @@ def acanoClient(request):
 
     acano_list = list()
 
-    for data in resDataJson['users']['user']:
+    for data in resDataJson:
         reData = dict()
-        res_user = api_users(data['@id'])
+        res_user = api_usersId(data['@id'])
 
         reData['userJid'] = res_user['user']['userJid']
         reData['name'] = res_user['user']['name']

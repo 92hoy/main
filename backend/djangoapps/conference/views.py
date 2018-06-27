@@ -7,6 +7,7 @@ from django.db import connections
 from backend.djangoapps.common.api.views import api_coSpaces
 from backend.djangoapps.common.api.views import api_coSpaceId
 from backend.djangoapps.common.api.views import api_activeCall
+from backend.djangoapps.common.api.views import api_activeCallId
 from backend.djangoapps.common.api.views import api_activeCallLegs
 
 
@@ -28,7 +29,7 @@ def activeCall(request):
 
     for data in resDataJson:
         reData = dict()
-        coSpaceId = api_activeCall(data['@id'])
+        coSpaceId = api_activeCallId(data['@id'])
         data_coSpaceId = api_coSpaceId(coSpaceId)
         data_activeCallLegs = api_activeCallLegs(data['@id'])
 
