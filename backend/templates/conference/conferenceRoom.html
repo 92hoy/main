@@ -6,165 +6,166 @@ from django.utils.translation import ugettext as _
 
 <%block name="containor">
 <style>
-.pagination .active .page-link, .pagination .active a{
-  background-color: #6e8df4 !important;
-  border-color: #6e8df4 !important
-}
+    .pagination .active .page-link, .pagination .active a{
+        background-color: #6e8df4 !important;
+        border-color: #6e8df4 !important
+    }
 
-td{
-  border: solid 1px #dddddd;
-  padding: 3px;
-}
+    td{
+        border: solid 1px #dddddd;
+        padding: 3px;
+    }
 
-.rightTd{
-width:100%
-}
+    .rightTd{
+        width:100%
+    }
 </style>
 
 <div class="dim-layer">
     <div class="dimBg"></div>
-    <div id="layer2" class="pop-layer">
+    <div id="layer2" class="pop-layer" style="height: 660px;">
         <div class="pop-container">
             <div class="pop-conts">
 
           <span class="nav-icon" style="padding-bottom: 18px;">
             <i class="fa fa-plug"></i>
           </span>
-          <div style="margin-bottom: 10px;">
-            Conference management<a href="#" class="btn-layerClose" style="float: right;">X</a>
-          </div>
+                <div style="margin-bottom: 10px;">
+                    Conference management<a href="#" class="btn-layerClose" style="float: right;">X</a>
+                </div>
 
-          <div style="text-align: center;">
-              <table style="display: inline-block; width:100%;">
-                      <tbody>
+                <div style="text-align: center;">
+                    <table style="display: inline-block; width:100%;">
+                        <tbody>
                         <tr>
-                          <td>Conference name</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>Conference name<font class="star">*</font></td>
+                            <td class="rightTd"><input type="text" class="form-control" id="conference_name" placeholder=""></td>
                         </tr>
                         <tr>
-                          <td>uri</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>uri<font class="star">*</font></td>
+                            <td class="rightTd"><input type="text" id="conference_uri" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
-                          <td>secondaryUri</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>secondaryUri</td>
+                            <td class="rightTd"><input type="text" id="conference_secondaryUri" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
-                          <td>callId</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>callId<font class="star">*</font></td>
+                            <td class="rightTd"><input type="text" id="conference_callId" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
-                          <td>cdrTag</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>cdrTag</td>
+                            <td class="rightTd"><input type="text" id="conference_cdrTag" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
-                          <td>passcode</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>passcode</td>
+                            <td class="rightTd"><input type="text" id="conference_passcode" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
-                          <td>Confirm password</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>Confirm password</td>
+                            <td class="rightTd"><input type="text" id="conference_confirm_passcode" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
-                          <td>defaultLayout</td>
-                          <td class="rightTd">
-                            <select id="inputState" class="custom-select w-100">
-                              <option selected="">Choose...</option>
-                              <option>...</option>
-                            </select>
-                          </td>
+                            <td>defaultLayout</td>
+                            <td class="rightTd">
+                                <select id="conference_defaultLayout" class="custom-select w-100">
+                                    <option selected="">Choose...</option>
+                                    <option value="allEqual">allEqual</option>
+                                </select>
+                            </td>
                         </tr>
                         <tr>
-                          <td>ownerJid</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>ownerJid</td>
+                            <td class="rightTd"><input type="text" id="conference_ownerJid" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
-                          <td>template</td>
-                          <td class="rightTd">
-                            <select id="inputState" class="custom-select w-100">
-                              <option selected="">Choose...</option>
-                              <option>...</option>
-                            </select>
-                          </td>
+                            <td>template</td>
+                            <td class="rightTd">
+                                <select id="conference_template" class="custom-select w-100">
+                                    <option selected="">Choose...</option>
+                                    <option>...</option>
+                                </select>
+                            </td>
                         </tr>
                         <tr>
-                          <td>streamUrl</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>streamUrl</td>
+                            <td class="rightTd"><input type="text" id="conference_streamUrl" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
-                          <td>ownerAdGuid</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>ownerAdGuid</td>
+                            <td class="rightTd"><input type="text" id="conference_ownerAdGuid" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
-                          <td>MeetingScheduler</td>
-                          <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>MeetingScheduler</td>
+                            <td class="rightTd"><input type="text" id="conference_meetingScheduler" class="form-control" placeholder=""></td>
                         </tr>
-                      </tbody>
+                        </tbody>
                     </table>
 
-                <button class="md-btn md-raised mb-2 w-xs blue mgt10" id="confSave">SAVE</button>
+                    <button class="md-btn md-raised mb-2 w-xs blue mgt10" id="confSave" style="margin-top: 20px;">SAVE</button>
 
-            </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 
-
-
-
 <div class="padding">
 
-  <div class="box">
-    <div class="box-header">
-      <h2>CONFERENCE ROOM</h2>
-      <small>You can see the current meeting status</small>
+    <div class="box">
+        <div class="box-header">
+            <h2>CONFERENCE ROOM</h2>
+            <small>You can see the current meeting status</small>
+        </div>
     </div>
-  </div>
+</div>
 
-  <div class="box" style="padding: 10px;">
+<div class="box" style="padding: 10px;">
 
-      <div style="padding: 10px;">
 
-        <div style="float: left; margin-right: 10px; padding-top:6px;">Search</div>
-        <input type="text" class="form-control" id="search_str" placeholder="Search" required="" style="width:20%; float: left; margin-right:10px;">
-        <button id="search_btn" class="md-btn md-raised mb-2 w-xs white" style="float: left">Search</button>
-
+    <div style="padding: 10px;">
         <button class="md-btn md-raised mb-2 w-xs red" id="delBtn" style="float: right;">DEL</button>
 
         <a href="#layer2" class="btn-example">
-          <button class="md-btn md-raised mb-2 w-xs indigo dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
+            <button class="md-btn md-raised mb-2 w-xs indigo dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
         </a>
+    </div>
 
-      </div>
+    <div class="table-responsive">
+        <table class="table table-hover table-striped table-bordered" id="table_conferenceRoom" style="width:100%">
 
-      <div class="table-responsive">
-        <table class="table table-bordered">
-
-          <thead style="background-color: #6e8df4; color: #ffffff">
+            <thead>
             <tr>
-              <th style="width:5%"><input type="checkbox"/></th>
-              <th style="width:35%">Conference Name</th>
-              <th style="width:10%">URI</th>
-              <th style="width:15%">Secondary URI</th>
-              <th style="width:10%">Call ID</th>
-              <th style="width:10%">CDR Tag</th>
-              <th style="width:15%">View</th>
+                <th style="width:5%" class="th-center"><input type="checkbox" id="select_all"/></th>
+                <th style="width:35%" class="th-center">Conference Name</th>
+                <th style="width:10%" class="th-center">URI</th>
+                <th style="width:15%" class="th-center">Secondary URI</th>
+                <th style="width:10%" class="th-center">Call ID</th>
+                <th style="width:10%" class="th-center">CDR Tag</th>
             </tr>
-          </thead>
+            </thead>
 
-          <tbody id="tbody">
-          </tbody>
+            <tbody id="tbody">
+            % for data in context['data']:
+            <tr>
+                <td></td>
+                <td>${data['name']}</td>
+                <td>${data['uri']}</td>
+                <td>${data['secondaryUri']}</td>
+                <td>${data['callId']}</td>
+                <td>${data['cdrTag']}</td>
+            </tr>
+            % endfor
+            </tbody>
 
         </table>
-      </div>
-
-      <div style="text-align: center;">
-        <div id="paging"></div>
-      </div>
-
     </div>
+
+    <div style="text-align: center;">
+        <div id="paging"></div>
+    </div>
+
 </div>
 
 <input type="hidden" id="all_pages" value="6">
@@ -174,213 +175,196 @@ width:100%
 
 <%block name="scriptDown">
 <script>
+    $(document).ready(function() {
+        //$(".paginate_button").attr('href', 'javascript:check_click();');
+        $table = $("#table_conferenceRoom");
+        var data_tb = $table.dataTable({
+            rowReorder: false,
+            sLengthMenu: [
+                [10, 20, 50, -1], //key
+                [10, 20, 50, "All"] //value
+            ],
+            dom: '<"clear"fl><"search">rt<"bottom"ipl>',
+            searching: true,
+            paginate: true,
+            order: [[1, 'desc']],
+            "oLanguage": {
+                "sInfo": "Page: _PAGE_ / _PAGES_",
+                'sLengthMenu': 'Display <select name="datatable-length">'+
+                '<option value="10">10</option>'+
+                '<option value="20">20</option>'+
+                '<option value="50">50</option>'+
+                '<option value="-1">All</option>'+
+                '</select> records',
+                "oPaginate": {
+                    "sNext": ">",
+                    "sPrevious": "<",
+                },
 
-var total_page = "";
-var cur_page = "";
-var start_page = 1;
+            },
+            columns: [
+                {'orderable': false},
+                null,
+                null,
+                null,
+                null,
+                null,
+            ],
+            columnDefs: [
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center"},
+            ],
+            "drawCallback":function(){
+                $(".paginate_button").attr('href', 'javascript:check_click();');
+            }
+        });
 
-$(document).ready(function () {
-    search(1);
 
-    $("#search_btn").click(function () {
-        search(1);
+        // save
+        $('#confSave').click(function(){
+            var conference_name = $("#conference_name").val();
+            var conference_uri = $("#conference_uri").val();
+            var conference_secondaryUri = $("#conference_secondaryUri").val();
+            var conference_callId = $("#conference_callId").val();
+            var conference_cdrTag = $("#conference_cdrTag").val();
+            var conference_passcode = $("#conference_passcode").val();
+            var conference_confirm_passcode = $("#conference_confirm_passcode").val();
+            var conference_defaultLayout = $("#conference_defaultLayout").val();
+            var conference_ownerJid = $("#conference_ownerJid").val();
+            var conference_template = $("#conference_template").val();
+            var conference_streamUrl = $("#conference_streamUrl").val();
+            var conference_ownerAdGuid = $("#conference_ownerAdGuid").val();
+            var conference_meetingScheduler = $("#conference_meetingScheduler").val();
+
+            var lock = 0;
+
+            if(conference_name == ''){
+                alert('Conference name을 입력하세요.');
+                lock = 1;
+            }
+            else if(conference_uri == ''){
+                alert('uri를 입력하세요.');
+                lock = 1;
+            }
+            else if(conference_callId == ''){
+                alert('callId를 입력하세요.');
+                lock = 1;
+            }
+            if(conference_passcode != '' && conference_passcode == conference_confirm_passcode){
+                alert('passcode가 일치하지 않습니다.');
+                lock = 1;
+            }
+
+            console.log({'name': conference_name,
+                    'uri': conference_uri,
+                    'secondaryUri': conference_secondaryUri,
+                    'callId': conference_callId,
+                    'cdrTag': conference_cdrTag,
+                    'passcode': conference_passcode,
+                    'defaultLayout': conference_defaultLayout,
+                    'ownerJid': conference_ownerJid,
+                    'template': conference_template,
+                    'streamUrl': conference_streamUrl,
+                    'ownerAdGuid': conference_ownerAdGuid,
+                    'meetingScheduler': conference_meetingScheduler,});
+
+            if(lock == 0){
+                /*
+                $.post('/conferenceRoom/add', {
+                    'name': conference_name,
+                    'uri': conference_uri,
+                    'secondaryUri': conference_secondaryUri,
+                    'callId': conference_callId,
+                    'cdrTag': conference_cdrTag,
+                    'passcode': conference_passcode,
+                    'defaultLayout': conference_defaultLayout,
+                    'ownerJid': conference_ownerJid,
+                    'template': conference_template,
+                    'streamUrl': conference_streamUrl,
+                    'ownerAdGuid': conference_ownerAdGuid,
+                    'meetingScheduler': conference_meetingScheduler,
+                })
+                        .done(function(data){
+                            alert('ok');
+                        });
+                        */
+            }
+
+        });
+
+
     });
 
-    $("#search_str").keyup(function (e) {
-        if (e.keyCode == 13)
-            search(1);
-    });
-
-    $("#delBtn").click(function () {
-        alert("del");
-    });
-
-    $("#confSave").click(function () {
-        alert("save");
-    });
-
-    /*
-    $("#addBtn").click(function () {
-        alert("add");
-    });
-    */
-});
-
-function search(page_no) {
-
-    var hidden_csrftoken = $('.hidden_csrftoken').text();
-
-    console.log("page_no = " + page_no);
-
-    if (page_no > 1 && $("#curr_page").val() == page_no) {
-        console.log("----------------> if 1");
-        return;
+    function check_click(){
+        //alert("paging btn");
+        if($("input:checkbox[id='select_all']").prop("checked")) {
+            $('input:checkbox').prop("checked", false);
+        }
+        else {
+            $('input:checkbox').prop("checked", false);
+        }
     }
 
-    if (page_no){
-        console.log("----------------> if 2");
-        $("#curr_page").val(page_no);
-    }
 
-    $.post('/commList',
-        {
-            page_size : 10,
-            curr_page : $("#curr_page").val(),
-            search_str : $("#search_str").val(),
-            csrfmiddlewaretoken: hidden_csrftoken
-        },
-    function (context) {
+    $('.btn-example').click(function(){
+        var $href = $(this).attr('href');
+        layer_popup($href);
+    });
 
-        var data = context.curr_data;
-        var all_pages = context.totalPage;
+    function layer_popup(el){
+        var $el = $(el);        //레이어의 id를 $el 변수에 저장
+        var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
 
-        var curr_page = Number($("#curr_page").val());
-        $("#all_pages").val(all_pages);
+        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
 
-        var html = "";
-        //for table
-        for (var i = 0; i < data.length; i++) {
+        var $elWidth = ~~($el.outerWidth()),
+                $elHeight = ~~($el.outerHeight()),
+                docWidth = $(document).width(),
+                docHeight = $(document).height();
 
-          html += '<tr>';
-          html += '<td><input type="checkbox"></td>';
-          html += '<td>'+ data[i]['name'] +'</td>';
-          html += '<td>'+ data[i]['uri'] +'</td>';
-          html += '<td></td>';
-          html += '<td>'+ data[i]['callId'] +'</td>';
-          html += '<td></td>';
-          html += '<td><button class="btn btn-fw accent">VIEW</button></td>';
-          html += '</tr>';
-
-          $('#tbody').html(html);
+        // 화면의 중앙에 레이어를 띄운다.
+        if ($elHeight < docHeight || $elWidth < docWidth) {
+            $el.css({
+                marginTop: -$elHeight /2,
+                marginLeft: -$elWidth/2
+            })
+        }
+        else {
+            $el.css({top: 0, left: 0});
         }
 
-        var paging = "";
-        var page_size = 5;
+        $el.find('a.btn-layerClose').click(function(){
+            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+            return false;
+        });
 
-        var minNum = Math.floor((curr_page - 1) / page_size) * page_size + 1;
-        var maxNum = minNum + page_size - 1;
+        $('.layer .dimBg').click(function(){
+            $('.dim-layer').fadeOut();
+            return false;
+        });
 
-        if (maxNum > all_pages)
-            maxNum = all_pages;
-
-        console.log(minNum + ":" + maxNum);
-
-        paging += '<ul class="pagination" style="display: inline-flex;">';
-        paging += '<li class="page-item">';
-        paging += '<a class="page-link" id="first" href="#" aria-label="Previous">';
-        paging += '<span aria-hidden="true">«</span>';
-        paging += '<span class="sr-only">Previous</span>';
-        paging += '</a>';
-        paging += '</li>';
-        paging += '<li class="page-item">';
-        paging += '<a class="page-link" id="prev" href="#" aria-label="Previous">';
-        paging += '<span aria-hidden="true"><</span>';
-        paging += '<span class="sr-only">Previous</span>';
-        paging += '</a>';
-        paging += '</li>';
-        for (var i = minNum; i <= maxNum; i++) {
-            if (i == curr_page)
-                paging += '<li class="page-item active"><a id="'+ i +'" class="page-link" href="#">'+ i +'</a></li>';
-            else
-                paging += '<li class="page-item"><a id="'+ i +'" class="page-link" href="#">'+ i +'</a></li>';
-        }
-        paging += '<li class="page-item">';
-        paging += '<a class="page-link" id="next" href="#" aria-label="Next">';
-        paging += '<span aria-hidden="true">></span>';
-        paging += '<span class="sr-only">Next</span>';
-        paging += '</a>';
-        paging += '</li>';
-        paging += '<li class="page-item">';
-        paging += '<a class="page-link" id="last" href="#" aria-label="Next">';
-        paging += '<span aria-hidden="true">»</span>';
-        paging += '<span class="sr-only">Next</span>';
-        paging += '</a>';
-        paging += '</li>';
-        paging += '</ul>';
-        $('#paging').html(paging);
-
-        fnPaging();
-      });
-}
-
-function fnPaging() {
-    $("#paging a").click(function () {
-        var id = $(this).attr("id");
-        var all_pages = $("#all_pages").val();
-        var curr_page = $("#curr_page").val();
-        var curr_page = $("#curr_page").val();
-        var prev_page = Number($("#curr_page").val()) - 1 > 0 ? Number($("#curr_page").val()) - 1 : 1;
-        var next_page = Number($("#curr_page").val()) + 1 <= all_pages ? Number($("#curr_page").val()) + 1 : all_pages;
-        var last_page = all_pages;
-
-        if (id == curr_page)
-            return;
-        if (id == 'first' && curr_page == '1')
-            return;
-        if (id == 'prev' && curr_page == prev_page)
-            return;
-        if (id == 'next' && curr_page == next_page)
-            return;
-        if (id == 'last' && curr_page == last_page)
-            return;
-
-        if (id == 'first')
-            search(1);
-        else if (id == 'prev')
-            search(prev_page);
-        else if (id == 'next')
-            search(next_page);
-        else if (id == 'last')
-            search(last_page);
-        else
-            search(id);
-
-        console.debug('id: ' + id);
-        console.debug('curr_page: ' + curr_page);
-        console.debug('prev_page: ' + prev_page);
-        console.debug('next_page: ' + next_page);
-        console.debug('last_page: ' + last_page);
-
-    });
-}
-
-$('.btn-example').click(function(){
-    var $href = $(this).attr('href');
-    layer_popup($href);
-});
-
-function layer_popup(el){
-
-    var $el = $(el);        //레이어의 id를 $el 변수에 저장
-    var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
-
-    isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
-
-    var $elWidth = ~~($el.outerWidth()),
-        $elHeight = ~~($el.outerHeight()),
-        docWidth = $(document).width(),
-        docHeight = $(document).height();
-
-    // 화면의 중앙에 레이어를 띄운다.
-    if ($elHeight < docHeight || $elWidth < docWidth) {
-        $el.css({
-            marginTop: -$elHeight /2,
-            marginLeft: -$elWidth/2
-        })
-    } else {
-        $el.css({top: 0, left: 0});
     }
 
-    $el.find('a.btn-layerClose').click(function(){
-        isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
-        return false;
-    });
+    function conferenceData(){
+        var conference_name = $("#conference_name").val();
+        var conference_uri = $("#conference_uri").val();
+        var conference_secondaryUri = $("#conference_secondaryUri").val();
+        var conference_callId = $("#conference_callId").val();
+        var conference_cdrTag = $("#conference_cdrTag").val();
+        var conference_passcode = $("#conference_passcode").val();
+        var conference_confirm_passcode = $("#conference_confirm_passcode").val();
+        var conference_defaultLayout = $("#conference_defaultLayout").val();
+        var conference_ownerJid = $("#conference_ownerJid").val();
+        var conference_template = $("#conference_template").val();
+        var conference_streamUrl = $("#conference_streamUrl").val();
+        var conference_ownerAdGuid = $("#conference_ownerAdGuid").val();
+        var conference_meetingScheduler = $("#conference_meetingScheduler").val();
 
-    $('.layer .dimBg').click(function(){
-        $('.dim-layer').fadeOut();
-        return false;
-    });
+        conData = {
 
-}
+        }
+
+        return conData;
+    }
 </script>
+
 </%block>

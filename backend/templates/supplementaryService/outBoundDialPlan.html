@@ -7,38 +7,145 @@ from django.utils.translation import ugettext as _
 <%block name="containor">
 <div class="padding">
 
-  <div class="box">
-    <div class="box-header">
-      <h2>OUTBOUND DIAL PLAN</h2>
-      <small>OUTBOUND DIAL PLAN</small>
+    <div class="box">
+        <div class="box-header">
+            <h2>OUTBOUND DIAL PLAN</h2>
+            <small>OUTBOUND DIAL PLAN</small>
+        </div>
     </div>
-  </div>
 
-  <div class="box">
-      <div class="table-responsive">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th><input type="checkbox"/></th>
-              <th>Domain</th>
-              <th>Priority</th>
-              <th>Tenant</th>
-              <th>View</th>
-            </tr>
-          </thead>
-          <tbody>
-            % for n in range(0,6):
-            <tr>
-              <td><input type="checkbox"/></td>
-              <td>172.10.21.103</td>
-              <td>0</td>
-              <td></td>
-              <td><button class="btn btn-fw primary">VIEW</button></td>
-            </tr>
-            % endfor
-          </tbody>
-        </table>
-      </div>
+    <div class="box" style="padding: 10px;">
+
+
+        <div style="padding: 10px;">
+            <button class="md-btn md-raised mb-2 w-xs blue" id="saveBtn" style="float: right; margin-left: 8px;">SAVE</button>
+            <button class="md-btn md-raised mb-2 w-xs red" id="delBtn" style="float: right;">DEL</button>
+
+            <a href="#layer2" class="btn-example">
+                <button class="md-btn md-raised mb-2 w-xs indigo dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered" id="table_outBoundDialPlan" style="width:100%">
+                <thead>
+                <tr>
+                    <th style="width:5%" class="th-center"><input type="checkbox" id="select_all"/></th>
+                    <th class="th-center">Domain</th>
+                    <th class="th-center">Priority</th>
+                    <th class="th-center">Tenant</th>
+                </tr>
+                </thead>
+                <tbody>
+                % for n in range(0,6):
+                <tr>
+                    <td><input type="checkbox"/></td>
+                    <td>172.10.21.103</td>
+                    <td>0</td>
+                    <td>321321321</td>
+                </tr>
+                % endfor
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+</%block>
+
+<%block name="scriptDown">
+<script>
+
+    $(document).ready(function() {
+        $table = $("#table_outBoundDialPlan");
+        $table.dataTable({
+            sLengthMenu: [
+                [10, 20, 50, -1], //key
+                [10, 20, 50, "All"] //value
+            ],
+            dom: '<"clear"fl><"search">rt<"bottom"ipl>',
+            searching: true,
+            paginate: true,
+            order: [[1, 'desc']],
+            "oLanguage": {
+                "sInfo": "Page: _PAGE_ / _PAGES_",
+                'sLengthMenu': 'Display <select name="datatable-length">'+
+                '<option value="10">10</option>'+
+                '<option value="20">20</option>'+
+                '<option value="50">50</option>'+
+                '<option value="-1">All</option>'+
+                '</select> records',
+                "oPaginate": {
+                    "sNext": ">",
+                    "sPrevious": "<",
+                },
+
+            },
+            columns: [
+                {'orderable': false},
+                null,
+                null,
+                null,
+            ],
+            columnDefs: [
+                {targets: 0, orderable: 'false', searchable: false, className: "text-center"},
+            ],
+            'initComplete': function(){
+            }
+        });
+
+        $("input:checkbox[id='select_all']").click(function () {
+            checkbox_all();
+        });
+
+    });
+
+
+    function checkbox_all(){
+        if($("input:checkbox[id='select_all']").prop("checked")) {
+            $('input:checkbox').prop("checked", true);
+        } else {
+            $('input:checkbox').prop("checked", false);
+        }
+    }
+
+
+    $('.btn-example').click(function(){
+        var $href = $(this).attr('href');
+        layer_popup($href);
+    });
+
+    function layer_popup(el){
+
+        var $el = $(el);        //레이어의 id를 $el 변수에 저장
+        var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
+
+        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
+
+        var $elWidth = ~~($el.outerWidth()),
+                $elHeight = ~~($el.outerHeight()),
+                docWidth = $(document).width(),
+                docHeight = $(document).height();
+
+        // 화면의 중앙에 레이어를 띄운다.
+        if ($elHeight < docHeight || $elWidth < docWidth) {
+            $el.css({
+                marginTop: -$elHeight /2,
+                marginLeft: -$elWidth/2
+            })
+        } else {
+            $el.css({top: 0, left: 0});
+        }
+
+        $el.find('a.btn-layerClose').click(function(){
+            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+            return false;
+        });
+
+        $('.layer .dimBg').click(function(){
+            $('.dim-layer').fadeOut();
+            return false;
+        });
+
+    }
+</script>
 </%block>

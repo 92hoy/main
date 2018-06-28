@@ -14,22 +14,28 @@ from django.utils.translation import ugettext as _
     </div>
   </div>
 
-  <div class="box">
+  <div class="box" style="padding: 10px;">
+            <div style="padding: 10px;">
+        <button class="md-btn md-raised mb-2 w-xs red" id="delBtn" style="float: right;">DEL</button>
+
+        <a href="#layer2" class="btn-example">
+          <button class="md-btn md-raised mb-2 w-xs indigo dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
+        </a>
+      </div>
+
       <div class="table-responsive">
-        <table class="table table-bordered">
+        <table class="table table-hover table-striped table-bordered" id="table_cdr" style="width:100%">
           <thead>
             <tr>
-              <th><input type="checkbox"/></th>
-              <th>Response URI</th>
-              <th>View</th>
+              <th style="width: 5%;" class="th-center"><input type="checkbox" id="select_all"/></th>
+              <th class="th-center">Response URI</th>
             </tr>
           </thead>
           <tbody>
-            % for n in range(0,6):
+            % for data in context['data']:
             <tr>
-              <td><input type="checkbox"/></td>
-              <td>http://14.63.53.27:8080/callback.do</td>
-              <td><button class="btn btn-fw primary">VIEW</button></td>
+              <td></td>
+              <td>${data['uri']}</td>
             </tr>
             % endfor
           </tbody>
@@ -37,4 +43,98 @@ from django.utils.translation import ugettext as _
       </div>
     </div>
 </div>
+</%block>
+
+<%block name="scriptDown">
+<script>
+    $(document).ready(function() {
+        //$(".paginate_button").attr('href', 'javascript:check_click();');
+        $table = $("#table_cdr");
+        var data_tb = $table.dataTable({
+            rowReorder: false,
+            sLengthMenu: [
+                [10, 20, 50, -1], //key
+                [10, 20, 50, "All"] //value
+            ],
+            dom: '<"clear"fl><"search">rt<"bottom"ipl>',
+            searching: true,
+            paginate: true,
+            order: [[1, 'desc']],
+            "oLanguage": {
+                "sInfo": "Page: _PAGE_ / _PAGES_",
+                'sLengthMenu': 'Display <select name="datatable-length">'+
+                '<option value="10">10</option>'+
+                '<option value="20">20</option>'+
+                '<option value="50">50</option>'+
+                '<option value="-1">All</option>'+
+                '</select> records',
+                "oPaginate": {
+                    "sNext": ">",
+                    "sPrevious": "<",
+                },
+
+            },
+            columns: [
+                {'orderable': false},
+                null,
+            ],
+            columnDefs: [
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center"},
+            ],
+            "drawCallback":function(){
+                $(".paginate_button").attr('href', 'javascript:check_click();');
+            }
+        });
+    });
+
+    function check_click(){
+        //alert("paging btn");
+        if($("input:checkbox[id='select_all']").prop("checked")) {
+            $('input:checkbox').prop("checked", false);
+        }
+        else {
+            $('input:checkbox').prop("checked", false);
+        }
+    }
+
+
+    $('.btn-example').click(function(){
+        var $href = $(this).attr('href');
+        layer_popup($href);
+    });
+
+    function layer_popup(el){
+        var $el = $(el);        //레이어의 id를 $el 변수에 저장
+        var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
+
+        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
+
+        var $elWidth = ~~($el.outerWidth()),
+            $elHeight = ~~($el.outerHeight()),
+            docWidth = $(document).width(),
+            docHeight = $(document).height();
+
+        // 화면의 중앙에 레이어를 띄운다.
+        if ($elHeight < docHeight || $elWidth < docWidth) {
+            $el.css({
+                marginTop: -$elHeight /2,
+                marginLeft: -$elWidth/2
+            })
+        }
+        else {
+            $el.css({top: 0, left: 0});
+        }
+
+        $el.find('a.btn-layerClose').click(function(){
+            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+            return false;
+        });
+
+        $('.layer .dimBg').click(function(){
+            $('.dim-layer').fadeOut();
+            return false;
+        });
+
+    }
+</script>
 </%block>

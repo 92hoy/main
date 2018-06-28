@@ -7,57 +7,325 @@ from django.utils.translation import ugettext as _
 <%block name="containor">
 <div class="padding">
 
-  <div class="box">
-    <div class="box-header">
-      <h2>ACTIVE CALL</h2>
-      <small>what is active call</small>
-    </div>
-  </div>
-
-  <div class="box">
-
-    <div class="box-header">
-        <ul class="pagination pagination-sm" style="float:right">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">«</span>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">»</span>
-                <span class="sr-only">Next</span>
-              </a>
-            </li>
-          </ul>
+    <div class="box">
+        <div class="box-header">
+            <h2>ACTIVE CALL</h2>
+            <small>what is active call</small>
+        </div>
     </div>
 
-      <div class="table-responsive">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th><input type="checkbox"/></th>
-              <th>Conference name</th>
-              <th>call ID</th>
-              <th>current visitor</th>
-            </tr>
-          </thead>
-          <tbody>
-            % for n in range(0,6):
-            <tr>
-              <td><input type="checkbox"/></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            % endfor
-          </tbody>
-        </table>
-      </div>
+    <div class="box">
+        <div style="padding: 10px;">
+
+            <button class="md-btn md-raised mb-2 w-xs red" id="delBtn" style="float: right;">DEL</button>
+
+            <a href="#layer2" class="btn-example">
+                <button class="md-btn md-raised mb-2 w-xs indigo dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
+            </a>
+            <a href="#layer_new" class="btn-example">
+            <button class="md-btn md-raised mb-2 w-xs dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">NEWLAYER</button>
+                <a href="/activacall_monitoring">
+                    <button>임시버튼</button>
+                </a>
+        </a>
+
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered" id="table_activeCall" style="width:100%">
+                <thead>
+                <tr>
+                    <th class="th-center" style="width: 5%"><input type="checkbox"id="select_all"/></th>
+                    <th class="th-center">Conference name</th>
+                    <th class="th-center">call ID</th>
+                    <th class="th-center" style="width: 20%">current visitor</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <!-- 데이터 확인 후 작업 예정 -->
+                % for data in context['data']:
+                <tr>
+                    <td></td>
+                    <td>${data['name']}</td>
+                    <td>${data['callId']}</td>
+                    <td style="text-align: right">${data['cv']}</td>
+                </tr>
+                % endfor
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+
+<!-- layer active call-->
+<div class="dim-layer2">
+    <div class="dimBg2"></div>
+    <div id="layer_new" class="pop-layer2">
+        <div class="pop-container2">
+            <div class="pop-conts">
+
+          <span class="nav-icon" style="padding-bottom: 18px;">
+            <i class="fa fa-book"></i>
+          </span>
+                <div style="margin-bottom: 10px;">
+
+                    <strong>Start Conference</strong><a href="#" class="btn-layerClose" style="float: right; font-size:18px;">X</a>
+                    <hr width="100%" color="#d9d9d9">
+                </div>
+                <div style="float:right;">
+                    <button class="md-btn md-raised mb-2 w-xs purple" id="confSave">START</button>
+                </div>
+                <div style="text-align: center;">
+                    <table style="display: inline-block; width:100%; margin-bottom: 20px; ">
+
+                        <tr>
+                            <td>Start conference</td>
+                            <td class="rightTd"><input type="text" class="form-control wi730" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>Conference name</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>callID</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>uri</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>Add user</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>Band Width</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>user password</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+
+
+                    </table>
+                </div>
+
+                <div style="width:48%; float:left; margin-right: 15px;  padding-bottom: 20px;">
+                  <span class="nav-icon"  style="padding-bottom: 18px;">
+                    <i class="fa fa-address-book-o"></i>
+                  </span>
+                    <div>
+                        <strong>User</strong>
+                    </div>
+                    <table class="tg" width="100%">
+                        <colgroup>
+                            <col width="30%">
+                            <col width="30%">
+                            <col width="30%">
+                            <col width="10%">
+                        </colgroup>
+                        <tr>
+                            <th>User Jld</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Delete</th>
+                        </tr>
+                        <tr>
+                            <td>User Jld</td>
+                            <td>Name</td>
+                            <td>Email</td>
+                            <td>Delete</td>
+                        </tr>
+                        <tr>
+                            <td>User Jld</td>
+                            <td>Name</td>
+                            <td>Email</td>
+                            <td>Delete</td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="width:50%; float:left; padding-bottom: 20px;">
+                        <span class="nav-icon"  style="padding-bottom: 18px;">
+                            <i class="fa fa-bolt"></i>
+                        </span>
+                    <div>
+                        <strong>End Point</strong>
+                    </div>
+
+                    <table class="tg" width="100%">
+                        <colgroup>
+                            <col width="15%">
+                            <col width="20%">
+                            <col width="20%">
+                            <col width="25%">
+                            <col width="20%">
+                        </colgroup>
+                        <tr>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</%block>
+
+<%block name="scriptDown">
+<script>
+    $(document).ready(function() {
+        $table = $("#table_activeCall");
+        $table.dataTable({
+            sLengthMenu: [
+                [10, 20, 50, -1], //key
+                [10, 20, 50, "All"] //value
+            ],
+            dom: '<"clear"fl><"search">rt<"bottom"ipl>',
+            searching: true,
+            paginate: true,
+            order: [[1, 'desc']],
+            "oLanguage": {
+                "sInfo": "Page: _PAGE_ / _PAGES_",
+                'sLengthMenu': 'Display <select name="datatable-length">'+
+                '<option value="10">10</option>'+
+                '<option value="20">20</option>'+
+                '<option value="50">50</option>'+
+                '<option value="-1">All</option>'+
+                '</select> records',
+                "oPaginate": {
+                    "sNext": ">",
+                    "sPrevious": "<",
+                },
+
+            },
+            columns: [
+                {'orderable': false},
+                null,
+                null,
+                null,
+            ],
+            columnDefs: [
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center"},
+            ],
+            "drawCallback":function(){
+                $(".paginate_button").attr('href', 'javascript:check_click();');
+            }
+        });
+
+    });
+
+    function check_click(){
+        //alert("paging btn");
+        if($("input:checkbox[id='select_all']").prop("checked")) {
+            $('input:checkbox').prop("checked", false);
+        }
+        else {
+            $('input:checkbox').prop("checked", false);
+        }
+    }
+
+    $('.btn-example').click(function(){
+        var $href = $(this).attr('href');
+        layer_popup2($href);
+    });
+
+    function layer_popup2(el){
+
+        var $el = $(el);        //레이어의 id를 $el 변수에 저장
+        var isDim = $el.prev().hasClass('dimBg2');   //dimmed 레이어를 감지하기 위한 boolean 변수
+
+        isDim ? $('.dim-layer2').fadeIn() : $el.fadeIn();
+
+        var $elWidth = ~~($el.outerWidth()),
+                $elHeight = ~~($el.outerHeight()),
+                docWidth = $(document).width(),
+                docHeight = $(document).height();
+
+        // 화면의 중앙에 레이어를 띄운다.
+        if ($elHeight < docHeight || $elWidth < docWidth) {
+            $el.css({
+                marginTop: -$elHeight /2,
+                marginLeft: -$elWidth/2
+            })
+        } else {
+            $el.css({top: 0, left: 0});
+        }
+
+        $el.find('a.btn-layerClose').click(function(){
+            isDim ? $('.dim-layer2').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+            return false;
+        });
+
+        $('.layer .dimBg2').click(function(){
+            $('.dim-layer2').fadeOut();
+            return false;
+        });
+
+    }
+
+</script>
 </%block>

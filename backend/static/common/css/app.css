@@ -2869,7 +2869,7 @@ div.jqvmap-zoomout {
   overflow-y: scroll; }
 
 .dataTables_wrapper {
-  padding: 0; }
+  padding: 10px; }
 
 .table.dataTable {
   border-collapse: collapse !important;

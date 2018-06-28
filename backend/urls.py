@@ -69,7 +69,9 @@ urlpatterns = [
 
     # conference
     url('conferenceRoom$', ConferenceViews.conferenceRoom, name='conferenceRoom'),
+    url('conferenceRoom/add$', ConferenceViews.conferenceRoomAdd, name='conferenceRoomAdd'),
     url('activeCall$', ConferenceViews.activeCall, name='activeCall'),
+    url('activecall_monitoring$', ConferenceViews.activecall_monitoring, name='activecall_monitoring'),
     url('template$', ConferenceViews.template, name='template'),
     url('reserveConference$', ConferenceViews.reserveConference, name='reserveConference'),
     url('reserveConferenceCal$', ConferenceViews.reserveConferenceCal, name='reserveConferenceCal'),
