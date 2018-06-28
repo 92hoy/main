@@ -91,6 +91,7 @@ urlpatterns = [
     url('ldap$', SystemViews.ldap, name='ldap'),
     url('account$', SystemViews.account, name='account'),
     url('endPoint$', SystemViews.endPoint, name='endPoint'),
+    url('endPoint_del$', SystemViews.endPoint_del, name='endPoint_del'),
     url('endPointGroup$', SystemViews.endPointGroup, name='endPointGroup'),
     url('acanoClient$', SystemViews.acanoClient, name='acanoClient'),
     url('logoManagement$', SystemViews.logoManagement, name='logoManagement'),
