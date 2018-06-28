@@ -86,7 +86,7 @@ def api_coSpaces():
 
 
 # from backend.djangoapps.common.api.views import api_coSpaceId
-def api_coSpaceId(id):
+def api_coSpaceId(id, request=None):
 
     Authorization = settings.AUTHORIZATION
 
@@ -95,14 +95,20 @@ def api_coSpaceId(id):
     headers = {
         'Authorization': Authorization
     }
-    r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
-    resData = str(r.text)
+    if request is not None:
+        json_data = json.dumps(request.POST)
+        json_data = json.loads(json_data)
+        resDataJson = requests.put(url, headers=headers, verify=False, data=json_data)
 
-    # xml to json
-    o = xmltodict.parse(resData)
-    resData = json.dumps(o)
-    resDataJson = json.loads(resData)
+    else:
+        r = requests.get(url, headers=headers, verify=False)
+        r.encoding = None
+        resData = str(r.text)
+
+        # xml to json
+        o = xmltodict.parse(resData)
+        resData = json.dumps(o)
+        resDataJson = json.loads(resData)
 
     print("-------------------> DEBUG[s]")
     print(resDataJson)
