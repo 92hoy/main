@@ -120,25 +120,93 @@ def account(request):
 def endPoint(request):
 
     if request.is_ajax():
-        name= request.POST.get('name'),
-        device_type= request.POST.get('device_type'),
-        user_name= request.POST.get('user_name'),
-        ip= request.POST.get('ip'),
-        sip= request.POST.get('sip'),
-        h_323= request.POST.get('h_323'),
-        mslync= request.POST.get('mslync'),
-        username= request.POST.get('username'),
-        recording_device= request.POST.get('recording_device'),
-        group_name= request.POST.get('group_name'),
-        sortno= request.POST.get('sortno'),
-        print ("name-->",name)
+        name= request.POST.get('name')
+        device_type= request.POST.get('device_type')
+        ip= request.POST.get('ip')
+        sip= request.POST.get('sip')
+        h_323= request.POST.get('h_323')
+        mslync= request.POST.get('mslync')
+        username= request.POST.get('username')
+        recording_device= request.POST.get('recording_device')
+        group_name= request.POST.get('group_name')
+        sortno= request.POST.get('sortno')
+        print ("ip-->",ip)
+        print ("sip-->",sip)
         print ("device_type-->",device_type)
         print ("group_name-->",group_name)
         print ("sortno-->",sortno)
 
-        #대충 값 넘어오는 ajax만 설정
+        lock = 0
 
-        return JsonResponse({"return":"success"})
+        with connections['default'].cursor() as cur:
+            query = '''
+                select ep_id
+                FROM cms_endpoint
+                WHERE ep_id ='{ep_id}'
+            '''.format(ep_id=name)
+            cur.execute(query)
+            rows = cur.fetchall()
+
+            print (query)
+            print ("rows ->",rows)
+            print ("before len rows =>",len(rows))
+
+            if len(rows) != 0:
+                print("if rows =>",len(rows))
+                print("before",lock)
+                lock = 1
+                print("after",lock)
+
+                return JsonResponse({"return": "fail"})
+        print(" not fail")
+
+
+
+        with connections['default'].cursor() as cur:
+            query = '''
+                  INSERT INTO kotech_cisco_cms.cms_endpoint
+                              (ep_id,
+                              ep_type,
+                              ip,
+                              sip,
+                              hdevice,
+                              mslync,
+                              username,
+                              recodingdevice,
+                              ep_group_seq,
+                              order_no
+                              )
+                  VALUES ('{ep_id}',
+                          '{ep_type}',
+                          '{ip}',
+                          '{sip}',
+                          '{hdevice}',
+                          '{mslync}',
+                          '{username}',
+                          '{recodingdevice}',
+                          '{ep_group_seq}',
+                          '{order_no}')
+            '''.format(ep_id=name, ep_type=device_type, ip=ip, sip=sip, hdevice=h_323, mslync=mslync,
+                       username=username, recodingdevice=recording_device, ep_group_seq=group_name, order_no=sortno)
+            cur.execute(query)
+
+        return JsonResponse({"return": "success"})
+
+
+    with connections['default'].cursor() as cur:
+        query = '''
+            SELECT ep_group_name,ep_group_seq
+              FROM cms_endpoint_group;
+        '''
+        cur.execute(query)
+        ep_data2 = cur.fetchall()
+
+        data_list2 = list()
+        for data2 in ep_data2:
+            data_dict2=dict()
+            data_dict2['ep_group_name'] = data2[0]
+            data_dict2['ep_group_seq'] = data2[1]
+            data_list2.append(data_dict2)
 
     with connections['default'].cursor() as cur:
         query = '''
@@ -179,7 +247,7 @@ def endPoint(request):
         data_dict['order_no'] = data[12]
         data_list.append(data_dict)
 
-    context = {'data': data_list}
+    context = {'data': data_list, 'data2': data_list2}
 
     return render(request, 'system/endPoint.html', context)
 

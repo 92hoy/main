@@ -214,9 +214,24 @@ from django.utils.translation import ugettext as _
                 success: function (data) {
                     if (data.return == 'success') {
                         swal("Success","등록 완료","success")
+                        location.reload();
                     }
                     else if (data.return != 'success') {
-                        swal("Fail","ID 중복","warning")
+                        swal({
+                            title: "Warning",
+                            text: "ID 중복",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: false,
+                        })
+                                .then(function(willDelete) {
+                            if (willDelete) {
+                            return
+                        } else {
+                            return
+                        }
+                                });
+                        //swal("Login-fail","ID,PW를 확인해주세요","warning");
                     }
                 },
             });

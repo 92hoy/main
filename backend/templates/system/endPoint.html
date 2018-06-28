@@ -17,7 +17,7 @@ from django.utils.translation import ugettext as _
 
     <div class="box" style="padding: 10px;">
         <div style="padding: 10px;">
-            <button class="md-btn md-raised mb-2 w-xs red" id="delBtn" style="float: right;">DEL</button>
+            <button class="md-btn md-raised mb-2 w-xs red" id="delBtn" style="float: right;" onclick="btn_del()">DEL</button>
 
             <a href="#layer2" class="btn-example">
                 <button class="md-btn md-raised mb-2 w-xs indigo dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
@@ -39,7 +39,7 @@ from django.utils.translation import ugettext as _
                 % for data in context['data']:
                 <tr>
                     <td></td>
-                    <td>${data['ep_name']}</td>
+                    <td>${data['ep_id']}</td>
                     <td>${data['ep_type']}</td>
                     <td>${data['ip']}</td>
                     <td>${data['ep_group_name']}</td>
@@ -70,25 +70,25 @@ from django.utils.translation import ugettext as _
                     <table style="display: inline-block; width:100%; ">
                         <tr style="margin-bottom: 20px;">
                             <td>Name</td>
-                            <td class="rightTd"><input type="text" class="form-control wi550" id="name"><br></td>
+                            <td class="rightTd"><input type="text" class="form-control wi600" id="name" style="width: 300px;"><br></td>
                         </tr>
                         <tr>
                             <td>Device Type</td>
                             <td>
                                 <label class="btn btn-outline-light" style="color:black; border: 1px solid #BDBDBD;">
-                                <input type="radio" name="options" id="ip" autocomplete="off"value="ip"> IP
+                                <input type="radio" name="options" autocomplete="off"value="ip"> IP
                                 </label>
 
                                 <label class="btn btn-outline-light" style="color:black;  border: 1px solid #BDBDBD;">
-                                    <input type="radio" name="options" id="sip" autocomplete="off" value="sip"> SIP
+                                    <input type="radio" name="options" autocomplete="off" value="sip"> SIP
                                 </label>
 
                                 <label class="btn btn-outline-light" style="color:black;  border: 1px solid #BDBDBD;">
-                                    <input type="radio" name="options" id="h.323" autocomplete="off"value="h.323"> H.323
+                                    <input type="radio" name="options" autocomplete="off"value="h.323"> H.323
                                 </label>
 
                                 <label class="btn btn-outline-light" style="color:black;  border: 1px solid #BDBDBD;">
-                                    <input type="radio" name="options" id="mslync" autocomplete="off"value="mslync"> MSLync
+                                    <input type="radio" name="options" autocomplete="off"value="mslync"> MSLync
                                 </label>
                             </td>
                         </tr>
@@ -98,11 +98,11 @@ from django.utils.translation import ugettext as _
                         </tr>
                         <tr>
                             <td>SIP</td>
-                            <td class="rightTd"><input type="text" class="form-control"id="sip"></td>
+                            <td class="rightTd"><input type="text" class="form-control" id="sip"></td>
                         </tr>
                         <tr>
                             <td>H.323</td>
-                            <td class="rightTd"><input type="text" class="form-control"id="h.323"></td>
+                            <td class="rightTd"><input type="text" class="form-control"id="h_323"></td>
                         </tr>
                         <tr>
                             <td>MSLync</td>
@@ -118,7 +118,15 @@ from django.utils.translation import ugettext as _
                         </tr>
                         <tr>
                             <td>Group Name</td>
-                            <td class="rightTd"><input type="text" class="form-control"id="group_name"></td>
+                            <td class="rightTd">
+
+                                <select class="custom-select w-100" id="group_name">
+                                    % for data2 in context['data2']:
+                                    <option value="${data2['ep_group_seq']}">${data2['ep_group_name']}</option>
+                                    % endfor
+                                </select>
+
+                            </td>
                         </tr>
                         <tr>
                             <td>SortNo</td>
@@ -235,7 +243,7 @@ from django.utils.translation import ugettext as _
         var device_type = $(':radio[name="options"]:checked').val();
         var ip = $('#ip').val();
         var sip = $('#sip').val();
-        var h_323 = $('#h.323').val();
+        var h_323 = $('#h_323').val();
         var mslync = $('#mslync').val();
         var user_name = $('#user_name').val();
         var recording_device = $('#recording_device').val();
@@ -281,13 +289,32 @@ from django.utils.translation import ugettext as _
                 success: function (data) {
                     if (data.return == 'success') {
                         swal("Success","등록 완료","success")
+                        location.reload();
                     }
                     else if (data.return != 'success') {
-                        swal("Fail","ID 중복","warning")
+                        swal({
+                            title: "Warning",
+                            text: "ID 중복",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: false,
+                        })
+                                .then(function(willDelete) {
+                            if (willDelete) {
+                            return
+                        } else {
+                            return
+                        }
+                                });
+                        //swal("Login-fail","ID,PW를 확인해주세요","warning");
                     }
                 },
             });
         }
+    }
+
+    function btn_del(){
+        var device_type = $(':checkbox[name="options"]:checked').val();
     }
 
 </script>
