@@ -1,0 +1,387 @@
+<%inherit file="../common/main_base.html"/>
+
+<%!
+from django.utils.translation import ugettext as _
+%>
+
+<%block name="containor">
+
+<div class="dim-layer">
+    <div class="dimBg"></div>
+
+    <div id="layer2" class="pop-layer">
+        <div class="pop-container">
+            <div class="pop-conts">
+
+          <span class="nav-icon" style="padding-bottom: 18px;">
+            <i class="fa fa-plug"></i>
+          </span>
+                <div style="margin-bottom: 10px;">
+                    <strong>Conference management</strong><a href="#" class="btn-layerClose" style="float: right; font-size:18px;">X</a>
+                </div>
+                <hr width="100%" color="#d9d9d9">
+                <div style="text-align: center;">
+                    <table style="display: inline-block; width:100%;">
+
+                        <tr>
+                            <td>Conference name</td>
+                            <td class="rightTd"><input type="text" class="form-control wi280" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>uri</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>secondaryUri</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>callId</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>cdrTag</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>passcode</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>Confirm password</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>defaultLayout</td>
+                            <td class="rightTd">
+                                <select id="inputState" class="custom-select w-100">
+                                    <option selected="">Choose...</option>
+                                    <option>...</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ownerJid</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>template</td>
+                            <td class="rightTd">
+                                <select id="inputState" class="custom-select w-100">
+                                    <option selected="">Choose...</option>
+                                    <option>...</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>streamUrl</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>ownerAdGuid</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>MeetingScheduler</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+
+                    </table>
+
+                    <button class="md-btn md-raised mb-2 w-xs purple mgt-20" id="confSave">SAVE</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+<!-- NEW LAYER POPUP -->
+<div class="dim-layer2">
+    <div class="dimBg2"></div>
+
+
+
+    <div id="layer_new" class="pop-layer2">
+        <div class="pop-container2">
+            <div class="pop-conts">
+
+          <span class="nav-icon" style="padding-bottom: 18px;">
+            <i class="fa fa-book"></i>
+          </span>
+                <div style="margin-bottom: 10px;">
+
+                    <strong>Start Conference</strong><a href="#" class="btn-layerClose" style="float: right; font-size:18px;">X</a>
+                    <hr width="100%" color="#d9d9d9">
+                </div>
+                <div style="float:right;">
+                    <button class="md-btn md-raised mb-2 w-xs purple" id="confSave">START</button>
+                </div>
+                <div style="text-align: center;">
+                    <table style="display: inline-block; width:100%; margin-bottom: 20px; ">
+
+                        <tr>
+                            <td>Start conference</td>
+                            <td class="rightTd"><input type="text" class="form-control wi730" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>Conference name</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>callID</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>uri</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>Add user</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>Band Width</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>user password</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+
+
+                    </table>
+                </div>
+
+
+
+
+
+                <div style="width:48%; float:left; margin-right: 15px;  padding-bottom: 20px;">
+
+                              <span class="nav-icon"  style="padding-bottom: 18px;">
+                                <i class="fa fa-address-book-o"></i>
+                              </span>
+                    <div>
+                        <strong>User</strong>
+                    </div>
+
+                    <table class="tg" width="100%">
+                        <colgroup>
+                            <col width="30%">
+                            <col width="30%">
+                            <col width="30%">
+                            <col width="10%">
+                        </colgroup>
+                        <tr>
+                            <th>User Jld</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Delete</th>
+                        </tr>
+                        <tr>
+                            <td>User Jld</td>
+                            <td>Name</td>
+                            <td>Email</td>
+                            <td>Delete</td>
+                        </tr>
+                        <tr>
+                            <td>User Jld</td>
+                            <td>Name</td>
+                            <td>Email</td>
+                            <td>Delete</td>
+                        </tr>
+                    </table>
+
+                </div>
+
+                <div style="width:50%; float:left; padding-bottom: 20px;">
+
+
+                              <span class="nav-icon"  style="padding-bottom: 18px;">
+                                <i class="fa fa-bolt"></i>
+                              </span>
+                    <div>
+                        <strong>End Point</strong>
+                    </div>
+
+
+                    <table class="tg" width="100%">
+                        <colgroup>
+                            <col width="15%">
+                            <col width="20%">
+                            <col width="20%">
+                            <col width="25%">
+                            <col width="20%">
+                        </colgroup>
+                        <tr>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- NEW LAYER POPUP 끝 -->
+
+<div class="padding">
+
+    <div class="box">
+        <div class="box-header">
+            <h2>TEMPLATE</h2>
+            <small>TEMPLATE</small>
+        </div>
+    </div>
+
+    <div style="padding: 10px; margin-bottom:40px;">
+
+        <!--<div style="float: left; margin-right: 10px; padding-top:6px;">Search</div>
+        <input type="text" class="form-control" id="search_str" placeholder="Search" required="" style="width:20%; float: left; margin-right:10px;">
+        <button id="search_btn" class="md-btn md-raised mb-2 w-xs white" style="float: left">Search</button>
+        -->
+
+        <button class="md-btn md-raised mb-2 w-xs cyan" id="delBtn" style="float: right;">DEL</button>
+
+        <a href="#layer2" class="btn-example">
+            <button class="md-btn md-raised mb-2 w-xs purple dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
+        </a>
+
+
+
+        <a href="#layer_new" class="btn-example">
+            <button class="md-btn md-raised mb-2 w-xs dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">NEWLAYER</button>
+        </a>
+    </div>
+
+
+
+    <div class="box" style="padding: 10px;">
+
+        <div class="table-responsive">
+            <div class="row">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm">
+                            On the mic
+                            <img src="/static/common/img/mic.png" alt="logo" class="cm_img">
+                            <br>
+                            off the mic
+                            <img src="/static/common/img/mic.png" alt="logo" class="cm_img">
+                            <br>
+                        </div>
+                        <div class="col-sm">
+                            On the volume
+                            <img src="/static/common/img/volume.png" alt="logo" class="cm_img">
+                            <br>
+                            Offthe volume
+                            <img src="/static/common/img/volume.png" alt="logo" class="cm_img">
+                            <br>
+                        </div>
+                        <div class="col-sm">
+                            On the video
+                            <img src="/static/common/img/video.png" alt="logo" class="cm_img">
+                            <br>
+                            Off the video
+                            <img src="/static/common/img/video.png" alt="logo" class="cm_img">
+                            <br>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <table class="table table-hover table-striped table-bordered" id="table_template" style="width:100%">
+                <thead>
+                <tr>
+                    <th style="width:5%" class="th-center"><</th>
+                    <th class="th-center">Conference name</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+
+
+</div>
+</%block>
+
+<%block name="scriptDown">
+<script>
+
+
+</script>
+</%block>

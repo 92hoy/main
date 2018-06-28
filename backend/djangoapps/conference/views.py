@@ -19,6 +19,10 @@ def conferenceRoom(request):
 
     return render(request, 'conference/conferenceRoom.html', context)
 
+def activecall_monitoring(request):
+
+
+    return render(request,'conference/activecall_monitoring.html')
 
 # 진행중인 회의 관리
 def activeCall(request):
