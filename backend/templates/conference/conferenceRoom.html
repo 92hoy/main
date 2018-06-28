@@ -59,18 +59,30 @@ from django.utils.translation import ugettext as _
                         </tr>
                         <tr>
                             <td>passcode</td>
-                            <td class="rightTd"><input type="text" id="conference_passcode" class="form-control" placeholder=""></td>
+                            <td class="rightTd"><input type="password" id="conference_passcode" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
                             <td>Confirm password</td>
-                            <td class="rightTd"><input type="text" id="conference_confirm_passcode" class="form-control" placeholder=""></td>
+                            <td class="rightTd"><input type="password" id="conference_confirm_passcode" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
                             <td>defaultLayout</td>
                             <td class="rightTd">
                                 <select id="conference_defaultLayout" class="custom-select w-100">
-                                    <option selected="">Choose...</option>
+                                    <option selected="">not Set</option>
                                     <option value="allEqual">allEqual</option>
+                                    <option value="allEqualQuarters">allEqualQuarters</option>
+                                    <option value="allEqualNinths">allEqualNinths</option>
+                                    <option value="allEqualSixteenths">allEqualSixteenths</option>
+                                    <option value="allEqualTwentyFifths">allEqualTwentyFifths</option>
+                                    <option value="speakerOnly">speakerOnly</option>
+                                    <option value="telepresence">telepresence</option>
+                                    <option value="stacked">stacked</option>
+                                    <option value="onePlusFive">onePlusFive</option>
+                                    <option value="onePlusSeven">onePlusSeven</option>
+                                    <option value="onePlusNine">onePlusNine</option>
+                                    <option value="automatic">automatic</option>
+                                    <option value="onePlusN">onePlusN</option>
                                 </select>
                             </td>
                         </tr>
@@ -82,8 +94,7 @@ from django.utils.translation import ugettext as _
                             <td>template</td>
                             <td class="rightTd">
                                 <select id="conference_template" class="custom-select w-100">
-                                    <option selected="">Choose...</option>
-                                    <option>...</option>
+                                    <option>test</option>
                                 </select>
                             </td>
                         </tr>
@@ -249,44 +260,59 @@ from django.utils.translation import ugettext as _
                 alert('callId를 입력하세요.');
                 lock = 1;
             }
-            if(conference_passcode != '' && conference_passcode == conference_confirm_passcode){
+            if(conference_passcode != conference_confirm_passcode){
                 alert('passcode가 일치하지 않습니다.');
                 lock = 1;
             }
+            if(conference_defaultLayout == 'not Set'){
+                conference_defaultLayout = '';
+            }
 
             console.log({'name': conference_name,
-                    'uri': conference_uri,
-                    'secondaryUri': conference_secondaryUri,
-                    'callId': conference_callId,
-                    'cdrTag': conference_cdrTag,
-                    'passcode': conference_passcode,
-                    'defaultLayout': conference_defaultLayout,
-                    'ownerJid': conference_ownerJid,
-                    'template': conference_template,
-                    'streamUrl': conference_streamUrl,
-                    'ownerAdGuid': conference_ownerAdGuid,
-                    'meetingScheduler': conference_meetingScheduler,});
+                'uri': conference_uri,
+                'secondaryUri': conference_secondaryUri,
+                'callId': conference_callId,
+                'cdrTag': conference_cdrTag,
+                'passcode': conference_passcode,
+                'defaultLayout': conference_defaultLayout,
+                'ownerJid': conference_ownerJid,
+                'template': conference_template,
+                'streamUrl': conference_streamUrl,
+                'ownerAdGuid': conference_ownerAdGuid,
+                'meetingScheduler': conference_meetingScheduler,});
 
             if(lock == 0){
-                /*
                 $.post('/conferenceRoom/add', {
-                    'name': conference_name,
-                    'uri': conference_uri,
-                    'secondaryUri': conference_secondaryUri,
-                    'callId': conference_callId,
-                    'cdrTag': conference_cdrTag,
-                    'passcode': conference_passcode,
-                    'defaultLayout': conference_defaultLayout,
-                    'ownerJid': conference_ownerJid,
-                    'template': conference_template,
-                    'streamUrl': conference_streamUrl,
-                    'ownerAdGuid': conference_ownerAdGuid,
-                    'meetingScheduler': conference_meetingScheduler,
-                })
+                            'name': conference_name,
+                            'uri': conference_uri,
+                            'secondaryUri': conference_secondaryUri,
+                            'callId': conference_callId,
+                            'cdrTag': conference_cdrTag,
+                            //'passcode': conference_passcode,
+                            'passcode': '',
+                            'defaultLayout': conference_defaultLayout,
+                            'ownerJid': conference_ownerJid,
+                            //'template': conference_template,
+                            // 추후 template 기능 개발 후 적용 예정
+                            'template': '',
+                            'streamUrl': conference_streamUrl,
+                            'ownerAdGuid': conference_ownerAdGuid,
+                            'meetingScheduler': conference_meetingScheduler,
+                        })
                         .done(function(data){
-                            alert('ok');
+                            if(data.code == '200'){
+                                swal({
+                                title: 'Success!',
+                                text: "",
+                                type: 'success',
+                            }).then(function(){
+                                location.reload();
+                            });
+                            } else {
+                                swal('경고', '입력값을 확인하세요', 'warning');
+                            }
+
                         });
-                        */
             }
 
         });

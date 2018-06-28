@@ -31,7 +31,7 @@ def conferenceRoomAdd(request):
 
     res = api_coSpaces_POST(request)
 
-    return JsonResponse({'msg': 'success'})
+    return JsonResponse({'code': res.status_code})
 
 
 # 진행중인 회의 관리

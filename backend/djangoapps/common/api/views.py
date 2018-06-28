@@ -10,41 +10,23 @@ import json
 import requests
 import xmltodict
 
+
 #from backend.djangoapps.common.api.views import api_coSpaces_POST
 def api_coSpaces_POST(request):
-    name = request.POST.get('name')
-    uri = request.POST.get('uri')
-    secondaryUri = request.POST.get('secondaryUri')
-    callId = request.POST.get('callId')
-    cdrTag = request.POST.get('cdrTag')
-    passcode = request.POST.get('passcode')
-    defaultLayout = request.POST.get('defaultLayout')
-    ownerJid = request.POST.get('ownerJid')
-    template = request.POST.get('template')
-    streamUrl = request.POST.get('streamUrl')
-    ownerAdGuid = request.POST.get('ownerAdGuid')
-    meetingScheduler = request.POST.get('meetingScheduler')
-    data = {
-        "name": "zxcv",
-        "uri": "9999",
-        "callId": "9999",
-        "secondaryUri": "9999",
-        "cdrTag": "9999",
-        "passcode": "9999",
-        "defaultLayout": "",
-        "ownerJid": "9999",
-        "template": "",
-        "streamUrl": "",
-        "ownerAdGuid": "",
-        "meetingScheduler": "9999"
-    }
+    json_data = json.dumps(request.POST)
+    json_data = json.loads(json_data)
     Authorization = settings.AUTHORIZATION
     url = 'https://14.63.53.22:449/api/v1/coSpaces'
     headers = {
         'Authorization': Authorization
     }
-    r = requests.post(url, headers=headers, verify=False, data=data)
-    print( str(r.text) )
+
+    r = requests.post(url, headers=headers, verify=False, data=json_data)
+
+    print(json_data)
+    print(r)
+    print(str(r.text))
+    return r
 
 #from backend.djangoapps.common.api.views import api_coSpaces
 def api_coSpaces():
@@ -68,7 +50,8 @@ def api_coSpaces():
     print("-------------------> DEBUG[s]")
     print("total = ", resDataJson['coSpaces']['@total']) #total
     print("realTotal = ", len(resDataJson['coSpaces']['coSpace'])) #total
-    requestCnt = (int(resDataJson['coSpaces']['@total']) / 20) + 1
+    requestCnt = (int(resDataJson['coSpaces']['@total']) / 20) + 1 if (int(resDataJson['coSpaces']['@total']) % 20) != 0 else int(resDataJson['coSpaces']['@total']) / 20
+
     resDataList = list()
 
     for n in range(0, int(requestCnt)):
@@ -79,7 +62,11 @@ def api_coSpaces():
         res_o = xmltodict.parse(res_data)
         res_data = json.dumps(res_o)
         res_data_json = json.loads(res_data)
-        resDataList.append(res_data_json['coSpaces']['coSpace'])
+        if type(res_data_json['coSpaces']['coSpace']) == list:
+            resDataList.append(res_data_json['coSpaces']['coSpace'])
+        else:
+            single_data = [res_data_json['coSpaces']['coSpace']]
+            resDataList.append(single_data)
 
     print(resDataList)
     totDataList = list()
