@@ -20,6 +20,10 @@ def conferenceRoom(request):
 
     return render(request, 'conference/conferenceRoom.html', context)
 
+def activecall_monitoring(request):
+
+
+    return render(request,'conference/activecall_monitoring.html')
 
 # 컨퍼런스 추가
 @csrf_exempt

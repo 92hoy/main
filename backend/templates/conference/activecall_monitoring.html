@@ -285,12 +285,6 @@ from django.utils.translation import ugettext as _
                         </tr>
                     </table>
                 </div>
-
-
-
-
-
-
             </div>
         </div>
     </div>
@@ -333,21 +327,47 @@ from django.utils.translation import ugettext as _
     <div class="box" style="padding: 10px;">
 
         <div class="table-responsive">
+            <div class="row">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm">
+                            On the mic
+                            <img src="/static/common/img/mic.png" alt="logo" class="cm_img">
+                            <br>
+                            off the mic
+                            <img src="/static/common/img/mic.png" alt="logo" class="cm_img">
+                            <br>
+                        </div>
+                        <div class="col-sm">
+                            On the volume
+                            <img src="/static/common/img/volume.png" alt="logo" class="cm_img">
+                            <br>
+                            Offthe volume
+                            <img src="/static/common/img/volume.png" alt="logo" class="cm_img">
+                            <br>
+                        </div>
+                        <div class="col-sm">
+                            On the video
+                            <img src="/static/common/img/video.png" alt="logo" class="cm_img">
+                            <br>
+                            Off the video
+                            <img src="/static/common/img/video.png" alt="logo" class="cm_img">
+                            <br>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
             <table class="table table-hover table-striped table-bordered" id="table_template" style="width:100%">
                 <thead>
                 <tr>
-                    <th style="width:5%" class="th-center"><input type="checkbox" id="select_all"/></th>
+                    <th style="width:5%" class="th-center"><</th>
                     <th class="th-center">Conference name</th>
                 </tr>
                 </thead>
 
-                <tbody id="tbody">
-                % for data in context['data']:
-                <tr>
-                    <td></td>
-                    <td>${data['conference_name']}</td>
-                </tr>
-                % endfor
+                <tbody>
+
                 </tbody>
             </table>
         </div>
@@ -361,145 +381,7 @@ from django.utils.translation import ugettext as _
 
 <%block name="scriptDown">
 <script>
-    $(document).ready(function() {
-        $table = $("#table_template");
-        $table.dataTable({
-            rowReorder: false,
-            sLengthMenu: [
-                [10, 20, 50, -1], //key
-                [10, 20, 50, "All"] //value
-            ],
-            dom: '<"clear"fl><"search">rt<"bottom"ipl>',
-            searching: true,
-            paginate: true,
-            "oLanguage": {
-                "sInfo": "Page: _PAGE_ / _PAGES_",
-                'sLengthMenu': 'Display <select name="datatable-length">'+
-                '<option value="10">10</option>'+
-                '<option value="20">20</option>'+
-                '<option value="50">50</option>'+
-                '<option value="-1">All</option>'+
-                '</select> records',
-                "oPaginate": {
-                    "sNext": ">",
-                    "sPrevious": "<",
-                },
 
-            },
-            order: [[1, 'desc']],
-            columns: [
-                {'orderable': false},
-                null,
-            ],
-            columnDefs: [
-                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center"},
-            ],
-            "drawCallback":function(){
-                $(".paginate_button").attr('href', 'javascript:check_click();');
-            }
-        });
-    } );
-
-    function check_click(){
-        //alert("paging btn");
-        if($("input:checkbox[id='select_all']").prop("checked")) {
-            $('input:checkbox').prop("checked", false);
-        }
-        else {
-            $('input:checkbox').prop("checked", false);
-        }
-    }
-
-    $('.btn-example').click(function(){
-        var $href = $(this).attr('href');
-        layer_popup($href);
-    });
-
-    function layer_popup(el){
-
-        var $el = $(el);        //레이어의 id를 $el 변수에 저장
-        var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
-
-        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
-
-        var $elWidth = ~~($el.outerWidth()),
-                $elHeight = ~~($el.outerHeight()),
-                docWidth = $(document).width(),
-                docHeight = $(document).height();
-
-        // 화면의 중앙에 레이어를 띄운다.
-        if ($elHeight < docHeight || $elWidth < docWidth) {
-            $el.css({
-                marginTop: -$elHeight /2,
-                marginLeft: -$elWidth/2
-            })
-        } else {
-            $el.css({top: 0, left: 0});
-        }
-
-        $el.find('a.btn-layerClose').click(function(){
-            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
-            return false;
-        });
-
-        $('.layer .dimBg').click(function(){
-            $('.dim-layer').fadeOut();
-            return false;
-        });
-
-    }
-
-
-    $('.btn-example').click(function(){
-        var $href = $(this).attr('href');
-        layer_popup2($href);
-    });
-
-    function layer_popup2(el){
-
-        var $el = $(el);        //레이어의 id를 $el 변수에 저장
-        var isDim = $el.prev().hasClass('dimBg2');   //dimmed 레이어를 감지하기 위한 boolean 변수
-
-        isDim ? $('.dim-layer2').fadeIn() : $el.fadeIn();
-
-        var $elWidth = ~~($el.outerWidth()),
-                $elHeight = ~~($el.outerHeight()),
-                docWidth = $(document).width(),
-                docHeight = $(document).height();
-
-        // 화면의 중앙에 레이어를 띄운다.
-        if ($elHeight < docHeight || $elWidth < docWidth) {
-            $el.css({
-                marginTop: -$elHeight /2,
-                marginLeft: -$elWidth/2
-            })
-        } else {
-            $el.css({top: 0, left: 0});
-        }
-
-        $el.find('a.btn-layerClose').click(function(){
-            isDim ? $('.dim-layer2').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
-            return false;
-        });
-
-        $('.layer .dimBg2').click(function(){
-            $('.dim-layer2').fadeOut();
-            return false;
-        });
-
-    }
-
-
-
-
-    // // 팝업 열때 부모창 스크롤 막기
-    // $('html, body').css({'overflow': 'hidden', 'height': '100%'});
-    // $('#element').on('scroll touchmove mousewheel', function(event) {
-    //      event.preventDefault();     event.stopPropagation();     return false; });
-
-    // // 팝업 해제시 스크롤 가능하게
-    // $('html, body').css({'overflow': 'auto', 'height': '100%'});
-    // $('#element').off('scroll touchmove mousewheel');
 
 </script>
 </%block>
