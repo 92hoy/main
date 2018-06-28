@@ -29,9 +29,34 @@ def activecall_monitoring(request):
 @csrf_exempt
 def conferenceRoomAdd(request):
 
+    print(request.POST.get('name'))
     res = api_coSpaces_POST(request)
 
-    return JsonResponse({'msg': 'success'})
+    return JsonResponse({'code': res.status_code})
+
+
+# 컨퍼런스 상세
+def conferenceRoomDetail(request):
+    coSpaceId = request.POST.get('coSpaceId')
+    print(coSpaceId)
+
+    resDataJson = api_coSpaceId(coSpaceId)
+
+    resDataJson['coSpace']['id'] = resDataJson['coSpace'].pop('@id')
+
+    return JsonResponse({'data': resDataJson})
+
+
+# 컨퍼런스 업데이트
+@csrf_exempt
+def conferenceRoomUpdate(request):
+    coSpaceId = request.POST.get('@id')
+    res = api_coSpaceId(coSpaceId, request)
+    print('conferenceRoomUpdate s ------------------------->')
+    print(res.status_code)
+    print('conferenceRoomUpdate e ------------------------->')
+
+    return JsonResponse({'code': res.status_code})
 
 
 # 진행중인 회의 관리
