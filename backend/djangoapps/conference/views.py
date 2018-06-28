@@ -1,15 +1,16 @@
 #-*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.db import connections
+import json
 
 from backend.djangoapps.common.api.views import api_coSpaces
 from backend.djangoapps.common.api.views import api_coSpaceId
 from backend.djangoapps.common.api.views import api_activeCall
 from backend.djangoapps.common.api.views import api_activeCallId
 from backend.djangoapps.common.api.views import api_activeCallLegs
-
+from backend.djangoapps.common.api.views import api_coSpaces_POST
 
 # 컨퍼런스 목록
 def conferenceRoom(request):
@@ -18,6 +19,15 @@ def conferenceRoom(request):
     context['data'] = api_coSpaces()
 
     return render(request, 'conference/conferenceRoom.html', context)
+
+
+# 컨퍼런스 추가
+@csrf_exempt
+def conferenceRoomAdd(request):
+
+    res = api_coSpaces_POST(request)
+
+    return JsonResponse({'msg': 'success'})
 
 
 # 진행중인 회의 관리

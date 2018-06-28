@@ -10,6 +10,42 @@ import json
 import requests
 import xmltodict
 
+#from backend.djangoapps.common.api.views import api_coSpaces_POST
+def api_coSpaces_POST(request):
+    name = request.POST.get('name')
+    uri = request.POST.get('uri')
+    secondaryUri = request.POST.get('secondaryUri')
+    callId = request.POST.get('callId')
+    cdrTag = request.POST.get('cdrTag')
+    passcode = request.POST.get('passcode')
+    defaultLayout = request.POST.get('defaultLayout')
+    ownerJid = request.POST.get('ownerJid')
+    template = request.POST.get('template')
+    streamUrl = request.POST.get('streamUrl')
+    ownerAdGuid = request.POST.get('ownerAdGuid')
+    meetingScheduler = request.POST.get('meetingScheduler')
+    data = {
+        "name": "zxcv",
+        "uri": "9999",
+        "callId": "9999",
+        "secondaryUri": "9999",
+        "cdrTag": "9999",
+        "passcode": "9999",
+        "defaultLayout": "",
+        "ownerJid": "9999",
+        "template": "",
+        "streamUrl": "",
+        "ownerAdGuid": "",
+        "meetingScheduler": "9999"
+    }
+    Authorization = settings.AUTHORIZATION
+    url = 'https://14.63.53.22:449/api/v1/coSpaces'
+    headers = {
+        'Authorization': Authorization
+    }
+    r = requests.post(url, headers=headers, verify=False, data=data)
+    print( str(r.text) )
+
 #from backend.djangoapps.common.api.views import api_coSpaces
 def api_coSpaces():
 

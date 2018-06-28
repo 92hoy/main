@@ -23,7 +23,7 @@ from django.utils.translation import ugettext as _
 
 <div class="dim-layer">
     <div class="dimBg"></div>
-    <div id="layer2" class="pop-layer">
+    <div id="layer2" class="pop-layer" style="height: 660px;">
         <div class="pop-container">
             <div class="pop-conts">
 
@@ -38,50 +38,50 @@ from django.utils.translation import ugettext as _
                     <table style="display: inline-block; width:100%;">
                         <tbody>
                         <tr>
-                            <td>Conference name</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>Conference name<font class="star">*</font></td>
+                            <td class="rightTd"><input type="text" class="form-control" id="conference_name" placeholder=""></td>
                         </tr>
                         <tr>
-                            <td>uri</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>uri<font class="star">*</font></td>
+                            <td class="rightTd"><input type="text" id="conference_uri" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
                             <td>secondaryUri</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td class="rightTd"><input type="text" id="conference_secondaryUri" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
-                            <td>callId</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td>callId<font class="star">*</font></td>
+                            <td class="rightTd"><input type="text" id="conference_callId" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
                             <td>cdrTag</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td class="rightTd"><input type="text" id="conference_cdrTag" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
                             <td>passcode</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td class="rightTd"><input type="text" id="conference_passcode" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
                             <td>Confirm password</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td class="rightTd"><input type="text" id="conference_confirm_passcode" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
                             <td>defaultLayout</td>
                             <td class="rightTd">
-                                <select id="inputState" class="custom-select w-100">
+                                <select id="conference_defaultLayout" class="custom-select w-100">
                                     <option selected="">Choose...</option>
-                                    <option>...</option>
+                                    <option value="allEqual">allEqual</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>ownerJid</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td class="rightTd"><input type="text" id="conference_ownerJid" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
                             <td>template</td>
                             <td class="rightTd">
-                                <select id="inputState" class="custom-select w-100">
+                                <select id="conference_template" class="custom-select w-100">
                                     <option selected="">Choose...</option>
                                     <option>...</option>
                                 </select>
@@ -89,20 +89,20 @@ from django.utils.translation import ugettext as _
                         </tr>
                         <tr>
                             <td>streamUrl</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td class="rightTd"><input type="text" id="conference_streamUrl" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
                             <td>ownerAdGuid</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td class="rightTd"><input type="text" id="conference_ownerAdGuid" class="form-control" placeholder=""></td>
                         </tr>
                         <tr>
                             <td>MeetingScheduler</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <td class="rightTd"><input type="text" id="conference_meetingScheduler" class="form-control" placeholder=""></td>
                         </tr>
                         </tbody>
                     </table>
 
-                    <button class="md-btn md-raised mb-2 w-xs blue mgt10" id="confSave">SAVE</button>
+                    <button class="md-btn md-raised mb-2 w-xs blue mgt10" id="confSave" style="margin-top: 20px;">SAVE</button>
 
                 </div>
             </div>
@@ -119,32 +119,32 @@ from django.utils.translation import ugettext as _
             <small>You can see the current meeting status</small>
         </div>
     </div>
-  </div>
+</div>
 
-  <div class="box" style="padding: 10px;">
+<div class="box" style="padding: 10px;">
 
 
-      <div style="padding: 10px;">
+    <div style="padding: 10px;">
         <button class="md-btn md-raised mb-2 w-xs red" id="delBtn" style="float: right;">DEL</button>
 
         <a href="#layer2" class="btn-example">
-          <button class="md-btn md-raised mb-2 w-xs indigo dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
+            <button class="md-btn md-raised mb-2 w-xs indigo dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
         </a>
-      </div>
+    </div>
 
-      <div class="table-responsive">
+    <div class="table-responsive">
         <table class="table table-hover table-striped table-bordered" id="table_conferenceRoom" style="width:100%">
 
-          <thead>
+            <thead>
             <tr>
-              <th style="width:5%" class="th-center"><input type="checkbox" id="select_all"/></th>
-              <th style="width:35%" class="th-center">Conference Name</th>
-              <th style="width:10%" class="th-center">URI</th>
-              <th style="width:15%" class="th-center">Secondary URI</th>
-              <th style="width:10%" class="th-center">Call ID</th>
-              <th style="width:10%" class="th-center">CDR Tag</th>
+                <th style="width:5%" class="th-center"><input type="checkbox" id="select_all"/></th>
+                <th style="width:35%" class="th-center">Conference Name</th>
+                <th style="width:10%" class="th-center">URI</th>
+                <th style="width:15%" class="th-center">Secondary URI</th>
+                <th style="width:10%" class="th-center">Call ID</th>
+                <th style="width:10%" class="th-center">CDR Tag</th>
             </tr>
-          </thead>
+            </thead>
 
             <tbody id="tbody">
             % for data in context['data']:
@@ -160,11 +160,11 @@ from django.utils.translation import ugettext as _
             </tbody>
 
         </table>
-      </div>
+    </div>
 
-      <div style="text-align: center;">
+    <div style="text-align: center;">
         <div id="paging"></div>
-      </div>
+    </div>
 
 </div>
 
@@ -217,6 +217,81 @@ from django.utils.translation import ugettext as _
                 $(".paginate_button").attr('href', 'javascript:check_click();');
             }
         });
+
+
+        // save
+        $('#confSave').click(function(){
+            var conference_name = $("#conference_name").val();
+            var conference_uri = $("#conference_uri").val();
+            var conference_secondaryUri = $("#conference_secondaryUri").val();
+            var conference_callId = $("#conference_callId").val();
+            var conference_cdrTag = $("#conference_cdrTag").val();
+            var conference_passcode = $("#conference_passcode").val();
+            var conference_confirm_passcode = $("#conference_confirm_passcode").val();
+            var conference_defaultLayout = $("#conference_defaultLayout").val();
+            var conference_ownerJid = $("#conference_ownerJid").val();
+            var conference_template = $("#conference_template").val();
+            var conference_streamUrl = $("#conference_streamUrl").val();
+            var conference_ownerAdGuid = $("#conference_ownerAdGuid").val();
+            var conference_meetingScheduler = $("#conference_meetingScheduler").val();
+
+            var lock = 0;
+
+            if(conference_name == ''){
+                alert('Conference name을 입력하세요.');
+                lock = 1;
+            }
+            else if(conference_uri == ''){
+                alert('uri를 입력하세요.');
+                lock = 1;
+            }
+            else if(conference_callId == ''){
+                alert('callId를 입력하세요.');
+                lock = 1;
+            }
+            if(conference_passcode != '' && conference_passcode == conference_confirm_passcode){
+                alert('passcode가 일치하지 않습니다.');
+                lock = 1;
+            }
+
+            console.log({'name': conference_name,
+                    'uri': conference_uri,
+                    'secondaryUri': conference_secondaryUri,
+                    'callId': conference_callId,
+                    'cdrTag': conference_cdrTag,
+                    'passcode': conference_passcode,
+                    'defaultLayout': conference_defaultLayout,
+                    'ownerJid': conference_ownerJid,
+                    'template': conference_template,
+                    'streamUrl': conference_streamUrl,
+                    'ownerAdGuid': conference_ownerAdGuid,
+                    'meetingScheduler': conference_meetingScheduler,});
+
+            if(lock == 0){
+                /*
+                $.post('/conferenceRoom/add', {
+                    'name': conference_name,
+                    'uri': conference_uri,
+                    'secondaryUri': conference_secondaryUri,
+                    'callId': conference_callId,
+                    'cdrTag': conference_cdrTag,
+                    'passcode': conference_passcode,
+                    'defaultLayout': conference_defaultLayout,
+                    'ownerJid': conference_ownerJid,
+                    'template': conference_template,
+                    'streamUrl': conference_streamUrl,
+                    'ownerAdGuid': conference_ownerAdGuid,
+                    'meetingScheduler': conference_meetingScheduler,
+                })
+                        .done(function(data){
+                            alert('ok');
+                        });
+                        */
+            }
+
+        });
+
+
     });
 
     function check_click(){
@@ -242,9 +317,9 @@ from django.utils.translation import ugettext as _
         isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
 
         var $elWidth = ~~($el.outerWidth()),
-            $elHeight = ~~($el.outerHeight()),
-            docWidth = $(document).width(),
-            docHeight = $(document).height();
+                $elHeight = ~~($el.outerHeight()),
+                docWidth = $(document).width(),
+                docHeight = $(document).height();
 
         // 화면의 중앙에 레이어를 띄운다.
         if ($elHeight < docHeight || $elWidth < docWidth) {
@@ -268,5 +343,28 @@ from django.utils.translation import ugettext as _
         });
 
     }
+
+    function conferenceData(){
+        var conference_name = $("#conference_name").val();
+        var conference_uri = $("#conference_uri").val();
+        var conference_secondaryUri = $("#conference_secondaryUri").val();
+        var conference_callId = $("#conference_callId").val();
+        var conference_cdrTag = $("#conference_cdrTag").val();
+        var conference_passcode = $("#conference_passcode").val();
+        var conference_confirm_passcode = $("#conference_confirm_passcode").val();
+        var conference_defaultLayout = $("#conference_defaultLayout").val();
+        var conference_ownerJid = $("#conference_ownerJid").val();
+        var conference_template = $("#conference_template").val();
+        var conference_streamUrl = $("#conference_streamUrl").val();
+        var conference_ownerAdGuid = $("#conference_ownerAdGuid").val();
+        var conference_meetingScheduler = $("#conference_meetingScheduler").val();
+
+        conData = {
+
+        }
+
+        return conData;
+    }
 </script>
+
 </%block>

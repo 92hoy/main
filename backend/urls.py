@@ -60,6 +60,7 @@ urlpatterns = [
 
     # conference
     url('conferenceRoom$', ConferenceViews.conferenceRoom, name='conferenceRoom'),
+    url('conferenceRoom/add$', ConferenceViews.conferenceRoomAdd, name='conferenceRoomAdd'),
     url('activeCall$', ConferenceViews.activeCall, name='activeCall'),
     url('template$', ConferenceViews.template, name='template'),
     url('reserveConference$', ConferenceViews.reserveConference, name='reserveConference'),
