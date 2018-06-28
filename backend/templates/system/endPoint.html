@@ -76,7 +76,7 @@ from django.utils.translation import ugettext as _
                             <td>Device Type</td>
                             <td>
                                 <label class="btn btn-outline-light" style="color:black; border: 1px solid #BDBDBD;">
-                                <input type="radio" name="options" autocomplete="off"value="ip"> IP
+                                    <input type="radio" name="options" autocomplete="off"value="ip"> IP
                                 </label>
 
                                 <label class="btn btn-outline-light" style="color:black;  border: 1px solid #BDBDBD;">
@@ -130,7 +130,7 @@ from django.utils.translation import ugettext as _
                         </tr>
                         <tr>
                             <td>SortNo</td>
-                            <td class="rightTd"><input type="text" class="form-control"id="sortno"></td>
+                            <td class="rightTd"><input type="number" class="form-control"id="sortno"></td>
                         </tr>
 
 
@@ -181,13 +181,15 @@ from django.utils.translation import ugettext as _
                 null,
             ],
             columnDefs: [
-                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center"},
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center t1"},
             ],
             "drawCallback":function(){
                 $(".paginate_button").attr('href', 'javascript:check_click();');
-            }
+            },
+            "initComplete":function(){
+                $(".text-center").attr('href','javascript:btn_del();');
+            },
         });
-
     });
 
     function check_click(){
@@ -300,13 +302,12 @@ from django.utils.translation import ugettext as _
                             dangerMode: false,
                         })
                                 .then(function(willDelete) {
-                            if (willDelete) {
-                            return
-                        } else {
-                            return
-                        }
+                                    if (willDelete) {
+                                        return
+                                    } else {
+                                        return
+                                    }
                                 });
-                        //swal("Login-fail","ID,PW를 확인해주세요","warning");
                     }
                 },
             });
@@ -314,7 +315,7 @@ from django.utils.translation import ugettext as _
     }
 
     function btn_del(){
-        var device_type = $(':checkbox[name="options"]:checked').val();
+
     }
 
 </script>

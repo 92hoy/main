@@ -22,7 +22,6 @@ from django.utils.translation import ugettext as _
                 <hr width="100%" color="#d9d9d9">
                 <div style="text-align: center;">
                     <table style="display: inline-block; width:100%;">
-
                         <tr>
                             <td>Conference name</td>
                             <td class="rightTd"><input type="text" class="form-control wi280" placeholder=""></td>
@@ -96,12 +95,6 @@ from django.utils.translation import ugettext as _
     </div>
 
 </div>
-
-
-
-
-
-
 <!-- NEW LAYER POPUP -->
 <div class="dim-layer2">
     <div class="dimBg2"></div>
@@ -309,27 +302,27 @@ from django.utils.translation import ugettext as _
         <button id="search_btn" class="md-btn md-raised mb-2 w-xs white" style="float: left">Search</button>
         -->
 
-        <button class="md-btn md-raised mb-2 w-xs cyan" id="delBtn" style="float: right;">DEL</button>
 
-        <a href="#layer2" class="btn-example">
-            <button class="md-btn md-raised mb-2 w-xs purple dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
-        </a>
-
-
-
-        <a href="#layer_new" class="btn-example">
-            <button class="md-btn md-raised mb-2 w-xs dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">NEWLAYER</button>
-        </a>
     </div>
 
 
 
     <div class="box" style="padding: 10px;">
+<div style="height: 100px;">
+    <button class="md-btn md-raised mb-2 w-xs cyan" id="delBtn" style="float: right;">DEL</button>
+        <a href="#layer2" class="btn-example">
+            <button class="md-btn md-raised mb-2 w-xs purple dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
+        </a>
+        <a href="#layer_new" class="btn-example">
+            <button class="md-btn md-raised mb-2 w-xs dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">NEWLAYER</button>
+        </a>
+    <h1> &nbsp; &nbsp; Streaming<img src="/static/common/img/message.png" alt="logo" class="cm_img"></h1>
 
+</div>
         <div class="table-responsive">
             <div class="row">
                 <div class="container">
-                    <div class="row">
+                    <div class="row" style="border: 2px groove #CBD8FB;">
                         <div class="col-sm">
                             On the mic
                             <img src="/static/common/img/mic.png" alt="logo" class="cm_img">
@@ -354,6 +347,14 @@ from django.utils.translation import ugettext as _
                             <img src="/static/common/img/video.png" alt="logo" class="cm_img">
                             <br>
                         </div>
+                        <div class="col-sm" style="border-left:2px groove #CBD8FB; vertical-align: middle; text-align: center; ">
+                            <br>
+                            <input type="text"> &nbsp; <button>invite</button>
+                            <br><br>
+                            <button>Add participants</button>
+                            <br><br>
+                            <button>Enc conference</button>
+                        </div>
                     </div>
                 </div>
 
@@ -370,11 +371,21 @@ from django.utils.translation import ugettext as _
 
                 </tbody>
             </table>
+<br><br><br><br><br><br><br><br>
+            <table class="table table-hover table-striped table-bordered" id="table_template" style="width:100%">
+                <thead>
+                <tr>
+                    <th style="width:5%" class="th-center"><</th>
+                    <th class="th-center">what the table</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                </tbody>
+            </table>
         </div>
-
-
     </div>
-
 
 </div>
 </%block>

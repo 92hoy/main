@@ -330,3 +330,4 @@ def commandManagement(request):
     context['cc_videoMode'] = jsonData['callcommand']['videoMode']
 
     return render(request, 'system/commandManagement.html', context)
+
