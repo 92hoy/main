@@ -219,7 +219,6 @@ def api_activeCallLegs(id):
     print("-------------------> DEBUG[s]")
     print(resDataJson)
     print("-------------------> DEBUG[e]")
->>>>>>> dev_ayh
 
     return resDataJson
 
@@ -368,7 +367,6 @@ def api_usersId(id):
     print("-------------------> DEBUG[s]")
     print(resDataJson)
     print("-------------------> DEBUG[e]")
->>>>>>> dev_ayh
 
     return resDataJson
 
