@@ -252,18 +252,18 @@ def endPoint(request):
     return render(request, 'system/endPoint.html', context)
 
 #endPoint 삭제        작업중
-# def endPoint_del(request):
-#     if request.is_ajax():
-#         name= request.POST.get('name')
-#
-#         with connections['default'].cursor() as cur:
-#             query = '''
-#                 delete FROM cms_endpoint
-#                 WHERE name ='{ep_id}'
-#             '''.format(ep_id=name)
-#             cur.execute(query)
-#
-#     return JsonResponse ({"return": "success"})
+def endPoint_del(request):
+    if request.is_ajax():
+        name= request.POST.get('name')
+
+        with connections['default'].cursor() as cur:
+            query = '''
+                 delete FROM cms_endpoint
+                 WHERE name ='{ep_id}'
+             '''.format(ep_id=name)
+            cur.execute(query)
+
+    return JsonResponse({"return": "success"})
 
 # 시스템 상태
 def endPointGroup(request):
