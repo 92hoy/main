@@ -162,7 +162,7 @@ from django.utils.translation import ugettext as _
             <% data_id = data['@id'] %>
             <tr>
                 <td></td>
-                <td><a href="javascript:coSpaceDetail('${data_id}');" style="text-decoration: underline;">${data['name']}</a></td>
+                <td><a href="javascript:coSpaceDetail('${data_id}');" con-id="${data_id}" style="text-decoration: underline;">${data['name']}</a></td>
                 <td>${data['uri']}</td>
                 <td>${data['secondaryUri']}</td>
                 <td>${data['callId']}</td>
@@ -223,7 +223,7 @@ from django.utils.translation import ugettext as _
                 null,
             ],
             columnDefs: [
-                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center"},
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center check-row"},
             ],
             "drawCallback":function(){
                 $(".paginate_button").attr('href', 'javascript:check_click();');
@@ -299,8 +299,8 @@ from django.utils.translation import ugettext as _
                             'secondaryUri': conference_secondaryUri,
                             'callId': conference_callId,
                             'cdrTag': conference_cdrTag,
-                            //'passcode': conference_passcode,
-                            'passcode': '',
+                            'passcode': conference_passcode,
+                            //'passcode': '',
                             'defaultLayout': conference_defaultLayout,
                             'ownerJid': conference_ownerJid,
                             //'template': conference_template,
@@ -313,12 +313,12 @@ from django.utils.translation import ugettext as _
                         .done(function(data){
                             if(data.code == '200'){
                                 swal({
-                                title: 'Success!',
-                                text: "",
-                                type: 'success',
-                            }).then(function(){
-                                location.reload();
-                            });
+                                    title: 'Success!',
+                                    text: "",
+                                    type: 'success',
+                                }).then(function(){
+                                    location.reload();
+                                });
                             } else {
                                 swal('경고', '입력값을 확인하세요', 'warning');
                             }
@@ -328,6 +328,37 @@ from django.utils.translation import ugettext as _
 
         });
 
+        // 체크박스 리스트 선택(delete)
+        $('#delBtn').click(function () {
+            var table = $('#table_conferenceRoom').DataTable();
+            var del_conference = $('td.check-row input[type="checkbox"]:checked').map(function() {
+                var this_tr = $(this).parent().parent();
+                // con-id는 id값 저장을위해 지정해준 속성
+                var this_td_data = $(this_tr).find("a").attr('con-id');
+                console.log(this_td_data);
+                return this_td_data;}).get();
+            $.ajax({
+                url: '/conferenceRoom/del',
+                type: "POST",
+                data: {
+                    'csrfmiddlewaretoken': '${csrf_token}',
+                    'del_arr': del_conference
+                }
+            }).done(function(data){
+                if(data.status == 'success'){
+                    swal({
+                        title: 'Success!',
+                        text: "",
+                        type: 'success',
+                    }).then(function(){
+                        location.reload();
+                    });
+                } else {
+                     swal('경고', '삭제에 실패하였습니다.', 'warning');
+                }
+                alert(data.code);
+            });
+        });
 
     });
 
