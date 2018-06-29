@@ -139,7 +139,8 @@ def api_activeCall():
     print(resDataJson)
     print("-------------------> DEBUG[e]")
 
-    requestCnt = (int(resDataJson['calls']['@total']) / 20) + 1
+    requestCnt = (int(resDataJson['calls']['@total']) / 20) + 1 if (int(resDataJson['calls']['@total']) % 20) != 0 else int(resDataJson['calls']['@total']) / 20
+
     resDataList = list()
 
     for n in range(0, int(requestCnt)):
@@ -150,7 +151,11 @@ def api_activeCall():
         res_o = xmltodict.parse(res_data)
         res_data = json.dumps(res_o)
         res_data_json = json.loads(res_data)
-        resDataList.append(res_data_json['calls']['call'])
+        if type(res_data_json['calls']['call']) == list:
+            resDataList.append(res_data_json['calls']['call'])
+        else:
+            single_data = [res_data_json['calls']['call']]
+            resDataList.append(single_data)
 
     totDataList = list()
     for list_data in resDataList:
