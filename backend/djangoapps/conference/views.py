@@ -7,10 +7,12 @@ import json
 
 from backend.djangoapps.common.api.views import api_coSpaces
 from backend.djangoapps.common.api.views import api_coSpaceId
+from backend.djangoapps.common.api.views import api_coSpaces_POST
+from backend.djangoapps.common.api.views import api_coSpaceDel
 from backend.djangoapps.common.api.views import api_activeCall
 from backend.djangoapps.common.api.views import api_activeCallId
 from backend.djangoapps.common.api.views import api_activeCallLegs
-from backend.djangoapps.common.api.views import api_coSpaces_POST
+
 
 # 컨퍼런스 목록
 def conferenceRoom(request):
@@ -57,6 +59,20 @@ def conferenceRoomUpdate(request):
     print('conferenceRoomUpdate e ------------------------->')
 
     return JsonResponse({'code': res.status_code})
+
+
+# 컨퍼런스 삭제
+def conferenceRoomDel(request):
+    res = api_coSpaceDel(request)
+
+    status = 'success'
+    if res:
+        print('<<<<<======================== conferenceRoomDel error ')
+        print(res)
+        print('conferenceRoomDel error ========================>>>>>>')
+        status = 'fail'
+
+    return JsonResponse({'status': status})
 
 
 # 진행중인 회의 관리

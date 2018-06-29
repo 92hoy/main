@@ -116,6 +116,30 @@ def api_coSpaceId(id, request=None):
 
     return resDataJson
 
+
+#from backend.djangoapps.common.api.views import api_coSpaceDel
+def api_coSpaceDel(request):
+    coSpaceId_list = request.POST.getlist('del_arr[]')
+    Authorization = settings.AUTHORIZATION
+
+    headers = {
+        'Authorization': Authorization
+    }
+    error_id = list()
+    for coSpaceId in coSpaceId_list:
+        url = 'https://14.63.53.22:449/api/v1/coSpaces/' + coSpaceId
+        r = requests.delete(url, headers=headers, verify=False)
+        r.encoding = None
+        print('coSpaceDel s ---------------------------------')
+        print(str(r.status_code), str(r.text))
+        print('coSpaceDel e ---------------------------------')
+
+        if r.status_code != 200:
+            error_id.append(r)
+
+    return error_id
+
+
 #from backend.djangoapps.common.api.views import api_activeCall
 def api_activeCall():
     Authorization = settings.AUTHORIZATION
