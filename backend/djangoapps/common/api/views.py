@@ -139,7 +139,9 @@ def api_activeCall():
     print(resDataJson)
     print("-------------------> DEBUG[e]")
 
-    requestCnt = (int(resDataJson['calls']['@total']) / 20) + 1 if (int(resDataJson['calls']['@total']) % 20) != 0 else int(resDataJson['calls']['@total']) / 20
+    requestCnt = (int(resDataJson['calls']['@total']) / 20) + 1 \
+        if (int(resDataJson['calls']['@total']) % 20) != 0 \
+        else int(resDataJson['calls']['@total']) / 20
 
     resDataList = list()
 
