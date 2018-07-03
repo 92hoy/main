@@ -20,7 +20,7 @@ from django.utils.translation import ugettext as _
                             <h3>${_("Created Meeting")}</h3>
                         </div>
                         <div class="box-body" style="height: 90px;">
-                            <p class="m-0 text-muted" style="font-size: 400%;">13</p>
+                            <p class="m-0 text-muted" style="font-size: 400%;">13/L</p>
                         </div>
                     </div>
 
@@ -29,7 +29,7 @@ from django.utils.translation import ugettext as _
                             <h3>${_("Ongoing meeting")}</h3>
                         </div>
                         <div class="box-body" style="height: 90px;">
-                            <p class="m-0 text-muted" style="font-size: 400%;">06</p>
+                            <p class="m-0 text-muted" style="font-size: 400%;">06/L</p>
                         </div>
                     </div>
 
@@ -38,7 +38,7 @@ from django.utils.translation import ugettext as _
                             <h3>${_("Connected users")}</h3>
                         </div>
                         <div class="box-body" style="height: 90px;">
-                            <p class="m-0 text-muted" style="font-size: 400%;">21</p>
+                            <p class="m-0 text-muted" style="font-size: 400%;">21/L</p>
                         </div>
                     </div>
 
@@ -64,6 +64,65 @@ from django.utils.translation import ugettext as _
 
         </div>
         <div class="col-sm-6">
+            <div class="box">
+                <div class="box-header">
+                    <h3>${_("Meeting status")} <button class="btn btn-fw warning" style="float:right; margin-top: -8px;">reservation</button></h3>
+                </div>
+
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <span class="badge amber text-u-c">reservation</span>
+                        </td>
+                        <td>Kotech Tech Manager<span style="margin-left:20px" class="badge badge-pill primary">new</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge amber text-u-c">reservation</span>
+                        </td>
+                        <td>코테크 코인 발행 회의<span style="margin-left:20px" class="badge badge-pill primary">new</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge green text-u-c">Open</span>
+                        </td>
+                        <td>코테크 연봉 협상 회의<span style="margin-left:20px" class="badge badge-pill primary">new</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge green text-u-c">Open</span>
+                        </td>
+                        <td>풀스택 개발자란 무엇인가...?<span style="margin-left:20px" class="badge badge-pill primary">new</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge grey text-u-c">Closed</span>
+                        </td>
+                        <td>임원 회의<span style="margin-left:20px" class="badge badge-pill primary">new</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-4">
+            <div class="box">
+
+                <div class="box-header d-flex">
+                    <h3>${ _("calendar") }</h3>
+                </div>
+
+                <table class="table table-sm"><thead><tr><th class="prev" data-action="previous"><span class="fa fa-chevron-left" title="Previous Month"></span></th><th class="picker-switch" data-action="pickerSwitch" colspan="5" title="Select Month">June 2018</th><th class="next" data-action="next"><span class="fa fa-chevron-right" title="Next Month"></span></th></tr><tr><th class="dow">Su</th><th class="dow">Mo</th><th class="dow">Tu</th><th class="dow">We</th><th class="dow">Th</th><th class="dow">Fr</th><th class="dow">Sa</th></tr></thead><tbody><tr><td data-action="selectDay" data-day="05/27/2018" class="day old weekend">27</td><td data-action="selectDay" data-day="05/28/2018" class="day old">28</td><td data-action="selectDay" data-day="05/29/2018" class="day old">29</td><td data-action="selectDay" data-day="05/30/2018" class="day old">30</td><td data-action="selectDay" data-day="05/31/2018" class="day old">31</td><td data-action="selectDay" data-day="06/01/2018" class="day">1</td><td data-action="selectDay" data-day="06/02/2018" class="day weekend">2</td></tr><tr><td data-action="selectDay" data-day="06/03/2018" class="day weekend">3</td><td data-action="selectDay" data-day="06/04/2018" class="day">4</td><td data-action="selectDay" data-day="06/05/2018" class="day">5</td><td data-action="selectDay" data-day="06/06/2018" class="day">6</td><td data-action="selectDay" data-day="06/07/2018" class="day">7</td><td data-action="selectDay" data-day="06/08/2018" class="day">8</td><td data-action="selectDay" data-day="06/09/2018" class="day weekend">9</td></tr><tr><td data-action="selectDay" data-day="06/10/2018" class="day weekend">10</td><td data-action="selectDay" data-day="06/11/2018" class="day">11</td><td data-action="selectDay" data-day="06/12/2018" class="day">12</td><td data-action="selectDay" data-day="06/13/2018" class="day">13</td><td data-action="selectDay" data-day="06/14/2018" class="day">14</td><td data-action="selectDay" data-day="06/15/2018" class="day active today">15</td><td data-action="selectDay" data-day="06/16/2018" class="day weekend">16</td></tr><tr><td data-action="selectDay" data-day="06/17/2018" class="day weekend">17</td><td data-action="selectDay" data-day="06/18/2018" class="day">18</td><td data-action="selectDay" data-day="06/19/2018" class="day">19</td><td data-action="selectDay" data-day="06/20/2018" class="day">20</td><td data-action="selectDay" data-day="06/21/2018" class="day">21</td><td data-action="selectDay" data-day="06/22/2018" class="day">22</td><td data-action="selectDay" data-day="06/23/2018" class="day weekend">23</td></tr><tr><td data-action="selectDay" data-day="06/24/2018" class="day weekend">24</td><td data-action="selectDay" data-day="06/25/2018" class="day">25</td><td data-action="selectDay" data-day="06/26/2018" class="day">26</td><td data-action="selectDay" data-day="06/27/2018" class="day">27</td><td data-action="selectDay" data-day="06/28/2018" class="day">28</td><td data-action="selectDay" data-day="06/29/2018" class="day">29</td><td data-action="selectDay" data-day="06/30/2018" class="day weekend">30</td></tr><tr><td data-action="selectDay" data-day="07/01/2018" class="day new weekend">1</td><td data-action="selectDay" data-day="07/02/2018" class="day new">2</td><td data-action="selectDay" data-day="07/03/2018" class="day new">3</td><td data-action="selectDay" data-day="07/04/2018" class="day new">4</td><td data-action="selectDay" data-day="07/05/2018" class="day new">5</td><td data-action="selectDay" data-day="07/06/2018" class="day new">6</td><td data-action="selectDay" data-day="07/07/2018" class="day new weekend">7</td></tr></tbody></table>
+
+            </div>
+        </div>
+        <div class="col-sm-8">
             <div class="box">
                 <div class="box-header">
                     <h3>${_("Recently terminated meeting")}</h3>
@@ -106,69 +165,12 @@ from django.utils.translation import ugettext as _
             </div>
         </div>
 
-    </div>
 
-    <div class="row">
-
-        <div class="col-sm-4">
-            <div class="box">
-
-                <div class="box-header d-flex">
-                    <h3>${ _("calendar") }</h3>
-                </div>
-
-                <table class="table table-sm"><thead><tr><th class="prev" data-action="previous"><span class="fa fa-chevron-left" title="Previous Month"></span></th><th class="picker-switch" data-action="pickerSwitch" colspan="5" title="Select Month">June 2018</th><th class="next" data-action="next"><span class="fa fa-chevron-right" title="Next Month"></span></th></tr><tr><th class="dow">Su</th><th class="dow">Mo</th><th class="dow">Tu</th><th class="dow">We</th><th class="dow">Th</th><th class="dow">Fr</th><th class="dow">Sa</th></tr></thead><tbody><tr><td data-action="selectDay" data-day="05/27/2018" class="day old weekend">27</td><td data-action="selectDay" data-day="05/28/2018" class="day old">28</td><td data-action="selectDay" data-day="05/29/2018" class="day old">29</td><td data-action="selectDay" data-day="05/30/2018" class="day old">30</td><td data-action="selectDay" data-day="05/31/2018" class="day old">31</td><td data-action="selectDay" data-day="06/01/2018" class="day">1</td><td data-action="selectDay" data-day="06/02/2018" class="day weekend">2</td></tr><tr><td data-action="selectDay" data-day="06/03/2018" class="day weekend">3</td><td data-action="selectDay" data-day="06/04/2018" class="day">4</td><td data-action="selectDay" data-day="06/05/2018" class="day">5</td><td data-action="selectDay" data-day="06/06/2018" class="day">6</td><td data-action="selectDay" data-day="06/07/2018" class="day">7</td><td data-action="selectDay" data-day="06/08/2018" class="day">8</td><td data-action="selectDay" data-day="06/09/2018" class="day weekend">9</td></tr><tr><td data-action="selectDay" data-day="06/10/2018" class="day weekend">10</td><td data-action="selectDay" data-day="06/11/2018" class="day">11</td><td data-action="selectDay" data-day="06/12/2018" class="day">12</td><td data-action="selectDay" data-day="06/13/2018" class="day">13</td><td data-action="selectDay" data-day="06/14/2018" class="day">14</td><td data-action="selectDay" data-day="06/15/2018" class="day active today">15</td><td data-action="selectDay" data-day="06/16/2018" class="day weekend">16</td></tr><tr><td data-action="selectDay" data-day="06/17/2018" class="day weekend">17</td><td data-action="selectDay" data-day="06/18/2018" class="day">18</td><td data-action="selectDay" data-day="06/19/2018" class="day">19</td><td data-action="selectDay" data-day="06/20/2018" class="day">20</td><td data-action="selectDay" data-day="06/21/2018" class="day">21</td><td data-action="selectDay" data-day="06/22/2018" class="day">22</td><td data-action="selectDay" data-day="06/23/2018" class="day weekend">23</td></tr><tr><td data-action="selectDay" data-day="06/24/2018" class="day weekend">24</td><td data-action="selectDay" data-day="06/25/2018" class="day">25</td><td data-action="selectDay" data-day="06/26/2018" class="day">26</td><td data-action="selectDay" data-day="06/27/2018" class="day">27</td><td data-action="selectDay" data-day="06/28/2018" class="day">28</td><td data-action="selectDay" data-day="06/29/2018" class="day">29</td><td data-action="selectDay" data-day="06/30/2018" class="day weekend">30</td></tr><tr><td data-action="selectDay" data-day="07/01/2018" class="day new weekend">1</td><td data-action="selectDay" data-day="07/02/2018" class="day new">2</td><td data-action="selectDay" data-day="07/03/2018" class="day new">3</td><td data-action="selectDay" data-day="07/04/2018" class="day new">4</td><td data-action="selectDay" data-day="07/05/2018" class="day new">5</td><td data-action="selectDay" data-day="07/06/2018" class="day new">6</td><td data-action="selectDay" data-day="07/07/2018" class="day new weekend">7</td></tr></tbody></table>
-
-            </div>
-        </div>
-
-        <div class="col-sm-8">
-            <div class="box">
-                <div class="box-header">
-                    <h3>${_("Meeting status")} <button class="btn btn-fw warning" style="float:right; margin-top: -8px;">reservation</button></h3>
-                </div>
-
-                <table class="table">
-                    <tbody>
-                    <tr>
-                        <td>
-                            <span class="badge amber text-u-c">reservation</span>
-                        </td>
-                        <td>Kotech Tech Manager<span style="margin-left:20px" class="badge badge-pill primary">new</span></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="badge amber text-u-c">reservation</span>
-                        </td>
-                        <td>코테크 코인 발행 회의<span style="margin-left:20px" class="badge badge-pill primary">new</span></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="badge green text-u-c">Open</span>
-                        </td>
-                        <td>코테크 연봉 협상 회의<span style="margin-left:20px" class="badge badge-pill primary">new</span></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="badge green text-u-c">Open</span>
-                        </td>
-                        <td>풀스택 개발자란 무엇인가...?<span style="margin-left:20px" class="badge badge-pill primary">new</span></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="badge grey text-u-c">Closed</span>
-                        </td>
-                        <td>임원 회의<span style="margin-left:20px" class="badge badge-pill primary">new</span></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </div>
 
     <div class="box" >
         <div class="box-header">
-            * Interval = 10sec
+            * Interval = 5sec
             <button class="btn btn-fw info" style="float:right; margin-top: -8px; margin-right: 5px;" onclick="btn_network()">Network_Status</button>
             <button class="btn btn-fw info" style="float:right; margin-top: -8px; margin-right: 5px;" onclick="btn_call()">Call_Status</button>
 
