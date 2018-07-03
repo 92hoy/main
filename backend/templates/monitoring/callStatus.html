@@ -5,7 +5,7 @@ from django.utils.translation import ugettext as _
 %>
 
 <%block name="containor">
-<div class="padding">
+<div class="padding" id="callstatus_chart">
     <div class="box">
         <div class="box-header">
             <h2>CALL STATUS</h2>
@@ -14,37 +14,36 @@ from django.utils.translation import ugettext as _
     </div>
 
     <div class="box">
-        <canvas id="myChart"></canvas>
+        <canvas id="call_Chart"></canvas>
     </div>
 </div>
 </%block>
-
+<%block name="script_callStatus">
 <%block name="scriptDown">
 <script>
+var c_init = new Date();
+        var c_initTime = ("0" + c_init.getHours()).slice(-2) + ":" + ("0" + c_init.getMinutes()).slice(-2) + ":" + ("0" + c_init.getSeconds()).slice(-2);
 
-var init = new Date();
-        var initTime = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
+        c_init.setTime(c_init.getTime() - 10000);
+        var c_initTimeMinus10 = ("0" + c_init.getHours()).slice(-2) + ":" + ("0" + c_init.getMinutes()).slice(-2) + ":" + ("0" + c_init.getSeconds()).slice(-2);
 
-        init.setTime(init.getTime() - 10000);
-        var initTimeMinus10 = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
+        c_init.setTime(c_init.getTime() - 10000);
+        var c_initTimeMinus20 = ("0" + c_init.getHours()).slice(-2) + ":" + ("0" + c_init.getMinutes()).slice(-2) + ":" + ("0" + c_init.getSeconds()).slice(-2);
 
-        init.setTime(init.getTime() - 10000);
-        var initTimeMinus20 = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
+        c_init.setTime(c_init.getTime() - 10000);
+        var c_initTimeMinus30 = ("0" + c_init.getHours()).slice(-2) + ":" + ("0" + c_init.getMinutes()).slice(-2) + ":" + ("0" + c_init.getSeconds()).slice(-2);
 
-        init.setTime(init.getTime() - 10000);
-        var initTimeMinus30 = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
+        c_init.setTime(c_init.getTime() - 10000);
+        var c_initTimeMinus40 = ("0" + c_init.getHours()).slice(-2) + ":" + ("0" + c_init.getMinutes()).slice(-2) + ":" + ("0" + c_init.getSeconds()).slice(-2);
 
-        init.setTime(init.getTime() - 10000);
-        var initTimeMinus40 = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
-
-        var queue = [initTimeMinus30,initTimeMinus30, initTimeMinus20, initTimeMinus10, initTime]
+        var call_queue = [c_initTimeMinus30,c_initTimeMinus30, c_initTimeMinus20, c_initTimeMinus10, c_initTime]
 
     $(document).ready(function() {
 
         var call_total = [0, 0, 0, 0, 0]
         var callLegsActive       = [0, 0, 0, 0, 0]
         var callLegsMaxActive    = [0, 0, 0, 0, 0]
-        var dataSet = [
+        var call_dataSet = [
             {
                 label: "Active Call",
                 borderColor: "#e8c3b9",
@@ -64,14 +63,14 @@ var init = new Date();
                 data: callLegsMaxActive
             }
         ];
-        function syncChart() {
+        function call_syncChart() {
             setInterval(function(){
 
                 var d = new Date();
                 var currTime = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
 
-                queue.push(currTime);
-                queue.shift();
+                call_queue.push(currTime);
+                call_queue.shift();
 
                 $.get( "/callStatus", {
                             //...
@@ -94,10 +93,10 @@ var init = new Date();
                             callLegsActive.shift();
                             callLegsMaxActive.shift();
 
-                            myLineChart.data.datasets[0]['data'] = call_total;
-                            myLineChart.data.datasets[1]['data'] = callLegsActive;
-                            myLineChart.data.datasets[2]['data'] = callLegsMaxActive;
-                            myLineChart.update();
+                            call_myLineChart.data.datasets[0]['data'] = call_total;
+                            call_myLineChart.data.datasets[1]['data'] = callLegsActive;
+                            call_myLineChart.data.datasets[2]['data'] = callLegsMaxActive;
+                            call_myLineChart.update();
                             /*
                              console.log(queue);
                              console.log(audioBitRateOutgoing);
@@ -108,14 +107,14 @@ var init = new Date();
                         });
             } ,2000);
         }
-        syncChart();
+        call_syncChart();
     });
 
 
 
-    var canvas = document.getElementById('myChart');
-    var s_data={
-        labels: queue,
+    var call_canvas = document.getElementById('call_Chart');
+    var call_data={
+        labels: call_queue,
         datasets: [
             {
                 label: "Active_call",
@@ -137,15 +136,16 @@ var init = new Date();
             },
         ]
     };
-    var option = {
+    var call_option = {
         showLines: true
     };
-    var myLineChart = Chart.Line(canvas,{
-        data:s_data,
-        options:option
+    var call_myLineChart = Chart.Line(call_canvas,{
+        data:call_data,
+        options:call_option
     });
 
 
 
 </script>
+</%block>
 </%block>

@@ -8,11 +8,30 @@ from backend.djangoapps.common.api.views import api_mornitoringStatus
 from backend.djangoapps.common.api.views import api_activeCall
 
 # 호출 상태
+def all_status(request):
+    resDataJson = api_mornitoringStatus()
+    resDataJson2 = api_activeCall('callstatus')
+
+    if request.is_ajax():
+        context = {}
+        context['call_total'] = resDataJson2['calls']['@total']
+        context['callLegsActive'] = resDataJson['status']['callLegsActive']
+        context['callLegsMaxActive'] = resDataJson['status']['callLegsMaxActive']
+        context['audioBitRateOutgoing'] = resDataJson['status']['audioBitRateOutgoing']
+        context['audioBitRateIncoming'] = resDataJson['status']['audioBitRateIncoming']
+        context['videoBitRateOutgoing'] = resDataJson['status']['videoBitRateOutgoing']
+        context['videoBitRateIncoming'] = resDataJson['status']['videoBitRateIncoming']
+
+        return JsonResponse(context)
+    context = {}
+
+    return render(request, 'monitoring/all_status.html', context)
+
 def callStatus(request):
 
     #resDataJson_c = api_coSpaces()
     resDataJson = api_mornitoringStatus()
-    resDataJson2 = api_activeCall()
+    resDataJson2 = api_activeCall('callstatus')
 
     if request.is_ajax():
         context = {}

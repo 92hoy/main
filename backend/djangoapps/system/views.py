@@ -126,7 +126,7 @@ def endPoint(request):
         sip= request.POST.get('sip')
         h_323= request.POST.get('h_323')
         mslync= request.POST.get('mslync')
-        username= request.POST.get('username')
+        user_name= request.POST.get('user_name')
         recording_device= request.POST.get('recording_device')
         group_name= request.POST.get('group_name')
         sortno= request.POST.get('sortno')
@@ -187,7 +187,7 @@ def endPoint(request):
                           '{ep_group_seq}',
                           '{order_no}')
             '''.format(ep_id=name, ep_type=device_type, ip=ip, sip=sip, hdevice=h_323, mslync=mslync,
-                       username=username, recodingdevice=recording_device, ep_group_seq=group_name, order_no=sortno)
+                       username=user_name, recodingdevice=recording_device, ep_group_seq=group_name, order_no=sortno)
             cur.execute(query)
 
         return JsonResponse({"return": "success"})
@@ -222,7 +222,7 @@ def endPoint(request):
                    audioonly,
                    gmt_time,
                    ifnull(ep_group_name, '') as ep_group_name,
-                   b.order_no as order_no
+                   a.order_no as order_no
               FROM cms_endpoint a
                    JOIN cms_endpoint_group b ON a.ep_group_seq = b.ep_group_seq;
         '''
@@ -251,19 +251,111 @@ def endPoint(request):
 
     return render(request, 'system/endPoint.html', context)
 
-#endPoint 삭제        작업중
+#endPoint 삭제
+@csrf_exempt
 def endPoint_del(request):
-    if request.is_ajax():
-        name= request.POST.get('name')
 
+
+    name = request.POST.getlist('del_arr[]')
+
+    for data in name:
         with connections['default'].cursor() as cur:
             query = '''
                  delete FROM cms_endpoint
-                 WHERE name ='{ep_id}'
-             '''.format(ep_id=name)
+                 WHERE ep_id ='{ep_id}'
+             '''.format(ep_id=data)
             cur.execute(query)
 
     return JsonResponse({"return": "success"})
+
+def endPoint_detail(request):
+
+    if request.is_ajax():
+        ep_id= request.POST.get('ep_id')
+
+        with connections['default'].cursor() as cur:
+            query = '''
+                SELECT ep_id,
+                       ep_name,
+                       ep_type,
+                       ip,
+                       sip,
+                       hdevice,
+                       mslync,
+                       username,
+                       recodingdevice,
+                       audioonly,
+                       gmt_time,
+                       ifnull(ep_group_name, '') as ep_group_name,
+                       a.order_no as order_no
+                  FROM cms_endpoint a
+                       JOIN cms_endpoint_group b ON a.ep_group_seq = b.ep_group_seq
+                  where ep_id = '{ep_id}';
+            '''.format(ep_id=ep_id)
+            cur.execute(query)
+            print(query)
+            rows = cur.fetchall()
+
+        data_dict4 = dict()
+        data_dict4['ep_id'] = rows[0][0]
+        data_dict4['ep_name'] = rows[0][1]
+        data_dict4['ep_type'] = rows[0][2]
+        data_dict4['ip'] = rows[0][3]
+        data_dict4['sip'] = rows[0][4]
+        data_dict4['hdevice'] = rows[0][5]
+        data_dict4['mslync'] = rows[0][6]
+        data_dict4['username'] = rows[0][7]
+        data_dict4['recodingdevice'] = rows[0][8]
+        data_dict4['audioonly'] = rows[0][9]
+        data_dict4['gmt_time'] = rows[0][10]
+        data_dict4['ep_group_name'] = rows[0][11]
+        data_dict4['order_no'] = rows[0][12]
+
+
+
+        #print(rows)
+
+    return JsonResponse({"rows":data_dict4})
+@csrf_exempt
+def endPoint_update(request):
+    if request.is_ajax():
+        name= request.POST.get('detail_ep_id')
+        device_type= request.POST.get('device_type')
+        ip= request.POST.get('ip')
+        sip= request.POST.get('sip')
+        h_323= request.POST.get('h_323')
+        mslync= request.POST.get('mslync')
+        user_name= request.POST.get('user_name')
+        recording_device= request.POST.get('recording_device')
+        group_name= request.POST.get('group_name')
+        sortno= request.POST.get('sortno')
+        print ("ip-->",ip)
+        print ("sip-->",sip)
+        print ("device_type-->",device_type)
+        print ("group_name-->",group_name)
+        print ("sortno-->",sortno)
+
+        with connections['default'].cursor() as cur:
+            query = '''
+                  update cms_endpoint
+                  set ep_type = '{ep_type}',
+                      ip='{ip}',
+                      sip='{sip}',
+                      hdevice='{hdevice}',
+                      mslync='{mslync}',
+                      username='{username}',
+                      recodingdevice='{recodingdevice}',
+                      ep_group_seq='{ep_group_seq}',
+                      order_no='{order_no}'
+                  where ep_id ='{ep_id}'
+            '''.format(ep_id=name, ep_type=device_type, ip=ip, sip=sip, hdevice=h_323, mslync=mslync,
+                       username=user_name, recodingdevice=recording_device, ep_group_seq=group_name, order_no=sortno)
+            print(query)
+            cur.execute(query)
+
+
+
+    return JsonResponse({"return":"success"})
 
 # 시스템 상태
 def endPointGroup(request):

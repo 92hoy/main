@@ -83,6 +83,7 @@ urlpatterns = [
     url('callStatus$', MonitoringViews.callStatus, name='callStatus'),
     url('networkStatus$', MonitoringViews.networkStatus, name='networkStatus'),
     url('systemStatus$', MonitoringViews.systemStatus, name='systemStatus'),
+    url('all_status$', MonitoringViews.all_status, name='all_status'),
 
     # monitoring
     url('roomUseState$', StatisticsViews.roomUseState, name='roomUseState'),
@@ -94,7 +95,9 @@ urlpatterns = [
     url('ldap$', SystemViews.ldap, name='ldap'),
     url('account$', SystemViews.account, name='account'),
     url('endPoint$', SystemViews.endPoint, name='endPoint'),
+    url('endPoint_detail$', SystemViews.endPoint_detail, name='endPoint_detail'),
     url('endPoint_del$', SystemViews.endPoint_del, name='endPoint_del'),
+    url('endPoint_update$', SystemViews.endPoint_update, name='endPoint_update'),
     url('endPointGroup$', SystemViews.endPointGroup, name='endPointGroup'),
     url('acanoClient$', SystemViews.acanoClient, name='acanoClient'),
     url('logoManagement$', SystemViews.logoManagement, name='logoManagement'),

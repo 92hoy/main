@@ -141,7 +141,7 @@ def api_coSpaceDel(request):
 
 
 #from backend.djangoapps.common.api.views import api_activeCall
-def api_activeCall():
+def api_activeCall(callstatus=None):
     Authorization = settings.AUTHORIZATION
 
     # requests GET
@@ -162,6 +162,9 @@ def api_activeCall():
     print("-------------------> DEBUG[s]")
     print(resDataJson)
     print("-------------------> DEBUG[e]")
+    if callstatus is not None:
+
+        return resDataJson
 
     requestCnt = (int(resDataJson['calls']['@total']) / 20) + 1 \
         if (int(resDataJson['calls']['@total']) % 20) != 0 \

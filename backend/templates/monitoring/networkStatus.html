@@ -14,11 +14,11 @@ from django.utils.translation import ugettext as _
     </div>
 
     <div class="box">
-        <canvas id="myChart"></canvas>
+        <canvas id="network_Chart"></canvas>
     </div>
 </div>
 </%block>
-
+<%block name="script_networkStatus">
 <%block name="scriptDown">
 <script>
     var init = new Date();
@@ -103,7 +103,7 @@ from django.utils.translation import ugettext as _
         syncChart();
     });
 
-    var canvas = document.getElementById('myChart');
+    var canvas = document.getElementById('network_Chart');
     var s_data={
         labels: queue,
         datasets: [
@@ -141,4 +141,5 @@ from django.utils.translation import ugettext as _
         options:option
     });
 </script>
+</%block>
 </%block>
