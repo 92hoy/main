@@ -169,6 +169,59 @@ def account_del(request):
 
     return JsonResponse({"return" : "success"})
 
+def account_detail(request):
+    if request.is_ajax():
+        user_id = request.POST.get('user_id')
+
+        with connections['default'].cursor() as cur:
+            query = '''
+                SELECT user_id,
+                       user_name,
+                       user_pwd,
+                       user_role
+                  FROM cms_manager
+                  where user_id = '{user_id}';
+            '''.format(user_id=user_id)
+            cur.execute(query)
+
+            print(query)
+            rows = cur.fetchall()
+
+        data_dict2 = dict()
+        data_dict2['user_id'] = rows[0][0]
+        data_dict2['user_name'] = rows[0][1]
+        data_dict2['user_pwd'] = rows[0][2]
+        data_dict2['user_role'] = rows[0][2]
+
+        print(rows)
+
+    return JsonResponse({"rows":data_dict2})
+
+def account_update(request):
+    if request.is_ajax():
+        user_id = request.POST.get('user_id')
+        user_pw = request.POST.get('user_pw')
+        user_name = request.POST.get('user_name')
+        user_role = request.POST.get('user_role')
+
+        print ("user_id-->",user_id)
+        print ("user_name-->",user_name)
+        print ("role-->",user_role)
+
+
+        with connections['default'].cursor() as cur:
+            query = '''
+                  update cms_manager
+                  set user_name = '{user_name}',
+                      user_role='{user_role}'
+                  where user_id ='{user_id}'
+            '''.format(user_id=user_id,user_name=user_name, user_role=user_role)
+            print(query)
+            cur.execute(query)
+
+    return JsonResponse({"return":"success"})
+
+
 # 시스템 상태
 @csrf_exempt
 def endPoint(request):
