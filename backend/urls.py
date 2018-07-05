@@ -92,8 +92,12 @@ urlpatterns = [
 
     # system
     url('cdr$', SystemViews.cdr, name='cdr'),
+    url('cdr_add$', SystemViews.cdr_add, name='cdr_add'),
+    url('cdr_detail$', SystemViews.cdr_detail, name='cdr_detail'),
+    url('cdr_del$', SystemViews.cdr_del, name='cdr_del'),
     url('ldap$', SystemViews.ldap, name='ldap'),
     url('account$', SystemViews.account, name='account'),
+    url('account_del$', SystemViews.account_del, name='account_del'),
     url('endPoint$', SystemViews.endPoint, name='endPoint'),
     url('endPoint_detail$', SystemViews.endPoint_detail, name='endPoint_detail'),
     url('endPoint_del$', SystemViews.endPoint_del, name='endPoint_del'),

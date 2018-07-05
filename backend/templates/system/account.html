@@ -27,7 +27,7 @@ from django.utils.translation import ugettext as _
 
     <div class="box" style="padding: 10px;">
         <div style="padding: 10px;">
-            <button class="md-btn md-raised mb-2 w-xs red" id="delBtn" style="float: right;" onclick="btn_del()">DEL</button>
+            <button class="md-btn md-raised mb-2 w-xs red" id="btn_del" style="float: right;" >DEL</button>
 
             <a href="#layer2" class="btn-example">
                 <button class="md-btn md-raised mb-2 w-xs indigo dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
@@ -40,6 +40,7 @@ from django.utils.translation import ugettext as _
                 <tr>
                     <th style="width:5%" class="th-center" style=""><input type="checkbox" id="select_all"/></th>
                     <th class="th-center">ID</th>
+                    <th class="th-center">Name</th>
                     <th style="width:35%" class="th-center">Role</th>
                 </tr>
                 </thead>
@@ -47,6 +48,7 @@ from django.utils.translation import ugettext as _
                 % for data in context['data']:
                 <tr>
                     <td></td>
+                    <td>${data['user_id']}</td>
                     <td>${data['user_name']}</td>
                     <td>${data['code_name']}</td>
                 </tr>
@@ -77,7 +79,7 @@ from django.utils.translation import ugettext as _
                     <table style="display: inline-block; width:100%;">
                         <tr style="margin-bottom: 10px;">
                             <td>ID</td>
-                            <td class="rightTd"><input type="text" class="form-control wi280" id="user_id"><br></td>
+                            <td class="rightTd"><input type="text" class="form-control wi280 " id="user_id"><br></td>
                         </tr>
                         <tr>
                             <td>NAME</td>
@@ -146,14 +148,49 @@ from django.utils.translation import ugettext as _
                 {'orderable': false},
                 null,
                 null,
+                null,
             ],
             columnDefs: [
-                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center"},
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center t1"},
             ],
             "drawCallback":function(){
                 $(".paginate_button").attr('href', 'javascript:check_click();');
-            }
+            },
+            "initComplete":function(){
+                $(".text-center").attr('href','javascript:btn_del();');
+            },
         });
+
+        $('#btn_del').click(function () {
+            var table = $('#table_account').DataTable();
+            var del_account= $('td.t1 input[type="checkbox"]:checked').map(function() {
+                var this_tr = $(this).parent().parent();
+                var this_td_data = $(this_tr).find('td').eq(1).text();
+                console.log(this_td_data);
+                console.log(del_account);
+                return this_td_data;}).get();
+            $.ajax({
+                url: '/system/account_del',
+                type: "POST",
+                data: {
+                    'csrfmiddlewaretoken': '${csrf_token}',
+                    'del_arr': del_account
+                }
+            }).done(function(data){
+                if(data.return == 'success'){
+                    swal({
+                        title: 'Success!',
+                        text: "",
+                        type: 'success',
+                    }).then(function(){
+                        location.reload();
+                    });
+                } else {
+                     swal('경고', '삭제에 실패하였습니다.', 'warning');
+                }
+            });
+        });
+
 
     });
 
@@ -237,9 +274,7 @@ from django.utils.translation import ugettext as _
             });
         }
     }
-    function btn_del(){
 
-    }
 
     function layer_popup(el){
 

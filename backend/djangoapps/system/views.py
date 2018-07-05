@@ -9,6 +9,9 @@ from backend.djangoapps.common.core.views import coreJson
 from backend.djangoapps.common.api.views import api_users
 from backend.djangoapps.common.api.views import api_usersId
 from backend.djangoapps.common.api.views import api_cdrReceivers
+from backend.djangoapps.common.api.views import api_cdr_POST
+from backend.djangoapps.common.api.views import api_cdr_id
+from backend.djangoapps.common.api.views import api_cdr_del
 
 
 # 호출 상태
@@ -25,6 +28,42 @@ def cdr(request):
 
     return render(request, 'system/cdr.html', context)
 
+@csrf_exempt
+def cdr_add(request):
+
+    print(request.POST.get('@id'))
+    print(request.POST.get('uri'))
+
+    res = api_cdr_POST(request)
+
+    return JsonResponse({'code': res.status_code})
+
+def cdr_del(request):
+
+    res = api_cdr_del(request)
+    print("res", res)
+    status = 'success'
+    print("success")
+    if res:
+        print('<<<<<======================== api_cdr_del error ')
+        print(res)
+        print('api_cdr_del error ========================>>>>>>')
+        status = 'fail'
+
+    return JsonResponse({'status': status})
+
+
+def cdr_detail(request):
+
+    cdr_id = request.POST.get('uri')
+    print("uri uri-uri-uri-uri-->",cdr_id)
+
+    resDataJson = api_cdr_id(cdr_id)
+    print("resDataJson--cdr_id>", resDataJson)
+
+    resDataJson['cdrReceiver']['id'] = resDataJson['cdrReceiver'].pop('@id')
+
+    return JsonResponse({'data': resDataJson})
 
 # 네트워크 상태
 def ldap(request):
@@ -114,6 +153,21 @@ def account(request):
 
     return render(request, 'system/account.html', context)
 
+def account_del(request):
+
+    id = request.POST.getlist('del_arr[]')
+    print(id)
+    for data in id:
+        with connections['default'].cursor() as cur:
+            query = '''
+                 delete FROM cms_manager
+                 WHERE user_id ='{user_id}'
+             '''.format(user_id=data)
+            print(query)
+            cur.execute(query)
+            print(query)
+
+    return JsonResponse({"return" : "success"})
 
 # 시스템 상태
 @csrf_exempt
@@ -255,9 +309,8 @@ def endPoint(request):
 @csrf_exempt
 def endPoint_del(request):
 
-
     name = request.POST.getlist('del_arr[]')
-
+    print("name",name)
     for data in name:
         with connections['default'].cursor() as cur:
             query = '''
@@ -287,6 +340,7 @@ def endPoint_detail(request):
                        audioonly,
                        gmt_time,
                        ifnull(ep_group_name, '') as ep_group_name,
+                       a.ep_group_seq as ep_group_seq,
                        a.order_no as order_no
                   FROM cms_endpoint a
                        JOIN cms_endpoint_group b ON a.ep_group_seq = b.ep_group_seq
@@ -309,9 +363,8 @@ def endPoint_detail(request):
         data_dict4['audioonly'] = rows[0][9]
         data_dict4['gmt_time'] = rows[0][10]
         data_dict4['ep_group_name'] = rows[0][11]
+        data_dict4['ep_group_seq'] = rows[0][12]
         data_dict4['order_no'] = rows[0][12]
-
-
 
         #print(rows)
 

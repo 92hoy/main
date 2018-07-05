@@ -40,9 +40,10 @@ def conferenceRoomAdd(request):
 # 컨퍼런스 상세
 def conferenceRoomDetail(request):
     coSpaceId = request.POST.get('coSpaceId')
-    print(coSpaceId)
+    print("coSpaceId--- id----->",coSpaceId)
 
     resDataJson = api_coSpaceId(coSpaceId)
+    print("api_coSpaceId(coSpaceId) --->resDataJson===",resDataJson)
 
     resDataJson['coSpace']['id'] = resDataJson['coSpace'].pop('@id')
 

@@ -7,40 +7,106 @@ from django.utils.translation import ugettext as _
 <%block name="containor">
 <div class="padding">
 
-  <div class="box">
-    <div class="box-header">
-      <h2>CDR</h2>
-      <small>CDR</small>
+    <div class="box">
+        <div class="box-header">
+            <h2>CDR</h2>
+            <small>CDR</small>
+        </div>
     </div>
-  </div>
 
-  <div class="box" style="padding: 10px;">
-            <div style="padding: 10px;">
-        <button class="md-btn md-raised mb-2 w-xs red" id="delBtn" style="float: right;">DEL</button>
+    <div class="box" style="padding: 10px;">
+        <div style="padding: 10px;">
+            <button class="md-btn md-raised mb-2 w-xs red" onclick="btn_del()" style="float: right;">DEL</button>
 
-        <a href="#layer2" class="btn-example">
-          <button class="md-btn md-raised mb-2 w-xs indigo dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
-        </a>
-      </div>
+            <a href="#layer2" class="btn-example">
+                <button class="md-btn md-raised mb-2 w-xs indigo dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
+            </a>
+        </div>
 
-      <div class="table-responsive">
-        <table class="table table-hover table-striped table-bordered" id="table_cdr" style="width:100%">
-          <thead>
-            <tr>
-              <th style="width: 5%;" class="th-center"><input type="checkbox" id="select_all"/></th>
-              <th class="th-center">Response URI</th>
-            </tr>
-          </thead>
-          <tbody>
-            % for data in context['data']:
-            <tr>
-              <td></td>
-              <td>${data['uri']}</td>
-            </tr>
-            % endfor
-          </tbody>
-        </table>
-      </div>
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered" id="table_cdr" style="width:100%">
+                <thead>
+                <tr>
+                    <th style="width: 5%;" class="th-center"><input type="checkbox" id="select_all"/></th>
+                    <th class="th-center">Response URI</th>
+                </tr>
+                </thead>
+                <tbody>
+                % for data in context['data']:
+                <% data_id = data['@id'] %>
+                <tr>
+                    <td></td>
+                    <td><a href="javascript:uri_detail('${data_id}');" cdr-id="${data_id}"style="text-decoration: underline;" >${data['uri']}</a></td>
+                </tr>
+                % endfor
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--  Layer popup -->
+
+<div class="dim-layer" id="dim-layer">
+    <div class="dimBg"></div>
+
+    <div id="layer2" class="pop-layer" style="height: 230px;">
+        <div class="pop-container">
+            <div class="pop-conts">
+
+          <span class="nav-icon" style="padding-bottom: 18px;">
+            <i class="fa fa-plug"></i>
+          </span>
+                <div style="margin-bottom: 10px;">
+                    <strong>URI</strong><a href="#" class="btn-layerClose" style="float: right; font-size:18px;">X</a>
+                </div>
+
+                <hr width="100%" color="#d9d9d9">
+                <div style="text-align: center;">
+                    <table style="display: inline-block; width:100%;">
+                        <tr style="margin-bottom: 20px;">
+                            <td>URI-create</td>
+                            <td class="rightTd"><input id="uri_id" style="display: none;" type="hidden"/><input type="text" class="form-control wi600" id="uri" style="width: 300px;"><br></td>
+                        </tr>
+                    </table>
+
+                    <button class="md-btn md-raised mb-2 w-xs purple mgt-20" id="confSave" onclick="btn_save()">SAVE</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--  Layer popup -->
+<!--  Layer popup detail -->
+
+<div class="dim-layer" id="dim-layer-2">
+    <div class="dimBg" id="dimBg"></div>
+
+    <div id="layer3" class="pop-layer" style="height: 230px;">
+        <div class="pop-container">
+            <div class="pop-conts">
+
+          <span class="nav-icon" style="padding-bottom: 18px;">
+            <i class="fa fa-plug"></i>
+          </span>
+                <div style="margin-bottom: 10px;">
+                    <strong>URI</strong><a href="#" class="btn-layerClose" style="float: right; font-size:18px;">X</a>
+                </div>
+                <hr width="100%" color="#d9d9d9">
+                <div style="text-align: center;">
+                    <table style="display: inline-block; width:100%; ">
+                        <tr style="margin-bottom: 20px;">
+                            <td>uri-update</td>
+                            <td class="rightTd"><input id="uri_detail_id" style="display: none;" type="hidden"/><input id="uri_detail" type="text" class="form-control wi600"  style="width: 300px;"><br></td>
+                        </tr>
+                    </table>
+
+                    <button class="md-btn md-raised mb-2 w-xs purple mgt-20" id="confSave" onclick="btn_update()">SAVE</button>
+
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </%block>
@@ -79,7 +145,7 @@ from django.utils.translation import ugettext as _
                 null,
             ],
             columnDefs: [
-                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center"},
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center t1"},
             ],
             "drawCallback":function(){
                 $(".paginate_button").attr('href', 'javascript:check_click();');
@@ -104,15 +170,16 @@ from django.utils.translation import ugettext as _
     });
 
     function layer_popup(el){
+
         var $el = $(el);        //레이어의 id를 $el 변수에 저장
         var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
 
-        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
+        isDim ? $('#dim-layer').fadeIn() : $el.fadeIn();
 
         var $elWidth = ~~($el.outerWidth()),
-            $elHeight = ~~($el.outerHeight()),
-            docWidth = $(document).width(),
-            docHeight = $(document).height();
+                $elHeight = ~~($el.outerHeight()),
+                docWidth = $(document).width(),
+                docHeight = $(document).height();
 
         // 화면의 중앙에 레이어를 띄운다.
         if ($elHeight < docHeight || $elWidth < docWidth) {
@@ -120,21 +187,139 @@ from django.utils.translation import ugettext as _
                 marginTop: -$elHeight /2,
                 marginLeft: -$elWidth/2
             })
-        }
-        else {
+        } else {
             $el.css({top: 0, left: 0});
         }
 
         $el.find('a.btn-layerClose').click(function(){
-            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+            isDim ? $('#dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
             return false;
         });
 
         $('.layer .dimBg').click(function(){
-            $('.dim-layer').fadeOut();
+            $('#dim-layer').fadeOut();
             return false;
         });
 
     }
+
+    $('.btn-example2').click(function(){
+        var $href = $(this).attr('href');
+        layer_popup_detail($href);
+    });
+
+    function layer_popup_detail(el){
+        var $el = $(el);        //레이어의 id를 $el 변수에 저장
+        var isDim1 = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
+
+        isDim1 ? $('#dim-layer-2').fadeIn() : $el.fadeIn();
+
+        var $elWidth = ~~($el.outerWidth()),
+                $elHeight = ~~($el.outerHeight()),
+                docWidth = $(document).width(),
+                docHeight = $(document).height();
+
+        // 화면의 중앙에 레이어를 띄운다.
+        if ($elHeight < docHeight || $elWidth < docWidth) {
+            $el.css({
+                marginTop: -$elHeight /2,
+                marginLeft: -$elWidth/2
+            })
+        } else {
+            $el.css({top: 0, left: 0});
+        }
+
+        $el.find('a.btn-layerClose').click(function(){
+            isDim1 ? $('#dim-layer-2').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+            return false;
+        });
+
+        $('.layer .dimBg').click(function(){
+            $('#dim-layer-2').fadeOut();
+            return false;
+        });
+
+    }
+    function uri_detail(uri){
+        $.ajax({
+            url: '/system/cdr_detail',
+            type: 'POST',
+            data: {
+                'csrfmiddlewaretoken': '${csrf_token}',
+                'uri': uri
+            }
+        }).done(function (data) {
+            $("#uri_detail_id").val(data.data.cdrReceiver.id);
+            $("#uri_detail").val(data.data.cdrReceiver.uri);
+
+            layer_popup_detail('#layer3');
+        })
+    }
+
+    function btn_save(){
+        var uri_id = $("#uri_id").val();
+        var uri = $("#uri").val();
+
+        var lock = 0;
+
+        if(uri == ''){
+            alert('uri 를 입력하세요.');
+            lock = 1;
+        }
+        if(lock == 0){
+                $.post('/system/cdr_add', {
+                            '@id': uri_id,
+                            'uri': uri,
+
+                        })
+                        .done(function(data){
+                            if(data.code == '200'){
+                                swal({
+                                    title: 'Success!',
+                                    text: "",
+                                    type: 'success',
+                                }).then(function(){
+                                    location.reload();
+                                });
+                            } else {
+                                swal('경고', '입력값을 확인하세요', 'warning');
+                            }
+                        });
+            }
+    }
+    function btn_update(){
+
+    }
+    function btn_del(){
+        var table = $('#table_cdr').DataTable();
+            var del_cdr= $('td.t1 input[type="checkbox"]:checked').map(function() {
+                var this_tr = $(this).parent().parent();
+                var this_td_data = $(this_tr).find("a").attr('cdr-id');
+                console.log("this_td_data",this_td_data);
+                console.log("del_cdr",del_cdr);
+                return this_td_data;}).get();
+
+            $.ajax({
+                url: '/system/cdr_del',
+                type: "POST",
+                data: {
+                    'csrfmiddlewaretoken': '${csrf_token}',
+                    'del_arr': del_cdr
+                }
+            }).done(function(data){
+                if(data.status == 'success'){
+                    swal({
+                        title: 'Success!',
+                        text: "",
+                        type: 'success',
+                    }).then(function(){
+                        location.reload();
+                    });
+                } else {
+                     swal('경고', '삭제에 실패하였습니다.', 'warning');
+                }
+            });
+    }
+
 </script>
 </%block>

@@ -40,7 +40,7 @@ from django.utils.translation import ugettext as _
                 <% data_id = data['ep_id'] %>
                 <tr>
                     <td></td>
-                    <td><a href="javascript:ep_detail('${data_id}');" class="btn-example2" style="text-decoration: underline;" id="ep_id" >${data['ep_id']}</a></td>
+                    <td><a href="javascript:ep_detail('${data_id}');" style="text-decoration: underline;" >${data['ep_id']}</a></td>
                     <td>${data['ep_type']}</td>
                     <td>${data['ip']}</td>
                     <td>${data['ep_group_name']}</td>
@@ -224,7 +224,7 @@ from django.utils.translation import ugettext as _
                                 <select class="custom-select w-100" id="detail_group_name">
                                     <option>-</option>
                                     % for data2 in context['data2']:
-                                    <option value="${data2['ep_group_seq']}">${data2['ep_group_name']}</option>
+                                    <option  value="${data2['ep_group_seq']}" selected >${data2['ep_group_name']}</option>
                                     % endfor
                                 </select>
 
@@ -298,9 +298,11 @@ from django.utils.translation import ugettext as _
             var table = $('#table_endPoint').DataTable();
             var del_endpoint= $('td.t1 input[type="checkbox"]:checked').map(function() {
                 var this_tr = $(this).parent().parent();
-                // con-id는 id값 저장을위해 지정해준 속성
                 var this_td_data = $(this_tr).find('td').eq(1).text();
+                console.log("td_data",this_td_data);
+                console.log("del_endpoint",del_endpoint);
                 return this_td_data;}).get();
+
             $.ajax({
                 url: '/system/endPoint_del',
                 type: "POST",
@@ -373,6 +375,7 @@ from django.utils.translation import ugettext as _
         });
 
     }
+
     function btn_save(){
         var name = $('#name').val();
         var device_type = $(':radio[name="options"]:checked').val();
@@ -510,14 +513,15 @@ from django.utils.translation import ugettext as _
             }
         ).done(function (data) {
             $("#detail_ep_id").val(data.rows.ep_id);
-            $("#detail_device_type").val(data.rows.ep_type);
+            $("input:radio[name=device_options]:input[value='data.rows.ep_type']").attr("checked", true);
+            //$('input:radio[name=device_options]:input[value=' + st + ']').attr("checked", true);
             $("#detail_ip").val(data.rows.ip);
             $("#detail_sip").val(data.rows.sip);
             $("#detail_h_323").val(data.rows.hdevice);
             $("#detail_mslync").val(data.rows.mslync);
             $("#detail_user_name").val(data.rows.username);
             $("#detail_recording_device").val(data.rows.recodingdevice);
-            $("#detail_group_name").val(data.rows.ep_group_name);
+            $("#detail_group_name").val(data.rows.ep_group_seq);
             $("#detail_sort").val(data.rows.order_no);
 
             layer_popup_detail('#layer3');

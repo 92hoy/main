@@ -422,3 +422,75 @@ def api_cdrReceivers():
     print("-------------------> DEBUG[e]")
 
     return resDataJson
+
+
+def api_cdr_POST(request):
+
+    json_data = json.dumps(request.POST)
+    json_data = json.loads(json_data)
+    Authorization = settings.AUTHORIZATION
+    url = 'https://14.63.53.22:449/api/v1/system/cdrReceivers'
+    headers = {
+        'Authorization': Authorization
+    }
+
+    r = requests.post(url, headers=headers, verify=False, data=json_data)
+
+    print(json_data)
+    print(r)
+    print(str(r.text))
+
+    return r
+
+def api_cdr_id(id, request=None):
+
+    Authorization = settings.AUTHORIZATION
+
+    # requests GET
+    url = 'https://14.63.53.22:449/api/v1/system/cdrReceivers/' + id
+    headers = {
+        'Authorization': Authorization
+    }
+    if request is not None:
+        json_data = json.dumps(request.POST)
+        json_data = json.loads(json_data)
+        resDataJson = requests.put(url, headers=headers, verify=False, data=json_data)
+
+    else:
+        r = requests.get(url, headers=headers, verify=False)
+        r.encoding = None
+        resData = str(r.text)
+
+        # xml to json
+        o = xmltodict.parse(resData)
+        resData = json.dumps(o)
+        resDataJson = json.loads(resData)
+
+    print("-------------------> DEBUG[s]")
+    print(resDataJson)
+    print("-------------------> DEBUG[e]")
+
+    return resDataJson
+
+def api_cdr_del(request):
+    cdr_listID = request.POST.getlist('del_arr[]')
+
+    Authorization = settings.AUTHORIZATION
+
+    headers = {
+        'Authorization': Authorization
+    }
+    error_id = list()
+    for cdrId in cdr_listID:
+        url = 'https://14.63.53.22:449/api/v1/system/cdrReceivers/' + cdrId
+        r = requests.delete(url, headers=headers, verify=False)
+        r.encoding = None
+        print(url)
+        print('api_cdr_del s _>_>_>_>_>_>_>_>_>')
+        print(str(r.status_code), str(r.text))
+        print('api_cdr_del e _>_>_>_>_>_>_>_>_>')
+
+        if r.status_code != 200:
+            error_id.append(r)
+
+    return error_id
