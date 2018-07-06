@@ -26,7 +26,9 @@ def api_coSpaces_POST(request):
     print(json_data)
     print(r)
     print(str(r.text))
+
     return r
+
 
 #from backend.djangoapps.common.api.views import api_coSpaces
 def api_coSpaces():
@@ -223,6 +225,167 @@ def api_activeCallId(id):
     print("-------------------> DEBUG[e]")
 
     return resDataJson['calls']['call']
+
+
+#from backend.djangoapps.common.api.views import api_callLegProfiles_POST
+def api_callLegProfiles_POST(callLegProfiles_data):
+
+    Authorization = settings.AUTHORIZATION
+    url = 'https://14.63.53.22:449/api/v1/callLegProfiles'
+    headers = {
+        'Authorization': Authorization
+    }
+
+    r = requests.post(url, headers=headers, verify=False, data=callLegProfiles_data)
+
+    print("-------------------> DEBUG[api_callLegProfiles_POST ---s]")
+    print(r)
+    print(r.text)
+    print("-------------------> DEBUG[api_callLegProfiles_POST ---e]")
+
+    return r
+
+
+# from backend.djangoapps.common.api.views import api_callLegProfiles_Id
+def api_callLegProfiles_Id(id):
+
+    Authorization = settings.AUTHORIZATION
+
+    # requests GET
+    url = 'https://14.63.53.22:449/api/v1/callLegProfiles/' + id
+    headers = {
+        'Authorization': Authorization
+    }
+
+    r = requests.get(url, headers=headers, verify=False)
+    r.encoding = None
+    resData = str(r.text)
+
+    # xml to json
+    o = xmltodict.parse(resData)
+    resData = json.dumps(o)
+    resDataJson = json.loads(resData)
+
+    print("-------------------> DEBUG[s]")
+    print(resDataJson)
+    print("-------------------> DEBUG[e]")
+
+    return resDataJson
+
+
+# from backend.djangoapps.common.api.views import api_callLegProfiles_Update
+def api_callLegProfiles_Update(id, callLegProfiles_data):
+    Authorization = settings.AUTHORIZATION
+    url = 'https://14.63.53.22:449/api/v1/callLegProfiles/' + id
+    headers = {
+        'Authorization': Authorization
+    }
+
+    res = requests.put(url, headers=headers, verify=False, data=callLegProfiles_data)
+
+    print("-------------------> DEBUG[api_callLegProfiles_Update ---s]")
+    print(res)
+    print(res.text)
+    print("-------------------> DEBUG[api_callLegProfiles_Update ---e]")
+
+    return res
+
+
+# from backend.djangoapps.common.api.views import api_callLegProfiles_Delete
+def api_callLegProfiles_Delete(id):
+    Authorization = settings.AUTHORIZATION
+
+    headers = {
+        'Authorization': Authorization
+    }
+    url = 'https://14.63.53.22:449/api/v1/callLegProfiles/' + id
+    r = requests.delete(url, headers=headers, verify=False)
+    r.encoding = None
+    print('api_callLegProfiles_Delete s ---------------------------------')
+    print(str(r.status_code), str(r.text))
+    print('api_callLegProfiles_Delete e ---------------------------------')
+
+    return r
+
+
+#from backend.djangoapps.common.api.views import api_callProfiles_POST
+def api_callProfiles_POST(callProfiles_data):
+
+    Authorization = settings.AUTHORIZATION
+    url = 'https://14.63.53.22:449/api/v1/callProfiles'
+    headers = {
+        'Authorization': Authorization
+    }
+
+    r = requests.post(url, headers=headers, verify=False, data=callProfiles_data)
+
+    print("-------------------> DEBUG[api_callProfiles_POST ---s]")
+    print(r)
+    print(r.text)
+    print("-------------------> DEBUG[api_callProfiles_POST ---e]")
+
+    return r
+
+
+# from backend.djangoapps.common.api.views import api_callProfiles_Id
+def api_callProfiles_Id(id):
+
+    Authorization = settings.AUTHORIZATION
+
+    # requests GET
+    url = 'https://14.63.53.22:449/api/v1/callProfiles/' + id
+    headers = {
+        'Authorization': Authorization
+    }
+    r = requests.get(url, headers=headers, verify=False)
+    r.encoding = None
+    resData = str(r.text)
+
+    # xml to json
+    o = xmltodict.parse(resData)
+    resData = json.dumps(o)
+    resDataJson = json.loads(resData)
+
+    print("-------------------> DEBUG[s]")
+    print(resDataJson)
+    print("-------------------> DEBUG[e]")
+
+    return resDataJson
+
+
+# from backend.djangoapps.common.api.views import api_callProfiles_Update
+def api_callProfiles_Update(id, callProfiles_data):
+    Authorization = settings.AUTHORIZATION
+    url = 'https://14.63.53.22:449/api/v1/callProfiles/' + id
+    headers = {
+        'Authorization': Authorization
+    }
+
+    res = requests.put(url, headers=headers, verify=False, data=callProfiles_data)
+
+    print("-------------------> DEBUG[api_callProfiles_Update ---s]")
+    print(res)
+    print(res.text)
+    print("-------------------> DEBUG[api_callProfiles_Update ---e]")
+
+    return res
+
+
+# from backend.djangoapps.common.api.views import api_callProfiles_Delete
+def api_callProfiles_Delete(id):
+    Authorization = settings.AUTHORIZATION
+
+    headers = {
+        'Authorization': Authorization
+    }
+    url = 'https://14.63.53.22:449/api/v1/callProfiles/' + id
+    r = requests.delete(url, headers=headers, verify=False)
+    r.encoding = None
+    print('api_callProfiles_Delete s ---------------------------------')
+    print(str(r.status_code), str(r.text))
+    print('api_callProfiles_Delete e ---------------------------------')
+
+    return r
 
 
 #from backend.djangoapps.common.api.views import api_activeCallLegs

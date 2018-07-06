@@ -6,426 +6,426 @@ from django.utils import translation
 <html lang="en">
 
 <head>
-  <title>Cisco x Kotech</title>
+    <title>Cisco x Kotech</title>
 
-  <meta charset="utf-8" />
-  <meta name="description" content="Responsive, Bootstrap, BS4" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Flatkit">
-  <meta name="mobile-web-app-capable" content="yes">
-  <script src="/static/common/libs/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.css">
+    <meta charset="utf-8" />
+    <meta name="description" content="Responsive, Bootstrap, BS4" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Flatkit">
+    <meta name="mobile-web-app-capable" content="yes">
+    <script src="/static/common/libs/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.css">
 
-  <link rel="icon" type="image/png" href="/static/common/img/favicons.png"/>
-  <link rel="apple-touch-icon" href="/static/common/img/logo.svg">
-  <link rel="shortcut icon" sizes="196x196" href="/static/common/img/logo.svg">
-  <link rel="stylesheet" href="/static/common/libs/font-awesome/css/font-awesome.min.css" type="text/css" />
-  <link rel="stylesheet" href="/static/common/libs/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
-  <link rel="stylesheet" href="/static/common/css/app.css" type="text/css" />
-  <link rel="stylesheet" href="/static/common/css/style.css" type="text/css" />
-  <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css" rel="stylesheet" />
-  <script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>
+    <link rel="icon" type="image/png" href="/static/common/img/favicons.png"/>
+    <link rel="apple-touch-icon" href="/static/common/img/logo.svg">
+    <link rel="shortcut icon" sizes="196x196" href="/static/common/img/logo.svg">
+    <link rel="stylesheet" href="/static/common/libs/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="/static/common/libs/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="/static/common/css/app.css" type="text/css" />
+    <link rel="stylesheet" href="/static/common/css/style.css" type="text/css" />
+    <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css" rel="stylesheet" />
+    <script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>
 
 </head>
 
 <body>
 
-  <header class="app-header theme">
+<header class="app-header theme">
     <div class="navbar navbar-expand-lg" style="height: 56px;">
-      <a class="d-lg-none mx-2" data-toggle="modal" data-target="#aside">
-	    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512"><path d="M80 304h352v16H80zM80 248h352v16H80zM80 192h352v16H80z"/></svg>
-      </a>
+        <a class="d-lg-none mx-2" data-toggle="modal" data-target="#aside">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512"><path d="M80 304h352v16H80zM80 248h352v16H80zM80 192h352v16H80z"/></svg>
+        </a>
 
-      <a href="javascript:window.location.href = '/'" class="navbar-brand">
-	  		<img style="margin-left: 20px; width:150px; height:53px;" src="/static/common/img/logo_main.png" alt="logo">
-	  	</a>
+        <a href="/" class="navbar-brand">
+            <img style="margin-left: 20px; width:150px; height:53px;" src="/static/common/img/logo_main.png" alt="logo">
+        </a>
 
-      <div class="collapse navbar-collapse  order-lg-1" id="navbarToggler">
+        <div class="collapse navbar-collapse  order-lg-1" id="navbarToggler">
 
-        <ul class="nav flex-row order-lg-2">
+            <ul class="nav flex-row order-lg-2">
 
-          <div class="nav-fold px-2">
-            <div class="d-flex p-2">
-                <span class="avatar w-40 rounded grey hide">J</span>
-                % if request.session['user_role'] == 'S':
-                  <img src="/static/common/img/a0.jpg" alt="..." class="w-40 circle">
-                % elif request.session['user_role'] == 'A':
-                  <img src="/static/common/img/a1.jpg" alt="..." class="w-40 circle">
-                % elif request.session['user_role'] == 'M':
-                  <img src="/static/common/img/a2.jpg" alt="..." class="w-40 circle">
-                % elif request.session['user_role'] == 'U':
-                  <img src="/static/common/img/a3.jpg" alt="..." class="w-40 circle">
-                % endif
+                <div class="nav-fold px-2">
+                    <div class="d-flex p-2">
+                        <span class="avatar w-40 rounded grey hide">J</span>
+                        % if request.session['user_role'] == 'S':
+                        <img src="/static/common/img/a0.jpg" alt="..." class="w-40 circle">
+                        % elif request.session['user_role'] == 'A':
+                        <img src="/static/common/img/a1.jpg" alt="..." class="w-40 circle">
+                        % elif request.session['user_role'] == 'M':
+                        <img src="/static/common/img/a2.jpg" alt="..." class="w-40 circle">
+                        % elif request.session['user_role'] == 'U':
+                        <img src="/static/common/img/a3.jpg" alt="..." class="w-40 circle">
+                        % endif
 
-            </div>
-            <div class="hidden-folded flex p-2">
-              <div class="d-flex">
-                <div class="mr-auto text-nowrap">
-                  ${request.session['user_name']}
-                  % if request.session['user_role'] == 'S':
-                    <small class="d-block text-muted">System Admin</small>
-                  % elif request.session['user_role'] == 'A':
-                    <small class="d-block text-muted">Admin</small>
-                  % elif request.session['user_role'] == 'M':
-                    <small class="d-block text-muted">Monitoring</small>
-                  % elif request.session['user_role'] == 'U':
-                    <small class="d-block text-muted">User</small>
-                  % endif
+                    </div>
+                    <div class="hidden-folded flex p-2">
+                        <div class="d-flex">
+                            <div class="mr-auto text-nowrap">
+                                ${request.session['user_name']}
+                                % if request.session['user_role'] == 'S':
+                                <small class="d-block text-muted">System Admin</small>
+                                % elif request.session['user_role'] == 'A':
+                                <small class="d-block text-muted">Admin</small>
+                                % elif request.session['user_role'] == 'M':
+                                <small class="d-block text-muted">Monitoring</small>
+                                % elif request.session['user_role'] == 'U':
+                                <small class="d-block text-muted">User</small>
+                                % endif
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="btn-group" style="padding-top: 10px; padding-bottom: 10px; margin-left: 10px;">
+                        <button class="btn warn">Language</button>
+                        <button class="btn warn dropdown-toggle" data-toggle="dropdown" aria-expanded="false"></button>
+                        <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(154px, 33px, 0px); top: 10px; left: -150px; width:30px; will-change: transform;">
+                            <a class="dropdown-item" id="transLangEN">English</a>
+                            <a class="dropdown-item" id="transLangKO">Korean</a>
+                            <!--<a class="dropdown-item" id="transLangJP">Japanese</a>-->
+                        </div>
+                    </div>
+
+                    <button
+                            class="btn btn-fw accent"
+                            style="margin-left: 15px;"
+                            onclick="window.location.href='/logout'"
+                    >Logout
+                    </button>
                 </div>
-              </div>
-            </div>
+            </ul>
 
-            <div class="btn-group" style="padding-top: 10px; padding-bottom: 10px; margin-left: 10px;">
-            <button class="btn warn">Language</button>
-            <button class="btn warn dropdown-toggle" data-toggle="dropdown" aria-expanded="false"></button>
-            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(154px, 33px, 0px); top: 10px; left: -150px; width:30px; will-change: transform;">
-              <a class="dropdown-item" id="transLangEN">English</a>
-              <a class="dropdown-item" id="transLangKO">Korean</a>
-              <!--<a class="dropdown-item" id="transLangJP">Japanese</a>-->
-            </div>
-            </div>
+            <!--
+            <ul class="navbar-nav mt-2 mt-lg-0 mx-0 mx-lg-2 flex">
+              <li class="nav-item" style="margin-left: 70px;">
+                <span class="nav-icon">
+                <i class="fa fa-users"></i>
+              </span>
+                <a href="/activeCall" class="nav-link" style="width: 150px;">
+                    Active Call
+                  </a>
+              </li>
+              <li class="nav-item">
+                <span class="nav-icon">
+                <i class="fa fa-tasks"></i>
+              </span>
+                <a href="/callStatus" class="nav-link" style="width: 150px;">
+                    Call Status
+                  </a>
+              </li>
+              <li class="nav-item">
+                <span class="nav-icon">
+                <i class="fa fa-television"></i>
+              </span>
+                <a href="/systemStatus" class="nav-link" style="width: 165px;">
+                    System Status
+                  </a>
+              </li>
+              <li class="nav-item">
+                <span class="nav-icon">
+                <i class="fa fa-area-chart"></i>
+              </span>
+                <a href="/networkStatus" class="nav-link" style="width: 150px;">
+                    Network Status
+                  </a>
+              </li>
+            </ul>
+            -->
 
-            <button
-              class="btn btn-fw accent"
-              style="margin-left: 15px;"
-              onclick="window.location.href='/logout'"
-              >Logout
-            </button>
-          </div>
-        </ul>
+            <ul class="navbar-nav mt-2 mt-lg-0 mx-0 mx-lg-2 flex"></ul>
 
-        <!--
-        <ul class="navbar-nav mt-2 mt-lg-0 mx-0 mx-lg-2 flex">
-          <li class="nav-item" style="margin-left: 70px;">
-            <span class="nav-icon">
-            <i class="fa fa-users"></i>
-          </span>
-            <a href="/activeCall" class="nav-link" style="width: 150px;">
-	  	      Active Call
-	  	    </a>
-          </li>
-          <li class="nav-item">
-            <span class="nav-icon">
-            <i class="fa fa-tasks"></i>
-          </span>
-            <a href="/callStatus" class="nav-link" style="width: 150px;">
-	  	      Call Status
-	  	    </a>
-          </li>
-          <li class="nav-item">
-            <span class="nav-icon">
-            <i class="fa fa-television"></i>
-          </span>
-            <a href="/systemStatus" class="nav-link" style="width: 165px;">
-	  	      System Status
-	  	    </a>
-          </li>
-          <li class="nav-item">
-            <span class="nav-icon">
-            <i class="fa fa-area-chart"></i>
-          </span>
-            <a href="/networkStatus" class="nav-link" style="width: 150px;">
-	  	      Network Status
-	  	    </a>
-          </li>
-        </ul>
-        -->
-
-        <ul class="navbar-nav mt-2 mt-lg-0 mx-0 mx-lg-2 flex"></ul>
-
-      </div>
+        </div>
     </div>
-  </header>
+</header>
 
-  <div class="app" id="app">
+<div class="app" id="app">
     <div id="aside" class="app-aside fade box-shadow-x nav-expand white" aria-hidden="true">
-      <div class="sidenav modal-dialog dk">
+        <div class="sidenav modal-dialog dk">
 
-        <div class="flex hide-scroll">
-          <div class="scroll">
-            <div class="nav-stacked nav-active-theme" data-nav>
-              <ul class="nav ">
-                <li class="nav-header">
-                  <span class="text-xs hidden-folded">Menu</span>
-                </li>
+            <div class="flex hide-scroll">
+                <div class="scroll">
+                    <div class="nav-stacked nav-active-theme" data-nav>
+                        <ul class="nav ">
+                            <li class="nav-header">
+                                <span class="text-xs hidden-folded">Menu</span>
+                            </li>
 
-                <!-- main menu [s] --------------------------------->
-                <li>
-                  <a>
+                            <!-- main menu [s] --------------------------------->
+                            <li id="conference">
+                                <a>
 		                  <span class="nav-caret">
 		                    <i class="fa fa-caret-down"></i>
 		                  </span>
 		                  <span class="nav-icon">
 		                    <i class="fa fa-group"></i>
 		                  </span>
-		                  <span class="nav-text">Conference</span>
-		                </a>
-                  <!-- sub menu -------------------------------->
-                  <ul class="nav-sub">
-                    <li>
-                      <!--<a href="/conferenceRoom">-->
-                        <a href="javascript:window.location.href = '/conferenceRoom';">
-		                      <span class="nav-text">Conference Room</span>
-		                    </a>
-                    </li>
-                    <li>
-                      <!--<a href="/activeCall">-->
-                        <a href="javascript:window.location.href = '/activeCall';">
-		                      <span class="nav-text">Active Call</span>
-		                    </a>
-                    </li>
-                    <li>
-                      <!--<a href="/template">-->
-                        <a href="javascript:window.location.href = '/template';">
-		                      <span class="nav-text">Template</span>
-		                    </a>
-                    </li>
-                    <!--
-                    <li>
-                        <a href="javascript:window.location.href = '/reserveConference';">
-		                      <span class="nav-text">Reserve Conference</span>
-		                    </a>
+                                    <span class="nav-text">Conference</span>
+                                </a>
+                                <!-- sub menu -------------------------------->
+                                <ul class="nav-sub">
+                                    <li id="conference_conferenceroom">
+                                        <!--<a href="/conferenceRoom">-->
+                                        <a href="javascript:window.location.href = '/conferenceRoom';">
+                                            <span class="nav-text">Conference Room</span>
+                                        </a>
+                                    </li>
+                                    <li id="conference_activecall">
+                                        <!--<a href="/activeCall">-->
+                                        <a href="javascript:window.location.href = '/activeCall';">
+                                            <span class="nav-text">Active Call</span>
+                                        </a>
+                                    </li>
+                                    <li id="conference_template">
+                                        <!--<a href="/template">-->
+                                        <a href="javascript:window.location.href = '/template';">
+                                            <span class="nav-text">Template</span>
+                                        </a>
+                                    </li>
+                                    <!--
+                                    <li>
+                                        <a href="javascript:window.location.href = '/reserveConference';">
+                                              <span class="nav-text">Reserve Conference</span>
+                                            </a>
 
-                    </li>
-                      -->
-                    <!--
-                    <li>
-                      <a href="/reserveConferenceCal">
-		                      <span class="nav-text">Reserve Conference Cal</span>
-		                    </a>
-                    </li>
-                    -->
-                  </ul>
-                  <!-- sub menu -------------------------------->
-                </li>
-                <!-- main menu [e] --------------------------------->
+                                    </li>
+                                      -->
+                                    <!--
+                                    <li>
+                                      <a href="/reserveConferenceCal">
+                                              <span class="nav-text">Reserve Conference Cal</span>
+                                            </a>
+                                    </li>
+                                    -->
+                                </ul>
+                                <!-- sub menu -------------------------------->
+                            </li>
+                            <!-- main menu [e] --------------------------------->
 
-                <!-- main menu [s] --------------------------------->
-                <li>
-                  <a>
+                            <!-- main menu [s] --------------------------------->
+                            <li id="monitoring">
+                                <a>
 		                  <span class="nav-caret">
 		                    <i class="fa fa-caret-down"></i>
 		                  </span>
 		                  <span class="nav-icon">
 		                    <i class="fa fa-desktop"></i>
 		                  </span>
-		                  <span class="nav-text">Monitoring</span>
-		                </a>
-                  <!-- sub menu -------------------------------->
-                  <ul class="nav-sub">
-                    <li>
-                      <!--<a href="/callStatus">-->
-                        <a href="javascript:window.location.href = '/callStatus';">
-		                      <span class="nav-text">Call Status</span>
-		                    </a>
-                    </li>
-                    <li>
-                      <!--<a href="/networkStatus">-->
-                        <a href="javascript:window.location.href = '/networkStatus';">
-		                      <span class="nav-text">Network Status</span>
-		                    </a>
-                    </li>
-                    <li>
-                      <!--<a href="/systemStatus">-->
-                        <a href="javascript:window.location.href = '/systemStatus';">
-		                      <span class="nav-text">System Status</span>
-		                    </a>
-                    </li>
-                  </ul>
-                  <!-- sub menu -------------------------------->
-                </li>
-                <!-- main menu [e] --------------------------------->
+                                    <span class="nav-text">Monitoring</span>
+                                </a>
+                                <!-- sub menu -------------------------------->
+                                <ul class="nav-sub">
+                                    <li id="monitoring_callstatus">
+                                        <!--<a href="/callStatus">-->
+                                        <a href="javascript:window.location.href = '/callStatus';">
+                                            <span class="nav-text">Call Status</span>
+                                        </a>
+                                    </li>
+                                    <li id="monitoring_networkstatus">
+                                        <!--<a href="/networkStatus">-->
+                                        <a href="javascript:window.location.href = '/networkStatus';">
+                                            <span class="nav-text">Network Status</span>
+                                        </a>
+                                    </li>
+                                    <li id="monitoring_systemstatus">
+                                        <!--<a href="/systemStatus">-->
+                                        <a href="javascript:window.location.href = '/systemStatus';">
+                                            <span class="nav-text">System Status</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!-- sub menu -------------------------------->
+                            </li>
+                            <!-- main menu [e] --------------------------------->
 
-                <!-- main menu [s] --------------------------------->
-                <li>
-                  <a>
+                            <!-- main menu [s] --------------------------------->
+                            <li id="statistics">
+                                <a>
 		                  <span class="nav-caret">
 		                    <i class="fa fa-caret-down"></i>
 		                  </span>
 		                  <span class="nav-icon">
 		                    <i class="fa fa-line-chart"></i>
 		                  </span>
-		                  <span class="nav-text">Statistics</span>
-		                </a>
-                  <!-- sub menu -------------------------------->
-                  <ul class="nav-sub">
-                    <li>
-                      <!--<a href="/roomUseState">-->
-                        <a href="javascript:window.location.href = '/roomUseState';">
-		                      <span class="nav-text">Room Use State</span>
-		                    </a>
-                    </li>
-                    <li>
-                      <!--<a href="/conferenceStatistics">-->
-                        <a href="javascript:window.location.href = '/conferenceStatistics';">
-		                      <span class="nav-text">Conference Statistics</span>
-		                    </a>
-                    </li>
-                    <li>
-                      <!--<a href="/periodStatistics">-->
-                        <a href="javascript:window.location.href = '/periodStatistics';">
-		                      <span class="nav-text">Period Statistics</span>
-		                    </a>
-                    </li>
-                  </ul>
-                  <!-- sub menu -------------------------------->
-                </li>
-                <!-- main menu [e] --------------------------------->
+                                    <span class="nav-text">Statistics</span>
+                                </a>
+                                <!-- sub menu -------------------------------->
+                                <ul class="nav-sub">
+                                    <li id="statistics_roomusestate">
+                                        <!--<a href="/roomUseState">-->
+                                        <a href="javascript:window.location.href = '/roomUseState';">
+                                            <span class="nav-text">Room Use State</span>
+                                        </a>
+                                    </li>
+                                    <li id="statistics_conferencestatistics">
+                                        <!--<a href="/conferenceStatistics">-->
+                                        <a href="javascript:window.location.href = '/conferenceStatistics';">
+                                            <span class="nav-text">Conference Statistics</span>
+                                        </a>
+                                    </li>
+                                    <li id="statistics_periodstatistics">
+                                        <!--<a href="/periodStatistics">-->
+                                        <a href="javascript:window.location.href = '/periodStatistics';">
+                                            <span class="nav-text">Period Statistics</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!-- sub menu -------------------------------->
+                            </li>
+                            <!-- main menu [e] --------------------------------->
 
-                <!-- main menu [s] --------------------------------->
-                <li>
-                  <a>
+                            <!-- main menu [s] --------------------------------->
+                            <li id="system">
+                                <a>
 		                  <span class="nav-caret">
 		                    <i class="fa fa-caret-down"></i>
 		                  </span>
 		                  <span class="nav-icon">
 		                    <i class="fa fa-tasks"></i>
 		                  </span>
-		                  <span class="nav-text">System</span>
-		                </a>
-                  <!-- sub menu -------------------------------->
-                  <ul class="nav-sub">
-                    <li>
-                      <!--<a href="/cdr">-->
-                        <a href="javascript:window.location.href = '/cdr';">
-		                      <span class="nav-text">CDR</span>
-		                    </a>
-                    </li>
-                    <!--
-                    <li>
-                        <a href="javascript:window.location.href = '/ldap';">
-		                      <span class="nav-text">LDAP</span>
-		                    </a>
-                    </li>
-                    -->
-                    <li>
-                      <!--<a href="/account">-->
-                        <a href="javascript:window.location.href = '/account';">
-		                      <span class="nav-text">Account</span>
-		                    </a>
-                    </li>
-                    <li>
-                      <!--<a href="/endPoint">-->
-                        <a href="javascript:window.location.href = '/endPoint';">
-		                      <span class="nav-text">EndPoint</span>
-		                    </a>
-                    </li>
-                    <li>
-                      <!--<a href="/endPointGroup">-->
-                        <a href="javascript:window.location.href = '/endPointGroup';">
-		                      <span class="nav-text">EndPointGroup</span>
-		                    </a>
-                    </li>
-                    <li>
-                      <!--<a href="/acanoClient">-->
-                        <a href="javascript:window.location.href = '/acanoClient';">
-		                      <span class="nav-text">Acano Client</span>
-		                    </a>
-                    </li>
-                    <!--
-                    <li>
-                        <a href="javascript:window.location.href = '/logoManagement';">
-		                      <span class="nav-text">Logo Management</span>
-		                    </a>
-                    </li>
-                    -->
-                    <li>
-                      <!--<a href="/commandManagement">-->
-                        <a href="javascript:window.location.href = '/commandManagement';">
-		                      <span class="nav-text">Command Management</span>
-		                    </a>
-                    </li>
-                  </ul>
-                  <!-- sub menu -------------------------------->
-                </li>
-                <!-- main menu [e] --------------------------------->
+                                    <span class="nav-text">System</span>
+                                </a>
+                                <!-- sub menu -------------------------------->
+                                <ul class="nav-sub">
+                                    <li id="system_cdr">
+                                        <!--<a href="/cdr">-->
+                                        <a href="javascript:window.location.href = '/cdr';">
+                                            <span class="nav-text">CDR</span>
+                                        </a>
+                                    </li>
+                                    <!--
+                                    <li>
+                                        <a href="javascript:window.location.href = '/ldap';">
+                                              <span class="nav-text">LDAP</span>
+                                            </a>
+                                    </li>
+                                    -->
+                                    <li id="system_account">
+                                        <!--<a href="/account">-->
+                                        <a href="javascript:window.location.href = '/account';">
+                                            <span class="nav-text">Account</span>
+                                        </a>
+                                    </li>
+                                    <li id="system_endpoint">
+                                        <!--<a href="/endPoint">-->
+                                        <a href="javascript:window.location.href = '/endPoint';">
+                                            <span class="nav-text">EndPoint</span>
+                                        </a>
+                                    </li>
+                                    <li id="system_endpointgroup">
+                                        <!--<a href="/endPointGroup">-->
+                                        <a href="javascript:window.location.href = '/endPointGroup';">
+                                            <span class="nav-text">EndPointGroup</span>
+                                        </a>
+                                    </li>
+                                    <li id="system_acanoclient">
+                                        <!--<a href="/acanoClient">-->
+                                        <a href="javascript:window.location.href = '/acanoClient';">
+                                            <span class="nav-text">Acano Client</span>
+                                        </a>
+                                    </li>
+                                    <!--
+                                    <li>
+                                        <a href="javascript:window.location.href = '/logoManagement';">
+                                              <span class="nav-text">Logo Management</span>
+                                            </a>
+                                    </li>
+                                    -->
+                                    <li id="system_commandmanagement">
+                                        <!--<a href="/commandManagement">-->
+                                        <a href="javascript:window.location.href = '/commandManagement';">
+                                            <span class="nav-text">Command Management</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!-- sub menu -------------------------------->
+                            </li>
+                            <!-- main menu [e] --------------------------------->
 
-                <!-- main menu [s] --------------------------------->
-                <li>
-                  <a>
+                            <!-- main menu [s] --------------------------------->
+                            <li id="environment">
+                                <a>
 		                  <span class="nav-caret">
 		                    <i class="fa fa-caret-down"></i>
 		                  </span>
 		                  <span class="nav-icon">
 		                    <i class="fa fa-soundcloud"></i>
 		                  </span>
-		                  <span class="nav-text">Environment</span>
-		                </a>
-                  <!-- sub menu -------------------------------->
-                  <ul class="nav-sub">
-                    <li>
-                      <!--<a href="/environment">-->
-                        <a href="javascript:window.location.href = '/environment';">
-		                      <span class="nav-text">Environment</span>
-		                    </a>
-                    </li>
-                  </ul>
-                  <!-- sub menu -------------------------------->
-                </li>
-                <!-- main menu [e] --------------------------------->
+                                    <span class="nav-text">Environment</span>
+                                </a>
+                                <!-- sub menu -------------------------------->
+                                <ul class="nav-sub">
+                                    <li id="environment_environment">
+                                        <!--<a href="/environment">-->
+                                        <a href="javascript:window.location.href = '/environment';">
+                                            <span class="nav-text">Environment</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!-- sub menu -------------------------------->
+                            </li>
+                            <!-- main menu [e] --------------------------------->
 
-                <!--
-                <li>
-                  <a>
-		                  <span class="nav-caret">
-		                    <i class="fa fa-caret-down"></i>
-		                  </span>
-		                  <span class="nav-icon">
-		                    <i class="fa fa-arrows-alt"></i>
-		                  </span>
-		                  <span class="nav-text">Supplementary Service</span>
-		                </a>
-                  <ul class="nav-sub">
-                    <li>
-                        <a href="javascript:window.location.href = '/outBoundDialPlan';">
-		                      <span class="nav-text">Outbound Dial Plan</span>
-		                    </a>
-                    </li>
-                  </ul>
-                  <!-- sub menu --------------------------------
-                </li>
-                -->
+                            <!--
+                            <li>
+                              <a>
+                                      <span class="nav-caret">
+                                        <i class="fa fa-caret-down"></i>
+                                      </span>
+                                      <span class="nav-icon">
+                                        <i class="fa fa-arrows-alt"></i>
+                                      </span>
+                                      <span class="nav-text">Supplementary Service</span>
+                                    </a>
+                              <ul class="nav-sub">
+                                <li>
+                                    <a href="javascript:window.location.href = '/outBoundDialPlan';">
+                                          <span class="nav-text">Outbound Dial Plan</span>
+                                        </a>
+                                </li>
+                              </ul>
+                              <!-- sub menu --------------------------------
+                            </li>
+                            -->
 
-              </ul>
+                        </ul>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
 
-        <!-- sidenav bottom -->
-        <div class="py-2 mt-2 b-t no-shrink">
-          <ul class="nav no-border">
-            <li>
-              <a href="/logout">
+            <!-- sidenav bottom -->
+            <div class="py-2 mt-2 b-t no-shrink">
+                <ul class="nav no-border">
+                    <li>
+                        <a href="/logout">
 						        <span class="nav-icon">
 						          <i class="fa fa-power-off"></i>
 						        </span>
-						        <span class="nav-text">Logout</span>
-						      </a>
-            </li>
-          </ul>
+                            <span class="nav-text">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- sidenav bottom -->
         </div>
-        <!-- sidenav bottom -->
-      </div>
     </div>
 
     <!-- content -->
     <div class="content-main " id="content-main" style="width:100%">
-    <%block name="containor">
+        <%block name="containor">
     </%block>
-    </div>
-    <!-- content -->
+</div>
+<!-- content -->
 
-    </div>
+</div>
 
-    <div class="hidden_csrftoken" style="display:none">${ csrf_token }</div>
+<div class="hidden_csrftoken" style="display:none">${ csrf_token }</div>
 
 
 
-    <script>
+<script>
     $( document ).ready(function() {
         console.log("----------------------> hello s");
         var uuu = window.location.href;
@@ -434,87 +434,188 @@ from django.utils import translation
     });
 
     //window.onload = function(){
-        //전체주소
-        //console.log("url : "+$(location).attr('href'));
-        //console.log("url : "+$(location).attr('protocol')+"//"+$(location).attr('host')+""+$(location).attr('pathname')+""+$(location).attr('search'));
+    //전체주소
+    //console.log("url : "+$(location).attr('href'));
+    //console.log("url : "+$(location).attr('protocol')+"//"+$(location).attr('host')+""+$(location).attr('pathname')+""+$(location).attr('search'));
     //}
-    </script>
+</script>
 
 
 
-    <script src="/static/common/vendor/sweetalert2.js"></script>
+<script src="/static/common/vendor/sweetalert2.js"></script>
 
-    <script src="/static/common/libs/popper.js/dist/umd/popper.min.js"></script>
-    <script src="/static/common/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/static/common/libs/pace-progress/pace.min.js"></script>
-    <script src="/static/common/libs/pjax/pjax.js"></script>
-    <script src="/static/common/js/lazyload.config.js"></script>
-    <script src="/static/common/js/lazyload.js"></script>
-    <script src="/static/common/js/plugin.js"></script>
-    <script src="/static/common/js/nav.js"></script>
-    <script src="/static/common/js/scrollto.js"></script>
-    <script src="/static/common/js/toggleclass.js"></script>
-    <script src="/static/common/js/theme.js"></script>
-    <script src="/static/common/js/ajax.js"></script>
-    <script src="/static/common/js/app.js"></script>
+<script src="/static/common/libs/popper.js/dist/umd/popper.min.js"></script>
+<script src="/static/common/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/static/common/libs/pace-progress/pace.min.js"></script>
+<script src="/static/common/libs/pjax/pjax.js"></script>
+<script src="/static/common/js/lazyload.config.js"></script>
+<script src="/static/common/js/lazyload.js"></script>
+<script src="/static/common/js/plugin.js"></script>
+<script src="/static/common/js/nav.js"></script>
+<script src="/static/common/js/scrollto.js"></script>
+<script src="/static/common/js/toggleclass.js"></script>
+<script src="/static/common/js/theme.js"></script>
+<script src="/static/common/js/ajax.js"></script>
+<script src="/static/common/js/app.js"></script>
 
-    <script src="/static/common/vendor/chart.js"></script>
-    <%block name="scriptDown">
-    </%block>
+<script src="/static/common/vendor/chart.js"></script>
+<%block name="scriptDown">
+</%block>
 
-    <script>
+<script>
     $( document ).ready(function() {
-      var hidden_csrftoken = $('.hidden_csrftoken').text();
-      var langCode = '${request.session[translation.LANGUAGE_SESSION_KEY]}';
+        var hidden_csrftoken = $('.hidden_csrftoken').text();
+        var langCode = '${request.session[translation.LANGUAGE_SESSION_KEY]}';
 
-      if(langCode == 'en'){
-          $('#transLangEN').css("background-color","#d2c6f4");
-          $('#transLangKO').css("background-color","#ffffff");
-          $('#transLangJP').css("background-color","#ffffff");
-      }
-      else if(langCode == 'ko'){
-          $('#transLangEN').css("background-color","#ffffff");
-          $('#transLangKO').css("background-color","#d2c6f4");
-          $('#transLangJP').css("background-color","#ffffff");
-      }
-      else if(langCode == 'ja'){
-          $('#transLangEN').css("background-color","#ffffff");
-          $('#transLangKO').css("background-color","#ffffff");
-          $('#transLangJP').css("background-color","#d2c6f4");
-      }
+        if(langCode == 'en'){
+            $('#transLangEN').css("background-color","#d2c6f4");
+            $('#transLangKO').css("background-color","#ffffff");
+            $('#transLangJP').css("background-color","#ffffff");
+        }
+        else if(langCode == 'ko'){
+            $('#transLangEN').css("background-color","#ffffff");
+            $('#transLangKO').css("background-color","#d2c6f4");
+            $('#transLangJP').css("background-color","#ffffff");
+        }
+        else if(langCode == 'ja'){
+            $('#transLangEN').css("background-color","#ffffff");
+            $('#transLangKO').css("background-color","#ffffff");
+            $('#transLangJP').css("background-color","#d2c6f4");
+        }
 
-      $( "#transLangEN" ).click(function() {
-        $.post( "/transLang", {
-           csrfmiddlewaretoken: hidden_csrftoken,
-           lang: 'en'
-         })
-        .done(function( data ) {
-          location.reload();
+        $( "#transLangEN" ).click(function() {
+            $.post( "/transLang", {
+                        csrfmiddlewaretoken: hidden_csrftoken,
+                        lang: 'en'
+                    })
+                    .done(function( data ) {
+                        location.reload();
+                    });
         });
-      });
 
-      $( "#transLangKO" ).click(function() {
-        $.post( "/transLang", {
-           csrfmiddlewaretoken: hidden_csrftoken,
-           lang: 'ko'
-         })
-        .done(function( data ) {
-          location.reload();
+        $( "#transLangKO" ).click(function() {
+            $.post( "/transLang", {
+                        csrfmiddlewaretoken: hidden_csrftoken,
+                        lang: 'ko'
+                    })
+                    .done(function( data ) {
+                        location.reload();
+                    });
         });
-      });
 
-      $( "#transLangJP" ).click(function() {
-        $.post( "/transLang", {
-           csrfmiddlewaretoken: hidden_csrftoken,
-           lang: 'ja'
-         })
-        .done(function( data ) {
-          location.reload();
+        $( "#transLangJP" ).click(function() {
+            $.post( "/transLang", {
+                        csrfmiddlewaretoken: hidden_csrftoken,
+                        lang: 'ja'
+                    })
+                    .done(function( data ) {
+                        location.reload();
+                    });
         });
-      });
     });
 
-    </script>
+    (function ($) {
+        $('ul.nav.nav-main li').mouseover(function (e) {
+            $(this).addClass('nav-active');
+        });
+        $('ul.nav.nav-main li').mouseleave(function (e) {
+            $(this).removeClass('nav-active');
+            setactivesidebar('none');
+        });
+
+        function setactivesidebar(is_expanded) {
+            var pagetitlename = $('#pagetitlename').text();
+//            console.log('pagetitlename: ' + pagetitlename);
+
+            switch (pagetitlename) {
+                case 'CONFERENCE ROOM':
+                    if (is_expanded != 'none') $('#conference').addClass('active');
+                    $('#conference').addClass('active');
+                    $('#conference_conferenceroom').addClass('active');
+                    break;
+                case 'ACTIVE CALL':
+                    if (is_expanded != 'none') $('#conference').addClass('active');
+                    $('#conference').addClass('active');
+                    $('#conference_activecall').addClass('active');
+                    break;
+                case 'TEMPLATE':
+                    if (is_expanded != 'none') $('#conference').addClass('active');
+                    $('#conference').addClass('active');
+                    $('#conference_template').addClass('active');
+                    break;
+                case 'CALL STATUS':
+                    if (is_expanded != 'none') $('#monitoring').addClass('active');
+                    $('#monitoring').addClass('active');
+                    $('#monitoring_callstatus').addClass('active');
+                    break;
+                case 'NETWORK STATUS':
+                    if (is_expanded != 'none') $('#monitoring').addClass('active');
+                    $('#monitoring').addClass('active');
+                    $('#monitoring_networkstatus').addClass('active');
+                    break;
+                case 'SYSTEM STATUS':
+                    if (is_expanded != 'none') $('#monitoring').addClass('active');
+                    $('#monitoring').addClass('active');
+                    $('#monitoring_systemstatus').addClass('active');
+                    break;
+                case 'ROOM USE STATE':
+                    if (is_expanded != 'none') $('#statistics').addClass('active');
+                    $('#statistics').addClass('active');
+                    $('#statistics_roomusestate').addClass('active');
+                    break;
+                case 'CONFERENCE STATISTICS':
+                    if (is_expanded != 'none') $('#statistics').addClass('active');
+                    $('#statistics').addClass('active');
+                    $('#statistics_conferencestatistics').addClass('active');
+                    break;
+                case 'PERIOD STATISTICS':
+                    if (is_expanded != 'none') $('#statistics').addClass('active');
+                    $('#statistics').addClass('active');
+                    $('#statistics_periodstatistics').addClass('active');
+                    break;
+                case 'CDR':
+                    if (is_expanded != 'none') $('#system').addClass('active');
+                    $('#system').addClass('active');
+                    $('#system_cdr').addClass('active');
+                    break;
+                case 'ACCOUNT':
+                    if (is_expanded != 'none') $('#system').addClass('active');
+                    $('#system').addClass('active');
+                    $('#system_account').addClass('active');
+                    break;
+                case 'ENDPOINT':
+                    if (is_expanded != 'none') $('#system').addClass('active');
+                    $('#system').addClass('active');
+                    $('#system_endpoint').addClass('active');
+                    break;
+                case 'ENDPOINTGROUP':
+                    if (is_expanded != 'none') $('#system').addClass('active');
+                    $('#system').addClass('active');
+                    $('#system_endpointgroup').addClass('active');
+                    break;
+                case 'ACANO CLIENT':
+                    if (is_expanded != 'none') $('#system').addClass('active');
+                    $('#system').addClass('active');
+                    $('#system_acanoclient').addClass('active');
+                    break;
+                case 'COMMAND MANAGEMENT':
+                    if (is_expanded != 'none') $('#system').addClass('active');
+                    $('#system').addClass('active');
+                    $('#system_commandmanagement').addClass('active');
+                    break;
+                case 'ENVIRONMENT':
+                    if (is_expanded != 'none') $('#environment').addClass('active');
+                    $('#environment').addClass('active');
+                    $('#environment_environment').addClass('active');
+                    break;
+
+            }
+        }
+
+        setactivesidebar('');
+    }).apply(this, [jQuery]);
+
+</script>
 
 </body>
 

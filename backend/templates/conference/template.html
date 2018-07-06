@@ -5,11 +5,28 @@ from django.utils.translation import ugettext as _
 %>
 
 <%block name="containor">
+<style>
+    .pagination .active .page-link, .pagination .active a{
+        background-color: #6e8df4 !important;
+        border-color: #6e8df4 !important
+    }
 
+    th, td{
+        border: solid 1px #dddddd;
+        padding: 3px;
+    }
+
+    th {
+        width: 70%;
+    }
+    .rightTd{
+        width:100%
+    }
+</style>
 <div class="dim-layer">
     <div class="dimBg"></div>
 
-    <div id="layer2" class="pop-layer">
+    <div id="layer2" class="pop-layer" style="width: 600px; height: 700px;">
         <div class="pop-container">
             <div class="pop-conts">
 
@@ -17,78 +34,376 @@ from django.utils.translation import ugettext as _
             <i class="fa fa-plug"></i>
           </span>
                 <div style="margin-bottom: 10px;">
-                    <strong>Conference management</strong><a href="#" class="btn-layerClose" style="float: right; font-size:18px;">X</a>
+                    <strong>Template management</strong><a href="#" class="btn-layerClose" style="float: right; font-size:18px;">X</a>
                 </div>
                 <hr width="100%" color="#d9d9d9">
                 <div style="text-align: center;">
-                    <table style="display: inline-block; width:100%;">
 
+
+                    <table style="display: inline-block; width:100%;" class="layer-template">
+                        <tbody>
                         <tr>
-                            <td>Conference name</td>
-                            <td class="rightTd"><input type="text" class="form-control wi280" placeholder=""></td>
+                            <th>Template Name</th>
+                            <td class="rightTd"><input type="hidden" id="template_seq"><input type="text" id="template_name" class="form-control" placeholder=""></td>
                         </tr>
+
+                        <!-- callLegProfile end -->
                         <tr>
-                            <td>uri</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                            <th colspan="2" style="text-align: left; border: none;padding-top: 15px;">callLegProfile</th>
                         </tr>
-                        <tr>
-                            <td>secondaryUri</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        <tr class="callLegProfile">
+                            <th>needsActivation</th>
+                            <td class="rightTd"><input type="checkbox" class="form-control" id="needsActivation" placeholder=""></td>
                         </tr>
-                        <tr>
-                            <td>callId</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
-                        </tr>
-                        <tr>
-                            <td>cdrTag</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
-                        </tr>
-                        <tr>
-                            <td>passcode</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
-                        </tr>
-                        <tr>
-                            <td>Confirm password</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
-                        </tr>
-                        <tr>
-                            <td>defaultLayout</td>
+                        <tr class="callLegProfile">
+                            <th>Call Leg Profile Layout</th>
                             <td class="rightTd">
-                                <select id="inputState" class="custom-select w-100">
-                                    <option selected="">Choose...</option>
-                                    <option>...</option>
+                                <select id="defaultLayout" class="custom-select w-100">
+                                    <option selected="" value="Not set">Not set</option>
+                                    <option value="allEqual">allEqual</option>
+                                    <option value="speakerOnly">speakerOnly</option>
+                                    <option value="telepresence">telepresence</option>
+                                    <option value="stacked">stacked</option>
+                                    <option value="allEqualQuarters">allEqualQuarters</option>
+                                    <option value="allEqualNinths">allEqualNinths</option>
+                                    <option value="allEqualSixteenths">allEqualSixteenths</option>
+                                    <option value="allEqualTwentyFifths">allEqualTwentyFifths</option>
+                                    <option value="onePlusFive">onePlusFive</option>
+                                    <option value="onePlusSeven">onePlusSeven</option>
+                                    <option value="onePlusNine">onePlusNine</option>
+                                    <option value="automatic">automatic</option>
+                                    <option value="onePlusN">onePlusN</option>
                                 </select>
                             </td>
                         </tr>
-                        <tr>
-                            <td>ownerJid</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        <tr class="callLegProfile">
+                            <th>Allow Change Layout</th>
+                            <td class="rightTd"><input type="checkbox" id="changeLayoutAllowed" class="form-control" placeholder=""></td>
                         </tr>
-                        <tr>
-                            <td>template</td>
+                        <tr class="callLegProfile">
+                            <th>Participant Labels</th>
                             <td class="rightTd">
-                                <select id="inputState" class="custom-select w-100">
-                                    <option selected="">Choose...</option>
-                                    <option>...</option>
+                                <input type="checkbox" id="participantLabels" class="form-control" placeholder="">
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>Presentation Display Mode</th>
+                            <td class="rightTd">
+                                <select id="presentationDisplayMode" class="custom-select w-100">
+                                    <option selected="" value="dualStream">dualStream</option>
+                                    <option value="singleStream">singleStream</option>
                                 </select>
                             </td>
                         </tr>
-                        <tr>
-                            <td>streamUrl</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        <tr class="callLegProfile">
+                            <th>Allow Presentation Contribution</th>
+                            <td class="rightTd"><input type="checkbox" class="form-control" id="presentationContributionAllowed" placeholder=""></td>
                         </tr>
-                        <tr>
-                            <td>ownerAdGuid</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        <tr class="callLegProfile">
+                            <th>Allow All Presentation Contribution</th>
+                            <td class="rightTd"><input type="checkbox" class="form-control" id="allowAllPresentationContributionAllowed" checked placeholder=""></td>
                         </tr>
-                        <tr>
-                            <td>MeetingScheduler</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        <tr class="callLegProfile">
+                            <th>Allow Presentation Viewing</th>
+                            <td class="rightTd">
+                                <input type="checkbox" id="presentationViewingAllowed" class="form-control" placeholder="">
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>Allow End Call</th>
+                            <td class="rightTd"><input type="checkbox" id="endCallAllowed" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>disconnectOthersAllowed</th>
+                            <td class="rightTd">
+                                <input type="checkbox" id="disconnectOthersAllowed" class="form-control" placeholder="">
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>Allow Mute Others</th>
+                            <td class="rightTd">
+                                <input type="checkbox" id="muteOthersAllowed" class="form-control" placeholder="">
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>Override New Participant Mute</th>
+                            <td class="rightTd"><input type="checkbox" id="changeJoinAudioMuteOverrideAllowed" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>Allow Mute Self</th>
+                            <td class="rightTd"><input type="checkbox"  id="muteSelfAllowed" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>Allow video Mute Others</th>
+                            <td class="rightTd"><input type="checkbox" id="videoMuteOthersAllowed" checked class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>Allow All Mute Self</th>
+                            <td class="rightTd">
+                                <input type="checkbox"  id="allowAllMuteSelfAllowed" class="form-control" placeholder="">
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>Allow Video Mute Self</th>
+                            <td class="rightTd"><input type="checkbox" id="videoMuteSelfAllowed" checked class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>joinToneParticipantThreshold</th>
+                            <td class="rightTd"><input type="text" id="joinToneParticipantThreshold" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>leaveToneParticipantThreshold</th>
+                            <td class="rightTd"><input type="text" id="leaveToneParticipantThreshold" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>videoMode</th>
+                            <td class="rightTd">
+                                <select id="videoMode" class="custom-select w-100">
+                                    <option selected="" value="Not set">Not set</option>
+                                    <option value="auto">auto</option>
+                                    <option value="disabled">disabled</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>Audio Hearing</th>
+                            <td class="rightTd">
+                                <select id="rxAudioMute" class="custom-select w-100">
+                                    <option selected="" value="Not set">Not set</option>
+                                    <option value="true">Hearing on</option>
+                                    <option value="false">Hearing off</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>Mute</th>
+                            <td class="rightTd">
+                                <select id="txAudioMute" class="custom-select w-100">
+                                    <option selected="" value="Not set">Not set</option>
+                                    <option value="true">Mute on</option>
+                                    <option value="false">Mute off</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>Video</th>
+                            <td class="rightTd">
+                                <select id="rxVideoMute" class="custom-select w-100">
+                                    <option selected="" value="Not set">Not set</option>
+                                    <option value="true">Video on</option>
+                                    <option value="false">Video off</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>Camera</th>
+                            <td class="rightTd">
+                                <select id="txVideoMute" class="custom-select w-100">
+                                    <option selected="" value="Not set">Not set</option>
+                                    <option value="true">Camera on</option>
+                                    <option value="false">Camera off</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>sipMediaEncryption</th>
+                            <td class="rightTd">
+                                <select id="sipMediaEncryption" class="custom-select w-100">
+                                    <option selected="" value="Not set">Not set</option>
+                                    <option value="optional">optional</option>
+                                    <option value="required">required</option>
+                                    <option value="prohibited">prohibited</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>audioPacketSizeMs</th>
+                            <td class="rightTd"><input type="text" class="form-control" id="audioPacketSizeMs" placeholder=""></td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>deactivationMode</th>
+                            <td class="rightTd">
+                                <select id="deactivationMode" class="custom-select w-100">
+                                    <option selected="" value="Not set">Not set</option>
+                                    <option value="deactivate">deactivate</option>
+                                    <option value="disconnect">disconnect</option>
+                                    <option value="remainActivated">remainActivated</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>deactivationModeTime</th>
+                            <td class="rightTd"><input type="text" id="deactivationModeTime" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>telepresenceCallsAllowed</th>
+                            <td class="rightTd">
+                                <select id="telepresenceCallsAllowed" class="custom-select w-100">
+                                    <option selected="" value="Not set">Not set</option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>sipPresentationChannelEnabled</th>
+                            <td class="rightTd">
+                                <select id="sipPresentationChannelEnabled" class="custom-select w-100">
+                                    <option selected="" value="Not set">Not set</option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>bfcpMode</th>
+                            <td class="rightTd">
+                                <select id="bfcpMode" class="custom-select w-100">
+                                    <option selected="" value="Not set">Not set</option>
+                                    <option value="serverOnly">serverOnly</option>
+                                    <option value="serverAndClient">serverAndClient</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>callLockAllowed</th>
+                            <td class="rightTd">
+                                <select id="callLockAllowed" class="custom-select w-100">
+                                    <option selected="" value="Not set">Not set</option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>recordingControlAllowed</th>
+                            <td class="rightTd">
+                                <select id="recordingControlAllowed" class="custom-select w-100">
+                                    <option selected="" value="Not set">Not set</option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>streamingControlAllowed</th>
+                            <td class="rightTd">
+                                <select id="streamingControlAllowed" class="custom-select w-100">
+                                    <option selected="" value="Not set">Not set</option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>name</th>
+                            <td class="rightTd"><input type="text" class="form-control" id="name" placeholder=""></td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>maxCallDurationTime</th>
+                            <td class="rightTd"><input type="text" class="form-control" id="maxCallDurationTime" placeholder=""></td>
                         </tr>
 
+                        <tr class="callLegProfile">
+                            <th>QualityMain</th>
+                            <td class="rightTd">
+                                <select id="qualityMain" class="custom-select w-100">
+                                    <option selected="" value="unrestricted">unrestricted</option>
+                                    <option value="max1080p30">max1080p30</option>
+                                    <option value="max720p30">max720p30</option>
+                                    <option value="max480p30">max480p30</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>QualityPresentation</th>
+                            <td class="rightTd">
+                                <select id="qualityPresentation" class="custom-select w-100">
+                                    <option selected="" value="unrestricted">unrestricted</option>
+                                    <option value="max1080p30">max1080p30</option>
+                                    <option value="max720p5">max720p5</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>ParticipantCounter</th>
+                            <td class="rightTd">
+                                <select id="participantCounter" class="custom-select w-100">
+                                    <option selected="" value="never">never</option>
+                                    <option value="auto">auto</option>
+                                    <option value="always">always</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="callLegProfile">
+                            <th>SetImportanceAllowed</th>
+                            <td class="rightTd">
+                                <input type="checkbox"  id="setImportanceAllowed" class="form-control" placeholder="">
+                            </td>
+                        </tr>
+                        <!-- callLegProfile end -->
+
+
+                        <!-- callProfile start -->
+                        <tr>
+                            <th colspan="2" style="text-align: left; border: none; padding-top: 15px;">Call Profile</th>
+                        </tr>
+                        <tr class="callProfile">
+                            <th>Participant Limit</th>
+                            <td class="rightTd"><input type="text" id="participantLimit" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr class="callProfile">
+                            <th>Use Message Board</th>
+                            <td class="rightTd"><input type="checkbox" id="messageBoardEnabled" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr class="callProfile">
+                            <th>Lock</th>
+                            <td class="rightTd"><input type="checkbox" id="locked" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr class="callProfile">
+                            <th>Recording mode</th>
+                            <td class="rightTd">
+                                <select id="recordingMode" class="custom-select w-100">
+                                    <option selected="" value="manual">manual</option>
+                                    <option value="automatic">automatic</option>
+                                    <option value="disabled">disabled</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="callProfile">
+                            <th>passcodeMode</th>
+                            <td class="rightTd">
+                                <select id="passcodeMode" class="custom-select w-100">
+                                    <option selected="" value="required">required</option>
+                                    <option value="timeout">timeout</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="callProfile">
+                            <th>passcodeTimeout</th>
+                            <td class="rightTd"><input type="text" id="passcodeTimeout" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr class="callProfile">
+                            <th>GatewayAudioCallOptimization</th>
+                            <td class="rightTd">
+                                <input type="checkbox"  id="gatewayAudioCallOptimization" class="form-control" placeholder="">
+                            </td>
+                        </tr>
+                        <tr class="callProfile">
+                            <th>LyncConferenceMode</th>
+                            <td class="rightTd">
+                                <select id="lyncConferenceMode" class="custom-select w-100">
+                                    <option selected="" value="dualHomeCluster">dualHomeCluster</option>
+                                    <option value="dualHomeCallbridge">dualHomeCallBridge</option>
+                                    <option value="gateway">gateway</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <!-- callProfile end -->
+                        </tbody>
                     </table>
 
-                    <button class="md-btn md-raised mb-2 w-xs purple mgt-20" id="confSave">SAVE</button>
+                    <button class="md-btn md-raised mb-2 w-xs purple mgt-20" id="template_save">SAVE</button>
 
                 </div>
             </div>
@@ -97,213 +412,12 @@ from django.utils.translation import ugettext as _
 
 </div>
 
-
-
-
-
-
-<!-- NEW LAYER POPUP -->
-<div class="dim-layer2">
-    <div class="dimBg2"></div>
-
-
-
-    <div id="layer_new" class="pop-layer2">
-        <div class="pop-container2">
-            <div class="pop-conts">
-
-          <span class="nav-icon" style="padding-bottom: 18px;">
-            <i class="fa fa-book"></i>
-          </span>
-                <div style="margin-bottom: 10px;">
-
-                    <strong>Start Conference</strong><a href="#" class="btn-layerClose" style="float: right; font-size:18px;">X</a>
-                    <hr width="100%" color="#d9d9d9">
-                </div>
-                <div style="float:right;">
-                    <button class="md-btn md-raised mb-2 w-xs purple" id="confSave">START</button>
-                </div>
-                <div style="text-align: center;">
-                    <table style="display: inline-block; width:100%; margin-bottom: 20px; ">
-
-                        <tr>
-                            <td>Start conference</td>
-                            <td class="rightTd"><input type="text" class="form-control wi730" placeholder=""></td>
-                        </tr>
-                        <tr>
-                            <td>Conference name</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
-                        </tr>
-                        <tr>
-                            <td>callID</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
-                        </tr>
-                        <tr>
-                            <td>uri</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
-                        </tr>
-                        <tr>
-                            <td>Add user</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
-                        </tr>
-                        <tr>
-                            <td>Band Width</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
-                        </tr>
-                        <tr>
-                            <td>user password</td>
-                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
-                        </tr>
-
-
-                    </table>
-                </div>
-
-
-
-
-
-                <div style="width:48%; float:left; margin-right: 15px;  padding-bottom: 20px;">
-
-                              <span class="nav-icon"  style="padding-bottom: 18px;">
-                                <i class="fa fa-address-book-o"></i>
-                              </span>
-                    <div>
-                        <strong>User</strong>
-                    </div>
-
-                    <table class="tg" width="100%">
-                        <colgroup>
-                            <col width="30%">
-                            <col width="30%">
-                            <col width="30%">
-                            <col width="10%">
-                        </colgroup>
-                        <tr>
-                            <th>User Jld</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Delete</th>
-                        </tr>
-                        <tr>
-                            <td>User Jld</td>
-                            <td>Name</td>
-                            <td>Email</td>
-                            <td>Delete</td>
-                        </tr>
-                        <tr>
-                            <td>User Jld</td>
-                            <td>Name</td>
-                            <td>Email</td>
-                            <td>Delete</td>
-                        </tr>
-                    </table>
-
-                </div>
-
-                <div style="width:50%; float:left; padding-bottom: 20px;">
-
-
-                              <span class="nav-icon"  style="padding-bottom: 18px;">
-                                <i class="fa fa-bolt"></i>
-                              </span>
-                    <div>
-                        <strong>End Point</strong>
-                    </div>
-
-
-                    <table class="tg" width="100%">
-                        <colgroup>
-                            <col width="15%">
-                            <col width="20%">
-                            <col width="20%">
-                            <col width="25%">
-                            <col width="20%">
-                        </colgroup>
-                        <tr>
-                            <th>1</th>
-                            <th>2</th>
-                            <th>3</th>
-                            <th>4</th>
-                            <th>5</th>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                        </tr>
-                    </table>
-                </div>
-
-
-
-
-
-
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<!-- NEW LAYER POPUP 끝 -->
 
 <div class="padding">
 
     <div class="box">
         <div class="box-header">
-            <h2>TEMPLATE</h2>
+            <h2 id="pagetitlename">TEMPLATE</h2>
             <small>TEMPLATE</small>
         </div>
     </div>
@@ -321,11 +435,6 @@ from django.utils.translation import ugettext as _
             <button class="md-btn md-raised mb-2 w-xs purple dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
         </a>
 
-
-
-        <a href="#layer_new" class="btn-example">
-            <button class="md-btn md-raised mb-2 w-xs dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">NEWLAYER</button>
-        </a>
     </div>
 
 
@@ -343,9 +452,10 @@ from django.utils.translation import ugettext as _
 
                 <tbody id="tbody">
                 % for data in context['data']:
+                <% data_seq = data['seq'] %>
                 <tr>
                     <td></td>
-                    <td>${data['conference_name']}</td>
+                    <td><a href="javascript:templateDetail('${data_seq}');" con-id="${data_seq}" style="text-decoration: underline;">${data['conference_name']}</a></td>
                 </tr>
                 % endfor
                 </tbody>
@@ -392,13 +502,331 @@ from django.utils.translation import ugettext as _
                 null,
             ],
             columnDefs: [
-                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center"},
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center check-row"},
             ],
             "drawCallback":function(){
                 $(".paginate_button").attr('href', 'javascript:check_click();');
             }
         });
-    } );
+
+        $("#template_save").click(function () {
+            $(".layer-template select").each(function(){
+                if($(this).val() == 'Not set'){
+                    $(this).val('');
+                    //alert($(".layer-template select option:selected").val());
+                }
+            });
+
+            var template_seq = $("#template_seq").val();
+            var template_name = $("#template_name").val();
+            //callLegProfiles
+            var needsActivation = $("#needsActivation").prop('checked');
+            //select
+            var defaultLayout = $("#defaultLayout").val();
+            var changeLayoutAllowed = $("#changeLayoutAllowed").prop('checked');
+            var participantLabels = $("#participantLabels").prop('checked');
+            //select
+            var presentationDisplayMode = $("#presentationDisplayMode").val();
+            var presentationContributionAllowed = $("#presentationContributionAllowed").prop('checked');
+            var allowAllPresentationContributionAllowed = $("#allowAllPresentationContributionAllowed").prop('checked');
+            var presentationViewingAllowed = $("#presentationViewingAllowed").prop('checked');
+            var endCallAllowed = $("#endCallAllowed").prop('checked');
+            var disconnectOthersAllowed = $("#disconnectOthersAllowed").prop('checked');
+            var muteOthersAllowed = $("#muteOthersAllowed").prop('checked');
+            var changeJoinAudioMuteOverrideAllowed = $("#changeJoinAudioMuteOverrideAllowed").prop('checked');
+            var muteSelfAllowed = $("#muteSelfAllowed").prop('checked');
+            var videoMuteOthersAllowed = $("#videoMuteOthersAllowed").prop('checked');
+            var allowAllMuteSelfAllowed = $("#allowAllMuteSelfAllowed").prop('checked');
+            var videoMuteSelfAllowed = $("#videoMuteSelfAllowed").prop('checked');
+            //text
+            var joinToneParticipantThreshold = $("#joinToneParticipantThreshold").val();
+            var leaveToneParticipantThreshold = $("#leaveToneParticipantThreshold").val();
+            //select
+            var videoMode = $("#videoMode").val();
+            var rxAudioMute = $("#rxAudioMute").val();
+            var txAudioMute = $("#txAudioMute").val();
+            var rxVideoMute = $("#rxVideoMute").val();
+            var txVideoMute = $("#txVideoMute").val();
+            var sipMediaEncryption = $("#sipMediaEncryption").val();
+            //text
+            var audioPacketSizeMs = $("#audioPacketSizeMs").val();
+            //select
+            var deactivationMode = $("#deactivationMode").val();
+            //text
+            var deactivationModeTime = $("#deactivationModeTime").val();
+            //select
+            var telepresenceCallsAllowed = $("#telepresenceCallsAllowed").val();
+            var sipPresentationChannelEnabled = $("#sipPresentationChannelEnabled").val();
+            var bfcpMode = $("#bfcpMode").val();
+            var callLockAllowed = $("#callLockAllowed").val();
+            var recordingControlAllowed = $("#recordingControlAllowed").val();
+            var streamingControlAllowed = $("#streamingControlAllowed").val();
+            //text
+            var name = $("#name").val();
+            var maxCallDurationTime = $("#maxCallDurationTime").val();
+            //select
+            var qualityMain = $("#qualityMain").val();
+            var qualityPresentation = $("#qualityPresentation").val();
+            var participantCounter = $("#participantCounter").val();
+
+            var setImportanceAllowed = $("#setImportanceAllowed").prop('checked');
+
+
+            //Call Profile
+            //text
+            var participantLimit = $("#participantLimit").val();
+            var messageBoardEnabled = $("#messageBoardEnabled").prop('checked');
+            var locked = $("#locked").prop('checked');
+            //select
+            var recordingMode = $("#recordingMode").val();
+            var passcodeMode = $("#passcodeMode").val();
+            //text
+            var passcodeTimeout = '';
+            if(passcodeMode == 'timeout'){
+                passcodeTimeout = $("#passcodeTimeout").val();
+            }
+            var gatewayAudioCallOptimization = $("#gatewayAudioCallOptimization").prop('checked');
+            //select
+            var lyncConferenceMode = $("#lyncConferenceMode").val();
+
+            var lock = 0;
+
+
+            var jsonData = {
+                "template_seq": template_seq,
+                "template_name": template_name,
+                "callLegProfiles": {
+                    "needsActivation": needsActivation,
+                    "defaultLayout": defaultLayout,
+                    "changeLayoutAllowed": changeLayoutAllowed,
+                    "participantLabels": participantLabels,
+                    "presentationDisplayMode": presentationDisplayMode,
+                    "presentationContributionAllowed": presentationContributionAllowed,
+                    "allowAllPresentationContributionAllowed": allowAllPresentationContributionAllowed,
+                    "presentationViewingAllowed": presentationViewingAllowed,
+                    "endCallAllowed": endCallAllowed,
+                    "disconnectOthersAllowed": disconnectOthersAllowed,
+                    "muteOthersAllowed": muteOthersAllowed,
+                    "changeJoinAudioMuteOverrideAllowed": changeJoinAudioMuteOverrideAllowed,
+                    "muteSelfAllowed": muteSelfAllowed,
+                    "videoMuteOthersAllowed": videoMuteOthersAllowed,
+                    "allowAllMuteSelfAllowed": allowAllMuteSelfAllowed,
+                    "videoMuteSelfAllowed": videoMuteSelfAllowed,
+                    "joinToneParticipantThreshold": joinToneParticipantThreshold,
+                    "leaveToneParticipantThreshold": leaveToneParticipantThreshold,
+                    "videoMode": videoMode,
+                    "rxAudioMute": rxAudioMute,
+                    "txAudioMute": txAudioMute,
+                    "rxVideoMute": rxVideoMute,
+                    "txVideoMute": txVideoMute,
+                    "sipMediaEncryption": sipMediaEncryption,
+                    "audioPacketSizeMs": audioPacketSizeMs,
+                    "deactivationMode": deactivationMode,
+                    "deactivationModeTime": deactivationModeTime,
+                    "telepresenceCallsAllowed": telepresenceCallsAllowed,
+                    "sipPresentationChannelEnabled": sipPresentationChannelEnabled,
+                    "bfcpMode": bfcpMode,
+                    "callLockAllowed": callLockAllowed,
+                    "recordingControlAllowed": recordingControlAllowed,
+                    "streamingControlAllowed": streamingControlAllowed,
+                    "name": name,
+                    "maxCallDurationTime": maxCallDurationTime,
+                    "qualityMain": qualityMain,
+                    "qualityPresentation": qualityPresentation,
+                    "participantCounter": participantCounter,
+                    "setImportanceAllowed": setImportanceAllowed,
+                },
+                "callProfiles": {
+                    "participantLimit": participantLimit,
+                    "messageBoardEnabled": messageBoardEnabled,
+                    "locked": locked,
+                    "recordingMode": recordingMode,
+                    "passcodeMode": passcodeMode,
+                    "passcodeTimeout": passcodeTimeout,
+                    "gatewayAudioCallOptimization": gatewayAudioCallOptimization,
+                    "lyncConferenceMode": lyncConferenceMode,
+                }};
+
+            if(template_seq != ''){
+                var template_url = '/template/update';
+            } else {
+                var template_url = '/template/add';
+            }
+
+            $.post(template_url, {'csrfmiddlewaretoken': '${csrf_token}', 'data': JSON.stringify(jsonData)}
+            ).done(function(data){
+                if(data.status == 'success'){
+                    swal({
+                        title: 'Success!',
+                        text: "",
+                        type: 'success',
+                    }).then(function(){
+                        location.reload();
+                    });
+                } else {
+                    swal('경고', '입력값을 확인하세요', 'warning');
+                }
+            });
+        });
+
+        // 체크박스 리스트 선택(delete)
+        $('#delBtn').click(function () {
+            var table = $('#table_template').DataTable();
+            var del_conference = $('td.check-row input[type="checkbox"]:checked').map(function() {
+                var this_tr = $(this).parent().parent();
+                // con-id는 id값 저장을위해 지정해준 속성
+                var this_td_data = $(this_tr).find("a").attr('con-id');
+                console.log(this_td_data);
+                return this_td_data;}).get();
+
+            swal({
+                title: '삭제하시겠습니까?',
+                text: '삭제하면 복구할 수 없습니다.',
+                type: 'info',
+                showCancelButton: true,
+                confirmButtonText: '확인',
+                cancelButtonText: '취소',
+                //closeOnClickOutside: false,
+                //closeOnEsc: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+            }).then(function (data) {
+                if(data.value == true){
+                    $.ajax({
+                        url: '/template/del',
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': '${csrf_token}',
+                            'del_arr': del_conference
+                        }
+                    }).done(function(data){
+                        alert(data.err_list.length);
+                        if(data.err_list.length == 0){
+                            swal({
+                                title: 'Success!',
+                                text: "",
+                                type: 'success',
+                            }).then(function(){
+                                location.reload();
+                            });
+                        } else {
+                            swal('경고', data.err_list + ' 삭제에 실패하였습니다.', 'warning');
+                        }
+                    });
+                } else {
+                    return;
+                }
+            });
+        });
+
+    });
+
+    function templateDetail(template_seq){
+        $.ajax({
+            url: '/template/detail',
+            type: 'POST',
+            data: {
+                'csrfmiddlewaretoken': '${csrf_token}',
+                'template_seq': template_seq
+            }
+        }).done(function(data){
+            //data.resDataJson_callProfiles
+            //data.resDataJson_callLegProfiles
+            //data.template_name
+            $("#template_seq").val(data.template_seq);
+            $("#template_name").val(data.template_name);
+            //callLegProfiles
+            console.log(data.callLegProfile_data);
+            $("#needsActivation").val(data.callLegProfile_data.needsActivation);
+
+            $("#changeLayoutAllowed").val(data.callLegProfile_data.changeLayoutAllowed);
+            $("#participantLabels").val(data.callLegProfile_data.participantLabels);
+            $("#presentationContributionAllowed").val(data.callLegProfile_data.presentationContributionAllowed);
+            $("#allowAllPresentationContributionAllowed").val(data.callLegProfile_data.allowAllPresentationContributionAllowed);
+            $("#presentationViewingAllowed").val(data.callLegProfile_data.presentationViewingAllowed);
+            $("#endCallAllowed").val(data.callLegProfile_data.endCallAllowed);
+            $("#disconnectOthersAllowed").val(data.callLegProfile_data.disconnectOthersAllowed);
+            $("#muteOthersAllowed").val(data.callLegProfile_data.muteOthersAllowed);
+            $("#changeJoinAudioMuteOverrideAllowed").val(data.callLegProfile_data.changeJoinAudioMuteOverrideAllowed);
+            $("#muteSelfAllowed").val(data.callLegProfile_data.muteSelfAllowed);
+            $("#videoMuteOthersAllowed").val(data.callLegProfile_data.videoMuteOthersAllowed);
+            $("#allowAllMuteSelfAllowed").val(data.callLegProfile_data.allowAllMuteSelfAllowed);
+            $("#videoMuteSelfAllowed").val(data.callLegProfile_data.videoMuteSelfAllowed);
+            $("#setImportanceAllowed").val(data.callLegProfile_data.setImportanceAllowed);
+
+            $(".callLegProfile td input[type='checkbox']").each(function () {
+                if($(this).val() == 'true'){
+                    $(this).prop('checked', true);
+                }else{
+                    $(this).prop('checked', false);
+                }
+            });
+
+            //select
+            $("#defaultLayout").val(data.callLegProfile_data.defaultLayout);
+            $("#presentationDisplayMode").val(data.callLegProfile_data.presentationDisplayMode);
+            $("#videoMode").val(data.callLegProfile_data.videoMode);
+            $("#rxAudioMute").val(data.callLegProfile_data.rxAudioMute);
+            $("#txAudioMute").val(data.callLegProfile_data.txAudioMute);
+            $("#rxVideoMute").val(data.callLegProfile_data.rxVideoMute);
+            $("#txVideoMute").val(data.callLegProfile_data.txVideoMute);
+            $("#sipMediaEncryption").val(data.callLegProfile_data.sipMediaEncryption);
+            $("#deactivationMode").val(data.callLegProfile_data.deactivationMode);
+            $("#telepresenceCallsAllowed").val(data.callLegProfile_data.telepresenceCallsAllowed);
+            $("#sipPresentationChannelEnabled").val(data.callLegProfile_data.sipPresentationChannelEnabled);
+            $("#bfcpMode").val(data.callLegProfile_data.bfcpMode);
+            $("#callLockAllowed").val(data.callLegProfile_data.callLockAllowed);
+            $("#recordingControlAllowed").val(data.callLegProfile_data.recordingControlAllowed);
+            $("#streamingControlAllowed").val(data.callLegProfile_data.streamingControlAllowed);
+            $("#qualityMain").val(data.callLegProfile_data.qualityMain);
+            $("#qualityPresentation").val(data.callLegProfile_data.qualityPresentation);
+            $("#participantCounter").val(data.callLegProfile_data.participantCounter);
+            //select end
+
+            $(".callLegProfile td select").each(function () {
+                if($(this).val() == null){
+                    $(this).val('Not set').attr('selected', 'selected');
+                }
+            });
+
+            //text
+            $("#joinToneParticipantThreshold").val(data.callLegProfile_data.joinToneParticipantThreshold);
+            $("#leaveToneParticipantThreshold").val(data.callLegProfile_data.leaveToneParticipantThreshold);
+            $("#audioPacketSizeMs").val(data.callLegProfile_data.audioPacketSizeMs);
+            $("#deactivationModeTime").val(data.callLegProfile_data.deactivationModeTime);
+            $("#name").val(data.callLegProfile_data.name);
+            $("#maxCallDurationTime").val(data.callLegProfile_data.maxCallDurationTime);
+
+
+
+
+            //Call Profile
+            $("#messageBoardEnabled").val(data.callProfile_data.messageBoardEnabled);
+            $("#locked").val(data.callProfile_data.locked);
+            $("#gatewayAudioCallOptimization").val(data.callProfile_data.gatewayAudioCallOptimization);
+
+            $(".callProfile td input[type='checkbox']").each(function () {
+                if($(this).val() == 'true'){
+                    $(this).prop('checked', true);
+                }else{
+                    $(this).prop('checked', false);
+                }
+            });
+
+            //text
+            $("#passcodeTimeout").val(data.callProfile_data.passcodeTimeout);
+            $("#participantLimit").val(data.callProfile_data.participantLimit);
+
+            //select
+            $("#recordingMode").val(data.callProfile_data.recordingMode);
+            $("#passcodeMode").val(data.callProfile_data.passcodeMode);
+            $("#lyncConferenceMode").val(data.callProfile_data.lyncConferenceMode);
+            //select
+
+            layer_popup('#layer2');
+
+        });
+    }
 
     function check_click(){
         //alert("paging btn");
@@ -416,7 +844,6 @@ from django.utils.translation import ugettext as _
     });
 
     function layer_popup(el){
-
         var $el = $(el);        //레이어의 id를 $el 변수에 저장
         var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
 
@@ -438,6 +865,7 @@ from django.utils.translation import ugettext as _
         }
 
         $el.find('a.btn-layerClose').click(function(){
+            popup_close();
             isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
             return false;
         });
@@ -450,46 +878,58 @@ from django.utils.translation import ugettext as _
     }
 
 
-    $('.btn-example').click(function(){
-        var $href = $(this).attr('href');
-        layer_popup2($href);
-    });
+    function popup_close(){
+        $("#template_seq").val('');
+        $("#template_name").val('');
 
-    function layer_popup2(el){
-
-        var $el = $(el);        //레이어의 id를 $el 변수에 저장
-        var isDim = $el.prev().hasClass('dimBg2');   //dimmed 레이어를 감지하기 위한 boolean 변수
-
-        isDim ? $('.dim-layer2').fadeIn() : $el.fadeIn();
-
-        var $elWidth = ~~($el.outerWidth()),
-                $elHeight = ~~($el.outerHeight()),
-                docWidth = $(document).width(),
-                docHeight = $(document).height();
-
-        // 화면의 중앙에 레이어를 띄운다.
-        if ($elHeight < docHeight || $elWidth < docWidth) {
-            $el.css({
-                marginTop: -$elHeight /2,
-                marginLeft: -$elWidth/2
-            })
-        } else {
-            $el.css({top: 0, left: 0});
-        }
-
-        $el.find('a.btn-layerClose').click(function(){
-            isDim ? $('.dim-layer2').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
-            return false;
+        //callLegProfiles
+        var check_default_arr = ['allowAllPresentationContributionAllowed', 'videoMuteOthersAllowed', 'videoMuteSelfAllowed'];
+        $(".callLegProfile td input[type='checkbox']").each(function () {
+            console.log($(this).prop('id'));
+            console.log($.inArray($(this).prop('id'), check_default_arr));
+            if($.inArray($(this).prop('id'), check_default_arr) != -1){
+                $(this).prop('checked', true);
+            }else{
+                $(this).prop('checked', false);
+            }
         });
 
-        $('.layer .dimBg2').click(function(){
-            $('.dim-layer2').fadeOut();
-            return false;
+        var select_default_arr = ['presentationDisplayMode', 'qualityMain', 'qualityPresentation', 'participantCounter'];
+        $(".callLegProfile td select").each(function () {
+            if($.inArray($(this).prop('id'), select_default_arr) == -1){
+                $(this).val('Not set').attr('selected', 'selected');
+            }
         });
 
+        //select
+        $("#presentationDisplayMode").val('dualStream');
+        $("#qualityMain").val('unrestricted');
+        $("#qualityPresentation").val('unrestricted');
+        $("#participantCounter").val('never');
+        //select end
+
+        //text
+        $("#joinToneParticipantThreshold").val('');
+        $("#leaveToneParticipantThreshold").val('');
+        $("#audioPacketSizeMs").val('');
+        $("#deactivationModeTime").val('');
+        $("#name").val('');
+        $("#maxCallDurationTime").val('');
+
+
+        //Call Profile
+        $(".callProfile td input[type='checkbox']").each(function () {
+            $(this).prop('checked', false);
+        });
+
+        //text
+        $("#passcodeTimeout").val('');
+        $("#participantLimit").val('');
+        //select
+        $("#recordingMode").val('manual');
+        $("#passcodeMode").val('required');
+        $("#lyncConferenceMode").val('dualHomeCluster');
     }
-
-
 
 
     // // 팝업 열때 부모창 스크롤 막기
