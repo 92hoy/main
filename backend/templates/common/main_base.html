@@ -538,6 +538,11 @@ from django.utils import translation
                     $('#conference').addClass('active');
                     $('#conference_activecall').addClass('active');
                     break;
+                case 'Active Call':
+                    if (is_expanded != 'none') $('#conference').addClass('active');
+                    $('#conference').addClass('active');
+                    $('#conference_activecall').addClass('active');
+                    break;
                 case 'TEMPLATE':
                     if (is_expanded != 'none') $('#conference').addClass('active');
                     $('#conference').addClass('active');
