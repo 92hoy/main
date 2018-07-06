@@ -62,7 +62,7 @@ from django.utils.translation import ugettext as _
 
 <!--  Layer popup -->
 
-<div class="dim-layer">
+<div class="dim-layer" id="dim-layer">
     <div class="dimBg"></div>
 
     <div id="layer2" class="pop-layer">
@@ -130,7 +130,7 @@ from django.utils.translation import ugettext as _
             <i class="fa fa-plug"></i>
           </span>
                 <div style="margin-bottom: 10px;">
-                    <strong>EndPoint</strong><a href="#" class="btn-layerClose" style="float: right; font-size:18px;">X</a>
+                    <strong>Account</strong><a href="#" class="btn-layerClose" style="float: right; font-size:18px;">X</a>
                 </div>
                 <hr width="100%" color="#d9d9d9">
                 <div style="text-align: center;">
@@ -337,7 +337,7 @@ from django.utils.translation import ugettext as _
         var $el = $(el);        //레이어의 id를 $el 변수에 저장
         var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
 
-        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
+        isDim ? $('#dim-layer').fadeIn() : $el.fadeIn();
 
         var $elWidth = ~~($el.outerWidth()),
                 $elHeight = ~~($el.outerHeight()),
@@ -355,12 +355,12 @@ from django.utils.translation import ugettext as _
         }
 
         $el.find('a.btn-layerClose').click(function(){
-            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+            isDim ? $('#dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
             return false;
         });
 
         $('.layer .dimBg').click(function(){
-            $('.dim-layer').fadeOut();
+            $('#dim-layer').fadeOut();
             return false;
         });
 
@@ -498,5 +498,6 @@ from django.utils.translation import ugettext as _
 
 
     }
+
 </script>
 </%block>

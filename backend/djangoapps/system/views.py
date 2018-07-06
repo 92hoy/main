@@ -485,6 +485,73 @@ def endPointGroup(request):
 
     return render(request, 'system/endPointGroup.html', context)
 
+def endPointGroup_add(request):
+
+    if request.is_ajax():
+
+        ep_group_name = request.POST.get('ep_group_name')
+        order_no = request.POST.get('order_no')
+        regist_id = request.POST.get('regist_id')
+
+        print ("ep_group_name ->", ep_group_name)
+        print ("order_no ->", order_no)
+        print ("regist_id ->", regist_id)
+
+        lock = 0
+
+        with connections['default'].cursor() as cur:
+            query = '''
+                select ep_group_name
+                FROM cms_endpoint_group
+                WHERE ep_group_name ='{ep_group_name}'
+            '''.format(ep_group_name=ep_group_name)
+            cur.execute(query)
+            rows = cur.fetchall()
+
+        print (query)
+        print ("rows ->",rows)
+        print("before len rows =>",len(rows))
+
+        #-------검증--------------------------
+
+        if len(rows) != 0:
+            print("if rows =>",len(rows))
+            print("before",lock)
+            lock = 1
+            print("after",lock)
+
+            return JsonResponse({"return": "fail"})
+
+        #  생성
+        with connections['default'].cursor() as cur:
+            query = '''
+                  INSERT INTO kotech_cisco_cms.cms_endpoint_group
+                              (ep_group_name,
+                              order_no)
+                  VALUES ('{ep_group_name}','{order_no}')
+            '''.format(ep_group_name=ep_group_name,order_no=order_no)
+            print(query)
+            cur.execute(query)
+
+    return JsonResponse({"return": "success"})
+
+def endPointGroup_del(request):
+    print("endPointGroup_del")
+    name = request.POST.getlist('del_arr[]')
+
+    print(name)
+    for data in name:
+        with connections['default'].cursor() as cur:
+            query = '''
+                 delete FROM cms_endpoint_group
+                 WHERE ep_group_name ='{ep_group_name}'
+             '''.format(ep_group_name=data)
+            print(query)
+            cur.execute(query)
+
+    return JsonResponse({"return" : "success"})
+
+
 
 # 시스템 상태
 def acanoClient(request):
