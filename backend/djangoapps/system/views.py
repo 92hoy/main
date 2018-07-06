@@ -191,7 +191,7 @@ def account_detail(request):
         data_dict2['user_id'] = rows[0][0]
         data_dict2['user_name'] = rows[0][1]
         data_dict2['user_pwd'] = rows[0][2]
-        data_dict2['user_role'] = rows[0][2]
+        data_dict2['user_role'] = rows[0][3]
 
         print(rows)
 

@@ -177,19 +177,19 @@ from django.utils.translation import ugettext as _
                             <td>Device Type</td>
                             <td>
                                 <label class="btn btn-outline-light" style="color:black; border: 1px solid #BDBDBD;">
-                                    <input type="radio" name="device_options" autocomplete="off" id="Device_ip" value="ip"> IP
+                                    <input type="radio" name="device_options" value="ip"> IP
                                 </label>
 
                                 <label class="btn btn-outline-light" style="color:black;  border: 1px solid #BDBDBD;">
-                                    <input type="radio" name="device_options" autocomplete="off" id="Device_sip" value="sip"> SIP
+                                    <input type="radio" name="device_options"  value="sip"> SIP
                                 </label>
 
                                 <label class="btn btn-outline-light" style="color:black;  border: 1px solid #BDBDBD;">
-                                    <input type="radio" name="device_options" autocomplete="off" id="Device_h.323" value="h_323"> H.323
+                                    <input type="radio" name="device_options"  value="h.323"> H.323
                                 </label>
 
                                 <label class="btn btn-outline-light" style="color:black;  border: 1px solid #BDBDBD;">
-                                    <input type="radio" name="device_options" autocomplete="off" id="Device_mslync" value="mslync"> MSLync
+                                    <input type="radio" name="device_options"  value="mslync"> MSLync
                                 </label>
                             </td>
                         </tr>
@@ -388,6 +388,8 @@ from django.utils.translation import ugettext as _
         var group_name = $('#group_name').val();
         var sortno = $('#sortno').val();
 
+
+
         var lock=0;
 
         if (name == '') {
@@ -512,9 +514,15 @@ from django.utils.translation import ugettext as _
                 }
             }
         ).done(function (data) {
+
+            var device_t = data.rows.ep_type
             $("#detail_ep_id").val(data.rows.ep_id);
-            $("input:radio[name=device_options]:input[value='data.rows.ep_type']").attr("checked", true);
-            //$('input:radio[name=device_options]:input[value=' + st + ']').attr("checked", true);
+            //$("input:radio[name=device_options]").val().prop("checked", true);
+            $("input:radio[name=device_options]").each(function(){
+                if($(this).val() == device_t){
+                    $(this).prop('checked', true);
+                }
+            });
             $("#detail_ip").val(data.rows.ip);
             $("#detail_sip").val(data.rows.sip);
             $("#detail_h_323").val(data.rows.hdevice);
@@ -530,7 +538,7 @@ from django.utils.translation import ugettext as _
 
     function ep_update(ep_id){
         var detail_ep_id = $('#detail_ep_id').val();
-        var device_type = $(':radio[name="device_options"]:checked').val();
+        var device_type = $(':radio[name=device_options]:checked').val();
         var ip = $('#detail_ip').val();
         var sip = $('#detail_sip').val();
         var h_323 = $('#detail_h_323').val();
@@ -540,7 +548,7 @@ from django.utils.translation import ugettext as _
         var group_name = $('#detail_group_name').val();
         var sortno = $('#detail_sort').val();
 
-        alert(group_name);
+
 
         var lock=0;
 
