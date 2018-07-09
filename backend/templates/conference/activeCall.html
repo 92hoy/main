@@ -25,7 +25,7 @@ from django.utils.translation import ugettext as _
             <a href="#layer_new" class="btn-example">
             <button class="md-btn md-raised mb-2 w-xs dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">NEWLAYER</button>
                 <a href="/activecall_monitoring">
-                    <button class="md-btn md-raised mb-2 w-xs dialog__trigger" id="addBtn" style="float: right; margin-right: 8px; width: auto;">active_monitoring</button>
+                    <button class="md-btn md-raised mb-2 w-xs dialog__trigger" id="addBtn" style="float: right; margin-right: 8px; width: auto;" hidden>active_monitoring</button>
                 </a>
         </a>
 
@@ -45,9 +45,9 @@ from django.utils.translation import ugettext as _
 
                 <!-- 데이터 확인 후 작업 예정 -->
                 % for data in context['data']:
-                <tr>
+                <a><tr>
                     <td></td>
-                    <td>${data['name']}</td>
+                    <td><a href="/activecall_monitoring">${data['name']}</a></td>
                     <td>${data['callId']}</td>
                     <td style="text-align: right">${data['cv']}</td>
                 </tr>

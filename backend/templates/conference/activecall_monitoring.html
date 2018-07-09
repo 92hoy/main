@@ -160,18 +160,18 @@ from django.utils.translation import ugettext as _
                             <button class="md-btn md-raised mb-2 w-xs grey dialog__trigger" style="background-color: #FA4143; width: 230px; height:60px; margin: 2px;">Conference Layouts</button>
                             </a>
                             <br>
-                            <button class="md-btn md-raised mb-2 w-xs grey dialog__trigger" style="background-color: #E9AB71; width: 230px; height:40px; margin: 2px;">Mute All Audio</button>
+                            <button class="md-btn md-raised mb-2 w-xs grey dialog__trigger" style="background-color: #E9AB71; width: 230px; height:40px; margin: 2px;" id="Mute_audio">Mute All Audio</button>
                             <br>
-                            <button class="md-btn md-raised mb-2 w-xs grey dialog__trigger" style="background-color: #E9AB71; width: 230px; height:40px; margin: 2px;">Mute All Video</button>
+                            <button class="md-btn md-raised mb-2 w-xs grey dialog__trigger" style="background-color: #E9AB71; width: 230px; height:40px; margin: 2px;" id="Mute_video">Mute All Video</button>
                             <br>
                         </div>
                         <div class="col-s" >
                             <br><br><br><br><br><br>
-                            <a href="#"><img src="/static/common/img/volume.png" alt="logo" class="cm_img" width="60px" height="60px"></a>
-                            <a href="#"><img src="/static/common/img/volume.png" alt="logo" class="cm_img" width="60px" height="60px"></a>
+                            <a href="#"><img src="/static/common/img/volume.png" alt="logo" class="cm_img" width="60px" height="60px" id="vol_o"></a>
+                            <a href="#"><img src="/static/common/img/volume_x.png" alt="logo" class="cm_img" width="60px" height="60px" id="vol_x"></a>
                             <br>
-                            <a href="#"><img src="/static/common/img/video.png" alt="logo" class="cm_img" width="60px" height="60px"></a>
-                            <a href="#"><img src="/static/common/img/video.png" alt="logo" class="cm_img" width="60px" height="60px"></a>
+                            <a href="#"><img src="/static/common/img/video.png" alt="logo" class="cm_img" width="60px" height="60px" id="video_o"></a>
+                            <a href="#"><img src="/static/common/img/video_x.png" alt="logo" class="cm_img" width="60px" height="60px" id="video_x"></a>
                             <br>
                         </div>
                         <div class="col-sm" style=" vertical-align: middle; text-align: center; ">
@@ -282,6 +282,40 @@ from django.utils.translation import ugettext as _
 
 <%block name="scriptDown">
 <script>
+    $(document).ready(function() {
+        $("#vol_x").hide()
+        $("#video_x").hide()
+
+        $("#vol_o").click(function(){
+            $("#vol_x").show()
+            $("#vol_o").hide()
+        });
+        $("#vol_x").click(function(){
+            $("#vol_o").show()
+            $("#vol_x").hide()
+        });
+        $("#video_o").click(function(){
+            $("#video_x").show()
+            $("#video_o").hide()
+        });
+        $("#video_x").click(function(){
+            $("#video_o").show()
+            $("#video_x").hide()
+        });
+
+        $("#Mute_audio").click(function(){
+            $("#vol_x").show()
+            $("#vol_o").hide()
+        })
+        $("#Mute_video").click(function(){
+            $("#video_x").show()
+            $("#video_o").hide()
+        })
+
+    })
+
+
+
     $('.layouts').click(function(){
         var $href = $(this).attr('href');
         layouts($href);
