@@ -240,10 +240,10 @@ class CmsEndpoint(models.Model):
 
 # from backend.models import CmsEndpointGroup
 class CmsEndpointGroup(models.Model):
-    ep_group_seq = models.TextField(primary_key=True)
-    ep_grroup_name = models.TextField()
+    ep_group_seq = models.IntegerField(primary_key=True)
+    ep_group_name = models.TextField()
     ep_group_color = models.TextField()
-    ep_order = models.IntegerField()
+    order_no = models.IntegerField()
     delete_yn = models.TextField()
     regist_date = models.DateTimeField()
     regist_id = models.TextField()

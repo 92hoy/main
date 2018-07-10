@@ -35,9 +35,10 @@ from django.utils.translation import ugettext as _
                 </thead>
                 <tbody>
                 % for data in context['data']:
+                <% data_id = data['ep_group_seq'] %>
                 <tr>
                     <td></td>
-                    <td>${data['ep_group_name']}</td>
+                    <td><input type="hidden" id="ep_group_seq" value="${data_id}"><a href="javascript:endPointGroupDetail('${data_id}');" con-id="${data['ep_group_seq']}" style="text-decoration: underline;">${data['ep_group_name']}</a></td>
                     <td>${data['order_no']}</td>
                 </tr>
                 % endfor
@@ -66,15 +67,11 @@ from django.utils.translation import ugettext as _
                     <table style="display: inline-block; width:100%;">
                         <tr style="margin-bottom: 10px;">
                             <td>Group Name</td>
-                            <td class="rightTd"><input type="text" class="form-control wi280 " id="ep_group_name"><br></td>
+                            <td class="rightTd"><input type="hidden" id="ep_group_seq_update" value=""><input type="text" class="form-control wi280 " id="ep_group_name"></td>
                         </tr>
                         <tr>
                             <td>Sort No</td>
-                            <td class="rightTd"><input type="text" class="form-control"  id="order_no"><br></td>
-                        </tr>
-                        <tr>
-                            <td>Regist Id(비활성)</td>
-                            <td class="rightTd"><input type="password" class="form-control"  id="regist_id"  readonly ><br></td>
+                            <td class="rightTd"><input type="text" class="form-control"  id="order_no"></td>
                         </tr>
 
                     </table>
@@ -190,6 +187,7 @@ from django.utils.translation import ugettext as _
 
         });
 
+        /*
         $table.on('click', 'td', function() {
             var table = $("#table_endPointGroup").DataTable();
             var table_tr_idx = table.cell(this).index().row;
@@ -198,7 +196,7 @@ from django.utils.translation import ugettext as _
             var table_td_data = $(this).text();
             var this_input = '';
             if(table_td_idx == 1 || table_td_idx == 2){
-                if($(this).children('input').length == 0){
+                if($(this).children('input#modi_input').length == 0){
                     $(this).html('<input type="text" value="' + table_td_data + '" id="modi_input" style="width: 80%;"/>');
                     this_input = $(this).find('input');
                     $(this_input).select();
@@ -213,6 +211,8 @@ from django.utils.translation import ugettext as _
                 $(table_tr).find('input.dt-checkboxes').prop('checked', true);
             });
         });
+        */
+
     });
 
 
@@ -254,6 +254,9 @@ from django.utils.translation import ugettext as _
         }
 
         $el.find('a.btn-layerClose').click(function(){
+             $("#ep_group_seq_update").val('');
+            $("#ep_group_name").val('');
+            $("#order_no").val('');
             isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
             return false;
         });
@@ -270,6 +273,7 @@ from django.utils.translation import ugettext as _
         var ep_group_name = $("#ep_group_name").val();
         var order_no = $("#order_no").val();
         var regist_id = $("#regist_id").val();
+        var ep_group_seq = $("#ep_group_seq_update").val();
 
         var lock = 0;
 
@@ -282,72 +286,100 @@ from django.utils.translation import ugettext as _
             lock = 1;
         }
 
-            if (lock == 0) {
-                $.ajax({
-                    type: "POST",
-                    url: "/system/endPointGroup_add",
-                    data: {
-                        'csrfmiddlewaretoken': '${csrf_token}',
-                        ep_group_name: ep_group_name,
-                        order_no: order_no,
-                        regist_id: regist_id
-                    },
-                    success: function (data) {
-                        if (data.return == 'success') {
-                            swal("Success", "등록 완료", "success")
-                            location.reload();
-                        }
-                        else if (data.return != 'success') {
-                            swal({
-                                title: "Warning",
-                                text: "group_name 중복",
-                                icon: "warning",
-                                buttons: true,
-                                dangerMode: false,
-                            })
-                                    .then(function (willDelete) {
-                                        if (willDelete) {
-                                            return
-                                        } else {
-                                            return
-                                        }
-                                    });
-                            //swal("Login-fail","ID,PW를 확인해주세요","warning");
-                        }
-                    },
-                });
-            }
+        if(ep_group_seq != ''){
+            var epg_url = '/system/endPointGroupUpdate';
+        } else {
+            var epg_url = '/system/endPointGroup_add';
         }
+
+        if (lock == 0) {
+            $.ajax({
+                type: "POST",
+                url: epg_url,
+                data: {
+                    'csrfmiddlewaretoken': '${csrf_token}',
+                    ep_group_name: ep_group_name,
+                    order_no: order_no,
+                    ep_group_seq: ep_group_seq,
+                },
+                success: function (data) {
+                    if (data.return == 'success') {
+                        if(ep_group_seq != ''){
+                            swal("Success", "수정 완료", "success");
+                        } else {
+                            swal("Success", "등록 완료", "success");
+                        }
+                        location.reload();
+                    }
+                    else if (data.return != 'success') {
+                        swal({
+                            title: "Warning",
+                            text: "group_name 중복",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: false,
+                        })
+                                .then(function (willDelete) {
+                                    if (willDelete) {
+                                        return
+                                    } else {
+                                        return
+                                    }
+                                });
+                        //swal("Login-fail","ID,PW를 확인해주세요","warning");
+                    }
+                },
+            });
+        }
+    }
+
+    function endPointGroupDetail(seq){
+        $.ajax({
+            url: '/system/endPointGroupDetail',
+            type: 'POST',
+            data: {
+                'csrfmiddlewaretoken': '${csrf_token}',
+                'ep_group_seq': seq
+            }
+        }).done(function(data){
+            $("#ep_group_seq_update").val(data.epg_seq);
+            $("#ep_group_name").val(data.epg_name);
+            $("#order_no").val(data.order_no);
+
+            layer_popup('#layer2');
+        });
+    }
+
     function btn_del(){
 
         var table = $('#table_endPointGroup').DataTable();
-            var del_ep_group= $('td.t1 input[type="checkbox"]:checked').map(function() {
-                var this_tr = $(this).parent().parent();
-                var this_td_data = $(this_tr).find('td').eq(1).text();
-                console.log("this_td_data",this_td_data);
+        var del_ep_group= $('td.t1 input[type="checkbox"]:checked').map(function() {
+            var this_tr = $(this).parent().parent();
+            var this_td_data = $(this_tr).find('td').eq(1).find('input#ep_group_seq').val();
+            console.log("this_td_data",this_td_data);
 
-                return this_td_data;}).get();
+            return this_td_data;}).get();
 
-            $.ajax({
-                url: '/system/endPointGroup_del',
-                type: "POST",
-                data: {
-                    'csrfmiddlewaretoken': '${csrf_token}',
-                    'del_arr': del_ep_group
-                }
-            }).done(function(data){
-                if(data.status == 'success'){
-                    swal({
-                        title: 'Success!',
-                        text: "",
-                        type: 'success',
-                    }).then(function(){
-                        location.reload();
-                    });
-                } else {
-                     swal('경고', '삭제에 실패하였습니다.', 'warning');
-                }
-            });
+        $.ajax({
+            url: '/system/endPointGroup_del',
+            type: "POST",
+            data: {
+                'csrfmiddlewaretoken': '${csrf_token}',
+                'del_arr': del_ep_group
+            }
+        }).done(function(data){
+            if(data.return == 'success'){
+                swal({
+                    title: 'Success!',
+                    text: "",
+                    type: 'success',
+                }).then(function(){
+                    location.reload();
+                });
+            } else {
+                swal('경고', '삭제에 실패하였습니다.', 'warning');
+            }
+        });
     }
 </script>
 </%block>
