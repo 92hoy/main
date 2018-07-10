@@ -7,14 +7,14 @@ class CmsManager(models.Model):
     user_pwd = models.TextField()
     user_name = models.TextField()
     user_role = models.TextField()
-    pw_change_date = models.DateTimeField()
-    login_fail_cnt = models.IntegerField()
-    last_login = models.DateTimeField()
-    language = models.TextField()
-    delete_yn = models.TextField()
-    regist_date = models.DateTimeField()
+    pw_change_date = models.DateTimeField(auto_now=True)
+    login_fail_cnt = models.IntegerField(default=0)
+    last_login = models.DateTimeField(auto_now=True)
+    language = models.TextField(default='en')
+    delete_yn = models.TextField(default='N')
+    regist_date = models.DateTimeField(auto_now_add=True)
     regist_id = models.TextField()
-    modify_date = models.DateTimeField()
+    modify_date = models.DateTimeField(auto_now=True)
     modify_id = models.TextField()
     class Meta:
         managed = False
@@ -33,7 +33,7 @@ class ApiCdrCall(models.Model):
     calllegscompleted = models.IntegerField()
     calllegsmaxactive = models.IntegerField()
     durationseconds = models.IntegerField()
-    add_date = models.DateTimeField()
+    add_date = models.DateTimeField(auto_now_add=True)
     cdrtag = models.TextField()
     tenant = models.TextField()
     class Meta:
@@ -99,7 +99,7 @@ class ApiCdrCallleg(models.Model):
     txaudio_packetgap_density = models.FloatField()
     state = models.TextField()
     deactivated = models.TextField()
-    add_date = models.DateTimeField()
+    add_date = models.DateTimeField(auto_now_add=True)
     ep_id = models.TextField()
     class Meta:
         managed = False
@@ -112,7 +112,7 @@ class ApiCdrRecord(models.Model):
     type = models.TextField()
     time = models.TextField()
     recordindex = models.IntegerField()
-    add_date = models.DateTimeField()
+    add_date = models.DateTimeField(auto_now_add=True)
     utc_time = models.DateTimeField()
     local_time = models.DateTimeField()
     class Meta:
@@ -129,7 +129,7 @@ class ApiCdrRecording(models.Model):
     recorderurl = models.TextField()
     call = models.TextField()
     callleg = models.TextField()
-    add_date = models.DateTimeField()
+    add_date = models.DateTimeField(auto_now_add=True)
     class Meta:
         managed = False
         db_table = 'api_cdr_recording'
@@ -138,7 +138,7 @@ class ApiCdrRecording(models.Model):
 class ApiCdrRecords(models.Model):
     session = models.TextField(primary_key=True)
     callbridge = models.TextField()
-    add_date = models.DateTimeField()
+    add_date = models.DateTimeField(auto_now_add=True)
     class Meta:
         managed = False
         db_table = 'api_cdr_records'
@@ -153,9 +153,9 @@ class CmsCospace(models.Model):
     bandwidth = models.TextField()
     delete_yn = models.TextField()
     use_yn = models.TextField()
-    regist_date = models.DateTimeField()
+    regist_date = models.DateTimeField(auto_now_add=True)
     regist_id = models.TextField()
-    modify_date = models.DateTimeField()
+    modify_date = models.DateTimeField(auto_now=True)
     modify_id = models.TextField()
     class Meta:
         managed = False
@@ -167,9 +167,9 @@ class CmsCospaceControl(models.Model):
     cospace_id = models.TextField(primary_key=True)
     id = models.TextField()
     delete_yn = models.TextField()
-    regist_date = models.DateTimeField()
+    regist_date = models.DateTimeField(auto_now_add=True)
     regist_id = models.TextField()
-    modify_date = models.DateTimeField()
+    modify_date = models.DateTimeField(auto_now=True)
     modify_id = models.TextField()
     class Meta:
         managed = False
@@ -189,9 +189,9 @@ class CmsCospaceEndpoint(models.Model):
     callnumber = models.TextField()
     id = models.TextField()
     type = models.TextField()
-    regist_date = models.DateTimeField()
+    regist_date = models.DateTimeField(auto_now_add=True)
     regist_id = models.TextField()
-    modify_date = models.DateTimeField()
+    modify_date = models.DateTimeField(auto_now=True)
     modify_id = models.TextField()
     class Meta:
         managed = False
@@ -203,9 +203,9 @@ class CmsCospaceUser(models.Model):
     userjid = models.TextField(primary_key=True)
     name = models.TextField()
     email = models.TextField()
-    regist_date = models.DateTimeField()
+    regist_date = models.DateTimeField(auto_now_add=True)
     regist_id = models.TextField()
-    modify_date = models.DateTimeField()
+    modify_date = models.DateTimeField(auto_now=True)
     modify_id = models.TextField()
     class Meta:
         managed = False
@@ -230,9 +230,9 @@ class CmsEndpoint(models.Model):
     delete_yn = models.TextField()
     use_yn = models.TextField()
     open_yn = models.TextField()
-    regist_date = models.DateTimeField()
+    regist_date = models.DateTimeField(auto_now_add=True)
     regist_id = models.TextField()
-    modify_date = models.DateTimeField()
+    modify_date = models.DateTimeField(auto_now=True)
     modify_id = models.TextField()
     class Meta:
         managed = False
@@ -240,14 +240,14 @@ class CmsEndpoint(models.Model):
 
 # from backend.models import CmsEndpointGroup
 class CmsEndpointGroup(models.Model):
-    ep_group_seq = models.TextField(primary_key=True)
-    ep_grroup_name = models.TextField()
+    ep_group_seq = models.IntegerField(primary_key=True)
+    ep_group_name = models.TextField()
     ep_group_color = models.TextField()
-    ep_order = models.IntegerField()
+    order_no = models.IntegerField()
     delete_yn = models.TextField()
-    regist_date = models.DateTimeField()
+    regist_date = models.DateTimeField(auto_now_add=True)
     regist_id = models.TextField()
-    modify_date = models.DateTimeField()
+    modify_date = models.DateTimeField(auto_now=True)
     modify_id = models.TextField()
     class Meta:
         managed = False
@@ -258,9 +258,9 @@ class CmsLdapserver(models.Model):
     id = models.TextField(primary_key=True)
     title = models.TextField()
     password = models.TextField()
-    regist_date = models.DateTimeField()
+    regist_date = models.DateTimeField(auto_now_add=True)
     regist_id = models.TextField()
-    modify_date = models.DateTimeField()
+    modify_date = models.DateTimeField(auto_now=True)
     modify_id = models.TextField()
     class Meta:
         managed = False
@@ -287,9 +287,9 @@ class CmsResvCospace(models.Model):
     cospace_type = models.TextField()
     cospace_url = models.TextField()
     duration = models.IntegerField()
-    regist_date = models.DateTimeField()
+    regist_date = models.DateTimeField(auto_now_add=True)
     regist_id = models.TextField()
-    modify_date = models.DateTimeField()
+    modify_date = models.DateTimeField(auto_now=True)
     modify_id = models.TextField()
     class Meta:
         managed = False
@@ -300,9 +300,9 @@ class CmsResvCospaceEndpoint(models.Model):
     resv_seq = models.IntegerField(primary_key=True)
     ep_id = models.IntegerField(primary_key=True)
     call_yn = models.TextField()
-    regist_date = models.DateTimeField()
+    regist_date = models.DateTimeField(auto_now_add=True)
     regist_id = models.TextField()
-    modify_date = models.DateTimeField()
+    modify_date = models.DateTimeField(auto_now=True)
     modify_id = models.TextField()
     class Meta:
         managed = False
@@ -315,9 +315,9 @@ class CmsResvCospaceUser(models.Model):
     name = models.TextField()
     email = models.TextField()
     call_yn = models.TextField()
-    regist_date = models.DateTimeField()
+    regist_date = models.DateTimeField(auto_now_add=True)
     regist_id = models.TextField()
-    modify_date = models.DateTimeField()
+    modify_date = models.DateTimeField(auto_now=True)
     modify_id = models.TextField()
     class Meta:
         managed = False
@@ -355,9 +355,9 @@ class CmsCodeGroup(models.Model):
     group_ename = models.TextField()
     group_note = models.TextField()
     delete_yn = models.TextField()
-    regist_date = models.DateTimeField()
+    regist_date = models.DateTimeField(auto_now_add=True)
     regist_id = models.TextField()
-    modify_date = models.DateTimeField()
+    modify_date = models.DateTimeField(auto_now=True)
     modify_id = models.TextField()
     class Meta:
         managed = False
@@ -373,9 +373,9 @@ class CmsCodeDetail(models.Model):
     ref_code = models.TextField()
     order_no = models.IntegerField()
     delete_yn = models.TextField()
-    regist_date = models.DateTimeField()
+    regist_date = models.DateTimeField(auto_now_add=True)
     regist_id = models.TextField()
-    modify_date = models.DateTimeField()
+    modify_date = models.DateTimeField(auto_now=True)
     modify_id = models.TextField()
     class Meta:
         managed = False
@@ -387,7 +387,7 @@ class CmsLoginLog(models.Model):
     user_id = models.TextField()
     login_ip = models.TextField()
     user_agent = models.TextField()
-    regist_date = models.DateTimeField()
+    regist_date = models.DateTimeField(auto_now_add=True)
     class Meta:
         managed = False
         db_table = 'cms_login_log'

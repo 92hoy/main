@@ -13,6 +13,9 @@ from backend.djangoapps.common.api.views import api_cdr_POST
 from backend.djangoapps.common.api.views import api_cdr_id
 from backend.djangoapps.common.api.views import api_cdr_del
 
+from backend.models import CmsEndpointGroup
+from backend.models import CmsManager
+
 
 # 호출 상태
 def cdr(request):
@@ -79,6 +82,7 @@ def ldap(request):
 # 시스템 상태
 @csrf_exempt
 def account(request):
+    sign_id = request.session['user_id']
     #-=-=-=-=-=-=-=-Account 생성-=-=-=-=-=-=-=-=-=-=-
     if request.is_ajax():
         user_id = request.POST.get('user_id')
@@ -91,42 +95,25 @@ def account(request):
         print ("account role->", role)
 
         lock = 0
-
-        with connections['default'].cursor() as cur:
-            query = '''
-                select user_id
-                FROM cms_manager
-                WHERE user_id ='{user_id}'
-            '''.format(user_id=user_id)
-            cur.execute(query)
-            rows = cur.fetchall()
-
-        print (query)
-        print ("rows ->",rows)
-        print("before len rows =>",len(rows))
+        id_cnt = CmsManager.objects.filter(user_id=user_id).count()
 
         #-------검증--------------------------
 
-        if len(rows) != 0:
-            print("if rows =>",len(rows))
-            print("before",lock)
+        if id_cnt != 0:
+            print("before", lock)
             lock = 1
-            print("after",lock)
+            print("after", lock)
 
             return JsonResponse({"return": "fail"})
         #-------검증--------------------------
 
-
-        with connections['default'].cursor() as cur:
-            query = '''
-                  INSERT INTO kotech_cisco_cms.cms_manager
-                              (user_id,
-                              user_name,
-                              user_pwd,
-                              user_role)
-                  VALUES ('{user_id}','{user_name}','{user_pwd}','{user_role}')
-            '''.format(user_id=user_id,user_name=user_name,user_pwd=user_id,user_role=role)
-            cur.execute(query)
+        print('account data start -------------------------------')
+        print('account - user_id : ', user_id)
+        print('account - user_name : ', user_name)
+        print('account - user_pwd : ', user_pw)
+        print('account - user_role : ', role)
+        print('account data end -------------------------------')
+        CmsManager.objects.create(user_id=user_id, user_name=user_name, user_pwd=user_pw, user_role=role, regist_id=sign_id, modify_id=sign_id)
 
         return JsonResponse({"return": "success"})
     #-=-=-=-=-=-=-=-Account 생성-=-=-=-=-=-=-=-=-=-=-
@@ -154,7 +141,7 @@ def account(request):
     return render(request, 'system/account.html', context)
 
 def account_del(request):
-
+    sign_id = request.session['user_id']
     id = request.POST.getlist('del_arr[]')
     print(id)
     for data in id:
@@ -166,6 +153,10 @@ def account_del(request):
             print(query)
             cur.execute(query)
             print(query)
+        manager_model = CmsManager.objects.get(user_id=data)
+        manager_model.modify_id = sign_id
+        manager_model.delete_yn = 'Y'
+        manager_model.save()
 
     return JsonResponse({"return" : "success"})
 
@@ -467,7 +458,8 @@ def endPoint_update(request):
 def endPointGroup(request):
     with connections['default'].cursor() as cur:
         query = '''
-          SELECT ep_group_seq, ep_group_name, order_no FROM cms_endpoint_group;
+          SELECT ep_group_seq, ep_group_name, order_no FROM cms_endpoint_group
+          WHERE delete_yn = 'N' ;
         '''
         cur.execute(query)
         ep_group = cur.fetchall()
@@ -491,11 +483,10 @@ def endPointGroup_add(request):
 
         ep_group_name = request.POST.get('ep_group_name')
         order_no = request.POST.get('order_no')
-        regist_id = request.POST.get('regist_id')
+        user_id = request.session['user_id']
 
         print ("ep_group_name ->", ep_group_name)
         print ("order_no ->", order_no)
-        print ("regist_id ->", regist_id)
 
         lock = 0
 
@@ -503,7 +494,7 @@ def endPointGroup_add(request):
             query = '''
                 select ep_group_name
                 FROM cms_endpoint_group
-                WHERE ep_group_name ='{ep_group_name}'
+                WHERE ep_group_name ='{ep_group_name}' and delete_yn = 'N'
             '''.format(ep_group_name=ep_group_name)
             cur.execute(query)
             rows = cur.fetchall()
@@ -527,9 +518,11 @@ def endPointGroup_add(request):
             query = '''
                   INSERT INTO kotech_cisco_cms.cms_endpoint_group
                               (ep_group_name,
-                              order_no)
-                  VALUES ('{ep_group_name}','{order_no}')
-            '''.format(ep_group_name=ep_group_name,order_no=order_no)
+                              order_no,
+                              regist_id,
+                              modify_id)
+                  VALUES ('{ep_group_name}','{order_no}', '{user_id}', '{user_id}')
+            '''.format(ep_group_name=ep_group_name,order_no=order_no, user_id=user_id)
             print(query)
             cur.execute(query)
 
@@ -537,20 +530,40 @@ def endPointGroup_add(request):
 
 def endPointGroup_del(request):
     print("endPointGroup_del")
+    user_id = request.session['user_id']
     name = request.POST.getlist('del_arr[]')
 
     print(name)
     for data in name:
-        with connections['default'].cursor() as cur:
-            query = '''
-                 delete FROM cms_endpoint_group
-                 WHERE ep_group_name ='{ep_group_name}'
-             '''.format(ep_group_name=data)
-            print(query)
-            cur.execute(query)
+        epg_model = CmsEndpointGroup.objects.get(ep_group_seq=data)
+        epg_model.delete_yn = 'Y'
+        epg_model.modify_id = user_id
+        epg_model.save()
 
     return JsonResponse({"return" : "success"})
 
+
+def endPointGroupDetail(request):
+    ep_group_seq = request.POST.get('ep_group_seq')
+    epg_model = CmsEndpointGroup.objects.get(delete_yn='N', ep_group_seq=ep_group_seq)
+
+    return JsonResponse({'epg_seq': epg_model.ep_group_seq, 'epg_name': epg_model.ep_group_name, 'order_no': epg_model.order_no})
+
+
+def endPointGroupUpdate(request):
+    user_id = request.session['user_id']
+    ep_group_seq = request.POST.get('ep_group_seq')
+    ep_group_name = request.POST.get('ep_group_name')
+    order_no = request.POST.get('order_no')
+
+    epg_model = CmsEndpointGroup.objects.get(delete_yn='N', ep_group_seq=ep_group_seq)
+    epg_model.ep_group_name = ep_group_name
+    epg_model.order_no = order_no
+    epg_model.ep_group_name = ep_group_name
+    epg_model.modify_id = user_id
+    epg_model.save()
+
+    return JsonResponse({'return': 'success'})
 
 
 # 시스템 상태
