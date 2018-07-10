@@ -109,6 +109,7 @@ def activeCall(request):
 
         reData['name'] = data['name']
         reData['callId'] = data_coSpaceId['coSpace']['callId']
+        reData['coSpaceId'] = data_coSpaceId['coSpace']['@id']
         reData['cv'] = data_activeCallLegs['callLegs']['@total']
         res_list.append(reData)
 
@@ -130,7 +131,6 @@ def activeCall(request):
         data_list.append(data_dict)
 
     context = {'data' : res_list ,'data2': data_list}
-
 
     return render(request, 'conference/activeCall.html', context)
 
