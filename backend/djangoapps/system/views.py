@@ -14,6 +14,7 @@ from backend.djangoapps.common.api.views import api_cdr_id
 from backend.djangoapps.common.api.views import api_cdr_del
 
 from backend.models import CmsEndpointGroup
+from backend.models import CmsManager
 
 
 # 호출 상태
@@ -81,6 +82,7 @@ def ldap(request):
 # 시스템 상태
 @csrf_exempt
 def account(request):
+    sign_id = request.session['user_id']
     #-=-=-=-=-=-=-=-Account 생성-=-=-=-=-=-=-=-=-=-=-
     if request.is_ajax():
         user_id = request.POST.get('user_id')
@@ -93,42 +95,25 @@ def account(request):
         print ("account role->", role)
 
         lock = 0
-
-        with connections['default'].cursor() as cur:
-            query = '''
-                select user_id
-                FROM cms_manager
-                WHERE user_id ='{user_id}'
-            '''.format(user_id=user_id)
-            cur.execute(query)
-            rows = cur.fetchall()
-
-        print (query)
-        print ("rows ->",rows)
-        print("before len rows =>",len(rows))
+        id_cnt = CmsManager.objects.filter(user_id=user_id).count()
 
         #-------검증--------------------------
 
-        if len(rows) != 0:
-            print("if rows =>",len(rows))
-            print("before",lock)
+        if id_cnt != 0:
+            print("before", lock)
             lock = 1
-            print("after",lock)
+            print("after", lock)
 
             return JsonResponse({"return": "fail"})
         #-------검증--------------------------
 
-
-        with connections['default'].cursor() as cur:
-            query = '''
-                  INSERT INTO kotech_cisco_cms.cms_manager
-                              (user_id,
-                              user_name,
-                              user_pwd,
-                              user_role)
-                  VALUES ('{user_id}','{user_name}','{user_pwd}','{user_role}')
-            '''.format(user_id=user_id,user_name=user_name,user_pwd=user_id,user_role=role)
-            cur.execute(query)
+        print('account data start -------------------------------')
+        print('account - user_id : ', user_id)
+        print('account - user_name : ', user_name)
+        print('account - user_pwd : ', user_pw)
+        print('account - user_role : ', role)
+        print('account data end -------------------------------')
+        CmsManager.objects.create(user_id=user_id, user_name=user_name, user_pwd=user_pw, user_role=role, regist_id=sign_id, modify_id=sign_id)
 
         return JsonResponse({"return": "success"})
     #-=-=-=-=-=-=-=-Account 생성-=-=-=-=-=-=-=-=-=-=-
@@ -156,7 +141,7 @@ def account(request):
     return render(request, 'system/account.html', context)
 
 def account_del(request):
-
+    sign_id = request.session['user_id']
     id = request.POST.getlist('del_arr[]')
     print(id)
     for data in id:
@@ -168,6 +153,10 @@ def account_del(request):
             print(query)
             cur.execute(query)
             print(query)
+        manager_model = CmsManager.objects.get(user_id=data)
+        manager_model.modify_id = sign_id
+        manager_model.delete_yn = 'Y'
+        manager_model.save()
 
     return JsonResponse({"return" : "success"})
 
