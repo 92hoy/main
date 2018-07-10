@@ -29,7 +29,11 @@ def conferenceRoom(request):
 
     context = dict()
     context['data'] = api_coSpaces()
-
+    template_data = CmsTemplate.objects.values_list('seq', 'title').filter(delete_yn='N')
+    template_list = list()
+    for seq, title in template_data:
+        template_list.append({'seq': seq, 'title': title})
+    context['template'] = template_list
     return render(request, 'conference/conferenceRoom.html', context)
 
 def activecall_monitoring(request):
@@ -116,24 +120,12 @@ def activeCall(request):
 
 # 진행중인 회의 관리
 def template(request):
-    with connections['default'].cursor() as cur:
-        query = '''
-            SELECT seq, title
-              FROM cms_template
-             WHERE delete_yn = 'N';
-        '''
-        print(query)
-        cur.execute(query)
-        data_tup = cur.fetchall()
+    template_data = CmsTemplate.objects.values_list('seq', 'title').filter(delete_yn='N')
+    template_list = list()
+    for seq, title in template_data:
+        template_list.append({'seq': seq, 'title': title})
 
-    data_list = list()
-    for data in data_tup:
-        data_dict = dict()
-        data_dict['seq'] = data[0]
-        data_dict['conference_name'] = data[1]
-        data_list.append(data_dict)
-
-    context = {'data': data_list}
+    context = {'data': template_list}
 
     return render(request, 'conference/template.html', context)
 
@@ -226,19 +218,19 @@ def templateDel(request):
     err_list = list()
     for seq in template_arr:
         template_model = CmsTemplate.objects.get(seq=seq)
-        # r1 = api_callLegProfiles_Delete(template_model.calllegprofile)
+        r1 = api_callLegProfiles_Delete(template_model.calllegprofile)
         r2 = api_callProfiles_Delete(template_model.callprofile)
 
-        # if r1.status_code == 200 and r2.status_code == 200:
-        #     template_model.delete_yn = 'Y'
-        #     template_model.modify_id = user_id
-        #     template_model.save()
-        # else:
-        #     err_list.append(template_model.title)
+        if r1.status_code == 200 and r2.status_code == 200:
+            template_model.delete_yn = 'Y'
+            template_model.modify_id = user_id
+            template_model.save()
+        else:
+            err_list.append(template_model.title)
 
         print('templateDel success s ====================')
         print('template_seq : ', seq)
-        # print('r1.status_code : ', r1.status_code)
+        print('r1.status_code : ', r1.status_code)
         print('r2.status_code : ', r2.status_code)
         print('template_model : ', template_model)
         print('templateDel success e ====================')

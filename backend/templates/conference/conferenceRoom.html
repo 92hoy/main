@@ -95,6 +95,9 @@ from django.utils.translation import ugettext as _
                             <td class="rightTd">
                                 <select id="conference_template" class="custom-select w-100">
                                     <option value="templatedefault" selected="selected">Select</option>
+                                    % for temp in context['template']:
+                                        <option value="${temp['seq']}">${temp['title']}</option>
+                                    % endfor
                                 </select>
                             </td>
                         </tr>
@@ -230,7 +233,6 @@ from django.utils.translation import ugettext as _
             }
         });
 
-
         // save
         $('#confSave').click(function(){
             var conference_id = $("#conference_id").val();
@@ -302,9 +304,7 @@ from django.utils.translation import ugettext as _
                             //'passcode': '',
                             'defaultLayout': conference_defaultLayout,
                             'ownerJid': conference_ownerJid,
-                            //'template': conference_template,
-                            // 추후 template 기능 개발 후 적용 예정
-                            'template': '',
+                            'template': conference_template,
                             'streamUrl': conference_streamUrl,
                             'ownerAdGuid': conference_ownerAdGuid,
                             'meetingScheduler': conference_meetingScheduler,
