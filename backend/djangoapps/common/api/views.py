@@ -636,6 +636,7 @@ def api_cdr_id(id, request=None):
     return resDataJson
 
 def api_cdr_del(request):
+
     cdr_listID = request.POST.getlist('del_arr[]')
 
     Authorization = settings.AUTHORIZATION
@@ -648,6 +649,7 @@ def api_cdr_del(request):
         url = 'https://14.63.53.22:449/api/v1/system/cdrReceivers/' + cdrId
         r = requests.delete(url, headers=headers, verify=False)
         r.encoding = None
+
         print(url)
         print('api_cdr_del s _>_>_>_>_>_>_>_>_>')
         print(str(r.status_code), str(r.text))

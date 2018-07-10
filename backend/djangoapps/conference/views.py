@@ -109,7 +109,24 @@ def activeCall(request):
         res_list.append(reData)
 
     context = {}
-    context['data'] = res_list
+
+    with connections['default'].cursor() as cur:
+        query = '''
+          SELECT ep_group_seq, ep_group_name, order_no FROM cms_endpoint_group;
+        '''
+        cur.execute(query)
+        ep_group = cur.fetchall()
+
+    data_list = list()
+    for data2 in ep_group:
+        data_dict = dict()
+        data_dict['ep_group_seq'] = data2[0]
+        data_dict['ep_group_name'] = data2[1]
+        data_dict['order_no'] = data2[2]
+        data_list.append(data_dict)
+
+    context = {'data' : res_list ,'data2': data_list}
+
 
     return render(request, 'conference/activeCall.html', context)
 

@@ -19,15 +19,14 @@ from django.utils.translation import ugettext as _
 
             <button class="md-btn md-raised mb-2 w-xs red" id="delBtn" style="float: right;">DEL</button>
 
-            <a href="#layer2" class="btn-example">
+            <a href="#layer_new" class="btn-example">
                 <button class="md-btn md-raised mb-2 w-xs indigo dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
             </a>
-            <a href="#layer_new" class="btn-example">
-            <button class="md-btn md-raised mb-2 w-xs dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">NEWLAYER</button>
-                <a href="/activecall_monitoring">
-                    <button class="md-btn md-raised mb-2 w-xs dialog__trigger" id="addBtn" style="float: right; margin-right: 8px; width: auto;" hidden>active_monitoring</button>
-                </a>
-        </a>
+
+            <a href="/activecall_monitoring">
+                <button class="md-btn md-raised mb-2 w-xs dialog__trigger" id="addBtn" style="float: right; margin-right: 8px; width: auto;" hidden>active_monitoring</button>
+            </a>
+            </a>
 
         </div>
 
@@ -45,7 +44,7 @@ from django.utils.translation import ugettext as _
 
                 <!-- 데이터 확인 후 작업 예정 -->
                 % for data in context['data']:
-                <a><tr>
+                <tr>
                     <td></td>
                     <td><a href="/activecall_monitoring">${data['name']}</a></td>
                     <td>${data['callId']}</td>
@@ -59,7 +58,7 @@ from django.utils.translation import ugettext as _
 </div>
 
 <!-- layer active call-->
-<div class="dim-layer2">
+<div class="dim-layer2" id="dim-layer2">
     <div class="dimBg2"></div>
     <div id="layer_new" class="pop-layer2">
         <div class="pop-container2">
@@ -146,87 +145,37 @@ from django.utils.translation import ugettext as _
                         </tr>
                     </table>
                 </div>
-                <div style="width:50%; float:left; padding-bottom: 20px;">
-                        <span class="nav-icon"  style="padding-bottom: 18px;">
-                            <i class="fa fa-bolt"></i>
-                        </span>
-                    <div>
-                        <strong>End Point</strong>
-                    </div>
+                <!----------------------- endpoint - group-------------------------->
 
-                    <table class="tg" width="100%">
-                        <colgroup>
-                            <col width="15%">
-                            <col width="20%">
-                            <col width="20%">
-                            <col width="25%">
-                            <col width="20%">
-                        </colgroup>
+
+                <div class="table-responsive" style="width: 410px;">
+                        <span class="nav-icon"  style="padding-bottom: 18px;">
+                    <i class="fa fa-address-book-o"></i>
+                  </span>
+                    <div>
+                        <strong>Endpoint</strong>
+                    </div>
+                    <table class="table table-hover table-striped table-bordered" id="table_endPointGroup" style="width:50%">
+                        <thead>
                         <tr>
-                            <th>1</th>
-                            <th>2</th>
-                            <th>3</th>
-                            <th>4</th>
-                            <th>5</th>
+                            <th class="th-center" style="width: 5%"><input type="checkbox" id="select_all"/></th>
+                            <th class="th-center">Group Name</th>
+                            <th class="th-center">Order by</th>
                         </tr>
+                        </thead>
+                        <tbody>
+                        % for data2 in context['data2']:
                         <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
+                            <td></td>
+                            <td>${data2['ep_group_name']}</td>
+                            <td>${data2['order_no']}</td>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                        </tr>
+                        % endfor
+                        </tbody>
                     </table>
                 </div>
+
+                <!----------------------- endpoint - group---------------------------->
             </div>
         </div>
     </div>
@@ -278,6 +227,72 @@ from django.utils.translation import ugettext as _
 
     });
 
+    $(document).ready(function() {
+        $table = $("#table_endPointGroup");
+        $table.dataTable({
+            sLengthMenu: [
+                [10, 20, 50, -1], //key
+                [10, 20, 50, "All"] //value
+            ],
+            //dom: '<"clear"fl><"search">rt<"bottom"ipl>',
+            searching: true,
+            paginate: true,
+            order: [[1, 'desc']],
+            "oLanguage": {
+                "sInfo": "Page: _PAGE_ / _PAGES_",
+                'sLengthMenu': 'Display <select name="datatable-length">'+
+                '<option value="10">10</option>'+
+                '<option value="20">20</option>'+
+                '<option value="50">50</option>'+
+                '<option value="-1">All</option>'+
+                '</select> records',
+                "oPaginate": {
+                    "sNext": ">",
+                    "sPrevious": "<",
+                },
+
+            },
+            columns: [
+                {'orderable': false},
+                null,
+                null,
+            ],
+            columnDefs: [
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center t1"},
+            ],
+            "drawCallback":function(){
+                $(".paginate_button").attr('href', 'javascript:check_click();');
+            },
+
+        });
+        /*
+        $table.on('click', 'td', function() {
+            var table = $("#table_endPointGroup").DataTable();
+            var table_tr_idx = table.cell(this).index().row;
+            var table_tr = table.row(table_tr_idx).node();
+            var table_td_idx = table.cell(this).index().column;
+            var table_td_data = $(this).text();
+            var this_input = '';
+            if(table_td_idx == 1 || table_td_idx == 2){
+                if($(this).children('input').length == 0){
+                    $(this).html('<input type="text" value="' + table_td_data + '" id="modi_input" style="width: 80%;"/>');
+                    this_input = $(this).find('input');
+                    $(this_input).select();
+                }
+            }
+
+            $(this_input).blur(function(){
+                $(this).parent().html($(this_input).val());
+            });
+
+            $(this).on('keyup', 'input#modi_input', function(){
+                $(table_tr).find('input.dt-checkboxes').prop('checked', true);
+            });
+        });
+        */
+    });
+
+
     function check_click(){
         //alert("paging btn");
         if($("input:checkbox[id='select_all']").prop("checked")) {
@@ -291,6 +306,7 @@ from django.utils.translation import ugettext as _
     $('.btn-example').click(function(){
         var $href = $(this).attr('href');
         layer_popup2($href);
+
     });
 
     function layer_popup2(el){
@@ -298,7 +314,7 @@ from django.utils.translation import ugettext as _
         var $el = $(el);        //레이어의 id를 $el 변수에 저장
         var isDim = $el.prev().hasClass('dimBg2');   //dimmed 레이어를 감지하기 위한 boolean 변수
 
-        isDim ? $('.dim-layer2').fadeIn() : $el.fadeIn();
+        isDim ? $('#dim-layer2').fadeIn() : $el.fadeIn();
 
         var $elWidth = ~~($el.outerWidth()),
                 $elHeight = ~~($el.outerHeight()),
@@ -316,12 +332,12 @@ from django.utils.translation import ugettext as _
         }
 
         $el.find('a.btn-layerClose').click(function(){
-            isDim ? $('.dim-layer2').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+            isDim ? $('#dim-layer2').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
             return false;
         });
 
         $('.layer .dimBg2').click(function(){
-            $('.dim-layer2').fadeOut();
+            $('#dim-layer2').fadeOut();
             return false;
         });
 
