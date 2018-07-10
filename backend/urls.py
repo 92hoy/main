@@ -70,9 +70,16 @@ urlpatterns = [
     # conference
     url('conferenceRoom$', ConferenceViews.conferenceRoom, name='conferenceRoom'),
     url('conferenceRoom/add$', ConferenceViews.conferenceRoomAdd, name='conferenceRoomAdd'),
+    url('conferenceRoom/detail$', ConferenceViews.conferenceRoomDetail, name='conferenceRoomDetail'),
+    url('conferenceRoom/update$', ConferenceViews.conferenceRoomUpdate, name='conferenceRoomUpdate'),
+    url('conferenceRoom/del', ConferenceViews.conferenceRoomDel, name='conferenceRoomDel'),
     url('activeCall$', ConferenceViews.activeCall, name='activeCall'),
     url('activecall_monitoring$', ConferenceViews.activecall_monitoring, name='activecall_monitoring'),
     url('template$', ConferenceViews.template, name='template'),
+    url('template/add$', ConferenceViews.templateAdd, name='templateAdd'),
+    url('template/detail$', ConferenceViews.templateDetail, name='templateDetail'),
+    url('template/update$', ConferenceViews.templateUpdate, name='templateUpdate'),
+    url('template/del$', ConferenceViews.templateDel, name='templateDel'),
     url('reserveConference$', ConferenceViews.reserveConference, name='reserveConference'),
     url('reserveConferenceCal$', ConferenceViews.reserveConferenceCal, name='reserveConferenceCal'),
 
@@ -80,6 +87,7 @@ urlpatterns = [
     url('callStatus$', MonitoringViews.callStatus, name='callStatus'),
     url('networkStatus$', MonitoringViews.networkStatus, name='networkStatus'),
     url('systemStatus$', MonitoringViews.systemStatus, name='systemStatus'),
+    url('all_status$', MonitoringViews.all_status, name='all_status'),
 
     # monitoring
     url('roomUseState$', StatisticsViews.roomUseState, name='roomUseState'),
@@ -88,10 +96,23 @@ urlpatterns = [
 
     # system
     url('cdr$', SystemViews.cdr, name='cdr'),
+    url('cdr_add$', SystemViews.cdr_add, name='cdr_add'),
+    url('cdr_detail$', SystemViews.cdr_detail, name='cdr_detail'),
+    url('cdr_del$', SystemViews.cdr_del, name='cdr_del'),
     url('ldap$', SystemViews.ldap, name='ldap'),
     url('account$', SystemViews.account, name='account'),
+    url('account_del$', SystemViews.account_del, name='account_del'),
+    url('account_detail$', SystemViews.account_detail, name='account_detail'),
+    url('account_update$', SystemViews.account_update, name='account_update'),
     url('endPoint$', SystemViews.endPoint, name='endPoint'),
+    url('endPoint_detail$', SystemViews.endPoint_detail, name='endPoint_detail'),
+    url('endPoint_del$', SystemViews.endPoint_del, name='endPoint_del'),
+    url('endPoint_update$', SystemViews.endPoint_update, name='endPoint_update'),
     url('endPointGroup$', SystemViews.endPointGroup, name='endPointGroup'),
+    url('endPointGroup_add$', SystemViews.endPointGroup_add, name='endPointGroup_add'),
+    url('endPointGroup_del$', SystemViews.endPointGroup_del, name='endPointGroup_del'),
+    url('endPointGroupDetail', SystemViews.endPointGroupDetail, name='endPointGroupDetail'),
+    url('endPointGroupUpdate', SystemViews.endPointGroupUpdate, name='endPointGroupUpdate'),
     url('acanoClient$', SystemViews.acanoClient, name='acanoClient'),
     url('logoManagement$', SystemViews.logoManagement, name='logoManagement'),
     url('commandManagement$', SystemViews.commandManagement, name='commandManagement'),

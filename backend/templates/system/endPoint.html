@@ -10,14 +10,14 @@ from django.utils.translation import ugettext as _
 
     <div class="box">
         <div class="box-header">
-            <h2>ENDPOINT</h2>
+            <h2 id="pagetitlename">ENDPOINT</h2>
             <small>ENDPOINT</small>
         </div>
     </div>
 
     <div class="box" style="padding: 10px;">
         <div style="padding: 10px;">
-            <button class="md-btn md-raised mb-2 w-xs red" id="delBtn" style="float: right;">DEL</button>
+            <button class="md-btn md-raised mb-2 w-xs red" id="btn_del" style="float: right;" >DEL</button>
 
             <a href="#layer2" class="btn-example">
                 <button class="md-btn md-raised mb-2 w-xs indigo dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
@@ -37,9 +37,10 @@ from django.utils.translation import ugettext as _
                 </thead>
                 <tbody>
                 % for data in context['data']:
+                <% data_id = data['ep_id'] %>
                 <tr>
                     <td></td>
-                    <td>${data['ep_name']}</td>
+                    <td><a href="javascript:ep_detail('${data_id}');" style="text-decoration: underline;" >${data['ep_id']}</a></td>
                     <td>${data['ep_type']}</td>
                     <td>${data['ip']}</td>
                     <td>${data['ep_group_name']}</td>
@@ -52,7 +53,7 @@ from django.utils.translation import ugettext as _
 </div>
 <!--  Layer popup -->
 
-<div class="dim-layer">
+<div class="dim-layer" id="dim-layer">
     <div class="dimBg"></div>
 
     <div id="layer2" class="pop-layer">
@@ -63,32 +64,32 @@ from django.utils.translation import ugettext as _
             <i class="fa fa-plug"></i>
           </span>
                 <div style="margin-bottom: 10px;">
-                    <strong>Account</strong><a href="#" class="btn-layerClose" style="float: right; font-size:18px;">X</a>
+                    <strong>EndPoint</strong><a href="#" class="btn-layerClose" style="float: right; font-size:18px;">X</a>
                 </div>
                 <hr width="100%" color="#d9d9d9">
                 <div style="text-align: center;">
                     <table style="display: inline-block; width:100%; ">
                         <tr style="margin-bottom: 20px;">
                             <td>Name</td>
-                            <td class="rightTd"><input type="text" class="form-control wi550" id="name"><br></td>
+                            <td class="rightTd"><input type="text" class="form-control wi600" id="name" style="width: 300px;"><br></td>
                         </tr>
                         <tr>
                             <td>Device Type</td>
                             <td>
                                 <label class="btn btn-outline-light" style="color:black; border: 1px solid #BDBDBD;">
-                                <input type="radio" name="options" id="ip" autocomplete="off"value="ip"> IP
+                                    <input type="radio" name="options" autocomplete="off"value="ip"> IP
                                 </label>
 
                                 <label class="btn btn-outline-light" style="color:black;  border: 1px solid #BDBDBD;">
-                                    <input type="radio" name="options" id="sip" autocomplete="off" value="sip"> SIP
+                                    <input type="radio" name="options" autocomplete="off" value="sip"> SIP
                                 </label>
 
                                 <label class="btn btn-outline-light" style="color:black;  border: 1px solid #BDBDBD;">
-                                    <input type="radio" name="options" id="h.323" autocomplete="off"value="h.323"> H.323
+                                    <input type="radio" name="options" autocomplete="off"value="h.323"> H.323
                                 </label>
 
                                 <label class="btn btn-outline-light" style="color:black;  border: 1px solid #BDBDBD;">
-                                    <input type="radio" name="options" id="mslync" autocomplete="off"value="mslync"> MSLync
+                                    <input type="radio" name="options" autocomplete="off"value="mslync"> MSLync
                                 </label>
                             </td>
                         </tr>
@@ -98,11 +99,11 @@ from django.utils.translation import ugettext as _
                         </tr>
                         <tr>
                             <td>SIP</td>
-                            <td class="rightTd"><input type="text" class="form-control"id="sip"></td>
+                            <td class="rightTd"><input type="text" class="form-control" id="sip"></td>
                         </tr>
                         <tr>
                             <td>H.323</td>
-                            <td class="rightTd"><input type="text" class="form-control"id="h.323"></td>
+                            <td class="rightTd"><input type="text" class="form-control"id="h_323"></td>
                         </tr>
                         <tr>
                             <td>MSLync</td>
@@ -118,11 +119,21 @@ from django.utils.translation import ugettext as _
                         </tr>
                         <tr>
                             <td>Group Name</td>
-                            <td class="rightTd"><input type="text" class="form-control"id="group_name"></td>
+                            <td class="rightTd">
+
+                                <select class="custom-select w-100" id="group_name">
+                                    % for data2 in context['data2']:
+                                    <option value="${data2['ep_group_seq']}">${data2['ep_group_name']}</option>
+                                    % endfor
+                                </select>
+
+                            </td>
                         </tr>
                         <tr>
                             <td>SortNo</td>
-                            <td class="rightTd"><input type="text" class="form-control"id="sortno"></td>
+                            <td class="rightTd">
+                            <input type="number" class="form-control" id="sortno" >
+                            </td>
                         </tr>
 
 
@@ -136,6 +147,105 @@ from django.utils.translation import ugettext as _
     </div>
 </div>
 <!--  Layer popup -->
+
+<!--  Layer popup detail -->
+
+<div class="dim-layer" id="dim-layer-2">
+    <div class="dimBg" id="dimBg"></div>
+
+    <div id="layer3" class="pop-layer">
+        <div class="pop-container">
+            <div class="pop-conts">
+
+          <span class="nav-icon" style="padding-bottom: 18px;">
+            <i class="fa fa-plug"></i>
+          </span>
+                <div style="margin-bottom: 10px;">
+                    <strong>EndPoint</strong><a href="#" class="btn-layerClose" style="float: right; font-size:18px;">X</a>
+                </div>
+                <hr width="100%" color="#d9d9d9">
+                <div style="text-align: center;">
+                    <table style="display: inline-block; width:100%; ">
+                        <tr style="margin-bottom: 20px;">
+                            <td>Name</td>
+                            <td class="rightTd">
+                                <input type="text" class="form-control wi600" id="detail_ep_id" style="width: 300px;" readonly>
+
+                                <br></td>
+                        </tr>
+                        <tr>
+                            <td>Device Type</td>
+                            <td>
+                                <label class="btn btn-outline-light" style="color:black; border: 1px solid #BDBDBD;">
+                                    <input type="radio" name="device_options" value="ip"> IP
+                                </label>
+
+                                <label class="btn btn-outline-light" style="color:black;  border: 1px solid #BDBDBD;">
+                                    <input type="radio" name="device_options"  value="sip"> SIP
+                                </label>
+
+                                <label class="btn btn-outline-light" style="color:black;  border: 1px solid #BDBDBD;">
+                                    <input type="radio" name="device_options"  value="h.323"> H.323
+                                </label>
+
+                                <label class="btn btn-outline-light" style="color:black;  border: 1px solid #BDBDBD;">
+                                    <input type="radio" name="device_options"  value="mslync"> MSLync
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>IP</td>
+                            <td class="rightTd"><input type="text" class="form-control"  id="detail_ip"></td>
+                        </tr>
+                        <tr>
+                            <td>SIP</td>
+                            <td class="rightTd"><input type="text" class="form-control" id="detail_sip"></td>
+                        </tr>
+                        <tr>
+                            <td>H.323</td>
+                            <td class="rightTd"><input type="text" class="form-control"id="detail_h_323"></td>
+                        </tr>
+                        <tr>
+                            <td>MSLync</td>
+                            <td class="rightTd"><input type="text" class="form-control"id="detail_mslync"></td>
+                        </tr>
+                        <tr>
+                            <td>UserName</td>
+                            <td class="rightTd"><input type="text" class="form-control"id="detail_user_name"></td>
+                        </tr>
+                        <tr>
+                            <td>Recording Device</td>
+                            <td class="rightTd"><input type="text" class="form-control"id="detail_recording_device"></td>
+                        </tr>
+                        <tr>
+                            <td>Group Name</td>
+                            <td class="rightTd">
+
+                                <select class="custom-select w-100" id="detail_group_name">
+                                    <option>-</option>
+                                    % for data2 in context['data2']:
+                                    <option  value="${data2['ep_group_seq']}" selected >${data2['ep_group_name']}</option>
+                                    % endfor
+                                </select>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SortNo</td>
+                            <td class="rightTd"><input type="number" class="form-control" id="detail_sort" ></td>
+                        </tr>
+
+
+                    </table>
+
+                    <button class="md-btn md-raised mb-2 w-xs purple mgt-20" id="confSave" onclick="ep_update()">SAVE</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--  Layer popup detail -->
 </%block>
 
 <%block name="scriptDown">
@@ -173,13 +283,48 @@ from django.utils.translation import ugettext as _
                 null,
             ],
             columnDefs: [
-                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center"},
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center t1"},
             ],
             "drawCallback":function(){
                 $(".paginate_button").attr('href', 'javascript:check_click();');
-            }
+            },
+            "initComplete":function(){
+                $(".text-center").attr('href','javascript:btn_del();');
+            },
         });
 
+        // 체크박스 리스트 선택(delete)
+        $('#btn_del').click(function () {
+            var table = $('#table_endPoint').DataTable();
+            var del_endpoint= $('td.t1 input[type="checkbox"]:checked').map(function() {
+                var this_tr = $(this).parent().parent();
+                var this_td_data = $(this_tr).find('td').eq(1).text();
+                console.log("td_data",this_td_data);
+                console.log("del_endpoint",del_endpoint);
+                return this_td_data;}).get();
+
+            $.ajax({
+                url: '/system/endPoint_del',
+                type: "POST",
+                data: {
+                    'csrfmiddlewaretoken': '${csrf_token}',
+                    'del_arr': del_endpoint
+                }
+            }).done(function(data){
+                if(data.return == 'success'){
+                    swal({
+                        title: 'Success!',
+                        text: "",
+                        type: 'success',
+                    }).then(function(){
+                        location.reload();
+                    });
+                } else {
+                     swal('경고', '삭제에 실패하였습니다.', 'warning');
+                }
+            });
+
+        });
     });
 
     function check_click(){
@@ -202,7 +347,7 @@ from django.utils.translation import ugettext as _
         var $el = $(el);        //레이어의 id를 $el 변수에 저장
         var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
 
-        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
+        isDim ? $('#dim-layer').fadeIn() : $el.fadeIn();
 
         var $elWidth = ~~($el.outerWidth()),
                 $elHeight = ~~($el.outerHeight()),
@@ -220,27 +365,30 @@ from django.utils.translation import ugettext as _
         }
 
         $el.find('a.btn-layerClose').click(function(){
-            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+            isDim ? $('#dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
             return false;
         });
 
         $('.layer .dimBg').click(function(){
-            $('.dim-layer').fadeOut();
+            $('#dim-layer').fadeOut();
             return false;
         });
 
     }
+
     function btn_save(){
         var name = $('#name').val();
         var device_type = $(':radio[name="options"]:checked').val();
         var ip = $('#ip').val();
         var sip = $('#sip').val();
-        var h_323 = $('#h.323').val();
+        var h_323 = $('#h_323').val();
         var mslync = $('#mslync').val();
         var user_name = $('#user_name').val();
         var recording_device = $('#recording_device').val();
         var group_name = $('#group_name').val();
         var sortno = $('#sortno').val();
+
+
 
         var lock=0;
 
@@ -280,15 +428,188 @@ from django.utils.translation import ugettext as _
                 },
                 success: function (data) {
                     if (data.return == 'success') {
+                        location.reload();
                         swal("Success","등록 완료","success")
+                        location.reload();
                     }
                     else if (data.return != 'success') {
-                        swal("Fail","ID 중복","warning")
+                        swal({
+                            title: "Warning",
+                            text: "ID 중복",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: false,
+                        })
+                                .then(function(willDelete) {
+                                    if (willDelete) {
+                                        return
+                                    } else {
+                                        return
+                                    }
+                                });
                     }
                 },
             });
         }
     }
+
+
+
+    $('.btn-example2').click(function(){
+        var $href = $(this).attr('href');
+        layer_popup_detail($href);
+    });
+
+    function layer_popup_detail(el){
+        var $el = $(el);        //레이어의 id를 $el 변수에 저장
+        var isDim1 = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
+
+        isDim1 ? $('#dim-layer-2').fadeIn() : $el.fadeIn();
+
+        var $elWidth = ~~($el.outerWidth()),
+                $elHeight = ~~($el.outerHeight()),
+                docWidth = $(document).width(),
+                docHeight = $(document).height();
+
+        // 화면의 중앙에 레이어를 띄운다.
+        if ($elHeight < docHeight || $elWidth < docWidth) {
+            $el.css({
+                marginTop: -$elHeight /2,
+                marginLeft: -$elWidth/2
+            })
+        } else {
+            $el.css({top: 0, left: 0});
+        }
+
+        $el.find('a.btn-layerClose').click(function(){
+            $("#detail_ep_id").val();
+            $("#Device_ip").val('');
+            $("#detail_ip").val('');
+            $("#detail_sip").val('');
+            $("#detail_h_323").val('');
+            $("#detail_mslync").val('');
+            $("#detail_user_name").val('');
+            $("#detail_recording_device").val('');
+            $("#detail_group_name").val('');
+            $("#detail_sort").val('');
+
+            isDim1 ? $('#dim-layer-2').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+            return false;
+        });
+
+        $('.layer .dimBg').click(function(){
+            $('#dim-layer-2').fadeOut();
+            return false;
+        });
+
+    }
+
+    function ep_detail(ep_id){
+        $.ajax({
+            url: '/system/endPoint_detail',
+            type: 'POST',
+            data: {
+                'csrfmiddlewaretoken': '${csrf_token}',
+                'ep_id': ep_id
+                }
+            }
+        ).done(function (data) {
+
+            var device_t = data.rows.ep_type
+            $("#detail_ep_id").val(data.rows.ep_id);
+            //$("input:radio[name=device_options]").val().prop("checked", true);
+            $("input:radio[name=device_options]").each(function(){
+                if($(this).val() == device_t){
+                    $(this).prop('checked', true);
+                }
+            });
+            $("#detail_ip").val(data.rows.ip);
+            $("#detail_sip").val(data.rows.sip);
+            $("#detail_h_323").val(data.rows.hdevice);
+            $("#detail_mslync").val(data.rows.mslync);
+            $("#detail_user_name").val(data.rows.username);
+            $("#detail_recording_device").val(data.rows.recodingdevice);
+            $("#detail_group_name").val(data.rows.ep_group_seq);
+            $("#detail_sort").val(data.rows.order_no);
+
+            layer_popup_detail('#layer3');
+        });
+    }
+
+    function ep_update(ep_id){
+        var detail_ep_id = $('#detail_ep_id').val();
+        var device_type = $(':radio[name=device_options]:checked').val();
+        var ip = $('#detail_ip').val();
+        var sip = $('#detail_sip').val();
+        var h_323 = $('#detail_h_323').val();
+        var mslync = $('#detail_mslync').val();
+        var user_name = $('#detail_user_name').val();
+        var recording_device = $('#detail_recording_device').val();
+        var group_name = $('#detail_group_name').val();
+        var sortno = $('#detail_sort').val();
+
+
+
+        var lock=0;
+
+        if (detail_ep_id == '') {
+            swal("Error","Name 를 입력하세요", "warning");
+            lock = 1;
+        }
+        else if($(':radio[name="device_options"]:checked').is(":checked") == false) {
+            swal("Error", "Device Type 을 체크하세요", "warning");
+            lock = 1;
+        }
+        else if(group_name == null){
+            swal("Error","Group Name 을  선택하세오", "warning");
+            lock = 1;
+        }
+        else if(sortno == '') {
+            swal("Error","SortNo 를 입력하세요", "warning");
+            lock = 1;
+        }
+        if(lock ==0){
+            $.ajax({
+                type: "POST",
+                url: "/system/endPoint_update",
+                data: {
+                    detail_ep_id: detail_ep_id,
+                    device_type: device_type,
+                    ip: ip,
+                    sip: sip,
+                    h_323: h_323,
+                    mslync: mslync,
+                    user_name: user_name,
+                    recording_device: recording_device,
+                    group_name: group_name,
+                    sortno: sortno,
+                },
+                success: function (data) {
+                    if (data.return == 'success') {
+                        swal("Success","수정 완료","success")
+                        location.reload();
+                    }
+                    else if (data.return != 'success') {
+                        swal({
+                            title: "Warning",
+                            text: "수정 실패",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: false,
+                        })
+                                .then(function(willDelete) {
+                                    if (willDelete) {
+                                        return
+                                    } else {
+                                        return
+                                    }
+                                });
+                    }
+                },
+            });
+        }
+    }
+
 
 </script>
 </%block>

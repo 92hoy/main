@@ -1,4 +1,5 @@
 <%inherit file="../common/main_base.html"/>
+<%inherit file="../monitoring/all_status.html"/>
 
 <%!
 from django.utils.translation import ugettext as _
@@ -6,166 +7,211 @@ from django.utils.translation import ugettext as _
 
 <%block name="containor">
 <div class="padding">
-  <div class="row">
+    <div class="row">
+        <div class="col-sm-6" style="max-width: 100%;">
+            <div >
+                <div class="box">
+                    <div class="box-header">
+                        <h3>${ _("Active Call") }</h3>
+                    </div>
 
-    <div class="col-sm-6">
-      <div class="box">
+                    <div style="background-color: #b1cce4; color: #ffffff; width: 33.3%; float:left">
+                        <div class="box-header">
+                            <h3>${_("Created Meeting")}</h3>
+                        </div>
+                        <div class="box-body" style="height: 90px;">
+                            <p class="m-0 text-muted" style="font-size: 400%;">13/L</p>
+                        </div>
+                    </div>
 
-        <div class="box-header d-flex">
-          <h3>${ _("Active Call") }</h3>
+                    <div style="background-color: #d7bdd9; color: #ffffff; width: 33.3%; float:left">
+                        <div class="box-header">
+                            <h3>${_("Ongoing meeting")}</h3>
+                        </div>
+                        <div class="box-body" style="height: 90px;">
+                            <p class="m-0 text-muted" style="font-size: 400%;">06/L</p>
+                        </div>
+                    </div>
+
+                    <div style="background-color: #c1e3c7; color: #ffffff; width: 33.3%; float:left">
+                        <div class="box-header">
+                            <h3>${_("Connected users")}</h3>
+                        </div>
+                        <div class="box-body" style="height: 90px;">
+                            <p class="m-0 text-muted" style="font-size: 400%;">21/L</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-sm-6" style="max-width: 100%; height: auto; padding: 0 0 10px 0; text-align: center; display: flex;">
+                <div style="display: inline-block; width: 33%; text-align: center;">
+                    <a href="javascript:window.location.href = '/callStatus'; ">
+                        <img src="/static/common/img/missed call.png" alt="logo" class="cm_img">
+                        <br>Call Status
+                    </a>
+                </div>
+                <div style="display: inline-block; width: 33%; text-align: center;">
+                    <a href="javascript:window.location.href = '/networkStatus';">
+                        <img src="/static/common/img/network.png" alt="logo" class="cm_img">
+                        <br>Network_Status
+                    </a>
+                </div>
+                <div style="display: inline-block; width: 33%; text-align: center;">
+                    <a href="javascript:window.location.href = '/systemStatus';">
+                        <img src="/static/common/img/infographics.png" alt="logo" class="cm_img">
+                        <br>System_Statuss
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-6">
+            <div class="box" style="margin-bottom: 0; height: 97%;">
+                <div class="box-header">
+                    <h3>${_("Meeting status")} <button class="btn btn-fw warning" style="float:right; margin-top: -8px;">reservation</button></h3>
+                </div>
+
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <span class="badge amber text-u-c">reservation</span>
+                        </td>
+                        <td>Kotech Tech Manager<span style="margin-left:20px" class="badge badge-pill primary">new</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge amber text-u-c">reservation</span>
+                        </td>
+                        <td>코테크 코인 발행 회의<span style="margin-left:20px" class="badge badge-pill primary">new</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge green text-u-c">Open</span>
+                        </td>
+                        <td>코테크 연봉 협상 회의<span style="margin-left:20px" class="badge badge-pill primary">new</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge green text-u-c">Open</span>
+                        </td>
+                        <td>풀스택 개발자란 무엇인가...?<span style="margin-left:20px" class="badge badge-pill primary">new</span></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge grey text-u-c">Closed</span>
+                        </td>
+                        <td>임원 회의<span style="margin-left:20px" class="badge badge-pill primary">new</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <div style="background-color: #b1cce4; color: #ffffff; width: 33.3%; float:left">
-          <div class="box-header">
-            <h3>${_("Created Meeting")}</h3>
-          </div>
-          <div class="box-body" style="height: 155px;">
-            <p class="m-0 text-muted" style="font-size: 600%;">13</p>
-          </div>
-        </div>
 
-        <div style="background-color: #d7bdd9; color: #ffffff; width: 33.3%; float:left">
-          <div class="box-header">
-            <h3>${_("Ongoing meeting")}</h3>
-          </div>
-          <div class="box-body" style="height: 155px;">
-            <p class="m-0 text-muted" style="font-size: 600%;">06</p>
-          </div>
-        </div>
-
-        <div style="background-color: #c1e3c7; color: #ffffff; width: 33.3%; float:left">
-          <div class="box-header">
-            <h3>${_("Connected users")}</h3>
-          </div>
-          <div class="box-body" style="height: 155px;">
-            <p class="m-0 text-muted" style="font-size: 600%;">21</p>
-          </div>
-        </div>
-
-      </div>
     </div>
 
-    <div class="col-sm-6">
-      <div class="box">
+    <div class="row">
+
+        <div class="col-sm-4">
+            <div class="box">
+
+                <div class="box-header d-flex">
+                    <h3>${ _("calendar") }</h3>
+                </div>
+
+                <table class="table table-sm"><thead><tr><th class="prev" data-action="previous"><span class="fa fa-chevron-left" title="Previous Month"></span></th><th class="picker-switch" data-action="pickerSwitch" colspan="5" title="Select Month">June 2018</th><th class="next" data-action="next"><span class="fa fa-chevron-right" title="Next Month"></span></th></tr><tr><th class="dow">Su</th><th class="dow">Mo</th><th class="dow">Tu</th><th class="dow">We</th><th class="dow">Th</th><th class="dow">Fr</th><th class="dow">Sa</th></tr></thead><tbody><tr><td data-action="selectDay" data-day="05/27/2018" class="day old weekend">27</td><td data-action="selectDay" data-day="05/28/2018" class="day old">28</td><td data-action="selectDay" data-day="05/29/2018" class="day old">29</td><td data-action="selectDay" data-day="05/30/2018" class="day old">30</td><td data-action="selectDay" data-day="05/31/2018" class="day old">31</td><td data-action="selectDay" data-day="06/01/2018" class="day">1</td><td data-action="selectDay" data-day="06/02/2018" class="day weekend">2</td></tr><tr><td data-action="selectDay" data-day="06/03/2018" class="day weekend">3</td><td data-action="selectDay" data-day="06/04/2018" class="day">4</td><td data-action="selectDay" data-day="06/05/2018" class="day">5</td><td data-action="selectDay" data-day="06/06/2018" class="day">6</td><td data-action="selectDay" data-day="06/07/2018" class="day">7</td><td data-action="selectDay" data-day="06/08/2018" class="day">8</td><td data-action="selectDay" data-day="06/09/2018" class="day weekend">9</td></tr><tr><td data-action="selectDay" data-day="06/10/2018" class="day weekend">10</td><td data-action="selectDay" data-day="06/11/2018" class="day">11</td><td data-action="selectDay" data-day="06/12/2018" class="day">12</td><td data-action="selectDay" data-day="06/13/2018" class="day">13</td><td data-action="selectDay" data-day="06/14/2018" class="day">14</td><td data-action="selectDay" data-day="06/15/2018" class="day active today">15</td><td data-action="selectDay" data-day="06/16/2018" class="day weekend">16</td></tr><tr><td data-action="selectDay" data-day="06/17/2018" class="day weekend">17</td><td data-action="selectDay" data-day="06/18/2018" class="day">18</td><td data-action="selectDay" data-day="06/19/2018" class="day">19</td><td data-action="selectDay" data-day="06/20/2018" class="day">20</td><td data-action="selectDay" data-day="06/21/2018" class="day">21</td><td data-action="selectDay" data-day="06/22/2018" class="day">22</td><td data-action="selectDay" data-day="06/23/2018" class="day weekend">23</td></tr><tr><td data-action="selectDay" data-day="06/24/2018" class="day weekend">24</td><td data-action="selectDay" data-day="06/25/2018" class="day">25</td><td data-action="selectDay" data-day="06/26/2018" class="day">26</td><td data-action="selectDay" data-day="06/27/2018" class="day">27</td><td data-action="selectDay" data-day="06/28/2018" class="day">28</td><td data-action="selectDay" data-day="06/29/2018" class="day">29</td><td data-action="selectDay" data-day="06/30/2018" class="day weekend">30</td></tr><tr><td data-action="selectDay" data-day="07/01/2018" class="day new weekend">1</td><td data-action="selectDay" data-day="07/02/2018" class="day new">2</td><td data-action="selectDay" data-day="07/03/2018" class="day new">3</td><td data-action="selectDay" data-day="07/04/2018" class="day new">4</td><td data-action="selectDay" data-day="07/05/2018" class="day new">5</td><td data-action="selectDay" data-day="07/06/2018" class="day new">6</td><td data-action="selectDay" data-day="07/07/2018" class="day new weekend">7</td></tr></tbody></table>
+
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="box">
+                <div class="box-header">
+                    <h3>${_("Recently terminated meeting")}</h3>
+                </div>
+
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <span class="badge grey text-u-c">Closed</span>
+                        </td>
+                        <td>코테크 컨퍼런스 회의</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge grey text-u-c">Closed</span>
+                        </td>
+                        <td>코테크 코인 발행 회의</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge grey text-u-c">Closed</span>
+                        </td>
+                        <td>코테크 연봉 협상 회의</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge grey text-u-c">Closed</span>
+                        </td>
+                        <td>풀스택 개발자란 무엇인가...?</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="badge grey text-u-c">Closed</span>
+                        </td>
+                        <td>임원 회의</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="box" >
         <div class="box-header">
-          <h3>${_("Recently terminated meeting")}</h3>
+            * Interval = 5sec
+            <button class="btn btn-fw info" style="float:right; margin-top: -8px; margin-right: 5px;" onclick="btn_network()">Network_Status</button>
+            <button class="btn btn-fw info" style="float:right; margin-top: -8px; margin-right: 5px;" onclick="btn_call()">Call_Status</button>
+
         </div>
+        <!--  call status chart-->
+        <div class="padding" id="callstatus_chart">
+            <div class="box">
+                <div class="box-header">
+                    <h2>CALL STATUS</h2>
+                    <small>CALL STATUS</small>
+                </div>
+            </div>
 
-        <table class="table">
-          <tbody>
-            <tr>
-              <td>
-                <span class="badge grey text-u-c">Closed</span>
-              </td>
-              <td>코테크 컨퍼런스 회의</td>
-            </tr>
-            <tr>
-              <td>
-                <span class="badge grey text-u-c">Closed</span>
-              </td>
-              <td>코테크 코인 발행 회의</td>
-            </tr>
-            <tr>
-              <td>
-                <span class="badge grey text-u-c">Closed</span>
-              </td>
-              <td>코테크 연봉 협상 회의</td>
-            </tr>
-            <tr>
-              <td>
-                <span class="badge grey text-u-c">Closed</span>
-              </td>
-              <td>풀스택 개발자란 무엇인가...?</td>
-            </tr>
-            <tr>
-              <td>
-                <span class="badge grey text-u-c">Closed</span>
-              </td>
-              <td>임원 회의</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-
-    <div class="col-sm-4">
-      <div class="box">
-
-        <div class="box-header d-flex">
-          <h3>${ _("calendar") }</h3>
+            <div class="box">
+                <canvas id="call_Chart"></canvas>
+            </div>
         </div>
+        <!--  call status chart-->
 
-        <table class="table table-sm"><thead><tr><th class="prev" data-action="previous"><span class="fa fa-chevron-left" title="Previous Month"></span></th><th class="picker-switch" data-action="pickerSwitch" colspan="5" title="Select Month">June 2018</th><th class="next" data-action="next"><span class="fa fa-chevron-right" title="Next Month"></span></th></tr><tr><th class="dow">Su</th><th class="dow">Mo</th><th class="dow">Tu</th><th class="dow">We</th><th class="dow">Th</th><th class="dow">Fr</th><th class="dow">Sa</th></tr></thead><tbody><tr><td data-action="selectDay" data-day="05/27/2018" class="day old weekend">27</td><td data-action="selectDay" data-day="05/28/2018" class="day old">28</td><td data-action="selectDay" data-day="05/29/2018" class="day old">29</td><td data-action="selectDay" data-day="05/30/2018" class="day old">30</td><td data-action="selectDay" data-day="05/31/2018" class="day old">31</td><td data-action="selectDay" data-day="06/01/2018" class="day">1</td><td data-action="selectDay" data-day="06/02/2018" class="day weekend">2</td></tr><tr><td data-action="selectDay" data-day="06/03/2018" class="day weekend">3</td><td data-action="selectDay" data-day="06/04/2018" class="day">4</td><td data-action="selectDay" data-day="06/05/2018" class="day">5</td><td data-action="selectDay" data-day="06/06/2018" class="day">6</td><td data-action="selectDay" data-day="06/07/2018" class="day">7</td><td data-action="selectDay" data-day="06/08/2018" class="day">8</td><td data-action="selectDay" data-day="06/09/2018" class="day weekend">9</td></tr><tr><td data-action="selectDay" data-day="06/10/2018" class="day weekend">10</td><td data-action="selectDay" data-day="06/11/2018" class="day">11</td><td data-action="selectDay" data-day="06/12/2018" class="day">12</td><td data-action="selectDay" data-day="06/13/2018" class="day">13</td><td data-action="selectDay" data-day="06/14/2018" class="day">14</td><td data-action="selectDay" data-day="06/15/2018" class="day active today">15</td><td data-action="selectDay" data-day="06/16/2018" class="day weekend">16</td></tr><tr><td data-action="selectDay" data-day="06/17/2018" class="day weekend">17</td><td data-action="selectDay" data-day="06/18/2018" class="day">18</td><td data-action="selectDay" data-day="06/19/2018" class="day">19</td><td data-action="selectDay" data-day="06/20/2018" class="day">20</td><td data-action="selectDay" data-day="06/21/2018" class="day">21</td><td data-action="selectDay" data-day="06/22/2018" class="day">22</td><td data-action="selectDay" data-day="06/23/2018" class="day weekend">23</td></tr><tr><td data-action="selectDay" data-day="06/24/2018" class="day weekend">24</td><td data-action="selectDay" data-day="06/25/2018" class="day">25</td><td data-action="selectDay" data-day="06/26/2018" class="day">26</td><td data-action="selectDay" data-day="06/27/2018" class="day">27</td><td data-action="selectDay" data-day="06/28/2018" class="day">28</td><td data-action="selectDay" data-day="06/29/2018" class="day">29</td><td data-action="selectDay" data-day="06/30/2018" class="day weekend">30</td></tr><tr><td data-action="selectDay" data-day="07/01/2018" class="day new weekend">1</td><td data-action="selectDay" data-day="07/02/2018" class="day new">2</td><td data-action="selectDay" data-day="07/03/2018" class="day new">3</td><td data-action="selectDay" data-day="07/04/2018" class="day new">4</td><td data-action="selectDay" data-day="07/05/2018" class="day new">5</td><td data-action="selectDay" data-day="07/06/2018" class="day new">6</td><td data-action="selectDay" data-day="07/07/2018" class="day new weekend">7</td></tr></tbody></table>
+        <!--  network status chart-->
+        <div class="padding" id="networkstatus_chart">
+            <div class="box">
+                <div class="box-header">
+                    <h2>NETWORK STATUS</h2>
+                    <small>NETWORK STATUS</small>
+                </div>
+            </div>
 
-      </div>
-    </div>
-
-    <div class="col-sm-8">
-      <div class="box">
-        <div class="box-header">
-          <h3>${_("Meeting status")} <button class="btn btn-fw warning" style="float:right; margin-top: -8px;">reservation</button></h3>
+            <div class="box">
+                <canvas id="network_Chart"></canvas>
+            </div>
         </div>
-
-        <table class="table">
-          <tbody>
-            <tr>
-              <td>
-                <span class="badge amber text-u-c">reservation</span>
-              </td>
-              <td>코테크 컨퍼런스 회의<span style="margin-left:20px" class="badge badge-pill primary">new</span></td>
-            </tr>
-            <tr>
-              <td>
-                <span class="badge amber text-u-c">reservation</span>
-              </td>
-              <td>코테크 코인 발행 회의<span style="margin-left:20px" class="badge badge-pill primary">new</span></td>
-            </tr>
-            <tr>
-              <td>
-                <span class="badge green text-u-c">Open</span>
-              </td>
-              <td>코테크 연봉 협상 회의<span style="margin-left:20px" class="badge badge-pill primary">new</span></td>
-            </tr>
-            <tr>
-              <td>
-                <span class="badge green text-u-c">Open</span>
-              </td>
-              <td>풀스택 개발자란 무엇인가...?<span style="margin-left:20px" class="badge badge-pill primary">new</span></td>
-            </tr>
-            <tr>
-              <td>
-                <span class="badge grey text-u-c">Closed</span>
-              </td>
-              <td>임원 회의<span style="margin-left:20px" class="badge badge-pill primary">new</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <!--  network status chart-->
     </div>
-  </div>
-
-  <div class="box">
-    <div class="box-header">
-      <h2>${_("Call Status")}</h2>
-      <small>${_("Call Status")}</small>
-    </div>
-    <div class="box-body">
-      <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
-        <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-          <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0">
-          </div>
-        </div>
-        <div class="chartjs-size-monitor-shrink"   style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-          <div style="position:absolute;width:200%;height:200%;left:0; top:0">
-          </div>
-        </div>
-      </div>
-      <canvas id="chart-line" data-plugin="chart" class="chartjs-render-monitor" style="display: block;">
-      </canvas>
-    </div>
-  </div>
 </div>
+
 </%block>
+
+
+

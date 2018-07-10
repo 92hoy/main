@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 # from backend.models import CmsManager
 class CmsManager(models.Model):
@@ -239,10 +240,10 @@ class CmsEndpoint(models.Model):
 
 # from backend.models import CmsEndpointGroup
 class CmsEndpointGroup(models.Model):
-    ep_group_seq = models.TextField(primary_key=True)
-    ep_grroup_name = models.TextField()
+    ep_group_seq = models.IntegerField(primary_key=True)
+    ep_group_name = models.TextField()
     ep_group_color = models.TextField()
-    ep_order = models.IntegerField()
+    order_no = models.IntegerField()
     delete_yn = models.TextField()
     regist_date = models.DateTimeField()
     regist_id = models.TextField()
@@ -334,10 +335,15 @@ class CmsTemplate(models.Model):
     ivrbrandingprofile = models.TextField()
     userprofile = models.TextField()
     note = models.TextField()
-    regist_date = models.DateTimeField()
+    # regist_date = models.DateTimeField(default=timezone.now)
+    regist_date = models.DateTimeField(auto_now_add=True)
     regist_id = models.TextField()
-    modify_date = models.DateTimeField()
+    modify_date = models.DateTimeField(auto_now=True, null=True)
     modify_id = models.TextField()
+
+    def publish(self):
+        self.modify_date = timezone.now()
+        self.save()
     class Meta:
         managed = False
         db_table = 'cms_template'

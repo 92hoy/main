@@ -10,41 +10,25 @@ import json
 import requests
 import xmltodict
 
+
 #from backend.djangoapps.common.api.views import api_coSpaces_POST
 def api_coSpaces_POST(request):
-    name = request.POST.get('name')
-    uri = request.POST.get('uri')
-    secondaryUri = request.POST.get('secondaryUri')
-    callId = request.POST.get('callId')
-    cdrTag = request.POST.get('cdrTag')
-    passcode = request.POST.get('passcode')
-    defaultLayout = request.POST.get('defaultLayout')
-    ownerJid = request.POST.get('ownerJid')
-    template = request.POST.get('template')
-    streamUrl = request.POST.get('streamUrl')
-    ownerAdGuid = request.POST.get('ownerAdGuid')
-    meetingScheduler = request.POST.get('meetingScheduler')
-    data = {
-        "name": "zxcv",
-        "uri": "9999",
-        "callId": "9999",
-        "secondaryUri": "9999",
-        "cdrTag": "9999",
-        "passcode": "9999",
-        "defaultLayout": "",
-        "ownerJid": "9999",
-        "template": "",
-        "streamUrl": "",
-        "ownerAdGuid": "",
-        "meetingScheduler": "9999"
-    }
+    json_data = json.dumps(request.POST)
+    json_data = json.loads(json_data)
     Authorization = settings.AUTHORIZATION
     url = 'https://14.63.53.22:449/api/v1/coSpaces'
     headers = {
         'Authorization': Authorization
     }
-    r = requests.post(url, headers=headers, verify=False, data=data)
-    print( str(r.text) )
+
+    r = requests.post(url, headers=headers, verify=False, data=json_data)
+
+    print(json_data)
+    print(r)
+    print(str(r.text))
+
+    return r
+
 
 #from backend.djangoapps.common.api.views import api_coSpaces
 def api_coSpaces():
@@ -68,7 +52,8 @@ def api_coSpaces():
     print("-------------------> DEBUG[s]")
     print("total = ", resDataJson['coSpaces']['@total']) #total
     print("realTotal = ", len(resDataJson['coSpaces']['coSpace'])) #total
-    requestCnt = (int(resDataJson['coSpaces']['@total']) / 20) + 1
+    requestCnt = (int(resDataJson['coSpaces']['@total']) / 20) + 1 if (int(resDataJson['coSpaces']['@total']) % 20) != 0 else int(resDataJson['coSpaces']['@total']) / 20
+
     resDataList = list()
 
     for n in range(0, int(requestCnt)):
@@ -79,7 +64,11 @@ def api_coSpaces():
         res_o = xmltodict.parse(res_data)
         res_data = json.dumps(res_o)
         res_data_json = json.loads(res_data)
-        resDataList.append(res_data_json['coSpaces']['coSpace'])
+        if type(res_data_json['coSpaces']['coSpace']) == list:
+            resDataList.append(res_data_json['coSpaces']['coSpace'])
+        else:
+            single_data = [res_data_json['coSpaces']['coSpace']]
+            resDataList.append(single_data)
 
     print(resDataList)
     totDataList = list()
@@ -99,7 +88,7 @@ def api_coSpaces():
 
 
 # from backend.djangoapps.common.api.views import api_coSpaceId
-def api_coSpaceId(id):
+def api_coSpaceId(id, request=None):
 
     Authorization = settings.AUTHORIZATION
 
@@ -108,14 +97,20 @@ def api_coSpaceId(id):
     headers = {
         'Authorization': Authorization
     }
-    r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
-    resData = str(r.text)
+    if request is not None:
+        json_data = json.dumps(request.POST)
+        json_data = json.loads(json_data)
+        resDataJson = requests.put(url, headers=headers, verify=False, data=json_data)
 
-    # xml to json
-    o = xmltodict.parse(resData)
-    resData = json.dumps(o)
-    resDataJson = json.loads(resData)
+    else:
+        r = requests.get(url, headers=headers, verify=False)
+        r.encoding = None
+        resData = str(r.text)
+
+        # xml to json
+        o = xmltodict.parse(resData)
+        resData = json.dumps(o)
+        resDataJson = json.loads(resData)
 
     print("-------------------> DEBUG[s]")
     print(resDataJson)
@@ -123,8 +118,32 @@ def api_coSpaceId(id):
 
     return resDataJson
 
+
+#from backend.djangoapps.common.api.views import api_coSpaceDel
+def api_coSpaceDel(request):
+    coSpaceId_list = request.POST.getlist('del_arr[]')
+    Authorization = settings.AUTHORIZATION
+
+    headers = {
+        'Authorization': Authorization
+    }
+    error_id = list()
+    for coSpaceId in coSpaceId_list:
+        url = 'https://14.63.53.22:449/api/v1/coSpaces/' + coSpaceId
+        r = requests.delete(url, headers=headers, verify=False)
+        r.encoding = None
+        print('coSpaceDel s ---------------------------------')
+        print(str(r.status_code), str(r.text))
+        print('coSpaceDel e ---------------------------------')
+
+        if r.status_code != 200:
+            error_id.append(r)
+
+    return error_id
+
+
 #from backend.djangoapps.common.api.views import api_activeCall
-def api_activeCall():
+def api_activeCall(callstatus=None):
     Authorization = settings.AUTHORIZATION
 
     # requests GET
@@ -145,8 +164,14 @@ def api_activeCall():
     print("-------------------> DEBUG[s]")
     print(resDataJson)
     print("-------------------> DEBUG[e]")
+    if callstatus is not None:
 
-    requestCnt = (int(resDataJson['calls']['@total']) / 20) + 1
+        return resDataJson
+
+    requestCnt = (int(resDataJson['calls']['@total']) / 20) + 1 \
+        if (int(resDataJson['calls']['@total']) % 20) != 0 \
+        else int(resDataJson['calls']['@total']) / 20
+
     resDataList = list()
 
     for n in range(0, int(requestCnt)):
@@ -157,7 +182,11 @@ def api_activeCall():
         res_o = xmltodict.parse(res_data)
         res_data = json.dumps(res_o)
         res_data_json = json.loads(res_data)
-        resDataList.append(res_data_json['calls']['call'])
+        if type(res_data_json['calls']['call']) == list:
+            resDataList.append(res_data_json['calls']['call'])
+        else:
+            single_data = [res_data_json['calls']['call']]
+            resDataList.append(single_data)
 
     totDataList = list()
     for list_data in resDataList:
@@ -196,6 +225,167 @@ def api_activeCallId(id):
     print("-------------------> DEBUG[e]")
 
     return resDataJson['calls']['call']
+
+
+#from backend.djangoapps.common.api.views import api_callLegProfiles_POST
+def api_callLegProfiles_POST(callLegProfiles_data):
+
+    Authorization = settings.AUTHORIZATION
+    url = 'https://14.63.53.22:449/api/v1/callLegProfiles'
+    headers = {
+        'Authorization': Authorization
+    }
+
+    r = requests.post(url, headers=headers, verify=False, data=callLegProfiles_data)
+
+    print("-------------------> DEBUG[api_callLegProfiles_POST ---s]")
+    print(r)
+    print(r.text)
+    print("-------------------> DEBUG[api_callLegProfiles_POST ---e]")
+
+    return r
+
+
+# from backend.djangoapps.common.api.views import api_callLegProfiles_Id
+def api_callLegProfiles_Id(id):
+
+    Authorization = settings.AUTHORIZATION
+
+    # requests GET
+    url = 'https://14.63.53.22:449/api/v1/callLegProfiles/' + id
+    headers = {
+        'Authorization': Authorization
+    }
+
+    r = requests.get(url, headers=headers, verify=False)
+    r.encoding = None
+    resData = str(r.text)
+
+    # xml to json
+    o = xmltodict.parse(resData)
+    resData = json.dumps(o)
+    resDataJson = json.loads(resData)
+
+    print("-------------------> DEBUG[s]")
+    print(resDataJson)
+    print("-------------------> DEBUG[e]")
+
+    return resDataJson
+
+
+# from backend.djangoapps.common.api.views import api_callLegProfiles_Update
+def api_callLegProfiles_Update(id, callLegProfiles_data):
+    Authorization = settings.AUTHORIZATION
+    url = 'https://14.63.53.22:449/api/v1/callLegProfiles/' + id
+    headers = {
+        'Authorization': Authorization
+    }
+
+    res = requests.put(url, headers=headers, verify=False, data=callLegProfiles_data)
+
+    print("-------------------> DEBUG[api_callLegProfiles_Update ---s]")
+    print(res)
+    print(res.text)
+    print("-------------------> DEBUG[api_callLegProfiles_Update ---e]")
+
+    return res
+
+
+# from backend.djangoapps.common.api.views import api_callLegProfiles_Delete
+def api_callLegProfiles_Delete(id):
+    Authorization = settings.AUTHORIZATION
+
+    headers = {
+        'Authorization': Authorization
+    }
+    url = 'https://14.63.53.22:449/api/v1/callLegProfiles/' + id
+    r = requests.delete(url, headers=headers, verify=False)
+    r.encoding = None
+    print('api_callLegProfiles_Delete s ---------------------------------')
+    print(str(r.status_code), str(r.text))
+    print('api_callLegProfiles_Delete e ---------------------------------')
+
+    return r
+
+
+#from backend.djangoapps.common.api.views import api_callProfiles_POST
+def api_callProfiles_POST(callProfiles_data):
+
+    Authorization = settings.AUTHORIZATION
+    url = 'https://14.63.53.22:449/api/v1/callProfiles'
+    headers = {
+        'Authorization': Authorization
+    }
+
+    r = requests.post(url, headers=headers, verify=False, data=callProfiles_data)
+
+    print("-------------------> DEBUG[api_callProfiles_POST ---s]")
+    print(r)
+    print(r.text)
+    print("-------------------> DEBUG[api_callProfiles_POST ---e]")
+
+    return r
+
+
+# from backend.djangoapps.common.api.views import api_callProfiles_Id
+def api_callProfiles_Id(id):
+
+    Authorization = settings.AUTHORIZATION
+
+    # requests GET
+    url = 'https://14.63.53.22:449/api/v1/callProfiles/' + id
+    headers = {
+        'Authorization': Authorization
+    }
+    r = requests.get(url, headers=headers, verify=False)
+    r.encoding = None
+    resData = str(r.text)
+
+    # xml to json
+    o = xmltodict.parse(resData)
+    resData = json.dumps(o)
+    resDataJson = json.loads(resData)
+
+    print("-------------------> DEBUG[s]")
+    print(resDataJson)
+    print("-------------------> DEBUG[e]")
+
+    return resDataJson
+
+
+# from backend.djangoapps.common.api.views import api_callProfiles_Update
+def api_callProfiles_Update(id, callProfiles_data):
+    Authorization = settings.AUTHORIZATION
+    url = 'https://14.63.53.22:449/api/v1/callProfiles/' + id
+    headers = {
+        'Authorization': Authorization
+    }
+
+    res = requests.put(url, headers=headers, verify=False, data=callProfiles_data)
+
+    print("-------------------> DEBUG[api_callProfiles_Update ---s]")
+    print(res)
+    print(res.text)
+    print("-------------------> DEBUG[api_callProfiles_Update ---e]")
+
+    return res
+
+
+# from backend.djangoapps.common.api.views import api_callProfiles_Delete
+def api_callProfiles_Delete(id):
+    Authorization = settings.AUTHORIZATION
+
+    headers = {
+        'Authorization': Authorization
+    }
+    url = 'https://14.63.53.22:449/api/v1/callProfiles/' + id
+    r = requests.delete(url, headers=headers, verify=False)
+    r.encoding = None
+    print('api_callProfiles_Delete s ---------------------------------')
+    print(str(r.status_code), str(r.text))
+    print('api_callProfiles_Delete e ---------------------------------')
+
+    return r
 
 
 #from backend.djangoapps.common.api.views import api_activeCallLegs
@@ -395,3 +585,77 @@ def api_cdrReceivers():
     print("-------------------> DEBUG[e]")
 
     return resDataJson
+
+
+def api_cdr_POST(request):
+
+    json_data = json.dumps(request.POST)
+    json_data = json.loads(json_data)
+    Authorization = settings.AUTHORIZATION
+    url = 'https://14.63.53.22:449/api/v1/system/cdrReceivers'
+    headers = {
+        'Authorization': Authorization
+    }
+
+    r = requests.post(url, headers=headers, verify=False, data=json_data)
+
+    print(json_data)
+    print(r)
+    print(str(r.text))
+
+    return r
+
+def api_cdr_id(id, request=None):
+
+    Authorization = settings.AUTHORIZATION
+
+    # requests GET
+    url = 'https://14.63.53.22:449/api/v1/system/cdrReceivers/' + id
+    headers = {
+        'Authorization': Authorization
+    }
+    if request is not None:
+        json_data = json.dumps(request.POST)
+        json_data = json.loads(json_data)
+        resDataJson = requests.put(url, headers=headers, verify=False, data=json_data)
+
+    else:
+        r = requests.get(url, headers=headers, verify=False)
+        r.encoding = None
+        resData = str(r.text)
+
+        # xml to json
+        o = xmltodict.parse(resData)
+        resData = json.dumps(o)
+        resDataJson = json.loads(resData)
+
+    print("-------------------> DEBUG[s]")
+    print(resDataJson)
+    print("-------------------> DEBUG[e]")
+
+    return resDataJson
+
+def api_cdr_del(request):
+
+    cdr_listID = request.POST.getlist('del_arr[]')
+
+    Authorization = settings.AUTHORIZATION
+
+    headers = {
+        'Authorization': Authorization
+    }
+    error_id = list()
+    for cdrId in cdr_listID:
+        url = 'https://14.63.53.22:449/api/v1/system/cdrReceivers/' + cdrId
+        r = requests.delete(url, headers=headers, verify=False)
+        r.encoding = None
+
+        print(url)
+        print('api_cdr_del s _>_>_>_>_>_>_>_>_>')
+        print(str(r.status_code), str(r.text))
+        print('api_cdr_del e _>_>_>_>_>_>_>_>_>')
+
+        if r.status_code != 200:
+            error_id.append(r)
+
+    return error_id

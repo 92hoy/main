@@ -9,6 +9,11 @@ from backend.djangoapps.common.core.views import coreJson
 from backend.djangoapps.common.api.views import api_users
 from backend.djangoapps.common.api.views import api_usersId
 from backend.djangoapps.common.api.views import api_cdrReceivers
+from backend.djangoapps.common.api.views import api_cdr_POST
+from backend.djangoapps.common.api.views import api_cdr_id
+from backend.djangoapps.common.api.views import api_cdr_del
+
+from backend.models import CmsEndpointGroup
 
 
 # 호출 상태
@@ -25,6 +30,42 @@ def cdr(request):
 
     return render(request, 'system/cdr.html', context)
 
+@csrf_exempt
+def cdr_add(request):
+
+    print(request.POST.get('@id'))
+    print(request.POST.get('uri'))
+
+    res = api_cdr_POST(request)
+
+    return JsonResponse({'code': res.status_code})
+
+def cdr_del(request):
+
+    res = api_cdr_del(request)
+    print("res", res)
+    status = 'success'
+    print("success")
+    if res:
+        print('<<<<<======================== api_cdr_del error ')
+        print(res)
+        print('api_cdr_del error ========================>>>>>>')
+        status = 'fail'
+
+    return JsonResponse({'status': status})
+
+
+def cdr_detail(request):
+
+    cdr_id = request.POST.get('uri')
+    print("uri uri-uri-uri-uri-->",cdr_id)
+
+    resDataJson = api_cdr_id(cdr_id)
+    print("resDataJson--cdr_id>", resDataJson)
+
+    resDataJson['cdrReceiver']['id'] = resDataJson['cdrReceiver'].pop('@id')
+
+    return JsonResponse({'data': resDataJson})
 
 # 네트워크 상태
 def ldap(request):
@@ -114,31 +155,167 @@ def account(request):
 
     return render(request, 'system/account.html', context)
 
+def account_del(request):
+
+    id = request.POST.getlist('del_arr[]')
+    print(id)
+    for data in id:
+        with connections['default'].cursor() as cur:
+            query = '''
+                 delete FROM cms_manager
+                 WHERE user_id ='{user_id}'
+             '''.format(user_id=data)
+            print(query)
+            cur.execute(query)
+            print(query)
+
+    return JsonResponse({"return" : "success"})
+
+def account_detail(request):
+    if request.is_ajax():
+        user_id = request.POST.get('user_id')
+
+        with connections['default'].cursor() as cur:
+            query = '''
+                SELECT user_id,
+                       user_name,
+                       user_pwd,
+                       user_role
+                  FROM cms_manager
+                  where user_id = '{user_id}';
+            '''.format(user_id=user_id)
+            cur.execute(query)
+
+            print(query)
+            rows = cur.fetchall()
+
+        data_dict2 = dict()
+        data_dict2['user_id'] = rows[0][0]
+        data_dict2['user_name'] = rows[0][1]
+        data_dict2['user_pwd'] = rows[0][2]
+        data_dict2['user_role'] = rows[0][3]
+
+        print(rows)
+
+    return JsonResponse({"rows":data_dict2})
+
+def account_update(request):
+    if request.is_ajax():
+        user_id = request.POST.get('user_id')
+        user_pw = request.POST.get('user_pw')
+        user_name = request.POST.get('user_name')
+        user_role = request.POST.get('user_role')
+
+        print ("user_id-->",user_id)
+        print ("user_name-->",user_name)
+        print ("role-->",user_role)
+
+
+        with connections['default'].cursor() as cur:
+            query = '''
+                  update cms_manager
+                  set user_name = '{user_name}',
+                      user_role='{user_role}'
+                  where user_id ='{user_id}'
+            '''.format(user_id=user_id,user_name=user_name, user_role=user_role)
+            print(query)
+            cur.execute(query)
+
+    return JsonResponse({"return":"success"})
+
 
 # 시스템 상태
 @csrf_exempt
 def endPoint(request):
 
     if request.is_ajax():
-        name= request.POST.get('name'),
-        device_type= request.POST.get('device_type'),
-        user_name= request.POST.get('user_name'),
-        ip= request.POST.get('ip'),
-        sip= request.POST.get('sip'),
-        h_323= request.POST.get('h_323'),
-        mslync= request.POST.get('mslync'),
-        username= request.POST.get('username'),
-        recording_device= request.POST.get('recording_device'),
-        group_name= request.POST.get('group_name'),
-        sortno= request.POST.get('sortno'),
-        print ("name-->",name)
+        name= request.POST.get('name')
+        device_type= request.POST.get('device_type')
+        ip= request.POST.get('ip')
+        sip= request.POST.get('sip')
+        h_323= request.POST.get('h_323')
+        mslync= request.POST.get('mslync')
+        user_name= request.POST.get('user_name')
+        recording_device= request.POST.get('recording_device')
+        group_name= request.POST.get('group_name')
+        sortno= request.POST.get('sortno')
+        print ("ip-->",ip)
+        print ("sip-->",sip)
         print ("device_type-->",device_type)
         print ("group_name-->",group_name)
         print ("sortno-->",sortno)
 
-        #대충 값 넘어오는 ajax만 설정
+        lock = 0
 
-        return JsonResponse({"return":"success"})
+        with connections['default'].cursor() as cur:
+            query = '''
+                select ep_id
+                FROM cms_endpoint
+                WHERE ep_id ='{ep_id}'
+            '''.format(ep_id=name)
+            cur.execute(query)
+            rows = cur.fetchall()
+
+            print (query)
+            print ("rows ->",rows)
+            print ("before len rows =>",len(rows))
+
+            if len(rows) != 0:
+                print("if rows =>",len(rows))
+                print("before",lock)
+                lock = 1
+                print("after",lock)
+
+                return JsonResponse({"return": "fail"})
+        print(" not fail")
+
+
+
+        with connections['default'].cursor() as cur:
+            query = '''
+                  INSERT INTO kotech_cisco_cms.cms_endpoint
+                              (ep_id,
+                              ep_type,
+                              ip,
+                              sip,
+                              hdevice,
+                              mslync,
+                              username,
+                              recodingdevice,
+                              ep_group_seq,
+                              order_no
+                              )
+                  VALUES ('{ep_id}',
+                          '{ep_type}',
+                          '{ip}',
+                          '{sip}',
+                          '{hdevice}',
+                          '{mslync}',
+                          '{username}',
+                          '{recodingdevice}',
+                          '{ep_group_seq}',
+                          '{order_no}')
+            '''.format(ep_id=name, ep_type=device_type, ip=ip, sip=sip, hdevice=h_323, mslync=mslync,
+                       username=user_name, recodingdevice=recording_device, ep_group_seq=group_name, order_no=sortno)
+            cur.execute(query)
+
+        return JsonResponse({"return": "success"})
+
+
+    with connections['default'].cursor() as cur:
+        query = '''
+            SELECT ep_group_name,ep_group_seq
+              FROM cms_endpoint_group;
+        '''
+        cur.execute(query)
+        ep_data2 = cur.fetchall()
+
+        data_list2 = list()
+        for data2 in ep_data2:
+            data_dict2=dict()
+            data_dict2['ep_group_name'] = data2[0]
+            data_dict2['ep_group_seq'] = data2[1]
+            data_list2.append(data_dict2)
 
     with connections['default'].cursor() as cur:
         query = '''
@@ -154,7 +331,7 @@ def endPoint(request):
                    audioonly,
                    gmt_time,
                    ifnull(ep_group_name, '') as ep_group_name,
-                   b.order_no as order_no
+                   a.order_no as order_no
               FROM cms_endpoint a
                    JOIN cms_endpoint_group b ON a.ep_group_seq = b.ep_group_seq;
         '''
@@ -179,16 +356,121 @@ def endPoint(request):
         data_dict['order_no'] = data[12]
         data_list.append(data_dict)
 
-    context = {'data': data_list}
+    context = {'data': data_list, 'data2': data_list2}
 
     return render(request, 'system/endPoint.html', context)
 
+#endPoint 삭제
+@csrf_exempt
+def endPoint_del(request):
+
+    name = request.POST.getlist('del_arr[]')
+    print("name",name)
+    for data in name:
+        with connections['default'].cursor() as cur:
+            query = '''
+                 delete FROM cms_endpoint
+                 WHERE ep_id ='{ep_id}'
+             '''.format(ep_id=data)
+            cur.execute(query)
+
+    return JsonResponse({"return": "success"})
+
+def endPoint_detail(request):
+
+    if request.is_ajax():
+        ep_id= request.POST.get('ep_id')
+
+        with connections['default'].cursor() as cur:
+            query = '''
+                SELECT ep_id,
+                       ep_name,
+                       ep_type,
+                       ip,
+                       sip,
+                       hdevice,
+                       mslync,
+                       username,
+                       recodingdevice,
+                       audioonly,
+                       gmt_time,
+                       ifnull(ep_group_name, '') as ep_group_name,
+                       a.ep_group_seq as ep_group_seq,
+                       a.order_no as order_no
+                  FROM cms_endpoint a
+                       JOIN cms_endpoint_group b ON a.ep_group_seq = b.ep_group_seq
+                  where ep_id = '{ep_id}';
+            '''.format(ep_id=ep_id)
+            cur.execute(query)
+            print(query)
+            rows = cur.fetchall()
+
+        data_dict4 = dict()
+        data_dict4['ep_id'] = rows[0][0]
+        data_dict4['ep_name'] = rows[0][1]
+        data_dict4['ep_type'] = rows[0][2]
+        data_dict4['ip'] = rows[0][3]
+        data_dict4['sip'] = rows[0][4]
+        data_dict4['hdevice'] = rows[0][5]
+        data_dict4['mslync'] = rows[0][6]
+        data_dict4['username'] = rows[0][7]
+        data_dict4['recodingdevice'] = rows[0][8]
+        data_dict4['audioonly'] = rows[0][9]
+        data_dict4['gmt_time'] = rows[0][10]
+        data_dict4['ep_group_name'] = rows[0][11]
+        data_dict4['ep_group_seq'] = rows[0][12]
+        data_dict4['order_no'] = rows[0][12]
+
+        #print(rows)
+
+    return JsonResponse({"rows":data_dict4})
+@csrf_exempt
+def endPoint_update(request):
+    if request.is_ajax():
+        name= request.POST.get('detail_ep_id')
+        device_type= request.POST.get('device_type')
+        ip= request.POST.get('ip')
+        sip= request.POST.get('sip')
+        h_323= request.POST.get('h_323')
+        mslync= request.POST.get('mslync')
+        user_name= request.POST.get('user_name')
+        recording_device= request.POST.get('recording_device')
+        group_name= request.POST.get('group_name')
+        sortno= request.POST.get('sortno')
+        print ("ip-->",ip)
+        print ("sip-->",sip)
+        print ("device_type-->",device_type)
+        print ("group_name-->",group_name)
+        print ("sortno-->",sortno)
+
+        with connections['default'].cursor() as cur:
+            query = '''
+                  update cms_endpoint
+                  set ep_type = '{ep_type}',
+                      ip='{ip}',
+                      sip='{sip}',
+                      hdevice='{hdevice}',
+                      mslync='{mslync}',
+                      username='{username}',
+                      recodingdevice='{recodingdevice}',
+                      ep_group_seq='{ep_group_seq}',
+                      order_no='{order_no}'
+                  where ep_id ='{ep_id}'
+            '''.format(ep_id=name, ep_type=device_type, ip=ip, sip=sip, hdevice=h_323, mslync=mslync,
+                       username=user_name, recodingdevice=recording_device, ep_group_seq=group_name, order_no=sortno)
+            print(query)
+            cur.execute(query)
+
+
+
+    return JsonResponse({"return":"success"})
 
 # 시스템 상태
 def endPointGroup(request):
     with connections['default'].cursor() as cur:
         query = '''
-          SELECT ep_group_seq, ep_group_name, order_no FROM cms_endpoint_group;
+          SELECT ep_group_seq, ep_group_name, order_no FROM cms_endpoint_group
+          WHERE delete_yn = 'N' ;
         '''
         cur.execute(query)
         ep_group = cur.fetchall()
@@ -205,6 +487,94 @@ def endPointGroup(request):
     #context['resDataJson'] = resDataJson
 
     return render(request, 'system/endPointGroup.html', context)
+
+def endPointGroup_add(request):
+
+    if request.is_ajax():
+
+        ep_group_name = request.POST.get('ep_group_name')
+        order_no = request.POST.get('order_no')
+        user_id = request.session['user_id']
+
+        print ("ep_group_name ->", ep_group_name)
+        print ("order_no ->", order_no)
+
+        lock = 0
+
+        with connections['default'].cursor() as cur:
+            query = '''
+                select ep_group_name
+                FROM cms_endpoint_group
+                WHERE ep_group_name ='{ep_group_name}' and delete_yn = 'N'
+            '''.format(ep_group_name=ep_group_name)
+            cur.execute(query)
+            rows = cur.fetchall()
+
+        print (query)
+        print ("rows ->",rows)
+        print("before len rows =>",len(rows))
+
+        #-------검증--------------------------
+
+        if len(rows) != 0:
+            print("if rows =>",len(rows))
+            print("before",lock)
+            lock = 1
+            print("after",lock)
+
+            return JsonResponse({"return": "fail"})
+
+        #  생성
+        with connections['default'].cursor() as cur:
+            query = '''
+                  INSERT INTO kotech_cisco_cms.cms_endpoint_group
+                              (ep_group_name,
+                              order_no,
+                              regist_id,
+                              modify_id)
+                  VALUES ('{ep_group_name}','{order_no}', '{user_id}', '{user_id}')
+            '''.format(ep_group_name=ep_group_name,order_no=order_no, user_id=user_id)
+            print(query)
+            cur.execute(query)
+
+    return JsonResponse({"return": "success"})
+
+def endPointGroup_del(request):
+    print("endPointGroup_del")
+    user_id = request.session['user_id']
+    name = request.POST.getlist('del_arr[]')
+
+    print(name)
+    for data in name:
+        epg_model = CmsEndpointGroup.objects.get(ep_group_seq=data)
+        epg_model.delete_yn = 'Y'
+        epg_model.modify_id = user_id
+        epg_model.save()
+
+    return JsonResponse({"return" : "success"})
+
+
+def endPointGroupDetail(request):
+    ep_group_seq = request.POST.get('ep_group_seq')
+    epg_model = CmsEndpointGroup.objects.get(delete_yn='N', ep_group_seq=ep_group_seq)
+
+    return JsonResponse({'epg_seq': epg_model.ep_group_seq, 'epg_name': epg_model.ep_group_name, 'order_no': epg_model.order_no})
+
+
+def endPointGroupUpdate(request):
+    user_id = request.session['user_id']
+    ep_group_seq = request.POST.get('ep_group_seq')
+    ep_group_name = request.POST.get('ep_group_name')
+    order_no = request.POST.get('order_no')
+
+    epg_model = CmsEndpointGroup.objects.get(delete_yn='N', ep_group_seq=ep_group_seq)
+    epg_model.ep_group_name = ep_group_name
+    epg_model.order_no = order_no
+    epg_model.ep_group_name = ep_group_name
+    epg_model.modify_id = user_id
+    epg_model.save()
+
+    return JsonResponse({'return': 'success'})
 
 
 # 시스템 상태
@@ -262,3 +632,4 @@ def commandManagement(request):
     context['cc_videoMode'] = jsonData['callcommand']['videoMode']
 
     return render(request, 'system/commandManagement.html', context)
+

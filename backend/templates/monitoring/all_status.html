@@ -1,0 +1,310 @@
+<%inherit file="../common/main_base.html"/>
+
+<%!
+from django.utils.translation import ugettext as _
+%>
+
+<%block name="containor">
+<div class="box-header">
+
+    <button class="btn btn-fw info" style="float:right; margin-top: -8px; margin-right: 5px;" onclick="btn_network()">Network_Status</button>
+    <button class="btn btn-fw info" style="float:right; margin-top: -8px; margin-right: 5px;" onclick="btn_call()">Call_Status</button>
+
+</div>
+<!--  call status chart-->
+<div class="padding" id="callstatus_chart">
+    <div class="box">
+        <div class="box-header">
+            <h2>CALL STATUS</h2>
+            <small>CALL STATUS</small>
+        </div>
+    </div>
+
+    <div class="box">
+        <canvas id="call_Chart"></canvas>
+    </div>
+</div>
+<!--  call status chart-->
+
+<!--  network status chart-->
+<div class="padding" id="networkstatus_chart">
+    <div class="box">
+        <div class="box-header">
+            <h2>NETWORK STATUS</h2>
+            <small>NETWORK STATUS</small>
+        </div>
+    </div>
+
+    <div class="box">
+        <canvas id="network_Chart"></canvas>
+    </div>
+</div>
+<!--  network status chart-->
+</%block>
+<%block name="script_callStatus">
+<%block name="scriptDown">
+<script>
+    //-------------------------------------------------------network------------------------------------
+
+    var init = new Date();
+    var initTime = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
+
+    init.setTime(init.getTime() - 10000);
+    var initTimeMinus10 = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
+
+    init.setTime(init.getTime() - 10000);
+    var initTimeMinus20 = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
+
+    init.setTime(init.getTime() - 10000);
+    var initTimeMinus30 = ("0" + init.getHours()).slice(-2) + ":" + ("0" + init.getMinutes()).slice(-2) + ":" + ("0" + init.getSeconds()).slice(-2);
+
+    var queue = [initTimeMinus30, initTimeMinus20, initTimeMinus10, initTime]
+
+    $(document).ready(function() {
+
+        var audioBitRateOutgoing = [0, 0, 0, 0]
+        var audioBitRateIncoming = [0, 0, 0, 0]
+        var videoBitRateOutgoing = [0, 0, 0, 0]
+        var videoBitRateIncoming = [0, 0, 0, 0]
+        var dataSet = [
+            {
+                label: "videoBitRateOutgoing",
+                borderColor: "#e8c3b9",
+                fill: false,
+                data: videoBitRateOutgoing
+            },
+            {
+                label: "videoBitRateIncoming",
+                borderColor: "#3e95cd",
+                fill: false,
+                data: videoBitRateIncoming
+            },
+            {
+                label: "audioBitRateOutgoing",
+                borderColor: "#8e5ea2",
+                fill: false,
+                data: audioBitRateOutgoing
+            },
+            {
+                label: "audioBitRateIncoming",
+                borderColor: "#3cba9f",
+                fill: false,
+                data: audioBitRateIncoming
+            }
+        ];
+        function syncChart() {
+            setInterval(function(){
+
+                var d = new Date();
+                var currTime = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
+
+                queue.push(currTime);
+                queue.shift();
+
+                $.get( "/networkStatus", {
+                            //...
+                        })
+                        .done(function( context ) {
+
+                            audioBitRateOutgoing.push(Number(context['audioBitRateOutgoing']));
+                            audioBitRateIncoming.push(Number(context['audioBitRateIncoming']));
+                            videoBitRateOutgoing.push(Number(context['videoBitRateOutgoing']));
+                            videoBitRateIncoming.push(Number(context['videoBitRateIncoming']));
+
+                            audioBitRateOutgoing.shift();
+                            audioBitRateIncoming.shift();
+                            videoBitRateOutgoing.shift();
+                            videoBitRateIncoming.shift();
+
+                            myLineChart.data.datasets[0]['data'] = videoBitRateOutgoing;
+                            myLineChart.data.datasets[1]['data'] = videoBitRateIncoming;
+                            myLineChart.data.datasets[2]['data'] = audioBitRateOutgoing;
+                            myLineChart.data.datasets[3]['data'] = audioBitRateIncoming;
+                            myLineChart.update();
+
+                        });
+            } ,5000);
+        }
+        syncChart();
+    });
+
+    var canvas = document.getElementById('network_Chart');
+    var s_data={
+        labels: queue,
+        datasets: [
+            {
+                label: "videoBitRateOutgoing",
+                borderColor: "#e8c3b9",
+                fill: false,
+                data: [0, 0, 0, 0]
+            },
+            {
+                label: "videoBitRateIncoming",
+                borderColor: "#3e95cd",
+                fill: false,
+                data: [0, 0, 0, 0]
+            },
+            {
+                label: "audioBitRateOutgoing",
+                borderColor: "#8e5ea2",
+                fill: false,
+                data: [0, 0, 0, 0]
+            },
+            {
+                label: "audioBitRateIncoming",
+                borderColor: "#3cba9f",
+                fill: false,
+                data: [0, 0, 0, 0]
+            },
+        ]
+    };
+    var option = {
+        showLines: true
+    };
+    var myLineChart = Chart.Line(canvas,{
+        data:s_data,
+        options:option
+    });
+    //-------------------------------------------------------network------------------------------------
+
+    //-------------------------------------------------------call---------------------------------------
+    var c_init = new Date();
+    var c_initTime = ("0" + c_init.getHours()).slice(-2) + ":" + ("0" + c_init.getMinutes()).slice(-2) + ":" + ("0" + c_init.getSeconds()).slice(-2);
+
+    c_init.setTime(c_init.getTime() - 10000);
+    var c_initTimeMinus10 = ("0" + c_init.getHours()).slice(-2) + ":" + ("0" + c_init.getMinutes()).slice(-2) + ":" + ("0" + c_init.getSeconds()).slice(-2);
+
+    c_init.setTime(c_init.getTime() - 10000);
+    var c_initTimeMinus20 = ("0" + c_init.getHours()).slice(-2) + ":" + ("0" + c_init.getMinutes()).slice(-2) + ":" + ("0" + c_init.getSeconds()).slice(-2);
+
+    c_init.setTime(c_init.getTime() - 10000);
+    var c_initTimeMinus30 = ("0" + c_init.getHours()).slice(-2) + ":" + ("0" + c_init.getMinutes()).slice(-2) + ":" + ("0" + c_init.getSeconds()).slice(-2);
+
+    c_init.setTime(c_init.getTime() - 10000);
+    var c_initTimeMinus40 = ("0" + c_init.getHours()).slice(-2) + ":" + ("0" + c_init.getMinutes()).slice(-2) + ":" + ("0" + c_init.getSeconds()).slice(-2);
+
+    var call_queue = [c_initTimeMinus30,c_initTimeMinus30, c_initTimeMinus20, c_initTimeMinus10, c_initTime]
+
+    $(document).ready(function() {
+
+        var call_total = [0, 0, 0, 0, 0]
+        var callLegsActive       = [0, 0, 0, 0, 0]
+        var callLegsMaxActive    = [0, 0, 0, 0, 0]
+        var call_dataSet = [
+            {
+                label: "Active Call",
+                borderColor: "#e8c3b9",
+                fill: false,
+                data: call_total
+            },
+            {
+                label: "Active CallLeg",
+                borderColor: "#3e95cd",
+                fill: false,
+                data: callLegsActive
+            },
+            {
+                label: "Max CallLeg",
+                borderColor: "#8e5ea2",
+                fill: false,
+                data: callLegsMaxActive
+            }
+        ];
+        function call_syncChart() {
+            setInterval(function(){
+
+                var d = new Date();
+                var currTime = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2) + ":" + ("0" + d.getSeconds()).slice(-2);
+
+                call_queue.push(currTime);
+                call_queue.shift();
+
+                $.get( "/callStatus", {
+                            //...
+                        })
+                        .done(function( context ) {
+
+                            /*
+                             audioBitRateOutgoing.push(Number(context['audioBitRateOutgoing']));
+                             audioBitRateIncoming.push(Number(context['callLegsActive']));
+                             videoBitRateOutgoing.push(Number(context['callLegsMaxActive']));
+                             videoBitRateIncoming.push(Number(context['videoBitRateIncoming']));
+                             */
+
+                            // sample
+                            call_total.push(Number(context['call_total']));
+                            callLegsActive.push(Number(context['callLegsActive']));
+                            callLegsMaxActive.push(Number(context['callLegsMaxActive']));
+
+                            call_total.shift();
+                            callLegsActive.shift();
+                            callLegsMaxActive.shift();
+
+                            call_myLineChart.data.datasets[0]['data'] = call_total;
+                            call_myLineChart.data.datasets[1]['data'] = callLegsActive;
+                            call_myLineChart.data.datasets[2]['data'] = callLegsMaxActive;
+                            call_myLineChart.update();
+                            /*
+                             console.log(queue);
+                             console.log(audioBitRateOutgoing);
+                             console.log(callLegsActive);
+                             console.log(callLegsMaxActive);
+                             console.log(videoBitRateIncoming);
+                             */
+                        });
+            } ,5000);
+        }
+        call_syncChart();
+    });
+
+
+
+    var call_canvas = document.getElementById('call_Chart');
+    var call_data={
+        labels: call_queue,
+        datasets: [
+            {
+                label: "Active_call",
+                borderColor: "#F28282",
+                fill: false,
+                data: [4, 4, 4, 4, 4]
+            },
+            {
+                label: "callLegsActive",
+                borderColor: "#C7E886",
+                fill: false,
+                data: [3, 3, 3, 3, 3]
+            },
+            {
+                label: "callLegsMaxActive",
+                borderColor: "#FAB9F1",
+                fill: false,
+                data: [2, 2, 2, 2, 2]
+            },
+        ]
+    };
+    var call_option = {
+        showLines: true
+    };
+    var call_myLineChart = Chart.Line(call_canvas,{
+        data:call_data,
+        options:call_option
+    });
+
+    $(document).ready(function() {
+
+        $('#networkstatus_chart').hide();
+    })
+    function btn_call(){
+        $('#callstatus_chart').show();
+        $('#networkstatus_chart').hide();
+    }
+
+    function btn_network(){
+        $('#callstatus_chart').hide();
+        $('#networkstatus_chart').show();
+    }
+
+</script>
+</%block>
+</%block>
