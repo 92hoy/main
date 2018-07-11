@@ -48,7 +48,7 @@ from django.utils.translation import ugettext as _
                 % for data in context['data']:
                 <tr>
                     <td></td>
-                    <td><a href="/activecall_monitoring">${data['name']}</a></td>
+                    <td><a href="/activecall_monitoring/${data['id']}">${data['name']}</a></td>
                     <td>${data['callId']}</td>
                     <td style="text-align: right">${data['cv']}</td>
                 </tr>
@@ -344,6 +344,5 @@ from django.utils.translation import ugettext as _
         });
 
     }
-
 </script>
 </%block>

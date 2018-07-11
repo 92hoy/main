@@ -4,6 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.db import connections
 from backend.models import CmsTemplate
+import datetime
 
 import json
 
@@ -14,6 +15,7 @@ from backend.djangoapps.common.api.views import api_coSpaceDel
 from backend.djangoapps.common.api.views import api_activeCall
 from backend.djangoapps.common.api.views import api_activeCallId
 from backend.djangoapps.common.api.views import api_activeCallLegs
+from backend.djangoapps.common.api.views import api_callLegs
 from backend.djangoapps.common.api.views import api_callLegProfiles_POST
 from backend.djangoapps.common.api.views import api_callLegProfiles_Id
 from backend.djangoapps.common.api.views import api_callLegProfiles_Update
@@ -36,10 +38,6 @@ def conferenceRoom(request):
     context['template'] = template_list
     return render(request, 'conference/conferenceRoom.html', context)
 
-def activecall_monitoring(request):
-
-
-    return render(request,'conference/activecall_monitoring.html')
 
 # 컨퍼런스 추가
 @csrf_exempt
@@ -48,7 +46,7 @@ def conferenceRoomAdd(request):
     print(request.POST.get('name'))
     res = api_coSpaces_POST(request)
     # if res.status_code == 200:
-        # data_insert = CmsCospace(cospace_id=)
+    # data_insert = CmsCospace(cospace_id=)
     header = res.headers['Location']
     location = header.split('/')[-1]
 
@@ -103,14 +101,15 @@ def activeCall(request):
 
     for data in resDataJson:
         reData = dict()
-        coSpaceId = api_activeCallId(data['@id'])
+        coSpaceId = api_activeCallId(data['@id'])['call']['coSpace']
         data_coSpaceId = api_coSpaceId(coSpaceId)
         data_activeCallLegs = api_activeCallLegs(data['@id'])
 
+        reData['id'] = data['@id']
         reData['name'] = data['name']
         reData['callId'] = data_coSpaceId['coSpace']['callId']
         reData['coSpaceId'] = data_coSpaceId['coSpace']['@id']
-        reData['cv'] = data_activeCallLegs['callLegs']['@total']
+        reData['cv'] = len(data_activeCallLegs)
         res_list.append(reData)
 
     context = {}
@@ -133,6 +132,34 @@ def activeCall(request):
     context = {'data' : res_list ,'data2': data_list}
 
     return render(request, 'conference/activeCall.html', context)
+
+
+# active call 모니터링 정보
+def activecall_monitoring(request, call_id):
+    call_data = api_activeCallId(call_id)
+    coSpace_data = api_coSpaceId(call_data['call']['coSpace'])
+    callLegs_data = api_activeCallLegs(call_id)
+
+    call_data['call']['locked'] = 'Yes' if call_data['call']['locked'] == 'true' else 'No'
+    call_data['call']['recording'] = 'Yes' if call_data['call']['recording'] == 'true' else 'No'
+
+    callLegs_list = list()
+    for data in callLegs_data:
+        callLegs_list.append(api_callLegs(data['@id']))
+
+    sec = call_data['call']['durationSeconds']
+    conference_time = datetime.timedelta(seconds=int(sec))
+
+    context = {'calls': call_data, 'coSpace': coSpace_data, 'callLegs_list': callLegs_list, 'duration_time': conference_time}
+
+    print('activecall_monitoring debug start --------------------------')
+    print('call_id : ', call_id)
+    print('call_data : ', call_data)
+    print('coSpace_data : ', coSpace_data)
+    print('callLegs_list : ', callLegs_list)
+    print('activecall_monitoring debug end --------------------------')
+
+    return render(request, 'conference/activecall_monitoring.html', context)
 
 
 # 진행중인 회의 관리
