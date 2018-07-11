@@ -74,6 +74,7 @@ urlpatterns = [
     url('conferenceRoom/update$', ConferenceViews.conferenceRoomUpdate, name='conferenceRoomUpdate'),
     url('conferenceRoom/del', ConferenceViews.conferenceRoomDel, name='conferenceRoomDel'),
     url('activeCall$', ConferenceViews.activeCall, name='activeCall'),
+    url('activecall_monitoring/del$', ConferenceViews.activecall_monitoring_userDel, name='activecall_monitoring_userDel'),
     url('activecall_monitoring/(?P<call_id>.+)$', ConferenceViews.activecall_monitoring, name='activecall_monitoring'),
     url('template$', ConferenceViews.template, name='template'),
     url('template/add$', ConferenceViews.templateAdd, name='templateAdd'),

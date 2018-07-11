@@ -122,9 +122,9 @@ from django.utils.translation import ugettext as _
 
 </div>
         <div class="table-responsive">
-            <div class="row">
+            <div class="row" style="border-bottom: 2px groove #CBD8FB;">
                 <div class="container">
-                    <div class="row" style="border-bottom: 2px groove #CBD8FB;">
+                    <div class="row">
                         <div class="col-sm-3">
                             <table style="display: inline-block; text-align: right;">
                                 <tr>
@@ -157,7 +157,7 @@ from django.utils.translation import ugettext as _
                         <div class="col-md">
                             <br><br><br>
                             <a href="#layer_new" class="layouts">
-                            <button class="md-btn md-raised mb-2 w-xs grey dialog__trigger" style="background-color: #FA4143; width: 230px; height:60px; margin: 2px;">Conference Layouts</button>
+                            <button class="md-btn md-raised mb-2 w-xs blue dialog__trigger" style="width: 230px; height:60px; margin: 2px;">Conference Layouts</button>
                             </a>
                             <br>
                             <button class="md-btn md-raised mb-2 w-xs grey dialog__trigger" style="background-color: #E9AB71; width: 230px; height:40px; margin: 2px;" id="Mute_audio">Mute All Audio</button>
@@ -198,50 +198,37 @@ from django.utils.translation import ugettext as _
                     <th class="th-center">Alarms</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody class="monitoring">
                 % for user in context['callLegs_list']:
                     <tr>
                         <td>${user['callLeg']['name']}</td>
                         <td>${user['callLeg']['originalRemoteParty']}</td>
-                        <td><ul>
-                            % if 'rxAudioMute' in user['callLeg']['configuration'].keys():
-                            <li>rxAudioMute : ${user['callLeg']['configuration']['rxAudioMute']}</li>
-                            % else :
-                            <li>rxAudioMute : true</li>
-                            % endif
-                            % if 'txVideoMute' in user['callLeg']['configuration'].keys():
-                            <li>txVideoMute : ${user['callLeg']['configuration']['txVideoMute']}</li>
-                            % else :
-                            <li>txVideoMute : true</li>
-                            % endif
-                            % if 'rxVideoMute' in user['callLeg']['configuration'].keys():
-                            <li>rxVideoMute : ${user['callLeg']['configuration']['rxVideoMute']}</li>
-                            % else :
-                            <li>rxVideoMute : true</li>
-                            % endif
-                            % if 'rxAudioMute' in user['callLeg']['configuration'].keys():
-                            <li>rxAudioMute : ${user['callLeg']['configuration']['rxAudioMute']}</li>
-                            % else :
-                            <li>rxAudioMute : true</li>
-                            % endif
-                            % if 'presentationContributionAllowed' in user['callLeg']['configuration'].keys():
-                            <li>presentationContributionAllowed : ${user['callLeg']['configuration']['presentationContributionAllowed']}</li>
-                            % else :
-                            <li>presentationContributionAllowed : true</li>
-                            % endif
-                            % if 'presentationViewingAllowed' in user['callLeg']['configuration'].keys():
-                            <li>presentationViewingAllowed : ${user['callLeg']['configuration']['presentationViewingAllowed']}</li>
-                            % else :
-                            <li>presentationViewingAllowed : true</li>
-                            % endif
+                        <td style="text-align: center">
                             <!--
-                            ##<li>${user['callLeg']['configuration']['txVideoMute']}</li>
-                            ##<li>${user['callLeg']['configuration']['rxVideoMute']}</li>
-                            ##<li>${user['callLeg']['configuration']['presentationContributionAllowed']}</li>
-                            ##<li>${user['callLeg']['configuration']['presentationViewingAllowed']}</li>
+                            <a href="#"><img src="/static/common/img/mic.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_rxAudio_o"></a>
+                            <a href="#"><img src="/static/common/img/mic_x.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_rxAudio_x"></a>
+                            <a href="#"><img src="/static/common/img/video.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_txVideo_o"></a>
+                            <a href="#"><img src="/static/common/img/video_x.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_txVideo_x"></a>
+                            <a href="#"><img src="/static/common/img/volume.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_rxVideo_o"></a>
+                            <a href="#"><img src="/static/common/img/volume_x.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_rxVideo_x"></a>
+                            <a href="#"><img src="/static/common/img/fileshared.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_presentationContributionAllowed_o"></a>
+                            <a href="#"><img src="/static/common/img/fileshared_x.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_presentationContributionAllowed_x"></a>
+                            <a href="#"><img src="/static/common/img/view.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_presentationViewingAllowed_o"></a>
+                            <a href="#"><img src="/static/common/img/view_x.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_presentationViewingAllowed_x"></a>
                             -->
+                            <div id="rxAudioMute" style="display: none;">${user['callLeg']['configuration']['rxAudioMute']}</div>
+                            <div id="txVideoMute" style="display: none;">${user['callLeg']['configuration']['txVideoMute']}</div>
+                            <div id="rxVideoMute" style="display: none;">${user['callLeg']['configuration']['rxVideoMute']}</div>
+                            <div id="presentationContributionAllowed" style="display: none;">${user['callLeg']['configuration']['presentationContributionAllowed']}</div>
+                            <div id="presentationViewingAllowed" style="display: none;">${user['callLeg']['configuration']['presentationViewingAllowed']}</div>
+                            <ul>
+                            <li>rxAudioMute : ${user['callLeg']['configuration']['rxAudioMute']}</li>
+                            <li>txVideoMute : ${user['callLeg']['configuration']['txVideoMute']}</li>
+                            <li>rxVideoMute : ${user['callLeg']['configuration']['rxVideoMute']}</li>
+                            <li>presentationContributionAllowed : ${user['callLeg']['configuration']['presentationContributionAllowed']}</li>
+                            <li>presentationViewingAllowed : ${user['callLeg']['configuration']['presentationViewingAllowed']}</li>
                         </ul></td>
-                        <td><button disabled class="btn btn-primary">Disconnect</button></td>
+                        <td style="text-align: center;"><button uid="${user['callLeg']['@id']}" class="btn btn-danger btn_disconnect">Disconnect</button></td>
                         <td><ul>
                             <li>Connected at ${user['callLeg']['status']['durationSeconds']}</li>
                             % if 'txVideo' in user['callLeg']['status'].keys():
@@ -253,8 +240,10 @@ from django.utils.translation import ugettext as _
                             <li>Rx : ${user['callLeg']['status']['rxAudio']['codec']}</li>
                             % endif
                         </ul></td>
-                        <td>
+                        <td style="text-align: center;">
                             % if 'layout' in user['callLeg']['status'].keys():
+                            <img src="/static/common/img/${user['callLeg']['status']['layout']}.png" alt="logo" class="cm_img" >
+                            <br>
                             ${user['callLeg']['status']['layout']}
                             % else:
                             % endif
@@ -290,6 +279,18 @@ from django.utils.translation import ugettext as _
         background-color: #CFEDF6;
         box-shadow: 0 5px white;
         transform: translateY(4px);
+    }
+    .monitoring td {
+        vertical-align: middle;
+    }
+    .monitoring td li {
+        display: block;
+    }
+    .conference_img {
+        display: none;
+    }
+    .conference_img.on {
+        display: inline-block;
     }
 </style>
 <!-- NEW LAYER POPUP -->
@@ -377,7 +378,86 @@ from django.utils.translation import ugettext as _
             $("#video_o").hide()
         })
 
-    })
+
+        if($("#rxAudioMute").text() == 'true'){
+            $("#user_rxAudio_o").addClass('on');
+            $("#user_rxAudio_x").removeClass('on');
+        }else{
+            $("#user_rxAudio_o").removeClass('on');
+            $("#user_rxAudio_x").addClass('on');
+        }
+
+        if($("#txVideoMute").text() == 'true'){
+            $("#user_txVideo_o").addClass('on');
+            $("#user_txVideo_x").removeClass('on');
+        }else{
+            $("#user_txVideo_o").removeClass('on');
+            $("#user_txVideo_x").addClass('on');
+        }
+
+        if($("#rxVideoMute").text() == 'true'){
+            $("#user_rxVideo_o").addClass('on');
+            $("#user_rxVideo_x").removeClass('on');
+        }else{
+            $("#user_rxVideo_o").removeClass('on');
+            $("#user_rxVideo_x").addClass('on');
+        }
+
+        if($("#presentationContributionAllowed").text() == 'true'){
+            $("#user_presentationContributionAllowed_o").addClass('on');
+            $("#user_presentationContributionAllowed_x").removeClass('on');
+        }else{
+            $("#user_presentationContributionAllowed_o").removeClass('on');
+            $("#user_presentationContributionAllowed_x").addClass('on');
+        }
+
+        if($("#presentationViewingAllowed").text() == 'true'){
+            $("#user_presentationViewingAllowed_o").addClass('on');
+            $("#user_presentationViewingAllowed_x").removeClass('on');
+        }else{
+            $("#user_presentationViewingAllowed_o").removeClass('on');
+            $("#user_presentationViewingAllowed_x").addClass('on');
+        }
+
+
+        $(".btn_disconnect").click(function(){
+            var user_uid = $(this).attr('uid');
+            swal({
+                title: '',
+                text: '해당 사용자의 연결을 끊으시겠습니까?',
+                type: 'info',
+                showCancelButton: true,
+                confirmButtonText: '확인',
+                cancelButtonText: '취소',
+                //closeOnClickOutside: false,
+                //closeOnEsc: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+            }).then(function (data) {
+                if(data.value == true){
+                    $.ajax({
+                        url: '/activecall_monitoring/del',
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': '${csrf_token}',
+                            'user_uid': user_uid
+                        }
+                    }).done(function(ret){
+                        if(ret.status == 'success'){
+                                location.reload();
+                        } else {
+                            swal('경고', '연결 해지에 실패하였습니다.', 'warning');
+                        }
+                    });
+                } else {
+                    return;
+                }
+            });
+        });
+
+
+
+    });
 
 
 
