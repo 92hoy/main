@@ -358,6 +358,70 @@ def reserveConference(request):
 
     return render(request, 'conference/reserveConference.html', context)
 
+def reserveConference_add(request):
+
+    if request.is_ajax():
+        start_date= request.POST.get('start_date')
+        end_date= request.POST.get('end_date')
+        conferencename= request.POST.get('conferencename')
+        callid= request.POST.get('callid')
+        bandwidth= request.POST.get('bandwidth')
+        userpassword= request.POST.get('userpassword')
+
+        #---------reserve insert-----------
+
+        with connections['default'].cursor() as cur:
+            query = '''
+                INSERT INTO kotech_cisco_cms.cms_resv_cospace
+                                  (start_date,
+                                  end_date,
+                                  resv_name,
+                                  passcode,
+                                  call_id,
+                                  bandwidth
+                                  )
+                      VALUES ('{start_date}',
+                              '{end_date}',
+                              '{resv_name}',
+                              '{passcode}',
+                              '{call_id}',
+                              '{bandwidth}'
+                              )
+
+            '''.format(start_date=start_date, end_date=end_date, resv_name=conferencename, call_id=callid, bandwidth=bandwidth, passcode=userpassword)
+            cur.execute(query)
+
+        #--------- seq 추출-----------
+
+        with connections['default'].cursor() as cur:
+            query = '''
+                select max(resv_seq)
+                from cms_resv_cospace
+            '''
+            cur.execute(query)
+            seq = cur.fetchall()
+            pk_seq = seq[0][0]
+            print("seq=", seq, "pk_seq=", pk_seq)
+
+        #---------endpoint insert-----------
+
+        endpoint_id = request.POST.getlist('endpoint_id[]')
+        print("endpoint_id==",endpoint_id)
+
+        for data in endpoint_id:
+            with connections['default'].cursor() as cur:
+                query = '''
+                     insert into kotech_cisco_cms.cms_resv_cospace_endpoint
+                                  (resv_seq,
+                                   ep_id)
+                     VALUES ('{pk_seq}',
+                              '{ep_id}')
+                 '''.format(ep_id=data, pk_seq=pk_seq)
+                cur.execute(query)
+
+
+    return JsonResponse({'return':'success'})
+
 
 # 컨퍼런스 제공 (달력)
 def reserveConferenceCal(request):

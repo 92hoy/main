@@ -85,8 +85,12 @@ from django.utils.translation import ugettext as _
                     <table style="display: inline-block; width:100%; margin-bottom: 20px; ">
 
                         <tr>
-                            <td>Start conference</td>
-                            <td class="rightTd"><input type="text" class="form-control wi590" id="startconference" placeholder=""></td>
+                            <td>Start date</td>
+                            <td class="rightTd"><input type="text" class="form-control wi590" id="start_date" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>End date</td>
+                            <td class="rightTd"><input type="text" class="form-control wi590" id="end_date" placeholder=""></td>
                         </tr>
                         <tr>
                             <td>Conference name</td>
@@ -95,10 +99,6 @@ from django.utils.translation import ugettext as _
                         <tr>
                             <td>callID</td>
                             <td class="rightTd"><input type="text" class="form-control" id="callid" placeholder=""></td>
-                        </tr>
-                        <tr>
-                            <td>uri</td>
-                            <td class="rightTd"><input type="text" class="form-control" id="uri" placeholder=""></td>
                         </tr>
                         <tr>
                             <td>Band Width</td>
@@ -337,17 +337,28 @@ from django.utils.translation import ugettext as _
     }
 
     function btn_add(){
-        var startconference = $('#startconference').val();
+        var table = $('#table_endPoint').DataTable();
+        var endpoint_id= $('td.t1 input[type="checkbox"]:checked').map(function() {
+            var this_tr = $(this).parent().parent();
+            var this_td_data = $(this_tr).find('td').eq(1).text();
+            console.log("td_data",this_td_data);
+            return this_td_data;}).get();
+        alert(endpoint_id);
+        var start_date = $('#start_date').val();
+        var end_date = $('#end_date').val();
         var conferencename = $('#conferencename').val();
         var callid = $('#callid').val();
-        var uri = $('#uri').val();
         var bandwidth = $('#bandwidth').val();
         var userpassword = $('#userpassword').val();
 
         var lock=0;
 
-        if (startconference == '') {
-            swal("Error","startconference 를 입력하세요", "warning");
+        if (start_date == '') {
+            swal("Error","start_date 를 입력하세요", "warning");
+            lock = 1;
+        }
+        else if(end_date == '') {
+            swal("Error","end_date 을 선택하세오", "warning");
             lock = 1;
         }
 
@@ -356,9 +367,48 @@ from django.utils.translation import ugettext as _
             lock = 1;
         }
 
-        else{
-            alert(startconference+ ' '+' '+ conferencename+ ' '+' '+callid+ ' '+' '+uri+ ' '+' '+bandwidth+ ' '+' '+userpassword);
+
+        if(lock ==0){
+            $.ajax({
+                type: "POST",
+                url: "/conference/reserveConference_add",
+                data: {
+                    'csrfmiddlewaretoken': '${csrf_token}',
+                    start_date: start_date,
+                    end_date: end_date,
+                    conferencename: conferencename,
+                    callid: callid,
+                    bandwidth: bandwidth,
+                    userpassword: userpassword,
+                    endpoint_id:endpoint_id
+
+                },
+                success: function (data) {
+                    if (data.return == 'success') {
+                        location.reload();
+                        swal("Success","등록 완료","success")
+                        location.reload();
+                    }
+                    else if (data.return != 'success') {
+                        swal({
+                            title: "Warning",
+                            text: "ID 중복",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: false,
+                        })
+                                .then(function(willDelete) {
+                                    if (willDelete) {
+                                        return
+                                    } else {
+                                        return
+                                    }
+                                });
+                    }
+                },
+            });
         }
+
 
     }
 

@@ -500,7 +500,7 @@ def api_users():
     }
 
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -508,23 +508,23 @@ def api_users():
     resData = json.dumps(o)
     resDataJson = json.loads(resData)
 
-    print("-------------------> DEBUG[mornitoringStatus ---s]")
-    print(resDataJson)
-    print("-------------------> DEBUG[mornitoringStatus ---e]")
+    print("-------------------> DEBUG[mornitoringStatus ---s resDataJson]")
+    #print(resDataJson)
+    print("-------------------> DEBUG[mornitoringStatus ---e resDataJson]")
     requestCnt = (int(resDataJson['users']['@total']) / 20) + 1
     resDataList = list()
 
     for n in range(0, int(requestCnt)):
         url = 'https://14.63.53.22:449/api/v1/users?offset={offset}&limit=20'.format(offset=n*20)
         res = requests.get(url, headers=headers, verify=False)
-        res.encoding = None
+        res.encoding = 'UTF-8'
         res_data = str(res.text)
         res_o = xmltodict.parse(res_data)
         res_data = json.dumps(res_o)
         res_data_json = json.loads(res_data)
         resDataList.append(res_data_json['users']['user'])
 
-    print(resDataList)
+    #print(resDataList)
     totDataList = list()
     for list_data in resDataList:
         for data in list_data:
@@ -546,7 +546,7 @@ def api_usersId(id):
     url = 'https://14.63.53.22:449/api/v1/users/' + id
 
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -554,9 +554,9 @@ def api_usersId(id):
     resData = json.dumps(o)
     resDataJson = json.loads(resData)
 
-    print("-------------------> DEBUG[s]")
-    print(resDataJson)
-    print("-------------------> DEBUG[e]")
+    print("-------------------> DEBUG[s] resDataJson")
+    #print(resDataJson)
+    print("-------------------> DEBUG[e] resDataJson")
 
     return resDataJson
 
@@ -572,7 +572,7 @@ def api_cdrReceivers():
     }
 
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
