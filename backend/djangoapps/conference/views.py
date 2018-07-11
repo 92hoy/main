@@ -16,6 +16,7 @@ from backend.djangoapps.common.api.views import api_activeCall
 from backend.djangoapps.common.api.views import api_activeCallId
 from backend.djangoapps.common.api.views import api_activeCallLegs
 from backend.djangoapps.common.api.views import api_callLegs
+from backend.djangoapps.common.api.views import api_callLegs_delete
 from backend.djangoapps.common.api.views import api_callLegProfiles_POST
 from backend.djangoapps.common.api.views import api_callLegProfiles_Id
 from backend.djangoapps.common.api.views import api_callLegProfiles_Update
@@ -47,10 +48,10 @@ def conferenceRoomAdd(request):
 
     print(request.POST.get('name'))
     res = api_coSpaces_POST(request)
-    # if res.status_code == 200:
+    if res.status_code == 200:
     # data_insert = CmsCospace(cospace_id=)
-    header = res.headers['Location']
-    location = header.split('/')[-1]
+        header = res.headers['Location']
+        location = header.split('/')[-1]
 
     return JsonResponse({'code': res.status_code})
 
@@ -181,12 +182,26 @@ def activecall_monitoring(request, call_id):
     coSpace_data = api_coSpaceId(call_data['call']['coSpace'])
     callLegs_data = api_activeCallLegs(call_id)
 
+    time_now = datetime.datetime.now()
+
     call_data['call']['locked'] = 'Yes' if call_data['call']['locked'] == 'true' else 'No'
     call_data['call']['recording'] = 'Yes' if call_data['call']['recording'] == 'true' else 'No'
 
     callLegs_list = list()
     for data in callLegs_data:
-        callLegs_list.append(api_callLegs(data['@id']))
+        callLeg = api_callLegs(data['@id'])
+        call_sec = callLeg['callLeg']['status']['durationSeconds']
+        dur_time = datetime.timedelta(seconds=int(call_sec))
+        join_time = time_now - dur_time
+
+        callLeg['callLeg']['status']['durationSeconds'] = join_time.strftime('%H:%M')
+        conf_key_list = ['rxAudioMute', 'txVideoMute', 'rxVideoMute', 'rxAudioMute', 'presentationContributionAllowed', 'presentationViewingAllowed']
+
+        for key_data in conf_key_list:
+            if key_data not in callLeg['callLeg']['configuration'].keys():
+                callLeg['callLeg']['configuration'][key_data] = 'true'
+
+        callLegs_list.append(callLeg)
 
     sec = call_data['call']['durationSeconds']
     conference_time = datetime.timedelta(seconds=int(sec))
@@ -201,6 +216,15 @@ def activecall_monitoring(request, call_id):
     print('activecall_monitoring debug end --------------------------')
 
     return render(request, 'conference/activecall_monitoring.html', context)
+
+
+# active call disconnect
+def activecall_monitoring_userDel(request):
+    user_uid = request.POST.get('user_uid')
+    del_status = api_callLegs_delete(user_uid)
+    status = 'success' if len(del_status) == 0 else 'fail'
+
+    return JsonResponse({'status': status})
 
 
 # 진행중인 회의 관리

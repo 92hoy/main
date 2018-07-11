@@ -700,7 +700,6 @@ from django.utils.translation import ugettext as _
                             'del_arr': del_conference
                         }
                     }).done(function(data){
-                        alert(data.err_list.length);
                         if(data.err_list.length == 0){
                             swal({
                                 title: 'Success!',
