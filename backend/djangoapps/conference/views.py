@@ -22,6 +22,8 @@ from backend.djangoapps.common.api.views import api_callProfiles_POST
 from backend.djangoapps.common.api.views import api_callProfiles_Id
 from backend.djangoapps.common.api.views import api_callProfiles_Update
 from backend.djangoapps.common.api.views import api_callProfiles_Delete
+from backend.djangoapps.common.api.views import api_users
+from backend.djangoapps.common.api.views import api_usersId
 
 
 # 컨퍼런스 목록
@@ -116,20 +118,59 @@ def activeCall(request):
 
     with connections['default'].cursor() as cur:
         query = '''
-          SELECT ep_group_seq, ep_group_name, order_no FROM cms_endpoint_group;
+            SELECT ep_id,
+                   ep_name,
+                   ep_type,
+                   ip,
+                   sip,
+                   hdevice,
+                   mslync,
+                   username,
+                   recodingdevice,
+                   audioonly,
+                   gmt_time,
+                   ifnull(ep_group_name, '') as ep_group_name,
+                   a.order_no as order_no
+              FROM cms_endpoint a
+                   JOIN cms_endpoint_group b ON a.ep_group_seq = b.ep_group_seq;
         '''
         cur.execute(query)
-        ep_group = cur.fetchall()
+        ep_data = cur.fetchall()
 
     data_list = list()
-    for data2 in ep_group:
+    for data2 in ep_data:
         data_dict = dict()
-        data_dict['ep_group_seq'] = data2[0]
-        data_dict['ep_group_name'] = data2[1]
-        data_dict['order_no'] = data2[2]
+        data_dict['ep_id'] = data2[0]
+        data_dict['ep_name'] = data2[1]
+        data_dict['ep_type'] = data2[2]
+        data_dict['ip'] = data2[3]
+        data_dict['sip'] = data2[4]
+        data_dict['hdevice'] = data2[5]
+        data_dict['mslync'] = data2[6]
+        data_dict['username'] = data2[7]
+        data_dict['recodingdevice'] = data2[8]
+        data_dict['audioonly'] = data2[9]
+        data_dict['gmt_time'] = data2[10]
+        data_dict['ep_group_name'] = data2[11]
+        data_dict['order_no'] = data2[12]
         data_list.append(data_dict)
 
-    context = {'data' : res_list ,'data2': data_list}
+    resDataJson2 = api_users()
+    acano_list = list()
+
+    for data3 in resDataJson2:
+        reData = dict()
+        res_user = api_usersId(data3['@id'])
+
+        reData['userJid'] = res_user['user']['userJid']
+        reData['name'] = res_user['user']['name']
+        reData['email'] = res_user['user']['email']
+        reData['tenant'] = res_user['user']['tenant'] if 'tenant' in res_user['user'] else ''
+        acano_list.append(reData)
+
+
+
+    context = {'data' : res_list ,'data2': data_list,'data3': acano_list}
 
 
     return render(request, 'conference/activeCall.html', context)
@@ -259,8 +300,60 @@ def templateDel(request):
 def reserveConference(request):
 
     #resDataJson = api_activeCall()
+    with connections['default'].cursor() as cur:
+        query = '''
+            SELECT ep_id,
+                   ep_name,
+                   ep_type,
+                   ip,
+                   sip,
+                   hdevice,
+                   mslync,
+                   username,
+                   recodingdevice,
+                   audioonly,
+                   gmt_time,
+                   ifnull(ep_group_name, '') as ep_group_name,
+                   a.order_no as order_no
+              FROM cms_endpoint a
+                   JOIN cms_endpoint_group b ON a.ep_group_seq = b.ep_group_seq;
+        '''
+        cur.execute(query)
+        ep_data = cur.fetchall()
 
-    context = {}
+    data_list = list()
+    for data2 in ep_data:
+        data_dict = dict()
+        data_dict['ep_id'] = data2[0]
+        data_dict['ep_name'] = data2[1]
+        data_dict['ep_type'] = data2[2]
+        data_dict['ip'] = data2[3]
+        data_dict['sip'] = data2[4]
+        data_dict['hdevice'] = data2[5]
+        data_dict['mslync'] = data2[6]
+        data_dict['username'] = data2[7]
+        data_dict['recodingdevice'] = data2[8]
+        data_dict['audioonly'] = data2[9]
+        data_dict['gmt_time'] = data2[10]
+        data_dict['ep_group_name'] = data2[11]
+        data_dict['order_no'] = data2[12]
+        data_list.append(data_dict)
+
+    resDataJson2 = api_users()
+    acano_list = list()
+
+    for data3 in resDataJson2:
+        reData = dict()
+        res_user = api_usersId(data3['@id'])
+
+        reData['userJid'] = res_user['user']['userJid']
+        reData['name'] = res_user['user']['name']
+        reData['email'] = res_user['user']['email']
+        reData['tenant'] = res_user['user']['tenant'] if 'tenant' in res_user['user'] else ''
+        acano_list.append(reData)
+
+
+    context = {'data2': data_list,'data3': acano_list}
     #context['resDataJson'] = resDataJson
 
     return render(request, 'conference/reserveConference.html', context)

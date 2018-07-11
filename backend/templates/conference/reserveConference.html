@@ -15,6 +15,20 @@ from django.utils.translation import ugettext as _
   </div>
 
   <div class="box">
+      <div style="padding: 10px; margin: 20px;">
+
+            <button class="md-btn md-raised mb-2 w-xs red" id="delBtn" style="float: right;">DEL</button>
+
+            <a href="#layer_new" class="btn-example">
+                <button class="md-btn md-raised mb-2 w-xs indigo dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
+            </a>
+
+            <a href="/activecall_monitoring">
+                <button class="md-btn md-raised mb-2 w-xs dialog__trigger" id="addBtn" style="float: right; margin-right: 8px; width: auto;" hidden>active_monitoring</button>
+            </a>
+
+
+        </div>
       <div class="table-responsive">
         <table class="table table-bordered">
           <thead>
@@ -49,4 +63,262 @@ from django.utils.translation import ugettext as _
       </div>
     </div>
 </div>
+<!-- layer active call-->
+<div class="dim-layer2" id="dim-layer2">
+    <div class="dimBg2"></div>
+    <div id="layer_new" class="pop-layer2">
+        <div class="pop-container2">
+            <div class="pop-conts">
+
+          <span class="nav-icon" style="padding-bottom: 18px;">
+            <i class="fa fa-book"></i>
+          </span>
+                <div style="margin-bottom: 10px;">
+
+                    <strong>Start Conference</strong><a href="#" class="btn-layerClose" style="float: right; font-size:18px;">X</a>
+                    <hr width="100%" color="#d9d9d9">
+                </div>
+                <div style="float:right;">
+                    <button class="md-btn md-raised mb-2 w-xs purple" id="confSave">ADD</button>
+                </div>
+                <div style="text-align: center;">
+                    <table style="display: inline-block; width:100%; margin-bottom: 20px; ">
+
+                        <tr>
+                            <td>Start conference</td>
+                            <td class="rightTd"><input type="text" class="form-control wi730" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>Conference name</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>callID</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>uri</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>Band Width</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>user password</td>
+                            <td class="rightTd"><input type="text" class="form-control" placeholder=""></td>
+                        </tr>
+
+
+                    </table>
+                </div>
+                <!----------------------- user - -------------------------->
+                <div style="width:310px; float:left; margin-right: 15px;">
+                  <span class="nav-icon"  style="padding-bottom: 18px;">
+                    <i class="fa fa-address-book-o"></i>
+                  </span>
+                    <div>
+                        <strong>User</strong>
+                    </div>
+                    <div class="table-responsive" style="width: 310px;">
+                        <table class="table table-hover table-striped table-bordered" id="table_acanoClient" style="width:100%; height: 247px;">
+                            <thead>
+                            <tr>
+                                <th class="th-center"style="width: 5%;">Name</th>
+
+                                <th class="th-center">User JID</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            % for data3 in context['data3']:
+                            <tr>
+                                <td>${data3['name']}</td>
+
+                                <td>${data3['userJid']}</td>
+                                <!--<td>${data3['tenant']}</td>-->
+                            </tr>
+                            % endfor
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!----------------------- user - -------------------------->
+                <!----------------------- endpoint - -------------------------->
+
+                <div class="table-responsive" style="width: 510px;">
+                    <span class="nav-icon"  style="padding-bottom: 18px;">
+                    <i class="fa fa-address-book-o"></i>
+                  </span>
+                    <div>
+                        <strong>Endpoint</strong>
+                    </div>
+                    <table class="table table-hover table-striped table-bordered" id="table_endPoint" style="width:100%; height: 247px;">
+                        <thead>
+                        <tr>
+                            <th class="th-center" style="width: 5%;"><input type="checkbox" id="select_all"/></th>
+                            <th class="th-center">EndPoint Name</th>
+                            <th class="th-center">Device Type</th>
+                            <th class="th-center">IP</th>
+                            <th class="th-center">Group Name</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        % for data2 in context['data2']:
+                        <tr>
+                            <td></td>
+                            <td>${data2['ep_id']}</td>
+                            <td>${data2['ep_type']}</td>
+                            <td>${data2['ip']}</td>
+                            <td>${data2['ep_group_name']}</td>
+                        </tr>
+                        % endfor
+                        </tbody>
+                    </table>
+                </div>
+
+                <!----------------------- endpoint - ---------------------------->
+            </div>
+        </div>
+    </div>
+
+</div>
+</%block>
+<%block name="scriptDown">
+<script>
+    /* <!----------------------- endpoint - ----------------------------> */
+    $(document).ready(function() {
+        $table = $("#table_endPoint");
+        $table.dataTable({
+            sLengthMenu: [
+                [5, 10, 20, -1], //key
+                [5, 10, 20, "All"] //value
+            ],
+            dom: '<"clear"f><"search">rt<"bottom"ipl>',
+            searching: true,
+            paginate: true,
+            order: [[1, 'desc']],
+            pageLength:5,
+            "oLanguage": {
+                "sInfo": "Page: _PAGE_ / _PAGES_",
+                'sLengthMenu': 'Display <select name="datatable-length">'+
+                '<option value="5">5</option>'+
+                '<option value="10">10</option>'+
+                '<option value="20">20</option>'+
+                '<option value="-1">All</option>'+
+                '</select> records',
+                "oPaginate": {
+                    "sNext": ">",
+                    "sPrevious": "<",
+                },
+
+            },
+            columns: [
+                {'orderable': false},
+                null,
+                null,
+                null,
+                null,
+            ],
+            columnDefs: [
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center t1"},
+            ],
+            "drawCallback":function(){
+                $(".paginate_button").attr('href', 'javascript:check_click();');
+            },
+
+        });
+    });
+    /* <!----------------------- endpoint - ----------------------------> */
+    /* <!----------------------- user - ----------------------------> */
+    $(document).ready(function() {
+        $table = $("#table_acanoClient");
+        $table.dataTable({
+            sLengthMenu: [
+                [5, 10, 20, -1], //key
+                [5, 10, 20, "All"] //value
+            ],
+            dom: '<"clear"f><"search">rt<"bottom"ipl>',
+            searching: true,
+            paginate: true,
+            order: [[0, 'asc']],
+            pageLength:5,
+            "oLanguage": {
+                "sInfo": "Page: _PAGE_ / _PAGES_",
+                'sLengthMenu': 'Display <select name="datatable-length">' +
+                '<option value="5">5</option>'+
+                '<option value="10">10</option>'+
+                '<option value="20">20</option>'+
+                '<option value="-1">All</option>' +
+                '</select> records',
+                "oPaginate": {
+                    "sNext": ">",
+                    "sPrevious": "<",
+                },
+
+            },
+            columns: [
+                null,
+                null,
+            ],
+            columnDefs: [
+            ],
+            'initComplete': function () {
+            }
+        });
+    });
+
+    /* <!----------------------- user - ----------------------------> */
+
+    function check_click(){
+        //alert("paging btn");
+        if($("input:checkbox[id='select_all']").prop("checked")) {
+            $('input:checkbox').prop("checked", false);
+        }
+        else {
+            $('input:checkbox').prop("checked", false);
+        }
+    }
+
+    $('.btn-example').click(function(){
+        var $href = $(this).attr('href');
+        layer_popup2($href);
+
+    });
+
+    function layer_popup2(el){
+
+        var $el = $(el);        //레이어의 id를 $el 변수에 저장
+        var isDim = $el.prev().hasClass('dimBg2');   //dimmed 레이어를 감지하기 위한 boolean 변수
+
+        isDim ? $('#dim-layer2').fadeIn() : $el.fadeIn();
+
+        var $elWidth = ~~($el.outerWidth()),
+                $elHeight = ~~($el.outerHeight()),
+                docWidth = $(document).width(),
+                docHeight = $(document).height();
+
+        // 화면의 중앙에 레이어를 띄운다.
+        if ($elHeight < docHeight || $elWidth < docWidth) {
+            $el.css({
+                marginTop: -$elHeight /2,
+                marginLeft: -$elWidth/2
+            })
+        } else {
+            $el.css({top: 0, left: 0});
+        }
+
+        $el.find('a.btn-layerClose').click(function(){
+            isDim ? $('#dim-layer2').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+            return false;
+        });
+
+        $('.layer .dimBg2').click(function(){
+            $('#dim-layer2').fadeOut();
+            return false;
+        });
+
+    }
+
+</script>
 </%block>
