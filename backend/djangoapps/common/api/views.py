@@ -218,13 +218,34 @@ def api_activeCallId(id):
     print("-------------------> DEBUG[api_activeCall ---s]")
     print(resDataJson)
     print("-------------------> DEBUG[api_activeCall ---e]")
-    if id is not None:
-        return resDataJson['call']['coSpace']
-    print("-------------------> DEBUG[s]")
-    print(resDataJson)
-    print("-------------------> DEBUG[e]")
 
-    return resDataJson['calls']['call']
+    return resDataJson
+
+
+#from backend.djangoapps.common.api.views import api_callLegs
+def api_callLegs(id):
+    Authorization = settings.AUTHORIZATION
+
+    # requests GET
+    headers = {
+        'Authorization': Authorization
+    }
+    url = 'https://14.63.53.22:449/api/v1/callLegs/' + id
+
+    r = requests.get(url, headers=headers, verify=False)
+    r.encoding = None
+    resData = str(r.text)
+
+    # xml to json
+    o = xmltodict.parse(resData)
+    resData = json.dumps(o)
+    resDataJson = json.loads(resData)
+
+    print("-------------------> DEBUG[api_callLegs ---s]")
+    print(resDataJson)
+    print("-------------------> DEBUG[api_callLegs ---e]")
+
+    return resDataJson
 
 
 #from backend.djangoapps.common.api.views import api_callLegProfiles_POST
@@ -409,8 +430,63 @@ def api_activeCallLegs(id):
     print("-------------------> DEBUG[s]")
     print(resDataJson)
     print("-------------------> DEBUG[e]")
+    requestCnt = (int(resDataJson['callLegs']['@total']) / 20) + 1 \
+        if (int(resDataJson['callLegs']['@total']) % 20) != 0 \
+        else int(resDataJson['callLegs']['@total']) / 20
+
+    resDataList = list()
+
+    for n in range(0, int(requestCnt)):
+        url = 'https://14.63.53.22:449/api/v1/calls/{id}/callLegs?offset={offset}&limit=20'.format(offset=n*20, id=id)
+        res = requests.get(url, headers=headers, verify=False)
+        res.encoding = None
+        res_data = str(res.text)
+        res_o = xmltodict.parse(res_data)
+        res_data = json.dumps(res_o)
+        res_data_json = json.loads(res_data)
+        if type(res_data_json['callLegs']['callLeg']) == list:
+            resDataList.append(res_data_json['callLegs']['callLeg'])
+        else:
+            single_data = [res_data_json['callLegs']['callLeg']]
+            resDataList.append(single_data)
+
+    totDataList = list()
+    for list_data in resDataList:
+        for data in list_data:
+            totDataList.append(data)
+
+    print("-------------------> DEBUG[api_activeCallLegs total ---s]")
+    print(totDataList)
+    print("-------------------> DEBUG[api_activeCallLegs total ---e]")
+
+    return totDataList
+
+
+# from backend.djangoapps.common.api.views import api_callProfiles_Id
+def api_activeCallLegsId(id):
+
+    Authorization = settings.AUTHORIZATION
+
+    # requests GET
+    url = 'https://14.63.53.22:449/api/v1/calls/{id}/callLegs/' + id
+    headers = {
+        'Authorization': Authorization
+    }
+    r = requests.get(url, headers=headers, verify=False)
+    r.encoding = None
+    resData = str(r.text)
+
+    # xml to json
+    o = xmltodict.parse(resData)
+    resData = json.dumps(o)
+    resDataJson = json.loads(resData)
+
+    print("-------------------> DEBUG[s]")
+    print(resDataJson)
+    print("-------------------> DEBUG[e]")
 
     return resDataJson
+
 
 #from backend.djangoapps.common.api.views import api_templateLegPro
 def api_templateLegPro(id):

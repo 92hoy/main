@@ -118,7 +118,7 @@ from django.utils.translation import ugettext as _
 
     <div class="box" style="padding: 10px;">
 <div style="height: 100px;">
-    <h1> &nbsp; &nbsp; A-call Monitoring<img src="/static/common/img/message.png" alt="logo" class="cm_img"></h1>
+    <h1><b style="padding-left: 50px;font-weight: normal;">${context['calls']['call']['name']}(${context['coSpace']['coSpace']['callId']})</b><img src="/static/common/img/message.png" alt="logo" class="cm_img"></h1>
 
 </div>
         <div class="table-responsive">
@@ -128,28 +128,28 @@ from django.utils.translation import ugettext as _
                         <div class="col-sm-3">
                             <table style="display: inline-block; text-align: right;">
                                 <tr>
-                                    <td style="border-right: 1px solid black; font-weight: bold; ">Conference duration &nbsp;</td>
-                                    <td>&nbsp;Conference</td>
+                                    <td style="border-right: 1px solid black; font-weight: bold; ">Conference duration(sec) &nbsp;</td>
+                                    <td>&nbsp;${context['duration_time']}</td>
                                 </tr>
                                 <tr>
                                     <td style="border-right: 1px solid black; font-weight: bold; ">Current visitor &nbsp;</td>
-                                    <td>&nbsp;Conference</td>
+                                    <td>&nbsp;${context['calls']['call']['numCallLegs']}</td>
                                 </tr>
                                 <tr>
                                     <td style="border-right: 1px solid black; font-weight: bold; ">Allow Mute &nbsp;</td>
-                                    <td>&nbsp;Conference</td>
+                                    <td>&nbsp;${context['calls']['call']['allowAllMuteSelf']}</td>
                                 </tr><br>
                                 <tr>
                                     <td style="border-right: 1px solid black; font-weight: bold; ">Peek visitor &nbsp;</td>
-                                    <td>&nbsp;Conference</td>
+                                    <td>&nbsp;${context['calls']['call']['maxCallLegs']}</td>
                                 </tr><br>
                                 <tr>
                                     <td style="border-right: 1px solid black; font-weight: bold; ">Locked &nbsp;</td>
-                                    <td>&nbsp;Conference </td>
+                                    <td>&nbsp;${context['calls']['call']['locked']} </td>
                                 </tr><br>
                                 <tr>
                                     <td style="border-right: 1px solid black; font-weight: bold; ">Recording &nbsp;</td>
-                                    <td>&nbsp;Conference</td>
+                                    <td>&nbsp;${context['calls']['call']['recording']}</td>
                                 </tr>
                             </table>
                         </div>
@@ -190,12 +190,77 @@ from django.utils.translation import ugettext as _
             <table class="table table-hover table-striped table-bordered" id="table_template" style="width:100%">
                 <thead>
                 <tr>
-                    <th style="width:5%" class="th-center"><</th>
-                    <th class="th-center">Conference name</th>
+                    <th class="th-center">Name</th>
+                    <th class="th-center">Remote ID</th>
+                    <th class="th-center">Command</th>
+                    <th class="th-center">Disconnect</th>
+                    <th class="th-center">Status</th>
+                    <th class="th-center">Alarms</th>
                 </tr>
                 </thead>
                 <tbody>
-
+                % for user in context['callLegs_list']:
+                    <tr>
+                        <td>${user['callLeg']['name']}</td>
+                        <td>${user['callLeg']['originalRemoteParty']}</td>
+                        <td><ul>
+                            % if 'rxAudioMute' in user['callLeg']['configuration'].keys():
+                            <li>rxAudioMute : ${user['callLeg']['configuration']['rxAudioMute']}</li>
+                            % else :
+                            <li>rxAudioMute : true</li>
+                            % endif
+                            % if 'txVideoMute' in user['callLeg']['configuration'].keys():
+                            <li>txVideoMute : ${user['callLeg']['configuration']['txVideoMute']}</li>
+                            % else :
+                            <li>txVideoMute : true</li>
+                            % endif
+                            % if 'rxVideoMute' in user['callLeg']['configuration'].keys():
+                            <li>rxVideoMute : ${user['callLeg']['configuration']['rxVideoMute']}</li>
+                            % else :
+                            <li>rxVideoMute : true</li>
+                            % endif
+                            % if 'rxAudioMute' in user['callLeg']['configuration'].keys():
+                            <li>rxAudioMute : ${user['callLeg']['configuration']['rxAudioMute']}</li>
+                            % else :
+                            <li>rxAudioMute : true</li>
+                            % endif
+                            % if 'presentationContributionAllowed' in user['callLeg']['configuration'].keys():
+                            <li>presentationContributionAllowed : ${user['callLeg']['configuration']['presentationContributionAllowed']}</li>
+                            % else :
+                            <li>presentationContributionAllowed : true</li>
+                            % endif
+                            % if 'presentationViewingAllowed' in user['callLeg']['configuration'].keys():
+                            <li>presentationViewingAllowed : ${user['callLeg']['configuration']['presentationViewingAllowed']}</li>
+                            % else :
+                            <li>presentationViewingAllowed : true</li>
+                            % endif
+                            <!--
+                            ##<li>${user['callLeg']['configuration']['txVideoMute']}</li>
+                            ##<li>${user['callLeg']['configuration']['rxVideoMute']}</li>
+                            ##<li>${user['callLeg']['configuration']['presentationContributionAllowed']}</li>
+                            ##<li>${user['callLeg']['configuration']['presentationViewingAllowed']}</li>
+                            -->
+                        </ul></td>
+                        <td><button disabled class="btn btn-primary">Disconnect</button></td>
+                        <td><ul>
+                            <li>Connected at ${user['callLeg']['status']['durationSeconds']}</li>
+                            % if 'txVideo' in user['callLeg']['status'].keys():
+                            <li>Tx : ${user['callLeg']['status']['txVideo']['width']} x ${user['callLeg']['status']['txVideo']['height']}, ${user['callLeg']['status']['txVideo']['codec']}, ${user['callLeg']['status']['txAudio']['codec']} </li>
+                            % else :
+                            <li>Tx : ${user['callLeg']['status']['txAudio']['codec']} </li>
+                            % endif
+                            % if 'rxAudio' in user['callLeg']['status'].keys():
+                            <li>Rx : ${user['callLeg']['status']['rxAudio']['codec']}</li>
+                            % endif
+                        </ul></td>
+                        <td>
+                            % if 'layout' in user['callLeg']['status'].keys():
+                            ${user['callLeg']['status']['layout']}
+                            % else:
+                            % endif
+                        </td>
+                    </tr>
+                % endfor
                 </tbody>
             </table>
             <br><br><br><br><br><br><br><br>
