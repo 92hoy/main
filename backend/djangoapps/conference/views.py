@@ -326,7 +326,35 @@ def templateDel(request):
 # 컨퍼런스 제공
 def reserveConference(request):
 
-    #resDataJson = api_activeCall()
+    # 기본 테이블
+    with connections['default'].cursor() as cur:
+        query = '''
+            SELECT  resv_seq,
+                    resv_name,
+                    start_date,
+                    end_date,
+                    call_id,
+                    regist_date
+            FROM cms_resv_cospace
+        '''
+        cur.execute(query)
+        resv = cur.fetchall()
+
+        data_list = list()
+
+    for data in resv:
+        data_dict = dict()
+        data_dict['resv_seq'] = data[0]
+        data_dict['resv_name'] = data[1]
+        data_dict['start_date'] = data[2]
+        data_dict['end_date'] = data[3]
+        data_dict['call_id'] = data[4]
+        data_dict['regist_date'] = data[5]
+
+        data_list.append(data_dict)
+        print("data===",data)
+
+    # layor popup - endpoint
     with connections['default'].cursor() as cur:
         query = '''
             SELECT ep_id,
@@ -348,7 +376,7 @@ def reserveConference(request):
         cur.execute(query)
         ep_data = cur.fetchall()
 
-    data_list = list()
+    data_list2 = list()
     for data2 in ep_data:
         data_dict = dict()
         data_dict['ep_id'] = data2[0]
@@ -364,8 +392,9 @@ def reserveConference(request):
         data_dict['gmt_time'] = data2[10]
         data_dict['ep_group_name'] = data2[11]
         data_dict['order_no'] = data2[12]
-        data_list.append(data_dict)
+        data_list2.append(data_dict)
 
+    # layor popup - user(api)
     resDataJson2 = api_users()
     acano_list = list()
 
@@ -380,8 +409,8 @@ def reserveConference(request):
         acano_list.append(reData)
 
 
-    context = {'data2': data_list,'data3': acano_list}
-    #context['resDataJson'] = resDataJson
+    context = {'data': data_list,'data2': data_list2,'data3': acano_list}
+
 
     return render(request, 'conference/reserveConference.html', context)
 

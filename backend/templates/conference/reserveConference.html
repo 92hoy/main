@@ -9,8 +9,8 @@ from django.utils.translation import ugettext as _
 
   <div class="box">
     <div class="box-header">
-      <h2>CONFERENCE ROOM</h2>
-      <small>You can see the current meeting status</small>
+      <h2>Reserve Conference</h2>
+      <small>Reserve Conference</small>
     </div>
   </div>
 
@@ -30,40 +30,42 @@ from django.utils.translation import ugettext as _
 
         </div>
       <div class="table-responsive">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th><input type="checkbox"/></th>
-              <th>Conference name</th>
-              <th>User</th>
-              <th>Date</th>
-              <th>Start time</th>
-              <th>End time</th>
-              <th>Reserve Type</th>
-              <th>call ID</th>
-              <th>View</th>
-            </tr>
-          </thead>
-          <tbody>
-            % for n in range(0,6):
-            <tr>
-              <td><input type="checkbox"/></td>
-              <td>Webbex Teams Conference 8500</td>
-              <td>개설자</td>
-              <td>2018-05-23</td>
-              <td>15:00</td>
-              <td>17:00</td>
-              <td>화상회의</td>
-              <td>8500</td>
-              <td><button class="btn btn-fw primary">VIEW</button></td>
-            </tr>
-            % endfor
-          </tbody>
-        </table>
-      </div>
+            <table class="table table-hover table-striped table-bordered" id="table_reserve" style="width:100%">
+                <thead>
+                <tr>
+                    <th class="th-center" style="width: 5%;"><input type="checkbox" id="select_all"/></th>
+                    <th class="th-center">Conference Name</th>
+                    <th class="th-center">Date</th>
+                    <th class="th-center">User</th>
+                    <th class="th-center">Start Time</th>
+                    <th class="th-center">End Time</th>
+                    <th class="th-center">Call Id</th>
+                    <th class="th-center">View</th>
+                </tr>
+                </thead>
+                <tbody>
+                % for data in context['data']:
+                <% data_id = data['resv_seq'] %>
+                <tr>
+                    <td></td>
+                    <td>${data['resv_name']}</td>
+                    <td>관리자</td>
+                    <td>${data['start_date']}</td>
+                    <td>${data['start_date']}</td>
+                    <td>${data['end_date']}</td>
+                    <td>${data['call_id']}</td>
+                    <td><button class="btn btn-fw primary" onclick="resv_detail(${data_id})">VIEW</button></td>
+                </tr>
+                % endfor
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
-<!-- layer active call-->
+
+
+
+<!-- layer popup-->
 <div class="dim-layer2" id="dim-layer2">
     <div class="dimBg2"></div>
     <div id="layer_new" class="pop-layer2">
@@ -186,8 +188,84 @@ from django.utils.translation import ugettext as _
 </%block>
 <%block name="scriptDown">
 <script>
+    $(document).ready(function() {
+        $table = $("#table_reserve");
+        $table.dataTable({
+            sLengthMenu: [
+                [10, 20, 50, -1], //key
+                [10, 20, 50, "All"] //value
+            ],
+            dom: '<"clear"fl><"search">rt<"bottom"ipl>',
+            searching: true,
+            paginate: true,
+            order: [[1, 'desc']],
+            "oLanguage": {
+                "sInfo": "Page: _PAGE_ / _PAGES_",
+                'sLengthMenu': 'Display <select name="datatable-length">'+
+                '<option value="10">10</option>'+
+                '<option value="20">20</option>'+
+                '<option value="50">50</option>'+
+                '<option value="-1">All</option>'+
+                '</select> records',
+                "oPaginate": {
+                    "sNext": ">",
+                    "sPrevious": "<",
+                },
 
+            },
+            columns: [
+                {'orderable': false},
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+            ],
+            columnDefs: [
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center t1"},
+            ],
+            "drawCallback":function(){
+                $(".paginate_button").attr('href', 'javascript:check_click_resv();');
+            },
+        });
 
+        // 체크박스 리스트 선택(delete)
+        /*
+        $('#btn_del').click(function () {
+            var table = $('#table_endPoint').DataTable();
+            var del_endpoint= $('td.t1 input[type="checkbox"]:checked').map(function() {
+                var this_tr = $(this).parent().parent();
+                var this_td_data = $(this_tr).find('td').eq(1).text();
+                console.log("td_data",this_td_data);
+                console.log("del_endpoint",del_endpoint);
+                return this_td_data;}).get();
+
+            $.ajax({
+                url: '/system/endPoint_del',
+                type: "POST",
+                data: {
+                    'csrfmiddlewaretoken': '${csrf_token}',
+                    'del_arr': del_endpoint
+                }
+            }).done(function(data){
+                if(data.return == 'success'){
+                    swal({
+                        title: 'Success!',
+                        text: "",
+                        type: 'success',
+                    }).then(function(){
+                        location.reload();
+                    });
+                } else {
+                     swal('경고', '삭제에 실패하였습니다.', 'warning');
+                }
+            });
+
+        });
+        */
+    });
 
     /* <!----------------------- endpoint - ----------------------------> */
     $(document).ready(function() {
@@ -233,6 +311,7 @@ from django.utils.translation import ugettext as _
         });
     });
     /* <!----------------------- endpoint - ----------------------------> */
+
     /* <!----------------------- user - ----------------------------> */
     $(document).ready(function() {
         $table = $("#table_acanoClient");
@@ -276,6 +355,15 @@ from django.utils.translation import ugettext as _
 
     /* <!----------------------- user - ----------------------------> */
 
+    function check_click_resv(){
+        //alert("paging btn");
+        if($("input:checkbox[id='select_all_ep']").prop("checked")) {
+            $('input:checkbox').prop("checked", false);
+        }
+        else {
+            $('input:checkbox').prop("checked", false);
+        }
+    }
     function check_click_ep(){
         //alert("paging btn");
         if($("input:checkbox[id='select_all_ep']").prop("checked")) {
@@ -397,19 +485,20 @@ from django.utils.translation import ugettext as _
                             buttons: true,
                             dangerMode: false,
                         })
-                                .then(function(willDelete) {
-                                    if (willDelete) {
-                                        return
-                                    } else {
-                                        return
-                                    }
-                                });
+                            .then(function(willDelete) {
+                                if (willDelete) {
+                                    return
+                                } else {
+                                    return
+                                }
+                            });
                     }
                 },
             });
         }
-
-
+    }
+    function resv_detail(resv_seq){
+        alert(resv_seq);
     }
 
 </script>
