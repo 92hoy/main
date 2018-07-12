@@ -59,10 +59,10 @@ def cdr_del(request):
 def cdr_detail(request):
 
     cdr_id = request.POST.get('uri')
-    print("uri uri-uri-uri-uri-->",cdr_id)
+    #print("uri uri-uri-uri-uri-->",cdr_id)
 
     resDataJson = api_cdr_id(cdr_id)
-    print("resDataJson--cdr_id>", resDataJson)
+    #print("resDataJson--cdr_id>", resDataJson)
 
     resDataJson['cdrReceiver']['id'] = resDataJson['cdrReceiver'].pop('@id')
 
@@ -236,27 +236,36 @@ def endPoint(request):
 
         lock = 0
 
+        # with connections['default'].cursor() as cur:
+        #     query = '''
+        #         select ep_id
+        #         FROM cms_endpoint
+        #         WHERE ep_id ='{ep_id}'
+        #     '''.format(ep_id=name)
+        #     cur.execute(query)
+        #     rows = cur.fetchall()
+        #
+        #     print (query)
+        #     print ("rows ->",rows)
+        #     print ("before len rows =>",len(rows))
+        #
+        #     if len(rows) != 0:
+        #         print("if rows =>",len(rows))
+        #         print("before",lock)
+        #         lock = 1
+        #         print("after",lock)
+        #
+        #         return JsonResponse({"return": "fail"})
+        # print(" not fail")
+
         with connections['default'].cursor() as cur:
-            query = '''
-                select ep_id
+            query='''
+                SELECT CONCAT('EPI', IF( MAX(ep_id) IS NULL , '00000001' , LPAD(CAST(SUBSTRING(MAX(ep_id),4,11) AS UNSIGNED)+1,8,0))) AS new_ep_id
                 FROM cms_endpoint
-                WHERE ep_id ='{ep_id}'
-            '''.format(ep_id=name)
+            '''
             cur.execute(query)
-            rows = cur.fetchall()
-
-            print (query)
-            print ("rows ->",rows)
-            print ("before len rows =>",len(rows))
-
-            if len(rows) != 0:
-                print("if rows =>",len(rows))
-                print("before",lock)
-                lock = 1
-                print("after",lock)
-
-                return JsonResponse({"return": "fail"})
-        print(" not fail")
+            seq = cur.fetchall()
+            ep_seq = seq[0][0]
 
 
 
@@ -264,6 +273,7 @@ def endPoint(request):
             query = '''
                   INSERT INTO kotech_cisco_cms.cms_endpoint
                               (ep_id,
+                              ep_name,
                               ep_type,
                               ip,
                               sip,
@@ -275,6 +285,7 @@ def endPoint(request):
                               order_no
                               )
                   VALUES ('{ep_id}',
+                          '{ep_name}',
                           '{ep_type}',
                           '{ip}',
                           '{sip}',
@@ -284,7 +295,7 @@ def endPoint(request):
                           '{recodingdevice}',
                           '{ep_group_seq}',
                           '{order_no}')
-            '''.format(ep_id=name, ep_type=device_type, ip=ip, sip=sip, hdevice=h_323, mslync=mslync,
+            '''.format(ep_id=ep_seq,ep_name=name, ep_type=device_type, ip=ip, sip=sip, hdevice=h_323, mslync=mslync,
                        username=user_name, recodingdevice=recording_device, ep_group_seq=group_name, order_no=sortno)
             cur.execute(query)
 
@@ -353,9 +364,9 @@ def endPoint(request):
 @csrf_exempt
 def endPoint_del(request):
 
-    name = request.POST.getlist('del_arr[]')
-    print("name",name)
-    for data in name:
+    ep_id = request.POST.getlist('del_arr[]')
+    print("ep_id",ep_id)
+    for data in ep_id:
         with connections['default'].cursor() as cur:
             query = '''
                  delete FROM cms_endpoint
@@ -416,7 +427,8 @@ def endPoint_detail(request):
 @csrf_exempt
 def endPoint_update(request):
     if request.is_ajax():
-        name= request.POST.get('detail_ep_id')
+        name= request.POST.get('detail_ep_name')
+        ep_id= request.POST.get('detail_ep_id')
         device_type= request.POST.get('device_type')
         ip= request.POST.get('ip')
         sip= request.POST.get('sip')
@@ -445,7 +457,7 @@ def endPoint_update(request):
                       ep_group_seq='{ep_group_seq}',
                       order_no='{order_no}'
                   where ep_id ='{ep_id}'
-            '''.format(ep_id=name, ep_type=device_type, ip=ip, sip=sip, hdevice=h_323, mslync=mslync,
+            '''.format(ep_name=name, ep_type=device_type, ip=ip, sip=sip, hdevice=h_323, mslync=mslync,
                        username=user_name, recodingdevice=recording_device, ep_group_seq=group_name, order_no=sortno)
             print(query)
             cur.execute(query)

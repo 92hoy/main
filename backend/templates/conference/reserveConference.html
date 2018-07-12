@@ -29,13 +29,13 @@ from django.utils.translation import ugettext as _
 
 
         </div>
-      <div class="table-responsive">
+      <div class="table-responsive" style="text-align: center;">
             <table class="table table-hover table-striped table-bordered" id="table_reserve" style="width:100%">
                 <thead>
                 <tr>
-                    <th class="th-center" style="width: 5%;"><input type="checkbox" id="select_all"/></th>
+                    <th class="th-center" style="width: 5%;"><input type="checkbox" id="select_all_resv"/></th>
+                    <th class="th-center" hidden>num</th>
                     <th class="th-center">Conference Name</th>
-                    <th class="th-center">Date</th>
                     <th class="th-center">User</th>
                     <th class="th-center">Start Time</th>
                     <th class="th-center">End Time</th>
@@ -48,9 +48,9 @@ from django.utils.translation import ugettext as _
                 <% data_id = data['resv_seq'] %>
                 <tr>
                     <td></td>
+                    <td hidden>${data['resv_seq']}</td>
                     <td>${data['resv_name']}</td>
                     <td>관리자</td>
-                    <td>${data['start_date']}</td>
                     <td>${data['start_date']}</td>
                     <td>${data['end_date']}</td>
                     <td>${data['call_id']}</td>
@@ -88,11 +88,11 @@ from django.utils.translation import ugettext as _
 
                         <tr>
                             <td>Start date</td>
-                            <td class="rightTd"><input type="text" class="form-control wi590" id="start_date" placeholder=""></td>
+                            <td class="rightTd"><input type="datetime-local" class="form-control wi590" id="start_date" value="2018-07-12T09:30"placeholder=""></td>
                         </tr>
                         <tr>
                             <td>End date</td>
-                            <td class="rightTd"><input type="text" class="form-control wi590" id="end_date" placeholder=""></td>
+                            <td class="rightTd"><input type="datetime-local" class="form-control wi590" id="end_date" value="2018-07-12T17:30"placeholder=""></td>
                         </tr>
                         <tr>
                             <td>Conference name</td>
@@ -100,17 +100,16 @@ from django.utils.translation import ugettext as _
                         </tr>
                         <tr>
                             <td>callID</td>
-                            <td class="rightTd"><input type="text" class="form-control" id="callid" placeholder=""></td>
+                            <td class="rightTd"><input type="number" min="1" max="99999999" class="form-control" id="callid" placeholder="숫자 8자 까지 입력 가능합니다"></td>
                         </tr>
                         <tr>
                             <td>Band Width</td>
-                            <td class="rightTd"><input type="text" class="form-control" id="bandwidth" placeholder=""></td>
+                            <td class="rightTd"><input type="number"  min="1" max="2000000" class="form-control" id="bandwidth" placeholder="200만 까지 입력 가능합니다"></td>
                         </tr>
                         <tr>
                             <td>user password</td>
                             <td class="rightTd"><input type="text" class="form-control" id="userpassword" placeholder=""></td>
                         </tr>
-
 
                     </table>
                 </div>
@@ -127,6 +126,7 @@ from django.utils.translation import ugettext as _
                             <thead>
                             <tr>
                                 <th class="th-center" style="width: 5%;"><input type="checkbox" id="select_all_user"/></th>
+                                <th class="th-center"style="width: 5%;" hidden>user_id</th>
                                 <th class="th-center"style="width: 5%;">Name</th>
                                 <th class="th-center">User JID</th>
 
@@ -136,8 +136,10 @@ from django.utils.translation import ugettext as _
                             % for data3 in context['data3']:
                             <tr>
                                 <td></td>
+                                <td hidden>${data3['user_id']}</td>
                                 <td>${data3['name']}</td>
                                 <td>${data3['userJid']}</td>
+
                                 <!--<td>${data3['tenant']}</td>-->
                             </tr>
                             % endfor
@@ -340,6 +342,7 @@ from django.utils.translation import ugettext as _
 
             },
             columns: [
+                {'orderable': false},
                 null,
                 null,
                 null,
@@ -357,7 +360,7 @@ from django.utils.translation import ugettext as _
 
     function check_click_resv(){
         //alert("paging btn");
-        if($("input:checkbox[id='select_all_ep']").prop("checked")) {
+        if($("input:checkbox[id='select_all_resv']").prop("checked")) {
             $('input:checkbox').prop("checked", false);
         }
         else {
@@ -425,13 +428,24 @@ from django.utils.translation import ugettext as _
     }
 
     function btn_add(){
-        var table = $('#table_endPoint').DataTable();
+
+        var table1 = $('#table_endPoint').DataTable();
         var endpoint_id= $('td.t1 input[type="checkbox"]:checked').map(function() {
-            var this_tr = $(this).parent().parent();
-            var this_td_data = $(this_tr).find('td').eq(1).text();
-            console.log("td_data",this_td_data);
-            return this_td_data;}).get();
-        alert(endpoint_id);
+            var this_tr1 = $(this).parent().parent();
+            var this_td_data1 = $(this_tr1).find('td').eq(1).text();
+            //console.log("td_data1",this_td_data1);
+            return this_td_data1;}).get();
+        //alert(endpoint_id);
+
+        var table2 = $('#table_acanoClient').DataTable();
+        var user_id= $('td.t2 input[type="checkbox"]:checked').map(function() {
+            var this_tr2 = $(this).parent().parent();
+            var this_td_data2 = $(this_tr2).find('td').eq(1).text();
+            //console.log("td_data2",this_td_data2);
+            return this_td_data2;}).get();
+        //alert(user_id);
+
+
         var start_date = $('#start_date').val();
         var end_date = $('#end_date').val();
         var conferencename = $('#conferencename').val();
@@ -454,6 +468,24 @@ from django.utils.translation import ugettext as _
             swal("Error","conferencename 을 선택하세오", "warning");
             lock = 1;
         }
+        else if(callid == '') {
+            swal("Error","callid 를 입력해주세요", "warning");
+            lock = 1;
+        }
+        else if(callid >99999999 | callid<0) {
+            swal("Error","callid 는  숫자 8자리 까지만 입력가능합니다", "warning");
+            lock = 1;
+        }
+        else if(bandwidth == '') {
+            swal("Error","bandwidth 를 입력해주세요", "warning");
+            lock = 1;
+        }
+        else if(bandwidth >2000000 | bandwidth<0) {
+            swal("Error","bandwidth 는  1 ~ 2,000,000 사이의 값만 입력가능합니다", "warning");
+            lock = 1;
+        }
+
+
 
 
         if(lock ==0){
@@ -468,7 +500,8 @@ from django.utils.translation import ugettext as _
                     callid: callid,
                     bandwidth: bandwidth,
                     userpassword: userpassword,
-                    endpoint_id:endpoint_id
+                    endpoint_id:endpoint_id,
+                    user_id:user_id
 
                 },
                 success: function (data) {
@@ -480,7 +513,7 @@ from django.utils.translation import ugettext as _
                     else if (data.return != 'success') {
                         swal({
                             title: "Warning",
-                            text: "ID 중복",
+                            text: "등록 실패",
                             icon: "warning",
                             buttons: true,
                             dangerMode: false,

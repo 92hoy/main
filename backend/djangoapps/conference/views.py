@@ -425,7 +425,7 @@ def reserveConference(request):
     for data3 in resDataJson2:
         reData = dict()
         res_user = api_usersId(data3['@id'])
-
+        reData['user_id'] = res_user['user']['@id']
         reData['userJid'] = res_user['user']['userJid']
         reData['name'] = res_user['user']['name']
         reData['email'] = res_user['user']['email']
@@ -434,7 +434,6 @@ def reserveConference(request):
 
 
     context = {'data': data_list,'data2': data_list2,'data3': acano_list}
-
 
     return render(request, 'conference/reserveConference.html', context)
 
@@ -486,7 +485,7 @@ def reserveConference_add(request):
         #---------endpoint insert-----------
 
         endpoint_id = request.POST.getlist('endpoint_id[]')
-        print("endpoint_id==",endpoint_id)
+        print("reserve_endpoint_id==",endpoint_id)
 
         for data in endpoint_id:
             with connections['default'].cursor() as cur:
@@ -497,6 +496,28 @@ def reserveConference_add(request):
                      VALUES ('{pk_seq}',
                               '{ep_id}')
                  '''.format(ep_id=data, pk_seq=pk_seq)
+                cur.execute(query)
+
+        #---------user insert-----------
+        user_id = request.POST.getlist('user_id[]')
+        print("reserve_user_id ==", user_id)
+
+        for aa in user_id:
+            user_data = api_usersId(aa)
+
+            with connections['default'].cursor() as cur:
+                query = '''
+                     insert into kotech_cisco_cms.cms_resv_cospace_user
+                                  (resv_seq,
+                                   userjid,
+                                   name,
+                                   email
+                                   )
+                     VALUES ('{pk_seq}',
+                              '{userjid}',
+                              '{name}',
+                              '{email}')
+                 '''.format(userjid=user_data['user']['userJid'], name=user_data['user']['name'], email=user_data['user']['email'], pk_seq=pk_seq)
                 cur.execute(query)
 
 
