@@ -203,31 +203,63 @@ from django.utils.translation import ugettext as _
                     <tr>
                         <td>${user['callLeg']['name']}</td>
                         <td>${user['callLeg']['originalRemoteParty']}</td>
-                        <td style="text-align: center">
+                        <td style="text-align: center" class="monitoring-td">
+                            % if user['callLeg']['configuration']['rxAudioMute'] == 'true':
+                            <a href="#"><img src="/static/common/img/mic.png" alt="logo" class="conference_img on" width="60px" height="60px" id="user_rxAudio_o">
+                            <img src="/static/common/img/mic_x.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_rxAudio_x"></a>
+                            % else:
+                            <a href="#"><img src="/static/common/img/mic.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_rxAudio_o">
+                            <img src="/static/common/img/mic_x.png" alt="logo" class="conference_img on" width="60px" height="60px" id="user_rxAudio_x"></a>
+                            % endif
+
+                            % if user['callLeg']['configuration']['txVideoMute'] == 'true':
+                            <a href="#"><img src="/static/common/img/video.png" alt="logo" class="conference_img on" width="60px" height="60px" id="user_txVideo_o">
+                            <img src="/static/common/img/video_x.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_txVideo_x"></a>
+                            % else:
+                            <a href="#"><img src="/static/common/img/video.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_txVideo_o">
+                            <img src="/static/common/img/video_x.png" alt="logo" class="conference_img on" width="60px" height="60px" id="user_txVideo_x"></a>
+                            % endif
+
+                            % if user['callLeg']['configuration']['rxVideoMute'] == 'true':
+                            <a href="#"><img src="/static/common/img/volume.png" alt="logo" class="conference_img on" width="60px" height="60px" id="user_rxVideo_o">
+                            <img src="/static/common/img/volume_x.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_rxVideo_x"></a>
+                            % else:
+                            <a href="#"><img src="/static/common/img/volume.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_rxVideo_o">
+                            <img src="/static/common/img/volume_x.png" alt="logo" class="conference_img on" width="60px" height="60px" id="user_rxVideo_x"></a>
+                            % endif
+
+                            % if user['callLeg']['configuration']['presentationContributionAllowed'] == 'true':
+                            <a href="#"><img src="/static/common/img/fileshared.png" alt="logo" class="conference_img on" width="60px" height="60px" id="user_presentationContributionAllowed_o">
+                            <img src="/static/common/img/fileshared_x.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_presentationContributionAllowed_x"></a>
+                            % else:
+                            <a href="#"><img src="/static/common/img/fileshared.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_presentationContributionAllowed_o">
+                            <img src="/static/common/img/fileshared_x.png" alt="logo" class="conference_img on" width="60px" height="60px" id="user_presentationContributionAllowed_x"></a>
+                            % endif
+
+                            % if user['callLeg']['configuration']['presentationViewingAllowed'] == 'true':
+                            <a href="#"><img src="/static/common/img/view.png" alt="logo" class="conference_img on" width="60px" height="60px" id="user_presentationViewingAllowed_o">
+                            <img src="/static/common/img/view_x.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_presentationViewingAllowed_x"></a>
+                            % else:
+                            <a href="#"><img src="/static/common/img/view.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_presentationViewingAllowed_o">
+                            <img src="/static/common/img/view_x.png" alt="logo" class="conference_img on" width="60px" height="60px" id="user_presentationViewingAllowed_x"></a>
+                            % endif
+
                             <!--
-                            <a href="#"><img src="/static/common/img/mic.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_rxAudio_o"></a>
-                            <a href="#"><img src="/static/common/img/mic_x.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_rxAudio_x"></a>
-                            <a href="#"><img src="/static/common/img/video.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_txVideo_o"></a>
-                            <a href="#"><img src="/static/common/img/video_x.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_txVideo_x"></a>
-                            <a href="#"><img src="/static/common/img/volume.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_rxVideo_o"></a>
-                            <a href="#"><img src="/static/common/img/volume_x.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_rxVideo_x"></a>
-                            <a href="#"><img src="/static/common/img/fileshared.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_presentationContributionAllowed_o"></a>
-                            <a href="#"><img src="/static/common/img/fileshared_x.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_presentationContributionAllowed_x"></a>
-                            <a href="#"><img src="/static/common/img/view.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_presentationViewingAllowed_o"></a>
-                            <a href="#"><img src="/static/common/img/view_x.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_presentationViewingAllowed_x"></a>
-                            -->
-                            <div id="rxAudioMute" style="display: none;">${user['callLeg']['configuration']['rxAudioMute']}</div>
+                            <div id="rxAudioMute" class="conference_val" style="display: none;">${user['callLeg']['configuration']['rxAudioMute']}</div>
                             <div id="txVideoMute" style="display: none;">${user['callLeg']['configuration']['txVideoMute']}</div>
                             <div id="rxVideoMute" style="display: none;">${user['callLeg']['configuration']['rxVideoMute']}</div>
                             <div id="presentationContributionAllowed" style="display: none;">${user['callLeg']['configuration']['presentationContributionAllowed']}</div>
                             <div id="presentationViewingAllowed" style="display: none;">${user['callLeg']['configuration']['presentationViewingAllowed']}</div>
+                            -->
                             <ul>
                             <li>rxAudioMute : ${user['callLeg']['configuration']['rxAudioMute']}</li>
                             <li>txVideoMute : ${user['callLeg']['configuration']['txVideoMute']}</li>
                             <li>rxVideoMute : ${user['callLeg']['configuration']['rxVideoMute']}</li>
                             <li>presentationContributionAllowed : ${user['callLeg']['configuration']['presentationContributionAllowed']}</li>
                             <li>presentationViewingAllowed : ${user['callLeg']['configuration']['presentationViewingAllowed']}</li>
-                        </ul></td>
+                        </ul>
+                        <!-- -->
+                        </td>
                         <td style="text-align: center;"><button uid="${user['callLeg']['@id']}" class="btn btn-danger btn_disconnect">Disconnect</button></td>
                         <td><ul>
                             <li>Connected at ${user['callLeg']['status']['durationSeconds']}</li>
@@ -379,45 +411,9 @@ from django.utils.translation import ugettext as _
         })
 
 
-        if($("#rxAudioMute").text() == 'true'){
-            $("#user_rxAudio_o").addClass('on');
-            $("#user_rxAudio_x").removeClass('on');
-        }else{
-            $("#user_rxAudio_o").removeClass('on');
-            $("#user_rxAudio_x").addClass('on');
-        }
-
-        if($("#txVideoMute").text() == 'true'){
-            $("#user_txVideo_o").addClass('on');
-            $("#user_txVideo_x").removeClass('on');
-        }else{
-            $("#user_txVideo_o").removeClass('on');
-            $("#user_txVideo_x").addClass('on');
-        }
-
-        if($("#rxVideoMute").text() == 'true'){
-            $("#user_rxVideo_o").addClass('on');
-            $("#user_rxVideo_x").removeClass('on');
-        }else{
-            $("#user_rxVideo_o").removeClass('on');
-            $("#user_rxVideo_x").addClass('on');
-        }
-
-        if($("#presentationContributionAllowed").text() == 'true'){
-            $("#user_presentationContributionAllowed_o").addClass('on');
-            $("#user_presentationContributionAllowed_x").removeClass('on');
-        }else{
-            $("#user_presentationContributionAllowed_o").removeClass('on');
-            $("#user_presentationContributionAllowed_x").addClass('on');
-        }
-
-        if($("#presentationViewingAllowed").text() == 'true'){
-            $("#user_presentationViewingAllowed_o").addClass('on');
-            $("#user_presentationViewingAllowed_x").removeClass('on');
-        }else{
-            $("#user_presentationViewingAllowed_o").removeClass('on');
-            $("#user_presentationViewingAllowed_x").addClass('on');
-        }
+        $(".monitoring-td a").click(function(){
+            console.log($(this).find('img')) ;
+        })
 
 
         $(".btn_disconnect").click(function(){

@@ -41,7 +41,7 @@ def api_coSpaces():
         'Authorization': Authorization
     }
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -59,7 +59,7 @@ def api_coSpaces():
     for n in range(0, int(requestCnt)):
         url = 'https://14.63.53.22:449/api/v1/coSpaces?offset={offset}&limit=20'.format(offset=n*20)
         res = requests.get(url, headers=headers, verify=False)
-        res.encoding = None
+        res.encoding = 'UTF-8'
         res_data = str(res.text)
         res_o = xmltodict.parse(res_data)
         res_data = json.dumps(res_o)
@@ -104,7 +104,7 @@ def api_coSpaceId(id, request=None):
 
     else:
         r = requests.get(url, headers=headers, verify=False)
-        r.encoding = None
+        r.encoding = 'UTF-8'
         resData = str(r.text)
 
         # xml to json
@@ -131,7 +131,7 @@ def api_coSpaceDel(request):
     for coSpaceId in coSpaceId_list:
         url = 'https://14.63.53.22:449/api/v1/coSpaces/' + coSpaceId
         r = requests.delete(url, headers=headers, verify=False)
-        r.encoding = None
+        r.encoding = 'UTF-8'
         print('coSpaceDel s ---------------------------------')
         print(str(r.status_code), str(r.text))
         print('coSpaceDel e ---------------------------------')
@@ -153,7 +153,7 @@ def api_activeCall(callstatus=None):
     }
 
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -177,7 +177,7 @@ def api_activeCall(callstatus=None):
     for n in range(0, int(requestCnt)):
         url = 'https://14.63.53.22:449/api/v1/calls?offset={offset}&limit=20'.format(offset=n*20)
         res = requests.get(url, headers=headers, verify=False)
-        res.encoding = None
+        res.encoding = 'UTF-8'
         res_data = str(res.text)
         res_o = xmltodict.parse(res_data)
         res_data = json.dumps(res_o)
@@ -207,7 +207,7 @@ def api_activeCallId(id):
     url = 'https://14.63.53.22:449/api/v1/calls/' + id
 
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -233,7 +233,7 @@ def api_callLegs(id):
     url = 'https://14.63.53.22:449/api/v1/callLegs/' + id
 
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -259,7 +259,7 @@ def api_callLegs_delete(id):
     url = 'https://14.63.53.22:449/api/v1/callLegs/' + id
 
     r = requests.delete(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
 
     print('api_callLegs_delete s ---------------------------------')
     print(str(r.status_code), str(r.text))
@@ -304,7 +304,7 @@ def api_callLegProfiles_Id(id):
     }
 
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -346,7 +346,7 @@ def api_callLegProfiles_Delete(id):
     }
     url = 'https://14.63.53.22:449/api/v1/callLegProfiles/' + id
     r = requests.delete(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     print('api_callLegProfiles_Delete s ---------------------------------')
     print(str(r.status_code), str(r.text))
     print('api_callLegProfiles_Delete e ---------------------------------')
@@ -384,7 +384,7 @@ def api_callProfiles_Id(id):
         'Authorization': Authorization
     }
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -426,7 +426,7 @@ def api_callProfiles_Delete(id):
     }
     url = 'https://14.63.53.22:449/api/v1/callProfiles/' + id
     r = requests.delete(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     print('api_callProfiles_Delete s ---------------------------------')
     print(str(r.status_code), str(r.text))
     print('api_callProfiles_Delete e ---------------------------------')
@@ -444,7 +444,7 @@ def api_activeCallLegs(id):
         'Authorization': Authorization
     }
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -464,7 +464,7 @@ def api_activeCallLegs(id):
     for n in range(0, int(requestCnt)):
         url = 'https://14.63.53.22:449/api/v1/calls/{id}/callLegs?offset={offset}&limit=20'.format(offset=n*20, id=id)
         res = requests.get(url, headers=headers, verify=False)
-        res.encoding = None
+        res.encoding = 'UTF-8'
         res_data = str(res.text)
         res_o = xmltodict.parse(res_data)
         res_data = json.dumps(res_o)
@@ -498,7 +498,7 @@ def api_activeCallLegsId(id):
         'Authorization': Authorization
     }
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -524,7 +524,7 @@ def api_templateLegPro(id):
         'Authorization': Authorization
     }
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -549,7 +549,7 @@ def api_templatePro(id):
         'Authorization': Authorization
     }
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -574,7 +574,7 @@ def api_mornitoringStatus():
         'Authorization': Authorization
     }
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -722,7 +722,7 @@ def api_cdr_id(id, request=None):
 
     else:
         r = requests.get(url, headers=headers, verify=False)
-        r.encoding = None
+        r.encoding = 'UTF-8'
         resData = str(r.text)
 
         # xml to json
@@ -749,7 +749,7 @@ def api_cdr_del(request):
     for cdrId in cdr_listID:
         url = 'https://14.63.53.22:449/api/v1/system/cdrReceivers/' + cdrId
         r = requests.delete(url, headers=headers, verify=False)
-        r.encoding = None
+        r.encoding = 'UTF-8'
 
         print(url)
         print('api_cdr_del s _>_>_>_>_>_>_>_>_>')
