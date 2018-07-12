@@ -248,6 +248,31 @@ def api_callLegs(id):
     return resDataJson
 
 
+#from backend.djangoapps.common.api.views import api_callLegs_delete
+def api_callLegs_delete(id):
+    Authorization = settings.AUTHORIZATION
+
+    # requests GET
+    headers = {
+        'Authorization': Authorization
+    }
+    url = 'https://14.63.53.22:449/api/v1/callLegs/' + id
+
+    r = requests.delete(url, headers=headers, verify=False)
+    r.encoding = None
+
+    print('api_callLegs_delete s ---------------------------------')
+    print(str(r.status_code), str(r.text))
+    print('api_callLegs_delete e ---------------------------------')
+
+    error_id = list()
+
+    if r.status_code != 200:
+        error_id.append(r)
+
+    return error_id
+
+
 #from backend.djangoapps.common.api.views import api_callLegProfiles_POST
 def api_callLegProfiles_POST(callLegProfiles_data):
 
