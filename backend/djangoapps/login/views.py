@@ -102,13 +102,13 @@ def checkLicense(license):
 
     if system_time > check_time:
         if check_data == encData:
-            print("success")
+            print("success : usual logic")
             return "success"
         else:
             print("error")
             return "error"
     else:
-        print("success")
+        print("success : time except")
         return "success"
 
 def login(request):
