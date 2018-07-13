@@ -106,21 +106,21 @@ from django.utils.translation import ugettext as _
 
     <!--<div style="padding: 10px; margin-bottom:40px;">-->
 
-        <!--<div style="float: left; margin-right: 10px; padding-top:6px;">Search</div>
-        <input type="text" class="form-control" id="search_str" placeholder="Search" required="" style="width:20%; float: left; margin-right:10px;">
-        <button id="search_btn" class="md-btn md-raised mb-2 w-xs white" style="float: left">Search</button>
-        -->
+    <!--<div style="float: left; margin-right: 10px; padding-top:6px;">Search</div>
+    <input type="text" class="form-control" id="search_str" placeholder="Search" required="" style="width:20%; float: left; margin-right:10px;">
+    <button id="search_btn" class="md-btn md-raised mb-2 w-xs white" style="float: left">Search</button>
+    -->
 
 
-   <!-- </div>-->
+    <!-- </div>-->
 
 
 
     <div class="box" style="padding: 10px;">
-<div style="height: 100px;">
-    <h1><b style="padding-left: 50px;font-weight: normal;">${context['calls']['call']['name']}(${context['coSpace']['coSpace']['callId']})</b><img src="/static/common/img/message.png" alt="logo" class="cm_img"></h1>
+        <div style="height: 100px;">
+            <h1><b style="padding-left: 50px;font-weight: normal;">${context['calls']['call']['name']}(${context['coSpace']['coSpace']['callId']})</b><img src="/static/common/img/message.png" alt="logo" class="cm_img"></h1>
 
-</div>
+        </div>
         <div class="table-responsive">
             <div class="row" style="border-bottom: 2px groove #CBD8FB;">
                 <div class="container">
@@ -157,7 +157,7 @@ from django.utils.translation import ugettext as _
                         <div class="col-md">
                             <br><br><br>
                             <a href="#layer_new" class="layouts">
-                            <button class="md-btn md-raised mb-2 w-xs blue dialog__trigger" style="width: 230px; height:60px; margin: 2px;">Conference Layouts</button>
+                                <button class="md-btn md-raised mb-2 w-xs blue dialog__trigger" style="width: 230px; height:60px; margin: 2px;">Conference Layouts</button>
                             </a>
                             <br>
                             <button class="md-btn md-raised mb-2 w-xs grey dialog__trigger" style="background-color: #E9AB71; width: 230px; height:40px; margin: 2px;" id="Mute_audio">Mute All Audio</button>
@@ -167,12 +167,49 @@ from django.utils.translation import ugettext as _
                         </div>
                         <div class="col-s" >
                             <br><br><br><br><br><br>
+                            <!--
                             <a href="#"><img src="/static/common/img/volume.png" alt="logo" class="cm_img" width="60px" height="60px" id="vol_o"></a>
+                            -->
+                            <!--
+                            <div><input type="checkbox" style="display: none;"><img src="/static/common/img/mic.png" alt="logo" class="con_check_all" width="60px" height="60px" name="rxAudioMute_all"></div>
+                            <div><input type="checkbox" style="display: none;"><img src="/static/common/img/volume.png" alt="logo" class="con_check_all" width="60px" height="60px" name="txAudioMute_all"></div>
+                            <div><input type="checkbox" style="display: none;"><img src="/static/common/img/video.png" alt="logo" class="con_check_all" width="60px" height="60px" name="txVideoMute_all"></div>
+                            -->
+
+                            <div class="mute_all_div">
+                                <button>
+                                    <img src="/static/common/img/mic.png" alt="logo" class="con_check_all" width="60px" height="60px" id="rxAudioMute_o">
+                                </button><button>
+                                    <img src="/static/common/img/mic_x.png" alt="logo" class="con_check_all" width="60px" height="60px" id="rxAudioMute_x">
+                                </button>
+                            </div>
+                            <div class="mute_all_div">
+                                <button>
+                                    <img src="/static/common/img/volume.png" alt="logo" class="con_check_all" width="60px" height="60px" id="txAudioMute_o">
+                                </button>
+                                <button>
+                                    <img src="/static/common/img/volume_x.png" alt="logo" class="con_check_all" width="60px" height="60px" id="txAudioMute_x">
+                                </button>
+                            </div>
+                            <div class="mute_all_div">
+                                <button>
+                                    <img src="/static/common/img/video.png" alt="logo" class="con_check_all" width="60px" height="60px" id="txVideoMute_o">
+                                </button><button>
+                                    <img src="/static/common/img/video_x.png" alt="logo" class="con_check_all" width="60px" height="60px" id="txVideoMute_x">
+                                </button>
+                            </div>
+
+                            <!--
+                            <div><input type="checkbox" style="display: none;"><img src="/static/common/img/volume.png" alt="logo" class="con_check_all" width="60px" height="60px" name="txAudioMute_all"></div>
+                            <div><input type="checkbox" style="display: none;"><img src="/static/common/img/video.png" alt="logo" class="con_check_all" width="60px" height="60px" name="txVideoMute_all"></div>
+
                             <a href="#"><img src="/static/common/img/volume_x.png" alt="logo" class="cm_img" width="60px" height="60px" id="vol_x"></a>
+
                             <br>
                             <a href="#"><img src="/static/common/img/video.png" alt="logo" class="cm_img" width="60px" height="60px" id="video_o"></a>
                             <a href="#"><img src="/static/common/img/video_x.png" alt="logo" class="cm_img" width="60px" height="60px" id="video_x"></a>
                             <br>
+                            -->
                         </div>
                         <div class="col-sm" style=" vertical-align: middle; text-align: center; ">
 
@@ -200,87 +237,69 @@ from django.utils.translation import ugettext as _
                 </thead>
                 <tbody class="monitoring">
                 % for user in context['callLegs_list']:
-                    <tr>
-                        <td>${user['callLeg']['name']}</td>
-                        <td>${user['callLeg']['originalRemoteParty']}</td>
-                        <td style="text-align: center" class="monitoring-td">
-                            % if user['callLeg']['configuration']['rxAudioMute'] == 'true':
-                            <a href="#"><img src="/static/common/img/mic.png" alt="logo" class="conference_img on" width="60px" height="60px" id="user_rxAudio_o">
-                            <img src="/static/common/img/mic_x.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_rxAudio_x"></a>
-                            % else:
-                            <a href="#"><img src="/static/common/img/mic.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_rxAudio_o">
-                            <img src="/static/common/img/mic_x.png" alt="logo" class="conference_img on" width="60px" height="60px" id="user_rxAudio_x"></a>
-                            % endif
+                <tr>
+                    <td>${user['callLeg']['name']}</td>
+                    <td>${user['callLeg']['originalRemoteParty']}</td>
+                    <td style="text-align: center" class="monitoring-td">
+                        <div class="monitoring-td-id" style="display: none;">${user['callLeg']['@id']}</div>
+                        % if user['callLeg']['configuration']['rxAudioMute'] == 'true':
+                        <div><input type="checkbox"><img src="/static/common/img/mic.png" alt="logo" class="con_checkbox" width="60px" height="60px" name="rxAudioMute"></div>
+                        % else:
+                        <div><input type="checkbox" checked><img src="/static/common/img/mic_x.png" alt="logo" class="con_checkbox" width="60px" height="60px" name="rxAudioMute"></div>
+                        % endif
 
-                            % if user['callLeg']['configuration']['txVideoMute'] == 'true':
-                            <a href="#"><img src="/static/common/img/video.png" alt="logo" class="conference_img on" width="60px" height="60px" id="user_txVideo_o">
-                            <img src="/static/common/img/video_x.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_txVideo_x"></a>
-                            % else:
-                            <a href="#"><img src="/static/common/img/video.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_txVideo_o">
-                            <img src="/static/common/img/video_x.png" alt="logo" class="conference_img on" width="60px" height="60px" id="user_txVideo_x"></a>
-                            % endif
+                        % if user['callLeg']['configuration']['txAudioMute'] == 'true':
+                        <div><input type="checkbox"><img src="/static/common/img/volume.png" alt="logo" class="con_checkbox" width="60px" height="60px" name="txAudioMute"></div>
+                        % else:
+                        <div><input type="checkbox" checked><img src="/static/common/img/volume_x.png" alt="logo" class="con_checkbox" width="60px" height="60px" name="txAudioMute"></div>
+                        % endif
 
-                            % if user['callLeg']['configuration']['rxVideoMute'] == 'true':
-                            <a href="#"><img src="/static/common/img/volume.png" alt="logo" class="conference_img on" width="60px" height="60px" id="user_rxVideo_o">
-                            <img src="/static/common/img/volume_x.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_rxVideo_x"></a>
-                            % else:
-                            <a href="#"><img src="/static/common/img/volume.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_rxVideo_o">
-                            <img src="/static/common/img/volume_x.png" alt="logo" class="conference_img on" width="60px" height="60px" id="user_rxVideo_x"></a>
-                            % endif
+                        % if user['callLeg']['configuration']['txVideoMute'] == 'true':
+                        <div><input type="checkbox"><img src="/static/common/img/video.png" alt="logo" class="con_checkbox" width="60px" height="60px" name="txVideoMute"></div>
+                        % else:
+                        <div><input type="checkbox" checked><img src="/static/common/img/video_x.png" alt="logo" class="con_checkbox" width="60px" height="60px" name="txVideoMute"></div>
+                        % endif
 
-                            % if user['callLeg']['configuration']['presentationContributionAllowed'] == 'true':
-                            <a href="#"><img src="/static/common/img/fileshared.png" alt="logo" class="conference_img on" width="60px" height="60px" id="user_presentationContributionAllowed_o">
-                            <img src="/static/common/img/fileshared_x.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_presentationContributionAllowed_x"></a>
-                            % else:
-                            <a href="#"><img src="/static/common/img/fileshared.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_presentationContributionAllowed_o">
-                            <img src="/static/common/img/fileshared_x.png" alt="logo" class="conference_img on" width="60px" height="60px" id="user_presentationContributionAllowed_x"></a>
-                            % endif
+                        % if user['callLeg']['configuration']['rxVideoMute'] == 'true':
+                        <div><input type="checkbox"><img src="/static/common/img/mpg.png" alt="logo" class="con_checkbox" width="60px" height="60px" name="rxVideoMute"></div>
+                        % else:
+                        <div><input type="checkbox" checked><img src="/static/common/img/mpg_x.png" alt="logo" class="con_checkbox" width="60px" height="60px" name="rxVideoMute"></div>
+                        % endif
 
-                            % if user['callLeg']['configuration']['presentationViewingAllowed'] == 'true':
-                            <a href="#"><img src="/static/common/img/view.png" alt="logo" class="conference_img on" width="60px" height="60px" id="user_presentationViewingAllowed_o">
-                            <img src="/static/common/img/view_x.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_presentationViewingAllowed_x"></a>
-                            % else:
-                            <a href="#"><img src="/static/common/img/view.png" alt="logo" class="conference_img" width="60px" height="60px" id="user_presentationViewingAllowed_o">
-                            <img src="/static/common/img/view_x.png" alt="logo" class="conference_img on" width="60px" height="60px" id="user_presentationViewingAllowed_x"></a>
-                            % endif
+                        % if user['callLeg']['configuration']['presentationContributionAllowed'] == 'true':
+                        <div><input type="checkbox"><img src="/static/common/img/fileshared.png" alt="logo" class="con_checkbox" width="60px" height="60px" name="presentationContributionAllowed"></div>
+                        % else:
+                        <div><input type="checkbox" checked><img src="/static/common/img/fileshared_x.png" alt="logo" class="con_checkbox" width="60px" height="60px" name="presentationContributionAllowed"></div>
+                        % endif
 
-                            <!--
-                            <div id="rxAudioMute" class="conference_val" style="display: none;">${user['callLeg']['configuration']['rxAudioMute']}</div>
-                            <div id="txVideoMute" style="display: none;">${user['callLeg']['configuration']['txVideoMute']}</div>
-                            <div id="rxVideoMute" style="display: none;">${user['callLeg']['configuration']['rxVideoMute']}</div>
-                            <div id="presentationContributionAllowed" style="display: none;">${user['callLeg']['configuration']['presentationContributionAllowed']}</div>
-                            <div id="presentationViewingAllowed" style="display: none;">${user['callLeg']['configuration']['presentationViewingAllowed']}</div>
-                            -->
-                            <ul>
-                            <li>rxAudioMute : ${user['callLeg']['configuration']['rxAudioMute']}</li>
-                            <li>txVideoMute : ${user['callLeg']['configuration']['txVideoMute']}</li>
-                            <li>rxVideoMute : ${user['callLeg']['configuration']['rxVideoMute']}</li>
-                            <li>presentationContributionAllowed : ${user['callLeg']['configuration']['presentationContributionAllowed']}</li>
-                            <li>presentationViewingAllowed : ${user['callLeg']['configuration']['presentationViewingAllowed']}</li>
-                        </ul>
-                        <!-- -->
-                        </td>
-                        <td style="text-align: center;"><button uid="${user['callLeg']['@id']}" class="btn btn-danger btn_disconnect">Disconnect</button></td>
-                        <td><ul>
-                            <li>Connected at ${user['callLeg']['status']['durationSeconds']}</li>
-                            % if 'txVideo' in user['callLeg']['status'].keys():
-                            <li>Tx : ${user['callLeg']['status']['txVideo']['width']} x ${user['callLeg']['status']['txVideo']['height']}, ${user['callLeg']['status']['txVideo']['codec']}, ${user['callLeg']['status']['txAudio']['codec']} </li>
-                            % else :
-                            <li>Tx : ${user['callLeg']['status']['txAudio']['codec']} </li>
-                            % endif
-                            % if 'rxAudio' in user['callLeg']['status'].keys():
-                            <li>Rx : ${user['callLeg']['status']['rxAudio']['codec']}</li>
-                            % endif
-                        </ul></td>
-                        <td style="text-align: center;">
-                            % if 'layout' in user['callLeg']['status'].keys():
-                            <img src="/static/common/img/${user['callLeg']['status']['layout']}.png" alt="logo" class="cm_img" >
-                            <br>
-                            ${user['callLeg']['status']['layout']}
-                            % else:
-                            % endif
-                        </td>
-                    </tr>
+                        % if user['callLeg']['configuration']['presentationViewingAllowed'] == 'true':
+                        <div><input type="checkbox"><img src="/static/common/img/view.png" alt="logo" class="con_checkbox" width="60px" height="60px" name="presentationViewingAllowed"></div>
+                        % else:
+                        <div><input type="checkbox" checked><img src="/static/common/img/view_x.png" alt="logo" class="con_checkbox" width="60px" height="60px" name="presentationViewingAllowed"></div>
+                        % endif
+
+                    </td>
+                    <td style="text-align: center;"><button uid="${user['callLeg']['@id']}" class="btn btn-danger btn_disconnect">Disconnect</button></td>
+                    <td><ul>
+                        <li>Connected at ${user['callLeg']['status']['durationSeconds']}</li>
+                        % if 'txVideo' in user['callLeg']['status'].keys():
+                        <li>Tx : ${user['callLeg']['status']['txVideo']['width']} x ${user['callLeg']['status']['txVideo']['height']}, ${user['callLeg']['status']['txVideo']['codec']}, ${user['callLeg']['status']['txAudio']['codec']} </li>
+                        % else :
+                        <li>Tx : ${user['callLeg']['status']['txAudio']['codec']} </li>
+                        % endif
+                        % if 'rxAudio' in user['callLeg']['status'].keys():
+                        <li>Rx : ${user['callLeg']['status']['rxAudio']['codec']}</li>
+                        % endif
+                    </ul></td>
+                    <td style="text-align: center;">
+                        % if 'layout' in user['callLeg']['status'].keys():
+                        <img src="/static/common/img/${user['callLeg']['status']['layout']}.png" alt="logo" class="cm_img" >
+                        <br>
+                        ${user['callLeg']['status']['layout']}
+                        % else:
+                        % endif
+                    </td>
+                </tr>
                 % endfor
                 </tbody>
             </table>
@@ -318,11 +337,16 @@ from django.utils.translation import ugettext as _
     .monitoring td li {
         display: block;
     }
-    .conference_img {
+    .monitoring-td div{
+        display: inline-block;
+    }
+    .monitoring-td input[type=checkbox] {
         display: none;
     }
-    .conference_img.on {
-        display: inline-block;
+
+    .mute_all_div button {
+        border: none;
+        background-color: #f3f6f9eb;
     }
 </style>
 <!-- NEW LAYER POPUP -->
@@ -342,27 +366,27 @@ from django.utils.translation import ugettext as _
                     <hr width="100%" color="#d9d9d9">
                 </div>
                 <div style="text-align: center;">
-                    <table style="display: inline-block; width:100%; margin-bottom: 20px; ">
+                    <table style="display: inline-block; width:100%; margin-bottom: 20px; " id="allLayout">
 
                         <tr>
-                            <td><button id="img_click" href="#" class="btn btn-outline-light"><img src="/static/common/img/notSet.png" alt="logo" class="cm_img" ><br>Not Set</button></td>
-                            <td><button id="img_click" href="#" class="btn btn-outline-light"><img src="/static/common/img/allEqual.png" alt="logo" class="cm_img" ><br>AllEqual</button></td>
-                            <td><button id="img_click" href="#" class="btn btn-outline-light"><img src="/static/common/img/allEqualQuarters.png" alt="logo" class="cm_img" ><br>AllEqual<br>Quarters</button></td>
-                            <td><button id="img_click" href="#" class="btn btn-outline-light"><img src="/static/common/img/allEqualNinths.png" alt="logo" class="cm_img" ><br>AllEqual<br>Nineth</button></td>
-                            <td><button id="img_click" href="#" class="btn btn-outline-light"><img src="/static/common/img/allEqualSixteenths.png" alt="logo" class="cm_img" ><br>AllEqual<br>Sisteenth</button></td>
+                            <td><button id="notSet" href="#" class="btn btn-outline-light"><img src="/static/common/img/notSet.png" alt="logo" class="cm_img" ><br>Not Set</button></td>
+                            <td><button id="allEqual" href="#" class="btn btn-outline-light"><img src="/static/common/img/allEqual.png" alt="logo" class="cm_img" ><br>AllEqual</button></td>
+                            <td><button id="allEqualQuarters" href="#" class="btn btn-outline-light"><img src="/static/common/img/allEqualQuarters.png" alt="logo" class="cm_img" ><br>AllEqual<br>Quarters</button></td>
+                            <td><button id="allEqualNinths" href="#" class="btn btn-outline-light"><img src="/static/common/img/allEqualNinths.png" alt="logo" class="cm_img" ><br>AllEqual<br>Nineth</button></td>
+                            <td><button id="allEqualSixteenths" href="#" class="btn btn-outline-light"><img src="/static/common/img/allEqualSixteenths.png" alt="logo" class="cm_img" ><br>AllEqual<br>Sisteenth</button></td>
                         </tr>
-                         <tr>
-                            <td><button id="img_click" href="#" class="btn btn-outline-light"><img src="/static/common/img/allEqualTwentyfifths.png" alt="logo" class="cm_img" ><br>AllEqual<br>Twentyfifths</button></td>
-                            <td><button id="img_click" href="#" class="btn btn-outline-light"><img src="/static/common/img/speakerOnly.png" alt="logo" class="cm_img" ><br>Speaker<br>Only</button></td>
-                            <td><button id="img_click" href="#" class="btn btn-outline-light"><img src="/static/common/img/Telepresence.png" alt="logo" class="cm_img" ><br>Telepresence</button></td>
-                            <td><button id="img_click" href="#" class="btn btn-outline-light"><img src="/static/common/img/stacked.png" alt="logo" class="cm_img" ><br>Stacked</button></td>
-                            <td><button id="img_click" href="#" class="btn btn-outline-light"><img src="/static/common/img/onePlusFive.png" alt="logo" class="cm_img" ><br>One Plus<br>Five</button></td>
+                        <tr>
+                            <td><button id="allEqualTwentyfifths" href="#" class="btn btn-outline-light"><img src="/static/common/img/allEqualTwentyfifths.png" alt="logo" class="cm_img" ><br>AllEqual<br>Twentyfifths</button></td>
+                            <td><button id="speakerOnly" href="#" class="btn btn-outline-light"><img src="/static/common/img/speakerOnly.png" alt="logo" class="cm_img" ><br>Speaker<br>Only</button></td>
+                            <td><button id="telepresence" href="#" class="btn btn-outline-light"><img src="/static/common/img/Telepresence.png" alt="logo" class="cm_img" ><br>Telepresence</button></td>
+                            <td><button id="stacked" href="#" class="btn btn-outline-light"><img src="/static/common/img/stacked.png" alt="logo" class="cm_img" ><br>Stacked</button></td>
+                            <td><button id="onePlusFive" href="#" class="btn btn-outline-light"><img src="/static/common/img/onePlusFive.png" alt="logo" class="cm_img" ><br>One Plus<br>Five</button></td>
                         </tr>
-                         <tr>
-                            <td><button id="img_click" href="#" class="btn btn-outline-light"><img src="/static/common/img/oneplusSeven.png" alt="logo" class="cm_img" ><br>One Plus<br>Seven</button></td>
-                            <td><button id="img_click" href="#" class="btn btn-outline-light"><img src="/static/common/img/onePlusNine.png" alt="logo" class="cm_img" ><br>One Plus<br>Nine</button></td>
-                            <td><button id="img_click" href="#" class="btn btn-outline-light"><img src="/static/common/img/automatic.png" alt="logo" class="cm_img" ><br>Automatic</button></td>
-                            <td><button id="img_click" href="#" class="btn btn-outline-light"><img src="/static/common/img/onePlusN.png" alt="logo" class="cm_img" ><br>One Plus<br>N</button></td>
+                        <tr>
+                            <td><button id="oneplusSeven" href="#" class="btn btn-outline-light"><img src="/static/common/img/oneplusSeven.png" alt="logo" class="cm_img" ><br>One Plus<br>Seven</button></td>
+                            <td><button id="onePlusNine" href="#" class="btn btn-outline-light"><img src="/static/common/img/onePlusNine.png" alt="logo" class="cm_img" ><br>One Plus<br>Nine</button></td>
+                            <td><button id="automatic" href="#" class="btn btn-outline-light"><img src="/static/common/img/automatic.png" alt="logo" class="cm_img" ><br>Automatic</button></td>
+                            <td><button id="onePlusN" href="#" class="btn btn-outline-light"><img src="/static/common/img/onePlusN.png" alt="logo" class="cm_img" ><br>One Plus<br>N</button></td>
 
                         </tr>
 
@@ -370,50 +394,80 @@ from django.utils.translation import ugettext as _
                 </div>
 
                 <div style="width:48%; float:left; margin-right: 15px;  padding-bottom: 20px;">
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- NEW LAYER POPUP 끝 -->
+    <!-- NEW LAYER POPUP 끝 -->
 </%block>
 
 <%block name="scriptDown">
 <script>
     $(document).ready(function() {
-        $("#vol_x").hide()
-        $("#video_x").hide()
-
-        $("#vol_o").click(function(){
-            $("#vol_x").show()
-            $("#vol_o").hide()
-        });
-        $("#vol_x").click(function(){
-            $("#vol_o").show()
-            $("#vol_x").hide()
-        });
-        $("#video_o").click(function(){
-            $("#video_x").show()
-            $("#video_o").hide()
-        });
-        $("#video_x").click(function(){
-            $("#video_o").show()
-            $("#video_x").hide()
-        });
 
         $("#Mute_audio").click(function(){
-            $("#vol_x").show()
-            $("#vol_o").hide()
-        })
+            $("#rxAudioMute_x").trigger('click');
+            $("#txAudioMute_x").trigger('click');
+        });
         $("#Mute_video").click(function(){
-            $("#video_x").show()
-            $("#video_o").hide()
-        })
+            $("#txVideoMute_x").trigger('click');
+        });
 
+        $(".con_check_all").on('click', function(){
+            var user_key = $(this).attr('id');
+            var user_value = '';
+            if(user_key.match('_x') == null){
+                user_key = user_key.replace('_o', '');
+                user_value = 'true';
+            } else {
+                user_key = user_key.replace('_x', '');
+                user_value = 'false';
+            }
+            all_update(user_key, user_value);
+        });
 
-        $(".monitoring-td a").click(function(){
-            console.log($(this).find('img')) ;
-        })
+        $("img.con_checkbox").on('click', function (e) {
+            var isChecked = $(this).parent().find('input[type=checkbox]').prop('checked');
+            var checked2 = !isChecked;
+            var img_src = $(this).attr('src');
+            var user_key = $(this).attr('name');
+            var user_value = '';
+            var user_api_id = $(this).parent().parent().find('div.monitoring-td-id').text();
+
+            $(this).parent().find('input[type=checkbox]').prop("checked", checked2);
+
+            if(isChecked && img_src.match('_x') != null){ // true로 바꿈
+                $(this).attr('src', img_src.replace('_x', ''));
+                user_value = 'true';
+            } else { // false로 바꿈
+                $(this).attr('src', img_src.replace('.png', '_x.png'));
+                user_value = 'false';
+            }
+
+            $.ajax({
+                url: '/activecall_monitoring/update',
+                type: 'POST',
+                data: {
+                    'csrfmiddlewaretoken': '${csrf_token}',
+                    'user_api_id': user_api_id,
+                    'user_key': user_key,
+                    'user_value': user_value
+                }
+            }).done(function(data){
+                if(data.status == 'fail'){
+                    swal('경고', '변경에 실패하였습니다.', 'warning');
+                } else {
+                    //location.reload();
+                }
+            });
+
+        });
+
+        $("#allLayout button").click(function() {
+            var select_layout = $(this).attr('id');
+            all_update('layout', select_layout);
+        });
 
 
         $(".btn_disconnect").click(function(){
@@ -440,7 +494,7 @@ from django.utils.translation import ugettext as _
                         }
                     }).done(function(ret){
                         if(ret.status == 'success'){
-                                location.reload();
+                            location.reload();
                         } else {
                             swal('경고', '연결 해지에 실패하였습니다.', 'warning');
                         }
@@ -450,12 +504,7 @@ from django.utils.translation import ugettext as _
                 }
             });
         });
-
-
-
     });
-
-
 
     $('.layouts').click(function(){
         var $href = $(this).attr('href');
@@ -494,6 +543,31 @@ from django.utils.translation import ugettext as _
             return false;
         });
 
+    }
+
+    function all_update(user_key, user_value){
+        var call_id = document.location.href;
+        var last_call_id = call_id.length;
+        if(call_id.indexOf('#') != -1){
+            last_call_id = call_id.indexOf('#')
+        }
+        call_id = call_id.substring(call_id.lastIndexOf('/') + 1, last_call_id);
+        $.ajax({
+            url: '/activecall_monitoring/updateAll',
+            type: 'POST',
+            data: {
+                'csrfmiddlewaretoken': '${csrf_token}',
+                'user_key': user_key,
+                'user_value': user_value,
+                'call_id': call_id
+            }
+        }).done(function(data){
+            if(data.status == 'fail'){
+                swal('경고', '변경에 실패하였습니다.', 'warning');
+            } else {
+                $("a.btn-layerClose").trigger('click');
+            }
+        });
     }
 </script>
 </%block>

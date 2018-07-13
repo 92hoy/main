@@ -16,6 +16,7 @@ from backend.djangoapps.common.api.views import api_activeCall
 from backend.djangoapps.common.api.views import api_activeCallId
 from backend.djangoapps.common.api.views import api_activeCallLegs
 from backend.djangoapps.common.api.views import api_callLegs
+from backend.djangoapps.common.api.views import api_callLegs_update
 from backend.djangoapps.common.api.views import api_callLegs_delete
 from backend.djangoapps.common.api.views import api_callLegProfiles_POST
 from backend.djangoapps.common.api.views import api_callLegProfiles_Id
@@ -169,8 +170,6 @@ def activeCall(request):
         reData['tenant'] = res_user['user']['tenant'] if 'tenant' in res_user['user'] else ''
         acano_list.append(reData)
 
-
-
     context = {'data' : res_list ,'data2': data_list,'data3': acano_list}
 
     return render(request, 'conference/activeCall.html', context)
@@ -195,7 +194,7 @@ def activecall_monitoring(request, call_id):
         join_time = time_now - dur_time
 
         callLeg['callLeg']['status']['durationSeconds'] = join_time.strftime('%H:%M')
-        conf_key_list = ['rxAudioMute', 'txVideoMute', 'rxVideoMute', 'rxAudioMute', 'presentationContributionAllowed', 'presentationViewingAllowed']
+        conf_key_list = ['rxAudioMute', 'txVideoMute', 'rxVideoMute', 'txAudioMute', 'presentationContributionAllowed', 'presentationViewingAllowed']
 
         for key_data in conf_key_list:
             if key_data not in callLeg['callLeg']['configuration'].keys():
@@ -218,11 +217,44 @@ def activecall_monitoring(request, call_id):
     return render(request, 'conference/activecall_monitoring.html', context)
 
 
+# active call monitoring update
+def activecall_monitoring_userUpdate(request):
+    error_data = api_callLegs_update(request)
+    status = 'success' if len(error_data) == 0 else 'fail'
+
+    print('activecall_monitoring_userUpdate debug start --------------------------')
+    print('error_date : ', error_data)
+    print('status : ', status)
+    print('activecall_monitoring_userUpdate debug end --------------------------')
+
+    return JsonResponse({'status': status})
+
+
+def activecall_monitoring_userUpdateAll(request):
+    call_id = request.POST.get('call_id')
+    callLeg_data = api_activeCallLegs(call_id)
+
+    error_list = list()
+    for data in callLeg_data:
+        api_status = api_callLegs_update(request, data['@id'])
+        if len(api_status) != 0:
+            error_list.append(api_status)
+
+    status = 'success' if len(error_list) == 0 else 'fail'
+
+    return JsonResponse({'status': status})
+
+
 # active call disconnect
 def activecall_monitoring_userDel(request):
     user_uid = request.POST.get('user_uid')
     del_status = api_callLegs_delete(user_uid)
     status = 'success' if len(del_status) == 0 else 'fail'
+
+    print('activecall_monitoring_userDel debug start --------------------------')
+    print('error_date : ', del_status)
+    print('status : ', status)
+    print('activecall_monitoring_userDel debug end --------------------------')
 
     return JsonResponse({'status': status})
 
