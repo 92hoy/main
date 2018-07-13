@@ -101,15 +101,15 @@ def checkLicense(license):
     check_time = convertTime(check_time)
 
     if system_time > check_time:
-        print("finish")
-        return "finish"
-    else:
         if check_data == encData:
             print("success")
             return "success"
         else:
             print("error")
             return "error"
+    else:
+        print("success")
+        return "success"
 
 def login(request):
 
@@ -119,7 +119,11 @@ def login(request):
         inputPw = request.POST.get('inputPw')
         license = settings.LICENSE
         licenseStatus = checkLicense(license)
-        print(licenseStatus)
+
+        if licenseStatus == 'error':
+            return JsonResponse({'result':'invalidLicense'})
+        elif licenseStatus == 'success':
+            pass
 
         if inputId =='' and inputPw == '' :
             return JsonResponse({'result':'error0'})
