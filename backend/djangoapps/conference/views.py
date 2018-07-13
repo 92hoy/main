@@ -14,6 +14,7 @@ from backend.djangoapps.common.api.views import api_coSpaces_POST
 from backend.djangoapps.common.api.views import api_coSpaceDel
 from backend.djangoapps.common.api.views import api_activeCall
 from backend.djangoapps.common.api.views import api_activeCallId
+from backend.djangoapps.common.api.views import api_activeCallId_delete
 from backend.djangoapps.common.api.views import api_activeCallLegs
 from backend.djangoapps.common.api.views import api_callLegs
 from backend.djangoapps.common.api.views import api_callLegs_update
@@ -241,6 +242,15 @@ def activecall_monitoring_userUpdateAll(request):
             error_list.append(api_status)
 
     status = 'success' if len(error_list) == 0 else 'fail'
+
+    return JsonResponse({'status': status})
+
+
+# 회의 종료
+def activecall_monitoring_callDel(request):
+    call_id = request.POST.get('call_id')
+    res = api_activeCallId_delete(call_id)
+    status = 'success' if res.status_code == 200 else 'fail'
 
     return JsonResponse({'status': status})
 

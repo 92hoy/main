@@ -218,7 +218,7 @@ from django.utils.translation import ugettext as _
                             <br><br>
                             <button class="md-btn md-raised mb-2 w-xs grey dialog__trigger" style="background-color: #70CFCB; width: 230px; margin: 1px; height: 35px;">Add participants</button>
                             <br><br>
-                            <button class="md-btn md-raised mb-2 w-xs grey dialog__trigger" style="background-color: #70CFCB; width: 230px; margin: 1px; height: 35px;">End conference</button>
+                            <button class="md-btn md-raised mb-2 w-xs grey dialog__trigger" style="background-color: #70CFCB; width: 230px; margin: 1px; height: 35px;" id="btn_endCall">End conference</button>
                         </div>
                     </div>
                 </div>
@@ -405,6 +405,12 @@ from django.utils.translation import ugettext as _
 <%block name="scriptDown">
 <script>
     $(document).ready(function() {
+        var call_id = document.location.href;
+        var last_call_id = call_id.length;
+        if(call_id.indexOf('#') != -1){
+            last_call_id = call_id.indexOf('#')
+        }
+        call_id = call_id.substring(call_id.lastIndexOf('/') + 1, last_call_id);
 
         $("#Mute_audio").click(function(){
             $("#rxAudioMute_x").trigger('click');
@@ -469,6 +475,40 @@ from django.utils.translation import ugettext as _
             all_update('layout', select_layout);
         });
 
+
+        $("#btn_endCall").click(function(){
+            swal({
+                title: '',
+                text: '회의를 종료 하시겠습니까?',
+                type: 'info',
+                showCancelButton: true,
+                confirmButtonText: '확인',
+                cancelButtonText: '취소',
+                //closeOnClickOutside: false,
+                //closeOnEsc: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+            }).then(function (data) {
+                if(data.value == true){
+                    $.ajax({
+                        url: '/activecall_monitoring/callDel',
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': '${csrf_token}',
+                            'call_id': call_id
+                        }
+                    }).done(function(ret){
+                        if(ret.status == 'success'){
+                            location.href = '/activeCall';
+                        } else {
+                            swal('경고', '회의 종료에 실패하였습니다.', 'warning');
+                        }
+                    });
+                } else {
+                    return;
+                }
+            });
+        });
 
         $(".btn_disconnect").click(function(){
             var user_uid = $(this).attr('uid');
