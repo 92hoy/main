@@ -16,6 +16,7 @@ from backend.djangoapps.common.api.views import api_activeCall
 from backend.djangoapps.common.api.views import api_activeCallId
 from backend.djangoapps.common.api.views import api_activeCallId_delete
 from backend.djangoapps.common.api.views import api_activeCallLegs
+from backend.djangoapps.common.api.views import api_activeCallLegsId_POST
 from backend.djangoapps.common.api.views import api_callLegs
 from backend.djangoapps.common.api.views import api_callLegs_update
 from backend.djangoapps.common.api.views import api_callLegs_delete
@@ -176,6 +177,19 @@ def activeCall(request):
     return render(request, 'conference/activeCall.html', context)
 
 
+# active call 삭제
+def activeCall_delete(request):
+    del_list = request.POST.getlist('del_arr[]')
+    status = 'success'
+
+    for del_id in del_list:
+        r = api_activeCallId_delete(del_id)
+        if r.status_code != 200:
+            status = 'fail'
+
+    return JsonResponse({'status': status})
+
+
 # active call 모니터링 정보
 def activecall_monitoring(request, call_id):
     call_data = api_activeCallId(call_id)
@@ -190,18 +204,20 @@ def activecall_monitoring(request, call_id):
     callLegs_list = list()
     for data in callLegs_data:
         callLeg = api_callLegs(data['@id'])
-        call_sec = callLeg['callLeg']['status']['durationSeconds']
-        dur_time = datetime.timedelta(seconds=int(call_sec))
-        join_time = time_now - dur_time
+        # 추후 404 처리 변경
+        if callLeg != 404:
+            call_sec = callLeg['callLeg']['status']['durationSeconds']
+            dur_time = datetime.timedelta(seconds=int(call_sec))
+            join_time = time_now - dur_time
 
-        callLeg['callLeg']['status']['durationSeconds'] = join_time.strftime('%H:%M')
-        conf_key_list = ['rxAudioMute', 'txVideoMute', 'rxVideoMute', 'txAudioMute', 'presentationContributionAllowed', 'presentationViewingAllowed']
+            callLeg['callLeg']['status']['durationSeconds'] = join_time.strftime('%H:%M')
+            conf_key_list = ['rxAudioMute', 'txVideoMute', 'rxVideoMute', 'txAudioMute', 'presentationContributionAllowed', 'presentationViewingAllowed']
 
-        for key_data in conf_key_list:
-            if key_data not in callLeg['callLeg']['configuration'].keys():
-                callLeg['callLeg']['configuration'][key_data] = 'true'
+            for key_data in conf_key_list:
+                if key_data not in callLeg['callLeg']['configuration'].keys():
+                    callLeg['callLeg']['configuration'][key_data] = 'true'
 
-        callLegs_list.append(callLeg)
+            callLegs_list.append(callLeg)
 
     sec = call_data['call']['durationSeconds']
     conference_time = datetime.timedelta(seconds=int(sec))
@@ -216,6 +232,23 @@ def activecall_monitoring(request, call_id):
     print('activecall_monitoring debug end --------------------------')
 
     return render(request, 'conference/activecall_monitoring.html', context)
+
+
+# active call 사용자 초대
+def activecall_monitoring_userInvite(request):
+    call_id = request.POST.get('call_id')
+    user_list = request.POST.getlist('user_list[]')
+
+    error_list = list()
+    for user in user_list:
+        r = api_activeCallLegsId_POST(call_id, user)
+
+        if r.status_code != 200:
+            error_list.append(r)
+
+    status = 'success' if len(error_list) == 0 else 'fail'
+
+    return JsonResponse({'status': status})
 
 
 # active call monitoring update

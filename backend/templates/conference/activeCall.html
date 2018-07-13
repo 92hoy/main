@@ -216,12 +216,62 @@ from django.utils.translation import ugettext as _
                 null,
             ],
             columnDefs: [
-                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center"},
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center check-row"},
             ],
             "drawCallback":function(){
                 $(".paginate_button").attr('href', 'javascript:check_click();');
             }
         });
+
+        // 체크박스 리스트 선택(delete)
+        $('#delBtn').click(function () {
+            var del_call = $('td.check-row input[type="checkbox"]:checked').map(function() {
+                var this_tr = $(this).parent().parent();
+                // con-id는 id값 저장을위해 지정해준 속성
+                var this_td_data = $(this_tr).find("a").attr('con-id');
+                console.log(this_td_data);
+                return this_td_data;}).get();
+
+            swal({
+                title: '종료하시겠습니까?',
+                text: '종료하면 복구할 수 없습니다.',
+                type: 'info',
+                showCancelButton: true,
+                confirmButtonText: '확인',
+                cancelButtonText: '취소',
+                //closeOnClickOutside: false,
+                //closeOnEsc: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+            }).then(function (data) {
+                if(data.value == true){
+                    $.ajax({
+                        url: '/activeCall/del',
+                        type: "POST",
+                        data: {
+                            'csrfmiddlewaretoken': '${csrf_token}',
+                            'del_arr': del_call
+                        }
+                    }).done(function(data){
+                        if(data.status == 'success'){
+                            swal({
+                                title: 'Success!',
+                                text: "",
+                                type: 'success',
+                            }).then(function(){
+                                location.reload();
+                            });
+                        } else {
+                            swal('경고', '회의 종료에 실패하였습니다.', 'warning');
+                        }
+                    });
+                } else {
+                    return;
+                }
+            });
+
+        });
+
 
     });
     /* <!----------------------- endpoint - ----------------------------> */
@@ -259,7 +309,7 @@ from django.utils.translation import ugettext as _
                 null,
             ],
             columnDefs: [
-                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center check-row"},
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center t1"},
             ],
             "drawCallback":function(){
                 $(".paginate_button").attr('href', 'javascript:check_click();');
@@ -305,6 +355,7 @@ from django.utils.translation import ugettext as _
             'initComplete': function () {
             }
         });
+
     });
 
     /* <!----------------------- user - ----------------------------> */
@@ -319,33 +370,6 @@ from django.utils.translation import ugettext as _
         }
     }
 
-    // 체크박스 리스트 선택(delete)
-        $('#delBtn').click(function () {
-            /*
-            var del_conference = $('td.check-row input[type="checkbox"]:checked').map(function() {
-                var this_tr = $(this).parent().parent();
-                // con-id는 id값 저장을위해 지정해준 속성
-                var this_td_data = $(this_tr).find("a").attr('con-id');
-                alert(this_td_data);
-                console.log(this_td_data);
-                return this_td_data;}).get();
-            alert(del_conference);
-            swal({
-                title: '종료하시겠습니까?',
-                text: '종료하면 복구할 수 없습니다.',
-                type: 'info',
-                showCancelButton: true,
-                confirmButtonText: '확인',
-                cancelButtonText: '취소',
-                //closeOnClickOutside: false,
-                //closeOnEsc: false,
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-            }).then(function (data) {
-
-            });
-            */
-        });
 
     $('.btn-example').click(function(){
         var $href = $(this).attr('href');

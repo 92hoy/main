@@ -254,18 +254,21 @@ def api_callLegs(id):
 
     r = requests.get(url, headers=headers, verify=False)
     r.encoding = 'UTF-8'
-    resData = str(r.text)
+    if r.status_code != 404:
+        resData = str(r.text)
 
-    # xml to json
-    o = xmltodict.parse(resData)
-    resData = json.dumps(o)
-    resDataJson = json.loads(resData)
+        # xml to json
+        o = xmltodict.parse(resData)
+        resData = json.dumps(o)
+        resDataJson = json.loads(resData)
 
-    print("-------------------> DEBUG[api_callLegs ---s]")
-    print(resDataJson)
-    print("-------------------> DEBUG[api_callLegs ---e]")
+        print("-------------------> DEBUG[api_callLegs ---s]")
+        print(resDataJson)
+        print("-------------------> DEBUG[api_callLegs ---e]")
 
-    return resDataJson
+        return resDataJson
+    else:
+        return r.status_code
 
 
 #from backend.djangoapps.common.api.views import api_callLegs_update
@@ -542,7 +545,7 @@ def api_activeCallLegsId(id):
     Authorization = settings.AUTHORIZATION
 
     # requests GET
-    url = 'https://14.63.53.22:449/api/v1/calls/{id}/callLegs/' + id
+    url = 'https://14.63.53.22:449/api/v1/calls/{id}/callLegs/'.format(id)
     headers = {
         'Authorization': Authorization
     }
@@ -555,11 +558,34 @@ def api_activeCallLegsId(id):
     resData = json.dumps(o)
     resDataJson = json.loads(resData)
 
-    print("-------------------> DEBUG[s]")
+    print("api_activeCallLegsId -------------------> DEBUG[s]")
     print(resDataJson)
-    print("-------------------> DEBUG[e]")
+    print("api_activeCallLegsId -------------------> DEBUG[e]")
 
     return resDataJson
+
+
+# from backend.djangoapps.common.api.views import api_activeCallLegsId_POST
+def api_activeCallLegsId_POST(id, user):
+
+    Authorization = settings.AUTHORIZATION
+
+    # requests GET
+    url = 'https://14.63.53.22:449/api/v1/calls/{id}/callLegs/'.format(id=id)
+    headers = {
+        'Authorization': Authorization
+    }
+
+    post_data = {"remoteParty": user}
+
+    r = requests.post(url, headers=headers, verify=False, data=post_data)
+
+    print("-------------------> DEBUG[api_activeCallLegsId_POST ---s]")
+    print(r)
+    print(r.text)
+    print("-------------------> DEBUG[api_activeCallLegsId_POST ---e]")
+
+    return r
 
 
 #from backend.djangoapps.common.api.views import api_templateLegPro

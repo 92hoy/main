@@ -166,7 +166,7 @@ from django.utils.translation import ugettext as _
                             <br>
                         </div>
                         <div class="col-s" >
-                            <br><br><br><br><br><br>
+                            <br><br><br>
                             <!--
                             <a href="#"><img src="/static/common/img/volume.png" alt="logo" class="cm_img" width="60px" height="60px" id="vol_o"></a>
                             -->
@@ -180,14 +180,13 @@ from django.utils.translation import ugettext as _
                                 <button>
                                     <img src="/static/common/img/mic.png" alt="logo" class="con_check_all" width="60px" height="60px" id="rxAudioMute_o">
                                 </button><button>
-                                    <img src="/static/common/img/mic_x.png" alt="logo" class="con_check_all" width="60px" height="60px" id="rxAudioMute_x">
-                                </button>
+                                <img src="/static/common/img/mic_x.png" alt="logo" class="con_check_all" width="60px" height="60px" id="rxAudioMute_x">
+                            </button>
                             </div>
                             <div class="mute_all_div">
                                 <button>
                                     <img src="/static/common/img/volume.png" alt="logo" class="con_check_all" width="60px" height="60px" id="txAudioMute_o">
-                                </button>
-                                <button>
+                                </button><button>
                                     <img src="/static/common/img/volume_x.png" alt="logo" class="con_check_all" width="60px" height="60px" id="txAudioMute_x">
                                 </button>
                             </div>
@@ -195,8 +194,8 @@ from django.utils.translation import ugettext as _
                                 <button>
                                     <img src="/static/common/img/video.png" alt="logo" class="con_check_all" width="60px" height="60px" id="txVideoMute_o">
                                 </button><button>
-                                    <img src="/static/common/img/video_x.png" alt="logo" class="con_check_all" width="60px" height="60px" id="txVideoMute_x">
-                                </button>
+                                <img src="/static/common/img/video_x.png" alt="logo" class="con_check_all" width="60px" height="60px" id="txVideoMute_x">
+                            </button>
                             </div>
 
                             <!--
@@ -214,7 +213,11 @@ from django.utils.translation import ugettext as _
                         <div class="col-sm" style=" vertical-align: middle; text-align: center; ">
 
                             <br>
-                            <input type="text" style="height: 32px; border: 1px groove #CBD8FB">&nbsp;<button class="md-btn md-raised mb-2 w-xs blue dialog__trigger" style="margin-top: 50px; width: 70px;">invite</button>
+
+                            <input type="text" id="input_invite" style="height: 32px; border: 1px groove #CBD8FB">&nbsp;<button class="md-btn md-raised mb-2 w-xs blue dialog__trigger" style="margin-top: 50px; width: 70px;" id="btn_invite">invite</button>
+                            <div>
+                            <text>여러명 초청시 구분자는 / 입니다.</text>
+                            </div>
                             <br><br>
                             <button class="md-btn md-raised mb-2 w-xs grey dialog__trigger" style="background-color: #70CFCB; width: 230px; margin: 1px; height: 35px;">Add participants</button>
                             <br><br>
@@ -290,6 +293,10 @@ from django.utils.translation import ugettext as _
                         % if 'rxAudio' in user['callLeg']['status'].keys():
                         <li>Rx : ${user['callLeg']['status']['rxAudio']['codec']}</li>
                         % endif
+                        <li style="text-align: center; margin-top: 5px;">
+                            <button><img src="/static/common/img/user_layout.png" alt="logo" class="user_img user_layout" name="user_layout"></button>
+                            <button><img src="/static/common/img/user_chart.png" alt="logo" class="user_img user_chart" name="user_chart"></button>
+                        </li>
                     </ul></td>
                     <td style="text-align: center;">
                         % if 'layout' in user['callLeg']['status'].keys():
@@ -308,11 +315,11 @@ from django.utils.translation import ugettext as _
     </div>
 </div>
 <style>
-    #img_click{
+    .cm_img{
         margin: 20px;
         color: #0b2e13;
     }
-    #img_click:after{
+    .cm_img:after{
         padding: 15px 25px;
         font-size: 24px;
         text-align: center;
@@ -322,11 +329,11 @@ from django.utils.translation import ugettext as _
 
         box-shadow: 0 9px white;
     }
-    #img_click:hover {
+    .cm_img:hover {
         background-color: #CFEDF6
     }
 
-    #img_click:active:after {
+    .cm_img:active:after {
         background-color: #CFEDF6;
         box-shadow: 0 5px white;
         transform: translateY(4px);
@@ -348,6 +355,18 @@ from django.utils.translation import ugettext as _
         border: none;
         background-color: #f3f6f9eb;
     }
+    .user_img {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
+
+    #allLayout td button {
+        color: #212529;
+    }
+    #allLayout td button:hover {
+        box-shadow: inset 0 -12rem 0px rgba(158, 158, 158, 0.2);
+    }
 </style>
 <!-- NEW LAYER POPUP -->
 <div class="dim-layer2">
@@ -366,7 +385,7 @@ from django.utils.translation import ugettext as _
                     <hr width="100%" color="#d9d9d9">
                 </div>
                 <div style="text-align: center;">
-                    <table style="display: inline-block; width:100%; margin-bottom: 20px; " id="allLayout">
+                    <table style="display: inline-block; width:100%; margin-bottom: 20px;" click-check="" id="allLayout">
 
                         <tr>
                             <td><button id="notSet" href="#" class="btn btn-outline-light"><img src="/static/common/img/notSet.png" alt="logo" class="cm_img" ><br>Not Set</button></td>
@@ -398,8 +417,8 @@ from django.utils.translation import ugettext as _
             </div>
         </div>
     </div>
-
-    <!-- NEW LAYER POPUP 끝 -->
+</div>
+<!-- NEW LAYER POPUP 끝 -->
 </%block>
 
 <%block name="scriptDown">
@@ -451,28 +470,19 @@ from django.utils.translation import ugettext as _
                 user_value = 'false';
             }
 
-            $.ajax({
-                url: '/activecall_monitoring/update',
-                type: 'POST',
-                data: {
-                    'csrfmiddlewaretoken': '${csrf_token}',
-                    'user_api_id': user_api_id,
-                    'user_key': user_key,
-                    'user_value': user_value
-                }
-            }).done(function(data){
-                if(data.status == 'fail'){
-                    swal('경고', '변경에 실패하였습니다.', 'warning');
-                } else {
-                    //location.reload();
-                }
-            });
+            user_update(user_api_id, user_key, user_value);
 
         });
 
+        //전체와 사용자별 분기
         $("#allLayout button").click(function() {
             var select_layout = $(this).attr('id');
-            all_update('layout', select_layout);
+            if($("#allLayout").attr('click-check') == 'all'){
+                all_update('layout', select_layout);
+            } else {
+                var user_api_id = $("#allLayout").attr('click-check');
+                user_update(user_api_id, 'layout', select_layout);
+            }
         });
 
 
@@ -544,10 +554,42 @@ from django.utils.translation import ugettext as _
                 }
             });
         });
+
+        $("#btn_invite").click(function(){
+            var user_input = $("#input_invite").val();
+            var user_list = user_input.replace(/\s/gi, '').split('/');
+
+            $.ajax({
+                url: '/activecall_monitoring/invite',
+                type: 'POST',
+                data: {
+                    'csrfmiddlewaretoken': '${csrf_token}',
+                    'call_id': call_id,
+                    'user_list': user_list
+                }
+            }).done(function (data) {
+                if(data.status == 'success'){
+                    location.reload();
+                } else {
+                    swal('경고', '초대에 실패하였습니다.', 'warning');
+                }
+            });
+
+        });
+
+        $(".user_layout").click(function () {
+            //user_id 찾기
+            var user_id = $(this).parent().parent().parent().parent().parent().find('div.monitoring-td-id').text();
+            $('#allLayout').attr('click-check', user_id);
+            layouts('#layer_new');
+        });
+
+
     });
 
     $('.layouts').click(function(){
         var $href = $(this).attr('href');
+        $('#allLayout').attr('click-check', 'all');
         layouts($href);
     });
 
@@ -583,6 +625,29 @@ from django.utils.translation import ugettext as _
             return false;
         });
 
+    }
+
+
+    function user_update(user_api_id, user_key, user_value){
+        $.ajax({
+                url: '/activecall_monitoring/update',
+                type: 'POST',
+                data: {
+                    'csrfmiddlewaretoken': '${csrf_token}',
+                    'user_api_id': user_api_id,
+                    'user_key': user_key,
+                    'user_value': user_value
+                }
+            }).done(function(data){
+                if(data.status == 'fail'){
+                    swal('경고', '변경에 실패하였습니다.', 'warning');
+                } else {
+                    //location.reload();
+                }
+            });
+        if(user_key == 'layout'){
+            location.reload();
+        }
     }
 
     function all_update(user_key, user_value){
