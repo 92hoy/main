@@ -48,7 +48,7 @@ from django.utils.translation import ugettext as _
                 % for data in context['data']:
                 <tr>
                     <td></td>
-                    <td><a href="/activecall_monitoring/${data['id']}">${data['name']}</a></td>
+                    <td><a href="/activecall_monitoring/${data['id']}" con-id="${data['id']}">${data['name']}</a></td>
                     <td>${data['callId']}</td>
                     <td style="text-align: right">${data['cv']}</td>
                 </tr>
@@ -259,7 +259,7 @@ from django.utils.translation import ugettext as _
                 null,
             ],
             columnDefs: [
-                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center t1"},
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center check-row"},
             ],
             "drawCallback":function(){
                 $(".paginate_button").attr('href', 'javascript:check_click();');
@@ -318,6 +318,34 @@ from django.utils.translation import ugettext as _
             $('input:checkbox').prop("checked", false);
         }
     }
+
+    // 체크박스 리스트 선택(delete)
+        $('#delBtn').click(function () {
+            /*
+            var del_conference = $('td.check-row input[type="checkbox"]:checked').map(function() {
+                var this_tr = $(this).parent().parent();
+                // con-id는 id값 저장을위해 지정해준 속성
+                var this_td_data = $(this_tr).find("a").attr('con-id');
+                alert(this_td_data);
+                console.log(this_td_data);
+                return this_td_data;}).get();
+            alert(del_conference);
+            swal({
+                title: '종료하시겠습니까?',
+                text: '종료하면 복구할 수 없습니다.',
+                type: 'info',
+                showCancelButton: true,
+                confirmButtonText: '확인',
+                cancelButtonText: '취소',
+                //closeOnClickOutside: false,
+                //closeOnEsc: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+            }).then(function (data) {
+
+            });
+            */
+        });
 
     $('.btn-example').click(function(){
         var $href = $(this).attr('href');
