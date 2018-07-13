@@ -447,7 +447,8 @@ def endPoint_update(request):
         with connections['default'].cursor() as cur:
             query = '''
                   update cms_endpoint
-                  set ep_type = '{ep_type}',
+                  set ep_name = '{ep_name}',
+                      ep_type = '{ep_type}',
                       ip='{ip}',
                       sip='{sip}',
                       hdevice='{hdevice}',
@@ -457,7 +458,7 @@ def endPoint_update(request):
                       ep_group_seq='{ep_group_seq}',
                       order_no='{order_no}'
                   where ep_id ='{ep_id}'
-            '''.format(ep_name=name, ep_type=device_type, ip=ip, sip=sip, hdevice=h_323, mslync=mslync,
+            '''.format(ep_id=ep_id,ep_name=name, ep_type=device_type, ip=ip, sip=sip, hdevice=h_323, mslync=mslync,
                        username=user_name, recodingdevice=recording_device, ep_group_seq=group_name, order_no=sortno)
             print(query)
             cur.execute(query)

@@ -49,7 +49,7 @@ def conferenceRoomAdd(request):
     print(request.POST.get('name'))
     res = api_coSpaces_POST(request)
     if res.status_code == 200:
-    # data_insert = CmsCospace(cospace_id=)
+        # data_insert = CmsCospace(cospace_id=)
         header = res.headers['Location']
         location = header.split('/')[-1]
 
@@ -360,6 +360,7 @@ def reserveConference(request):
                     call_id,
                     regist_date
             FROM cms_resv_cospace
+            where delete_yn='N'
         '''
         cur.execute(query)
         resv = cur.fetchall()
@@ -523,9 +524,156 @@ def reserveConference_add(request):
 
     return JsonResponse({'return':'success'})
 
+def reserveConference_detail(request):
+
+    if request.is_ajax():
+        resv_seq= request.POST.get('resv_seq')
+
+        with connections['default'].cursor() as cur:
+            query = '''
+                SELECT    start_date,
+                          end_date,
+                          resv_name,
+                          passcode,
+                          call_id,
+                          bandwidth,
+                          resv_seq
+                FROM cms_resv_cospace
+                where resv_seq = '{resv_seq}';
+            '''.format(resv_seq=resv_seq)
+            cur.execute(query)
+            print(query)
+            detail_input = cur.fetchall()
+
+        data = dict()
+        data['start_date'] = detail_input[0][0]
+        data['end_date'] = detail_input[0][1]
+        data['resv_name'] = detail_input[0][2]
+        data['passcode'] = detail_input[0][3]
+        data['call_id'] = detail_input[0][4]
+        data['bandwidth'] = detail_input[0][5]
+        data['resv_seq'] = detail_input[0][6]
+
+        with connections['default'].cursor() as cur:
+            query = '''
+                SELECT ep_id
+                FROM cms_resv_cospace_endpoint
+                where resv_seq = '{resv_seq}';
+            '''.format(resv_seq=resv_seq)
+            cur.execute(query)
+            print(query)
+        #     ep_data = cur.fetchall()
+        #
+        # data_list2 = list()
+        # for data2 in ep_data:
+        #     data_dict = dict()
+        #     data_dict['ep_id'] = data2[0]
+        #     data_list2.append(data2[0])
+
+
+    return JsonResponse({'detail_input':data})
+
+def reserveConference_update(request):
+    if request.is_ajax():
+        resv_seq= request.POST.get('resv_seq')
+        start_date= request.POST.get('start_date')
+        end_date= request.POST.get('end_date')
+        conferencename= request.POST.get('conferencename')
+        callid= request.POST.get('callid')
+        bandwidth= request.POST.get('bandwidth')
+        userpassword= request.POST.get('userpassword')
+
+        #---------reserve update-----------
+
+        with connections['default'].cursor() as cur:
+            query = '''
+                update cms_resv_cospace
+                set   start_date='{start_date}',
+                      end_date='{end_date}',
+                      resv_name='{resv_name}',
+                      passcode='{passcode}',
+                      call_id='{call_id}',
+                      bandwidth='{bandwidth}'
+
+                where resv_seq='{resv_seq}'
+
+            '''.format(resv_seq=resv_seq,start_date=start_date, end_date=end_date, resv_name=conferencename, call_id=callid, bandwidth=bandwidth, passcode=userpassword)
+            cur.execute(query)
+
+        #---------endpoint update-----------
+
+        endpoint_id = request.POST.getlist('endpoint_id[]')
+        print("update_reserve_endpoint_id==",endpoint_id)
+
+        for data in endpoint_id:
+            with connections['default'].cursor() as cur:
+                query = '''
+                    UPDATE cms_resv_cospace_endpoint
+                    set
+                            ep_id='{ep_id}'
+
+                    where resv_seq = '{resv_seq}'
+                 '''.format(ep_id=data, resv_seq=resv_seq)
+                cur.execute(query)
+
+        #---------user update-----------
+        user_id = request.POST.getlist('user_id[]')
+        print("update_reserve_user_id ==", user_id)
+
+        for aa in user_id:
+            user_data = api_usersId(aa)
+
+            with connections['default'].cursor() as cur:
+                query = '''
+                    update cms_resv_cospace_user
+                    set
+                            userjid='{userjid}',
+                            name='{name}',
+                            email='{email}'
+
+                    where resv_seq = '{resv_seq}'
+                 '''.format(userjid=user_data['user']['userJid'],
+                            name=user_data['user']['name'],
+                            email=user_data['user']['email'],
+                            resv_seq=resv_seq)
+                cur.execute(query)
+
+    return JsonResponse({'return':'success'})
+
+def reserveConference_del(request):
+    if request.is_ajax():
+        resv_seq = request.POST.getlist('del_seq[]')
+
+        for bb in resv_seq:
+            with connections['default'].cursor() as cur:
+                query = '''
+                    update cms_resv_cospace
+                    set   delete_yn='Y'
+                    where resv_seq= '{resv_seq}'
+                '''.format(resv_seq=bb)
+                cur.execute(query)
+
+        for cc in resv_seq:
+            with connections['default'].cursor() as cur:
+                query='''
+                     delete from cms_resv_cospace_endpoint
+                     where resv_seq = '{resv_seq}'
+                '''.format(resv_seq=cc)
+                cur.execute(query)
+
+        for dd in resv_seq:
+            with connections['default'].cursor() as cur:
+                query='''
+                     delete from cms_resv_cospace_user
+                     where resv_seq = '{resv_seq}'
+                '''.format(resv_seq=dd)
+                cur.execute(query)
+
+    return JsonResponse({'return':'success'})
 
 # 컨퍼런스 제공 (달력)
 def reserveConferenceCal(request):
+
 
     #resDataJson = api_activeCall()
 

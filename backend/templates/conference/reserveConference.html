@@ -7,17 +7,17 @@ from django.utils.translation import ugettext as _
 <%block name="containor">
 <div class="padding">
 
-  <div class="box">
-    <div class="box-header">
-      <h2>Reserve Conference</h2>
-      <small>Reserve Conference</small>
+    <div class="box">
+        <div class="box-header">
+            <h2>Reserve Conference</h2>
+            <small>Reserve Conference</small>
+        </div>
     </div>
-  </div>
 
-  <div class="box">
-      <div style="padding: 10px; margin: 20px;">
+    <div class="box">
+        <div style="padding: 10px; margin: 20px;">
 
-            <button class="md-btn md-raised mb-2 w-xs red" id="delBtn" style="float: right;">DEL</button>
+            <button class="md-btn md-raised mb-2 w-xs red" onclick="btn_del()" style="float: right;">DEL</button>
 
             <a href="#layer_new" class="btn-example">
                 <button class="md-btn md-raised mb-2 w-xs indigo dialog__trigger" id="addBtn" style="float: right; margin-right: 8px;">ADD</button>
@@ -29,7 +29,7 @@ from django.utils.translation import ugettext as _
 
 
         </div>
-      <div class="table-responsive" style="text-align: center;">
+        <div class="table-responsive" style="text-align: center;">
             <table class="table table-hover table-striped table-bordered" id="table_reserve" style="width:100%">
                 <thead>
                 <tr>
@@ -54,7 +54,7 @@ from django.utils.translation import ugettext as _
                     <td>${data['start_date']}</td>
                     <td>${data['end_date']}</td>
                     <td>${data['call_id']}</td>
-                    <td><button class="btn btn-fw primary" onclick="resv_detail(${data_id})">VIEW</button></td>
+                    <td><button class="btn btn-fw primary" href="#layer_detail" id ="resv_view" onclick="resv_detail(${data_id})">VIEW</button></td>
                 </tr>
                 % endfor
                 </tbody>
@@ -67,7 +67,7 @@ from django.utils.translation import ugettext as _
 
 <!-- layer popup-->
 <div class="dim-layer2" id="dim-layer2">
-    <div class="dimBg2"></div>
+    <div class="dimBg2" ></div>
     <div id="layer_new" class="pop-layer2">
         <div class="pop-container2">
             <div class="pop-conts">
@@ -153,7 +153,7 @@ from django.utils.translation import ugettext as _
                 <div class="table-responsive" style="width: 470px;">
                     <span class="nav-icon"  style="padding-bottom: 18px;">
                     <i class="fa fa-address-book-o"></i>
-                  </span>
+                    </span>
                     <div>
                         <strong>Endpoint</strong>
                     </div>
@@ -161,6 +161,7 @@ from django.utils.translation import ugettext as _
                         <thead>
                         <tr>
                             <th class="th-center" style="width: 5%;"><input type="checkbox" id="select_all_ep"/></th>
+                            <th class="th-center" hidden>EndPoint id</th>
                             <th class="th-center">EndPoint Name</th>
                             <th class="th-center">Device Type</th>
                             <th class="th-center">IP</th>
@@ -171,7 +172,8 @@ from django.utils.translation import ugettext as _
                         % for data2 in context['data2']:
                         <tr>
                             <td></td>
-                            <td>${data2['ep_id']}</td>
+                            <td hidden>${data2['ep_id']}</td>
+                            <td>${data2['ep_name']}</td>
                             <td>${data2['ep_type']}</td>
                             <td>${data2['ip']}</td>
                             <td>${data2['ep_group_name']}</td>
@@ -187,6 +189,139 @@ from django.utils.translation import ugettext as _
     </div>
 
 </div>
+<!-- -----------------------------    detail -  layor - popup     ------------ -->
+<!-- -----------------------------    detail -  layor - popup     ------------ -->
+<!-- -----------------------------    detail -  layor - popup     ------------ -->
+<!-- -----------------------------    detail -  layor - popup     ------------ -->
+
+<div class="dim-layer2" id="dim-layer3">
+    <div class="dimBg2" id="dimBg2"></div>
+    <div id="layer_detail" class="pop-layer2">
+        <div class="pop-container2">
+            <div class="pop-conts">
+
+          <span class="nav-icon" style="padding-bottom: 18px;">
+            <i class="fa fa-book"></i>
+          </span>
+                <div style="margin-bottom: 10px;">
+
+                    <strong>Start Conference</strong><a href="#" class="btn-layerClose" style="float: right; font-size:18px;">X</a>
+                    <hr width="100%" color="#d9d9d9">
+                </div>
+                <div style="float:right;">
+
+                    <button class="md-btn md-raised mb-2 w-xs purple" onclick="btn_update()">ADD</button>
+
+                </div>
+                <div style="text-align: center;">
+                    <table style="display: inline-block; width:100%; margin-bottom: 20px; ">
+                        <tr>
+                            <td hidden></td>
+                            <td class="rightTd" hidden><input type="number" class="form-control wi590" id="detail_seq" placeholder="" hidden readonly></td>
+                        </tr>
+                        <tr>
+                            <td>Start date</td>
+                            <td class="rightTd"><input type="datetime-local" class="form-control wi590" id="detail_start_date" value="2018-07-12T09:30"placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>End date</td>
+                            <td class="rightTd"><input type="datetime-local" class="form-control wi590" id="detail_end_date" value="2018-07-12T17:30"placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>Conference name</td>
+                            <td class="rightTd"><input type="text" class="form-control" id="detail_conferencename" placeholder=""></td>
+                        </tr>
+                        <tr>
+                            <td>callID</td>
+                            <td class="rightTd"><input type="number" min="1" max="99999999" class="form-control" id="detail_callid" placeholder="숫자 8자 까지 입력 가능합니다"></td>
+                        </tr>
+                        <tr>
+                            <td>Band Width</td>
+                            <td class="rightTd"><input type="number"  min="1" max="2000000" class="form-control" id="detail_bandwidth" placeholder="200만 까지 입력 가능합니다"></td>
+                        </tr>
+                        <tr>
+                            <td>user password</td>
+                            <td class="rightTd"><input type="text" class="form-control" id="detail_userpassword" placeholder=""></td>
+                        </tr>
+
+                    </table>
+                </div>
+                <!----------------------- user - -------------------------->
+                <div style="width:310px; float:left; margin-right: 15px;">
+                  <span class="nav-icon"  style="padding-bottom: 18px;">
+                    <i class="fa fa-address-book-o"></i>
+                  </span>
+                    <div>
+                        <strong>User</strong>
+                    </div>
+                    <div class="table-responsive" style="width: 340px;">
+                        <table class="table table-hover table-striped table-bordered" id="detail_table_acanoClient" style="width:100%; height: 247px;">
+                            <thead>
+                            <tr>
+                                <th class="th-center" style="width: 5%;"><input type="checkbox" id="select_all_user"/></th>
+                                <th class="th-center"style="width: 5%;" hidden>user_id</th>
+                                <th class="th-center"style="width: 5%;">Name</th>
+                                <th class="th-center">User JID</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            % for data3 in context['data3']:
+                            <tr>
+                                <td></td>
+                                <td hidden>${data3['user_id']}</td>
+                                <td>${data3['name']}</td>
+                                <td>${data3['userJid']}</td>
+
+                                <!--<td>${data3['tenant']}</td>-->
+                            </tr>
+                            % endfor
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!----------------------- user - -------------------------->
+                <!----------------------- endpoint - -------------------------->
+
+                <div class="table-responsive" style="width: 470px;">
+                    <span class="nav-icon"  style="padding-bottom: 18px;">
+                    <i class="fa fa-address-book-o"></i>
+                  </span>
+                    <div>
+                        <strong>Endpoint</strong>
+                    </div>
+                    <table class="table table-hover table-striped table-bordered" id="detail_table_endPoint" style="width:100%; height: 247px;">
+                        <thead>
+                        <tr>
+                            <th class="th-center" style="width: 5%;"><input type="checkbox" id="select_all_ep"/></th>
+                            <th class="th-center" hidden>EndPoint id</th>
+                            <th class="th-center">EndPoint Name</th>
+                            <th class="th-center">Device Type</th>
+                            <th class="th-center">IP</th>
+                            <th class="th-center">Group Name</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        % for data2 in context['data2']:
+                        <tr>
+                            <td></td>
+                            <td hidden>${data2['ep_id']}</td>
+                            <td>${data2['ep_name']}</td>
+                            <td>${data2['ep_type']}</td>
+                            <td>${data2['ip']}</td>
+                            <td>${data2['ep_group_name']}</td>
+                        </tr>
+                        % endfor
+                        </tbody>
+                    </table>
+                </div>
+
+                <!----------------------- endpoint - ---------------------------->
+            </div>
+        </div>
+    </div>
+</div>
+
 </%block>
 <%block name="scriptDown">
 <script>
@@ -226,47 +361,12 @@ from django.utils.translation import ugettext as _
                 null,
             ],
             columnDefs: [
-                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center t1"},
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center t0"},
             ],
             "drawCallback":function(){
-                $(".paginate_button").attr('href', 'javascript:check_click_resv();');
+               // $(".paginate_button").attr('href', 'javascript:check_click_resv();');
             },
         });
-
-        // 체크박스 리스트 선택(delete)
-        /*
-        $('#btn_del').click(function () {
-            var table = $('#table_endPoint').DataTable();
-            var del_endpoint= $('td.t1 input[type="checkbox"]:checked').map(function() {
-                var this_tr = $(this).parent().parent();
-                var this_td_data = $(this_tr).find('td').eq(1).text();
-                console.log("td_data",this_td_data);
-                console.log("del_endpoint",del_endpoint);
-                return this_td_data;}).get();
-
-            $.ajax({
-                url: '/system/endPoint_del',
-                type: "POST",
-                data: {
-                    'csrfmiddlewaretoken': '${csrf_token}',
-                    'del_arr': del_endpoint
-                }
-            }).done(function(data){
-                if(data.return == 'success'){
-                    swal({
-                        title: 'Success!',
-                        text: "",
-                        type: 'success',
-                    }).then(function(){
-                        location.reload();
-                    });
-                } else {
-                     swal('경고', '삭제에 실패하였습니다.', 'warning');
-                }
-            });
-
-        });
-        */
     });
 
     /* <!----------------------- endpoint - ----------------------------> */
@@ -280,6 +380,7 @@ from django.utils.translation import ugettext as _
             dom: '<"clear"f><"search">rt<"bottom"ipl>',
             searching: true,
             paginate: true,
+
             order: [[1, 'desc']],
             pageLength:5,
             "oLanguage": {
@@ -302,12 +403,13 @@ from django.utils.translation import ugettext as _
                 null,
                 null,
                 null,
+                null,
             ],
             columnDefs: [
                 {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center t1"},
             ],
             "drawCallback":function(){
-                $(".paginate_button").attr('href', 'javascript:check_click_ep();');
+                //$(".paginate_button").attr('href', 'javascript:check_click_ep();');
             },
 
         });
@@ -348,16 +450,16 @@ from django.utils.translation import ugettext as _
                 null,
             ],
             columnDefs: [
-                    {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center t2"},
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center t2"},
             ],
             "drawCallback":function(){
-                $(".paginate_button").attr('href', 'javascript:check_click_ep();');
+                //$(".paginate_button").attr('href', 'javascript:check_click_ep();');
             },
         });
     });
 
     /* <!----------------------- user - ----------------------------> */
-
+    /*
     function check_click_resv(){
         //alert("paging btn");
         if($("input:checkbox[id='select_all_resv']").prop("checked")) {
@@ -385,7 +487,36 @@ from django.utils.translation import ugettext as _
             $('input:checkbox').prop("checked", false);
         }
     }
+    */
+    function btn_del(){
+        var table = $('#table_reserve').DataTable();
+            var del_resv= $('td.t0 input[type="checkbox"]:checked').map(function() {
+                var this_tr0 = $(this).parent().parent();
+                var this_td_data0 = $(this_tr0).find('td').eq(1).text();
+                return this_td_data0;}).get();
+                alert(del_resv);
 
+            $.ajax({
+                url: '/conference/reserveConference_del',
+                type: "POST",
+                data: {
+                    'csrfmiddlewaretoken': '${csrf_token}',
+                    'del_seq': del_resv
+                }
+            }).done(function(data){
+                if(data.return == 'success'){
+                    swal({
+                        title: 'Success!',
+                        text: "삭제 완료",
+                        type: 'success',
+                    }).then(function(){
+                        location.reload();
+                    });
+                } else {
+                     swal('경고', '삭제에 실패하였습니다.', 'warning');
+                }
+            });
+    }
 
     $('.btn-example').click(function(){
         var $href = $(this).attr('href');
@@ -416,6 +547,15 @@ from django.utils.translation import ugettext as _
         }
 
         $el.find('a.btn-layerClose').click(function(){
+            $("#start_date").val('2018-07-12T09:30');
+            $("#end_date").val('2018-07-12T17:30');
+            $("#conferencename").val('');
+            $("#callid").val('');
+            $("#bandwidth").val('');
+            $("#userpassword").val('');
+            $('input:checkbox').prop("checked", false);
+
+
             isDim ? $('#dim-layer2').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
             return false;
         });
@@ -518,21 +658,292 @@ from django.utils.translation import ugettext as _
                             buttons: true,
                             dangerMode: false,
                         })
-                            .then(function(willDelete) {
-                                if (willDelete) {
-                                    return
-                                } else {
-                                    return
-                                }
-                            });
+                                .then(function(willDelete) {
+                                    if (willDelete) {
+                                        return
+                                    } else {
+                                        return
+                                    }
+                                });
                     }
                 },
             });
         }
     }
-    function resv_detail(resv_seq){
-        alert(resv_seq);
+
+    /*
+     $('#resv_view').click(function(){
+     var $href = $(this).attr('href');
+     layer_popup3($href);
+
+     });
+     */
+
+    /*------------------------------  Deatil----------------------*/
+    /*------------------------------  Deatil----------------------*/
+    /*------------------------------  Deatil----------------------*/
+
+    function layer_popup3(el){
+
+        var $el = $(el);        //레이어의 id를 $el 변수에 저장
+        var isDim = $el.prev().hasClass('dimBg2');   //dimmed 레이어를 감지하기 위한 boolean 변수
+
+        isDim ? $('#dim-layer3').fadeIn() : $el.fadeIn();
+
+        var $elWidth = ~~($el.outerWidth()),
+                $elHeight = ~~($el.outerHeight()),
+                docWidth = $(document).width(),
+                docHeight = $(document).height();
+
+        // 화면의 중앙에 레이어를 띄운다.
+        if ($elHeight < docHeight || $elWidth < docWidth) {
+            $el.css({
+                marginTop: -$elHeight /2,
+                marginLeft: -$elWidth/2
+            })
+        } else {
+            $el.css({top: 0, left: 0});
+        }
+
+        $el.find('a.btn-layerClose').click(function(){
+            $("#detail_seq").val('');
+            $("#detail_start_date").val('2018-07-12T09:30');
+            $("#detail_end_date").val('2018-07-12T17:30');
+            $("#detail_conferencename").val('');
+            $("#detail_callid").val('');
+            $("#detail_bandwidth").val('');
+            $("#detail_userpassword").val('');
+            $('input:checkbox').prop("checked", false);
+
+            isDim ? $('#dim-layer3').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+            return false;
+        });
+
+        $('.layer .dimBg').click(function(){
+            $('#dim-layer3').fadeOut();
+            return false;
+        });
+
     }
+
+
+    function resv_detail(resv_seq){
+        alert("들어가시면 체크박스 초기화 됩니다/ 구현중");
+        $.ajax({
+                    url: '/conference/reserveConference_detail',
+                    type: 'POST',
+                    data: {
+                        'csrfmiddlewaretoken': '${csrf_token}',
+                        'resv_seq': resv_seq
+                    }
+                }
+        ).done(function (data) {
+            var ep_id = data.ep_data;
+            $('#detail_seq').val(data.detail_input.resv_seq);
+            $("#detail_start_date").val(data.detail_input.start_date);
+            $("#detail_end_date").val(data.detail_input.end_date);
+            $("#detail_conferencename").val(data.detail_input.resv_name);
+            $("#detail_callid").val(data.detail_input.passcode);
+            $("#detail_bandwidth").val(data.detail_input.call_id);
+            $("#detail_userpassword").val(data.detail_input.bandwidth);
+            console.log(data.ep_data);
+
+            layer_popup3('#layer_detail');
+        });
+    }
+
+    function btn_update(){
+        var table3 = $('#table_endPoint').DataTable();
+        var endpoint_id_d= $('td.t3 input[type="checkbox"]:checked').map(function() {
+            var this_tr3 = $(this).parent().parent();
+            var this_td_data3 = $(this_tr3).find('td').eq(1).text();
+            //console.log("td_data1",this_td_data3);
+            return this_td_data3;}).get();
+        //alert(endpoint_id_d);
+
+        var table24 = $('#table_acanoClient').DataTable();
+        var user_id_d= $('td.t4 input[type="checkbox"]:checked').map(function() {
+            var this_tr4 = $(this).parent().parent();
+            var this_td_data4 = $(this_tr4).find('td').eq(1).text();
+            //console.log("td_data4",this_td_data2);
+            return this_td_data4;}).get();
+        //alert(user_id_d);
+
+        var resv_seq = $('#detail_seq').val();
+        var start_date = $('#detail_start_date').val();
+        var end_date = $('#detail_end_date').val();
+        var conferencename = $('#detail_conferencename').val();
+        var callid = $('#detail_callid').val();
+        var bandwidth = $('#detail_bandwidth').val();
+        var userpassword = $('#detail_userpassword').val();
+
+        var lock=0;
+
+
+        if (detail_start_date == '') {
+            swal("Error","start_date 를 입력하세요", "warning");
+            lock = 1;
+        }
+        else if(detail_end_date == '') {
+            swal("Error","end_date 을 선택하세오", "warning");
+            lock = 1;
+        }
+
+        else if(detail_conferencename == '') {
+            swal("Error","conferencename 을 선택하세오", "warning");
+            lock = 1;
+        }
+        else if(detail_callid == '') {
+            swal("Error","callid 를 입력해주세요", "warning");
+            lock = 1;
+        }
+        else if(detail_callid >99999999 | detail_callid<0) {
+            swal("Error","callid 는  숫자 8자리 까지만 입력가능합니다", "warning");
+            lock = 1;
+        }
+        else if(detail_bandwidth == '') {
+            swal("Error","bandwidth 를 입력해주세요", "warning");
+            lock = 1;
+        }
+        else if(detail_bandwidth >2000000 | detail_bandwidth<0) {
+            swal("Error","bandwidth 는  1 ~ 2,000,000 사이의 값만 입력가능합니다", "warning");
+            lock = 1;
+        }
+
+
+        if(lock ==0){
+            $.ajax({
+                type: "POST",
+                url: "/conference/reserveConference_update",
+                data: {
+                    'csrfmiddlewaretoken': '${csrf_token}',
+                    resv_seq: resv_seq,
+                    start_date: start_date,
+                    end_date: end_date,
+                    conferencename: conferencename,
+                    callid: callid,
+                    bandwidth: bandwidth,
+                    userpassword: userpassword,
+                    endpoint_id:endpoint_id_d,
+                    user_id:user_id_d
+                },
+                success: function (data) {
+                    if (data.return == 'success') {
+                        location.reload();
+                        swal("Success","등록 완료","success")
+                        location.reload();
+                    }
+                    else if (data.return != 'success') {
+                        swal({
+                            title: "Warning",
+                            text: "등록 실패",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: false,
+                        })
+                                .then(function(willDelete) {
+                                    if (willDelete) {
+                                        return
+                                    } else {
+                                        return
+                                    }
+                                });
+                    }
+                },
+            });
+        }
+    }
+
+    /*----------   detail  ____table_______*/
+    $(document).ready(function() {
+        $table = $("#detail_table_endPoint");
+        $table.dataTable({
+            sLengthMenu: [
+                [5, 10, 20, -1], //key
+                [5, 10, 20, "All"] //value
+            ],
+            dom: '<"clear"f><"search">rt<"bottom"ipl>',
+            searching: true,
+            paginate: true,
+            destroy: true,
+            order: [[1, 'desc']],
+            pageLength:5,
+            "oLanguage": {
+                "sInfo": "Page: _PAGE_ / _PAGES_",
+                'sLengthMenu': 'Display <select name="datatable-length">'+
+                '<option value="5">5</option>'+
+                '<option value="10">10</option>'+
+                '<option value="20">20</option>'+
+                '<option value="-1">All</option>'+
+                '</select> records',
+                "oPaginate": {
+                    "sNext": ">",
+                    "sPrevious": "<",
+                },
+
+            },
+            columns: [
+                {'orderable': false},
+                null,
+                null,
+                null,
+                null,
+                null,
+            ],
+            columnDefs: [
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center t3"},
+            ],
+            "drawCallback":function(){
+                //$(".paginate_button").attr('href', 'javascript:check_click_ep();');
+            },
+
+        });
+    });
+    /* <!----------------------- endpoint - ----------------------------> */
+
+    /* <!----------------------- user - ----------------------------> */
+    $(document).ready(function() {
+        $table = $("#detail_table_acanoClient");
+        $table.dataTable({
+            sLengthMenu: [
+                [5, 10, 20, -1], //key
+                [5, 10, 20, "All"] //value
+            ],
+            dom: '<"clear"f><"search">rt<"bottom"ipl>',
+            searching: true,
+            paginate: true,
+            destroy: true,
+            order: [[1, 'desc']],
+            pageLength:5,
+            "oLanguage": {
+                "sInfo": "Page: _PAGE_ / _PAGES_",
+                'sLengthMenu': 'Display <select name="datatable-length">'+
+                '<option value="5">5</option>'+
+                '<option value="10">10</option>'+
+                '<option value="20">20</option>'+
+                '<option value="-1">All</option>'+
+                '</select> records',
+                "oPaginate": {
+                    "sNext": ">",
+                    "sPrevious": "<",
+                },
+
+            },
+            columns: [
+                {'orderable': false},
+                null,
+                null,
+                null,
+            ],
+            columnDefs: [
+                {targets: 0, orderable: 'false', searchable: false, checkboxes: true, className: "text-center t4"},
+            ],
+            "drawCallback":function(){
+                $(".paginate_button").attr('href', 'javascript:check_click_ep();');
+            },
+        });
+    });
+    /*----------   detail  ____table_______*/
 
 </script>
 </%block>

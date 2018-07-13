@@ -83,6 +83,9 @@ urlpatterns = [
     url('template/del$', ConferenceViews.templateDel, name='templateDel'),
     url('reserveConference$', ConferenceViews.reserveConference, name='reserveConference'),
     url('reserveConference_add$', ConferenceViews.reserveConference_add, name='reserveConference_add'),
+    url('reserveConference_detail$', ConferenceViews.reserveConference_detail, name='reserveConference_detail'),
+    url('reserveConference_update$', ConferenceViews.reserveConference_update, name='reserveConference_update'),
+    url('reserveConference_del$', ConferenceViews.reserveConference_del, name='reserveConference_del'),
     url('reserveConferenceCal$', ConferenceViews.reserveConferenceCal, name='reserveConferenceCal'),
 
     # monitoring
