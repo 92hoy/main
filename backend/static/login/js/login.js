@@ -50,6 +50,10 @@ $( document ).ready(function() {
         $('.info').show();
         $('.info').text('비밀번호가 일치하지 않습니다');
       }
+      else if(data.result == 'invalidLicense'){
+        $('.info').show();
+        $('.info').text('라이센스가 유효하지 않습니다');
+      }
       else{
         alert("알 수 없는 오류");
       }

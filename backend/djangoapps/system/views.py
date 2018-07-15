@@ -14,6 +14,7 @@ from backend.djangoapps.common.api.views import api_cdr_id
 from backend.djangoapps.common.api.views import api_cdr_del
 
 from backend.models import CmsEndpointGroup
+from backend.models import CmsManager
 
 
 # 호출 상태
@@ -58,10 +59,10 @@ def cdr_del(request):
 def cdr_detail(request):
 
     cdr_id = request.POST.get('uri')
-    print("uri uri-uri-uri-uri-->",cdr_id)
+    #print("uri uri-uri-uri-uri-->",cdr_id)
 
     resDataJson = api_cdr_id(cdr_id)
-    print("resDataJson--cdr_id>", resDataJson)
+    #print("resDataJson--cdr_id>", resDataJson)
 
     resDataJson['cdrReceiver']['id'] = resDataJson['cdrReceiver'].pop('@id')
 
@@ -81,6 +82,7 @@ def ldap(request):
 # 시스템 상태
 @csrf_exempt
 def account(request):
+    sign_id = request.session['user_id']
     #-=-=-=-=-=-=-=-Account 생성-=-=-=-=-=-=-=-=-=-=-
     if request.is_ajax():
         user_id = request.POST.get('user_id')
@@ -93,42 +95,25 @@ def account(request):
         print ("account role->", role)
 
         lock = 0
-
-        with connections['default'].cursor() as cur:
-            query = '''
-                select user_id
-                FROM cms_manager
-                WHERE user_id ='{user_id}'
-            '''.format(user_id=user_id)
-            cur.execute(query)
-            rows = cur.fetchall()
-
-        print (query)
-        print ("rows ->",rows)
-        print("before len rows =>",len(rows))
+        id_cnt = CmsManager.objects.filter(user_id=user_id).count()
 
         #-------검증--------------------------
 
-        if len(rows) != 0:
-            print("if rows =>",len(rows))
-            print("before",lock)
+        if id_cnt != 0:
+            print("before", lock)
             lock = 1
-            print("after",lock)
+            print("after", lock)
 
             return JsonResponse({"return": "fail"})
         #-------검증--------------------------
 
-
-        with connections['default'].cursor() as cur:
-            query = '''
-                  INSERT INTO kotech_cisco_cms.cms_manager
-                              (user_id,
-                              user_name,
-                              user_pwd,
-                              user_role)
-                  VALUES ('{user_id}','{user_name}','{user_pwd}','{user_role}')
-            '''.format(user_id=user_id,user_name=user_name,user_pwd=user_id,user_role=role)
-            cur.execute(query)
+        print('account data start -------------------------------')
+        print('account - user_id : ', user_id)
+        print('account - user_name : ', user_name)
+        print('account - user_pwd : ', user_pw)
+        print('account - user_role : ', role)
+        print('account data end -------------------------------')
+        CmsManager.objects.create(user_id=user_id, user_name=user_name, user_pwd=user_pw, user_role=role, regist_id=sign_id, modify_id=sign_id)
 
         return JsonResponse({"return": "success"})
     #-=-=-=-=-=-=-=-Account 생성-=-=-=-=-=-=-=-=-=-=-
@@ -156,7 +141,7 @@ def account(request):
     return render(request, 'system/account.html', context)
 
 def account_del(request):
-
+    sign_id = request.session['user_id']
     id = request.POST.getlist('del_arr[]')
     print(id)
     for data in id:
@@ -168,6 +153,10 @@ def account_del(request):
             print(query)
             cur.execute(query)
             print(query)
+        manager_model = CmsManager.objects.get(user_id=data)
+        manager_model.modify_id = sign_id
+        manager_model.delete_yn = 'Y'
+        manager_model.save()
 
     return JsonResponse({"return" : "success"})
 
@@ -247,27 +236,36 @@ def endPoint(request):
 
         lock = 0
 
+        # with connections['default'].cursor() as cur:
+        #     query = '''
+        #         select ep_id
+        #         FROM cms_endpoint
+        #         WHERE ep_id ='{ep_id}'
+        #     '''.format(ep_id=name)
+        #     cur.execute(query)
+        #     rows = cur.fetchall()
+        #
+        #     print (query)
+        #     print ("rows ->",rows)
+        #     print ("before len rows =>",len(rows))
+        #
+        #     if len(rows) != 0:
+        #         print("if rows =>",len(rows))
+        #         print("before",lock)
+        #         lock = 1
+        #         print("after",lock)
+        #
+        #         return JsonResponse({"return": "fail"})
+        # print(" not fail")
+
         with connections['default'].cursor() as cur:
-            query = '''
-                select ep_id
+            query='''
+                SELECT CONCAT('EPI', IF( MAX(ep_id) IS NULL , '00000001' , LPAD(CAST(SUBSTRING(MAX(ep_id),4,11) AS UNSIGNED)+1,8,0))) AS new_ep_id
                 FROM cms_endpoint
-                WHERE ep_id ='{ep_id}'
-            '''.format(ep_id=name)
+            '''
             cur.execute(query)
-            rows = cur.fetchall()
-
-            print (query)
-            print ("rows ->",rows)
-            print ("before len rows =>",len(rows))
-
-            if len(rows) != 0:
-                print("if rows =>",len(rows))
-                print("before",lock)
-                lock = 1
-                print("after",lock)
-
-                return JsonResponse({"return": "fail"})
-        print(" not fail")
+            seq = cur.fetchall()
+            ep_seq = seq[0][0]
 
 
 
@@ -275,6 +273,7 @@ def endPoint(request):
             query = '''
                   INSERT INTO kotech_cisco_cms.cms_endpoint
                               (ep_id,
+                              ep_name,
                               ep_type,
                               ip,
                               sip,
@@ -286,6 +285,7 @@ def endPoint(request):
                               order_no
                               )
                   VALUES ('{ep_id}',
+                          '{ep_name}',
                           '{ep_type}',
                           '{ip}',
                           '{sip}',
@@ -295,7 +295,7 @@ def endPoint(request):
                           '{recodingdevice}',
                           '{ep_group_seq}',
                           '{order_no}')
-            '''.format(ep_id=name, ep_type=device_type, ip=ip, sip=sip, hdevice=h_323, mslync=mslync,
+            '''.format(ep_id=ep_seq,ep_name=name, ep_type=device_type, ip=ip, sip=sip, hdevice=h_323, mslync=mslync,
                        username=user_name, recodingdevice=recording_device, ep_group_seq=group_name, order_no=sortno)
             cur.execute(query)
 
@@ -364,9 +364,9 @@ def endPoint(request):
 @csrf_exempt
 def endPoint_del(request):
 
-    name = request.POST.getlist('del_arr[]')
-    print("name",name)
-    for data in name:
+    ep_id = request.POST.getlist('del_arr[]')
+    print("ep_id",ep_id)
+    for data in ep_id:
         with connections['default'].cursor() as cur:
             query = '''
                  delete FROM cms_endpoint
@@ -427,7 +427,8 @@ def endPoint_detail(request):
 @csrf_exempt
 def endPoint_update(request):
     if request.is_ajax():
-        name= request.POST.get('detail_ep_id')
+        name= request.POST.get('detail_ep_name')
+        ep_id= request.POST.get('detail_ep_id')
         device_type= request.POST.get('device_type')
         ip= request.POST.get('ip')
         sip= request.POST.get('sip')
@@ -446,7 +447,8 @@ def endPoint_update(request):
         with connections['default'].cursor() as cur:
             query = '''
                   update cms_endpoint
-                  set ep_type = '{ep_type}',
+                  set ep_name = '{ep_name}',
+                      ep_type = '{ep_type}',
                       ip='{ip}',
                       sip='{sip}',
                       hdevice='{hdevice}',
@@ -456,7 +458,7 @@ def endPoint_update(request):
                       ep_group_seq='{ep_group_seq}',
                       order_no='{order_no}'
                   where ep_id ='{ep_id}'
-            '''.format(ep_id=name, ep_type=device_type, ip=ip, sip=sip, hdevice=h_323, mslync=mslync,
+            '''.format(ep_id=ep_id,ep_name=name, ep_type=device_type, ip=ip, sip=sip, hdevice=h_323, mslync=mslync,
                        username=user_name, recodingdevice=recording_device, ep_group_seq=group_name, order_no=sortno)
             print(query)
             cur.execute(query)

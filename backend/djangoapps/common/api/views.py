@@ -41,7 +41,7 @@ def api_coSpaces():
         'Authorization': Authorization
     }
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -59,7 +59,7 @@ def api_coSpaces():
     for n in range(0, int(requestCnt)):
         url = 'https://14.63.53.22:449/api/v1/coSpaces?offset={offset}&limit=20'.format(offset=n*20)
         res = requests.get(url, headers=headers, verify=False)
-        res.encoding = None
+        res.encoding = 'UTF-8'
         res_data = str(res.text)
         res_o = xmltodict.parse(res_data)
         res_data = json.dumps(res_o)
@@ -104,7 +104,7 @@ def api_coSpaceId(id, request=None):
 
     else:
         r = requests.get(url, headers=headers, verify=False)
-        r.encoding = None
+        r.encoding = 'UTF-8'
         resData = str(r.text)
 
         # xml to json
@@ -131,7 +131,7 @@ def api_coSpaceDel(request):
     for coSpaceId in coSpaceId_list:
         url = 'https://14.63.53.22:449/api/v1/coSpaces/' + coSpaceId
         r = requests.delete(url, headers=headers, verify=False)
-        r.encoding = None
+        r.encoding = 'UTF-8'
         print('coSpaceDel s ---------------------------------')
         print(str(r.status_code), str(r.text))
         print('coSpaceDel e ---------------------------------')
@@ -153,7 +153,7 @@ def api_activeCall(callstatus=None):
     }
 
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -177,7 +177,7 @@ def api_activeCall(callstatus=None):
     for n in range(0, int(requestCnt)):
         url = 'https://14.63.53.22:449/api/v1/calls?offset={offset}&limit=20'.format(offset=n*20)
         res = requests.get(url, headers=headers, verify=False)
-        res.encoding = None
+        res.encoding = 'UTF-8'
         res_data = str(res.text)
         res_o = xmltodict.parse(res_data)
         res_data = json.dumps(res_o)
@@ -207,7 +207,7 @@ def api_activeCallId(id):
     url = 'https://14.63.53.22:449/api/v1/calls/' + id
 
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -218,13 +218,111 @@ def api_activeCallId(id):
     print("-------------------> DEBUG[api_activeCall ---s]")
     print(resDataJson)
     print("-------------------> DEBUG[api_activeCall ---e]")
-    if id is not None:
-        return resDataJson['call']['coSpace']
-    print("-------------------> DEBUG[s]")
-    print(resDataJson)
-    print("-------------------> DEBUG[e]")
 
-    return resDataJson['calls']['call']
+    return resDataJson
+
+
+#from backend.djangoapps.common.api.views import api_activeCallId_delete
+def api_activeCallId_delete(id):
+    Authorization = settings.AUTHORIZATION
+
+    # requests GET
+    headers = {
+        'Authorization': Authorization
+    }
+    url = 'https://14.63.53.22:449/api/v1/calls/' + id
+
+    r = requests.delete(url, headers=headers, verify=False)
+
+    print("-------------------> DEBUG[api_activeCallId_delete ---s]")
+    print(r)
+    print(r.text)
+    print("-------------------> DEBUG[api_activeCallId_delete ---e]")
+
+    return r
+
+
+#from backend.djangoapps.common.api.views import api_callLegs
+def api_callLegs(id):
+    Authorization = settings.AUTHORIZATION
+
+    # requests GET
+    headers = {
+        'Authorization': Authorization
+    }
+    url = 'https://14.63.53.22:449/api/v1/callLegs/' + id
+
+    r = requests.get(url, headers=headers, verify=False)
+    r.encoding = 'UTF-8'
+    if r.status_code != 404:
+        resData = str(r.text)
+
+        # xml to json
+        o = xmltodict.parse(resData)
+        resData = json.dumps(o)
+        resDataJson = json.loads(resData)
+
+        print("-------------------> DEBUG[api_callLegs ---s]")
+        print(resDataJson)
+        print("-------------------> DEBUG[api_callLegs ---e]")
+
+        return resDataJson
+    else:
+        return r.status_code
+
+
+#from backend.djangoapps.common.api.views import api_callLegs_update
+def api_callLegs_update(request, call_id=None):
+    id = request.POST.get('user_api_id') if call_id is None else call_id
+    user_key = request.POST.get('user_key')
+    user_value = request.POST.get('user_value')
+    put_data = {user_key: user_value}
+    Authorization = settings.AUTHORIZATION
+
+    # requests GET
+    headers = {
+        'Authorization': Authorization
+    }
+    url = 'https://14.63.53.22:449/api/v1/callLegs/' + id
+
+    r = requests.put(url, headers=headers, verify=False, data=put_data)
+    r.encoding = 'UTF-8'
+
+    print('api_callLegs_update s ---------------------------------')
+    print(str(r.status_code), str(r.text))
+    print('api_callLegs_update e ---------------------------------')
+
+    error_id = list()
+
+    if r.status_code != 200:
+        error_id.append(r)
+
+    return error_id
+
+
+#from backend.djangoapps.common.api.views import api_callLegs_delete
+def api_callLegs_delete(id):
+    Authorization = settings.AUTHORIZATION
+
+    # requests GET
+    headers = {
+        'Authorization': Authorization
+    }
+    url = 'https://14.63.53.22:449/api/v1/callLegs/' + id
+
+    r = requests.delete(url, headers=headers, verify=False)
+    r.encoding = 'UTF-8'
+
+    print('api_callLegs_delete s ---------------------------------')
+    print(str(r.status_code), str(r.text))
+    print('api_callLegs_delete e ---------------------------------')
+
+    error_id = list()
+
+    if r.status_code != 200:
+        error_id.append(r)
+
+    return error_id
 
 
 #from backend.djangoapps.common.api.views import api_callLegProfiles_POST
@@ -258,7 +356,7 @@ def api_callLegProfiles_Id(id):
     }
 
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -300,7 +398,7 @@ def api_callLegProfiles_Delete(id):
     }
     url = 'https://14.63.53.22:449/api/v1/callLegProfiles/' + id
     r = requests.delete(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     print('api_callLegProfiles_Delete s ---------------------------------')
     print(str(r.status_code), str(r.text))
     print('api_callLegProfiles_Delete e ---------------------------------')
@@ -338,7 +436,7 @@ def api_callProfiles_Id(id):
         'Authorization': Authorization
     }
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -380,7 +478,7 @@ def api_callProfiles_Delete(id):
     }
     url = 'https://14.63.53.22:449/api/v1/callProfiles/' + id
     r = requests.delete(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     print('api_callProfiles_Delete s ---------------------------------')
     print(str(r.status_code), str(r.text))
     print('api_callProfiles_Delete e ---------------------------------')
@@ -398,7 +496,7 @@ def api_activeCallLegs(id):
         'Authorization': Authorization
     }
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -409,8 +507,86 @@ def api_activeCallLegs(id):
     print("-------------------> DEBUG[s]")
     print(resDataJson)
     print("-------------------> DEBUG[e]")
+    requestCnt = (int(resDataJson['callLegs']['@total']) / 20) + 1 \
+        if (int(resDataJson['callLegs']['@total']) % 20) != 0 \
+        else int(resDataJson['callLegs']['@total']) / 20
+
+    resDataList = list()
+
+    for n in range(0, int(requestCnt)):
+        url = 'https://14.63.53.22:449/api/v1/calls/{id}/callLegs?offset={offset}&limit=20'.format(offset=n*20, id=id)
+        res = requests.get(url, headers=headers, verify=False)
+        res.encoding = 'UTF-8'
+        res_data = str(res.text)
+        res_o = xmltodict.parse(res_data)
+        res_data = json.dumps(res_o)
+        res_data_json = json.loads(res_data)
+        if type(res_data_json['callLegs']['callLeg']) == list:
+            resDataList.append(res_data_json['callLegs']['callLeg'])
+        else:
+            single_data = [res_data_json['callLegs']['callLeg']]
+            resDataList.append(single_data)
+
+    totDataList = list()
+    for list_data in resDataList:
+        for data in list_data:
+            totDataList.append(data)
+
+    print("-------------------> DEBUG[api_activeCallLegs total ---s]")
+    print(totDataList)
+    print("-------------------> DEBUG[api_activeCallLegs total ---e]")
+
+    return totDataList
+
+
+# from backend.djangoapps.common.api.views import api_callProfiles_Id
+def api_activeCallLegsId(id):
+
+    Authorization = settings.AUTHORIZATION
+
+    # requests GET
+    url = 'https://14.63.53.22:449/api/v1/calls/{id}/callLegs/'.format(id)
+    headers = {
+        'Authorization': Authorization
+    }
+    r = requests.get(url, headers=headers, verify=False)
+    r.encoding = 'UTF-8'
+    resData = str(r.text)
+
+    # xml to json
+    o = xmltodict.parse(resData)
+    resData = json.dumps(o)
+    resDataJson = json.loads(resData)
+
+    print("api_activeCallLegsId -------------------> DEBUG[s]")
+    print(resDataJson)
+    print("api_activeCallLegsId -------------------> DEBUG[e]")
 
     return resDataJson
+
+
+# from backend.djangoapps.common.api.views import api_activeCallLegsId_POST
+def api_activeCallLegsId_POST(id, user):
+
+    Authorization = settings.AUTHORIZATION
+
+    # requests GET
+    url = 'https://14.63.53.22:449/api/v1/calls/{id}/callLegs/'.format(id=id)
+    headers = {
+        'Authorization': Authorization
+    }
+
+    post_data = {"remoteParty": user}
+
+    r = requests.post(url, headers=headers, verify=False, data=post_data)
+
+    print("-------------------> DEBUG[api_activeCallLegsId_POST ---s]")
+    print(r)
+    print(r.text)
+    print("-------------------> DEBUG[api_activeCallLegsId_POST ---e]")
+
+    return r
+
 
 #from backend.djangoapps.common.api.views import api_templateLegPro
 def api_templateLegPro(id):
@@ -423,7 +599,7 @@ def api_templateLegPro(id):
         'Authorization': Authorization
     }
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -448,7 +624,7 @@ def api_templatePro(id):
         'Authorization': Authorization
     }
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -473,7 +649,7 @@ def api_mornitoringStatus():
         'Authorization': Authorization
     }
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -500,7 +676,7 @@ def api_users():
     }
 
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -508,23 +684,23 @@ def api_users():
     resData = json.dumps(o)
     resDataJson = json.loads(resData)
 
-    print("-------------------> DEBUG[mornitoringStatus ---s]")
-    print(resDataJson)
-    print("-------------------> DEBUG[mornitoringStatus ---e]")
+    print("-------------------> DEBUG[mornitoringStatus ---s resDataJson]")
+    #print(resDataJson)
+    print("-------------------> DEBUG[mornitoringStatus ---e resDataJson]")
     requestCnt = (int(resDataJson['users']['@total']) / 20) + 1
     resDataList = list()
 
     for n in range(0, int(requestCnt)):
         url = 'https://14.63.53.22:449/api/v1/users?offset={offset}&limit=20'.format(offset=n*20)
         res = requests.get(url, headers=headers, verify=False)
-        res.encoding = None
+        res.encoding = 'UTF-8'
         res_data = str(res.text)
         res_o = xmltodict.parse(res_data)
         res_data = json.dumps(res_o)
         res_data_json = json.loads(res_data)
         resDataList.append(res_data_json['users']['user'])
 
-    print(resDataList)
+    #print(resDataList)
     totDataList = list()
     for list_data in resDataList:
         for data in list_data:
@@ -546,7 +722,7 @@ def api_usersId(id):
     url = 'https://14.63.53.22:449/api/v1/users/' + id
 
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -554,9 +730,9 @@ def api_usersId(id):
     resData = json.dumps(o)
     resDataJson = json.loads(resData)
 
-    print("-------------------> DEBUG[s]")
+    print("api_usersId -------------------> DEBUG[s] resDataJson")
     print(resDataJson)
-    print("-------------------> DEBUG[e]")
+    print("api_usersId -------------------> DEBUG[e] resDataJson")
 
     return resDataJson
 
@@ -572,7 +748,7 @@ def api_cdrReceivers():
     }
 
     r = requests.get(url, headers=headers, verify=False)
-    r.encoding = None
+    r.encoding = 'UTF-8'
     resData = str(r.text)
 
     # xml to json
@@ -621,7 +797,7 @@ def api_cdr_id(id, request=None):
 
     else:
         r = requests.get(url, headers=headers, verify=False)
-        r.encoding = None
+        r.encoding = 'UTF-8'
         resData = str(r.text)
 
         # xml to json
@@ -648,7 +824,7 @@ def api_cdr_del(request):
     for cdrId in cdr_listID:
         url = 'https://14.63.53.22:449/api/v1/system/cdrReceivers/' + cdrId
         r = requests.delete(url, headers=headers, verify=False)
-        r.encoding = None
+        r.encoding = 'UTF-8'
 
         print(url)
         print('api_cdr_del s _>_>_>_>_>_>_>_>_>')

@@ -29,6 +29,7 @@ from django.utils.translation import ugettext as _
                 <thead>
                 <tr>
                     <th class="th-center" style="width: 5%;"><input type="checkbox" id="select_all"/></th>
+                    <th class="th-center" hidden>EndPoint id</th>
                     <th class="th-center">EndPoint Name</th>
                     <th class="th-center">Device Type</th>
                     <th class="th-center">IP</th>
@@ -40,7 +41,8 @@ from django.utils.translation import ugettext as _
                 <% data_id = data['ep_id'] %>
                 <tr>
                     <td></td>
-                    <td><a href="javascript:ep_detail('${data_id}');" style="text-decoration: underline;" >${data['ep_id']}</a></td>
+                    <td hidden>${data['ep_id']}</td>
+                    <td><a href="javascript:ep_detail('${data_id}');" style="text-decoration: underline;" >${data['ep_name']}</a></td>
                     <td>${data['ep_type']}</td>
                     <td>${data['ip']}</td>
                     <td>${data['ep_group_name']}</td>
@@ -58,6 +60,8 @@ from django.utils.translation import ugettext as _
 
     <div id="layer2" class="pop-layer">
         <div class="pop-container">
+
+
             <div class="pop-conts">
 
           <span class="nav-icon" style="padding-bottom: 18px;">
@@ -72,6 +76,10 @@ from django.utils.translation import ugettext as _
                         <tr style="margin-bottom: 20px;">
                             <td>Name</td>
                             <td class="rightTd"><input type="text" class="form-control wi600" id="name" style="width: 300px;"><br></td>
+                        </tr>
+                        <tr hidden>
+                            <td hidden>ep_id</td>
+                            <td class="rightTd" hidden><input type="text" class="form-control"  id="ep_id" hidden></td>
                         </tr>
                         <tr>
                             <td>Device Type</td>
@@ -169,9 +177,13 @@ from django.utils.translation import ugettext as _
                         <tr style="margin-bottom: 20px;">
                             <td>Name</td>
                             <td class="rightTd">
-                                <input type="text" class="form-control wi600" id="detail_ep_id" style="width: 300px;" readonly>
+                                <input type="text" class="form-controlz wi600" id="detail_ep_name" style="width: 300px;" readonly>
 
                                 <br></td>
+                        </tr>
+                        <tr hidden>
+                            <td hidden>ep_id</td>
+                            <td class="rightTd" hidden><input type="text" class="form-control"  id="detail_ep_id" hidden></td>
                         </tr>
                         <tr>
                             <td>Device Type</td>
@@ -277,6 +289,7 @@ from django.utils.translation import ugettext as _
             },
             columns: [
                 {'orderable': false},
+                null,
                 null,
                 null,
                 null,
@@ -482,7 +495,8 @@ from django.utils.translation import ugettext as _
         }
 
         $el.find('a.btn-layerClose').click(function(){
-            $("#detail_ep_id").val();
+            $("#detail_ep_name").val('');
+            $("#detail_ep_id").val('');
             $("#Device_ip").val('');
             $("#detail_ip").val('');
             $("#detail_sip").val('');
@@ -516,6 +530,7 @@ from django.utils.translation import ugettext as _
         ).done(function (data) {
 
             var device_t = data.rows.ep_type
+            $("#detail_ep_name").val(data.rows.ep_name);
             $("#detail_ep_id").val(data.rows.ep_id);
             //$("input:radio[name=device_options]").val().prop("checked", true);
             $("input:radio[name=device_options]").each(function(){
@@ -537,6 +552,7 @@ from django.utils.translation import ugettext as _
     }
 
     function ep_update(ep_id){
+        var detail_ep_name = $('#detail_ep_name').val();
         var detail_ep_id = $('#detail_ep_id').val();
         var device_type = $(':radio[name=device_options]:checked').val();
         var ip = $('#detail_ip').val();
@@ -552,7 +568,7 @@ from django.utils.translation import ugettext as _
 
         var lock=0;
 
-        if (detail_ep_id == '') {
+        if (detail_ep_name == '') {
             swal("Error","Name 를 입력하세요", "warning");
             lock = 1;
         }
@@ -573,6 +589,7 @@ from django.utils.translation import ugettext as _
                 type: "POST",
                 url: "/system/endPoint_update",
                 data: {
+                    detail_ep_name: detail_ep_name,
                     detail_ep_id: detail_ep_id,
                     device_type: device_type,
                     ip: ip,

@@ -16,7 +16,6 @@ from django.utils.translation import ugettext as _
 
     <div class="box" style="padding: 10px;">
         <div style="padding: 10px;">
-            <button class="md-btn md-raised mb-2 w-xs blue" id="saveBtn" style="float: right; margin-left: 8px;">SAVE</button>
             <button class="md-btn md-raised mb-2 w-xs red" onclick="btn_del()" style="float: right;">DEL</button>
 
             <a href="#layer2" class="btn-example">
@@ -38,7 +37,7 @@ from django.utils.translation import ugettext as _
                 <% data_id = data['ep_group_seq'] %>
                 <tr>
                     <td></td>
-                    <td><input type="hidden" id="ep_group_seq" value="${data_id}"><a href="javascript:endPointGroupDetail('${data_id}');" con-id="${data['ep_group_seq']}" style="text-decoration: underline;">${data['ep_group_name']}</a></td>
+                    <td><a href="javascript:endPointGroupDetail('${data_id}');" con-id="${data['ep_group_seq']}" style="text-decoration: underline;">${data['ep_group_name']}</a></td>
                     <td>${data['order_no']}</td>
                 </tr>
                 % endfor
@@ -355,7 +354,7 @@ from django.utils.translation import ugettext as _
         var table = $('#table_endPointGroup').DataTable();
         var del_ep_group= $('td.t1 input[type="checkbox"]:checked').map(function() {
             var this_tr = $(this).parent().parent();
-            var this_td_data = $(this_tr).find('td').eq(1).find('input#ep_group_seq').val();
+            var this_td_data = $(this_tr).find('td').eq(1).find('a').attr('con-id');
             console.log("this_td_data",this_td_data);
 
             return this_td_data;}).get();
